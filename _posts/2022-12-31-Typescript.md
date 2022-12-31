@@ -178,3 +178,149 @@ const playerOne = playerMaker('PlayerOne');
 
 playerOne.age = 20;
 ```
+
+## ReadOnly
+
+TypeScript에는 readonly를 설정하는 기능이 있다.
+
+말 그대로 readonly 설정된 변수 등에 write 기능을 허용하지 않는 것이다.
+
+readonly가 설정된 것은 immutability(불변성)을 갖게 된다.
+
+```jsx
+// use reedonly
+const numbers: readonly number[] = [1,2,3,4];
+
+numbers.push(1) //Error 
+
+// can write
+const numbers: number[] = [1,2,3,4];
+
+numbers.push(1) // work
+```
+
+## Tuple
+
+Tuple은 Array를 생성할 수 있게 하는데 있어서 최소한의 길이를 가져야 하고,
+
+특정 위치에 특정 타입이 존재해야 한다.
+
+```jsx
+const player: [string, number, boolean] = ['seobisback', 1, true];
+
+player[0] = 1 // Error 
+```
+
+## any
+
+Typescript 에서는 여러가지 타입이 존재하는데 그것은 Javascript 타입이 많다
+
+하지만 Typescript에서만 사용할 수 있는 타입이 있고 그것은 ‘any’ 이다.
+
+any는 Typescript의 보호장치에서 벗어날 수 있게 해준다.
+
+**가장 좋은 것은 any를 사용하지 않는 것이다.** (~~당연하게도 Typescript의 보호 장치를 사용하고 바보같은 실수를 하지 않기 위해서 Typescript를 사용하기 때문~~)
+
+하지만 Typescript에는 ‘any’가 존재하고 그렇기 때문에 공부할 필요는 있다.
+
+‘any’를 사용하면 말 그대로 모든 타입을 허용하는 것이다.
+
+**코드를 보자**
+
+```jsx
+// if use 'any'
+const a : any[] = [1,2,3,4]
+const b : any = true
+
+a + b // 원래라면 에러를 던져야 하는 Typescript지만 이 코드를 허용해버린다.
+
+// 현재 코드에서 'any'를 지우면 Typescript는 바로 에러를 던진다.
+```
+
+## unknown
+
+Typescript에만 존재하는 타입이다.
+
+만약 API에게 응답 데이터를 받는데 해당 데이터의 타입을 알 수 없을 경우
+
+‘unknown’이라는 타입을 사용한다.
+
+```jsx
+let a: unknown;
+
+let b = a + 1; //Error
+
+// typescript에서 unknown을 사용하려면 type을 check해야한다.
+
+if(typeof a === 'number'){
+	let b = a + 1; // 허용
+}
+// 위와 같이 타입을 체크 후 사용할 경우 typescript는 이를 허용한다.
+// 왜냐하면 해당 범위 안에서의 a는 number이기 때문이다.
+
+let b = a.toUpperCase() // Error
+
+if(typeof a === 'string'){
+	let b = a.toUpperCase() // 허용
+}
+// 위와 같이 타입을 체크 후 사용할 경우 typescript는 이를 허용한다.
+// 왜냐하면 해당 범위 안에서의 a는 stringr이기 때문이다.
+```
+
+위와 같이 변수의 타입을 미리 알 수 없을 경우 ‘unknown’을 사용한다.
+
+## void
+
+Typescript에만 존재하는 타입이다.
+
+void는 아무것도 return하지 않는 함수를 대상으로 사용한다.
+
+보통은 void를 따로 지정해줄 필요가 없다.
+
+```jsx
+/*region Same Code*/
+function hello(){
+	console.log('say hello');
+}
+
+function hello(): void{
+	console.log('say hello');
+}
+/*endregion Same Code*/
+
+const a = hello();
+a.toUpperCase(); // Error
+```
+
+## never
+
+Typescript에만 존재하는 타입이다.
+
+‘never’ 는 함수가 절대 return하지 않을 때 발생한다.
+
+예를 들자면 함수에서 exception(예외)이 발생할 때 등이 있다.
+
+```jsx
+// 에러가 발생하는 함수
+function hello():never{
+	console.log('x')
+}
+
+// 정상적으로 동작하는 함수
+function hello():never{
+	throw new Error('xxx');
+}
+// 이 함수는 return 하지 않고 오류를 발생시키는 함수이다.
+// 위와 같은 상황일 때, never를 사용한다.
+
+function hello(name: string|number){
+	if(typeof name === 'string'){
+		name // (parameter) name: string
+	} else if(typeof name === 'number'){
+		name // (parameter) name: number
+	} else {
+		// 이 코드는 절대 실행되지 않아야 한다라는 뜻
+		name // (parameter) name: never
+	}
+}
+```
