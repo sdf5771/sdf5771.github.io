@@ -171,6 +171,9 @@ function playerMaker(name: string) : Player {
 	}
 }
 
+// Arrow Function을 사용할 경우
+const playerMaker = (name: string) : Player => {{name}}
+
 const playerOne = playerMaker('PlayerOne');
 
 playerOne.age = 20;
