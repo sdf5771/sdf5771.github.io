@@ -1,3 +1,9 @@
+---
+layout: single
+title:  "**[Python] - 기본 입출력**"
+categories: Python
+---
+
 ### 기본 입출력
 
 - 모든 프로그램은 적절한 (약속된) 입출력 양식을 가지고 있다.
