@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "**React Query + 상태 + 상태 관리 [1편]**"
+title:  "**React Query + 상태 + 상태 관리 [2편]**"
 categories: React, React Native, State, State Management
 ---
 
