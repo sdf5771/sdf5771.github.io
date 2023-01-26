@@ -2,6 +2,9 @@
 layout: single
 title:  "**[Python] - 기본 입출력**"
 categories: Python
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 ### 기본 입출력

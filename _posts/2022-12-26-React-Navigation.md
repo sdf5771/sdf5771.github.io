@@ -2,6 +2,9 @@
 layout: single
 title:  "**React Navigation**"
 categories: React Native
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 이 포스팅은 회사에서 React Native를 사용한 프로젝트를 진행하며, 

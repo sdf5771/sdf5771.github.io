@@ -2,6 +2,9 @@
 layout: single
 title:  "**Typescript를 사용하는 이유**"
 categories: Typescript
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 ## 개요

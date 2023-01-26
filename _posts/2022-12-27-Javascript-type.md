@@ -2,6 +2,9 @@
 layout: single
 title:  "**Javascript Types**"
 categories: JavaScript
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 ### 원시 (Primitive) 타입

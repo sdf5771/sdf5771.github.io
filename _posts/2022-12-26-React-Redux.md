@@ -2,6 +2,9 @@
 layout: single
 title:  "**상태 관리 라이브러리 Redux VS MobX**"
 categories: React
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 회사에서 **React**로 프로젝트를 진행하게 되어, 상태관리 라이브러리에 관해서 조사를 하게 되었다.

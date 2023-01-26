@@ -2,6 +2,9 @@
 layout: single
 title:  "**ReactHook_useMemo**"
 categories: React
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 ## useMemo

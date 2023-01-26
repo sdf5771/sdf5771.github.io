@@ -2,6 +2,9 @@
 layout: single
 title:  "**[Python] - 함수, 람다 표현식**"
 categories: Python
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 ### 함수

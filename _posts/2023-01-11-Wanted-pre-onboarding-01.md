@@ -2,6 +2,9 @@
 layout: single
 title:  "**[Code refactoring] - 원티드 프리온보딩 프론트엔드 챌린지 - 사전과제 리팩토링**"
 categories: React Native
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 원티드에서 프리온보딩 프론트엔드 챌린지를 참여하고 있다.

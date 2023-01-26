@@ -2,6 +2,9 @@
 layout: single
 title:  "**[Python] - 집합 자료형, 사전 자료형**"
 categories: Python
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 ### 사전 자료형

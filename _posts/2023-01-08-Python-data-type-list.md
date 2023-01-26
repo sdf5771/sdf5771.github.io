@@ -2,6 +2,9 @@
 layout: single
 title:  "**[Python] - 리스트 자료형**"
 categories: Python
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 # 리스트 자료형

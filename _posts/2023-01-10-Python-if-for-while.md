@@ -2,6 +2,9 @@
 layout: single
 title:  "**[Python] - 조건문, 반복문**"
 categories: Python
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "bookmark"
 ---
 
 ### 조건문
