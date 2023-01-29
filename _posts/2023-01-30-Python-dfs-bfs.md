@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "**[Python] - 그래프 탐색 알고리즘 : DFS/BFS **"
+title:  "**[Python] - 그래프 탐색 알고리즘 : DFS/BFS**"
 categories: Python
 toc: true
 toc_label: "Table of Contents"
