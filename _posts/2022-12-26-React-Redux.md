@@ -1,7 +1,7 @@
 ---
 layout: single
 title:  "**상태 관리 라이브러리 Redux VS MobX**"
-categories: React
+categories: React StateManagement
 toc: true
 toc_label: "Table of Contents"
 toc_icon: "bookmark"

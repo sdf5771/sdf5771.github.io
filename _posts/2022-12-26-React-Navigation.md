@@ -1,7 +1,7 @@
 ---
 layout: single
 title:  "**React Navigation**"
-categories: React Native
+categories: ReactNative
 toc: true
 toc_label: "Table of Contents"
 toc_icon: "bookmark"
