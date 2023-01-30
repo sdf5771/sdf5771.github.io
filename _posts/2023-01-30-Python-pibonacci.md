@@ -71,4 +71,4 @@ def solution(n):
 
 <Test Case 결과>
 
-![pibonacci_result](/assets/images/posts/2023-01-30-Python-pinonacci/pibonacci_result.png)
+![pibonacci_result](/assets/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png)
