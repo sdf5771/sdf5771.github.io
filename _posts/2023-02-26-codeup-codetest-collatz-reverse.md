@@ -1,13 +1,11 @@
 ---
 layout: single
-title:  "“****1929 : (재귀함수) 우박수 (3n+1) (reverse)****”"
+title:  "1929 : (재귀함수) 우박수 (3n+1) (reverse)"
 categories: Python
 toc: true
 toc_label: "Table of Contents"
 toc_icon: "bookmark"
 ---
-
-# “****1929 : (재귀함수) 우박수 (3n+1) (reverse)****”
 
 문제 링크 :
 
