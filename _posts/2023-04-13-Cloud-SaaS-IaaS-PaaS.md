@@ -11,11 +11,11 @@ toc_icon: "bookmark"
 
 - 인터넷을 통해 접근할 수 있는 서버 그리고 그 안에서 구동되는 소프트웨어, 데이터베이스 등을 의미함.
 
-![cloud_01](assets/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png)
+![cloud_01](/assets/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png)
 
 - 내 컴퓨터 장비를 사용하지 않고 컴퓨터 장비를 구축해 해야할 작업을 온라인에 분산되어 존재하는 데이터 센터(Data Center, 이하 클라우드)에 맡겨 수행하는 것을 말한다. 이렇게 되면 서버를 직접 구매할 때 고려해야 할 전력, 위치, 서버 세팅, 확장성을 고민하지 않고 서비스 운영에만 집중할 수 있다. 이를 오프프레미스(off-premise) 방식이라고 한다.
 
-![cloud_02](assets/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png)
+![cloud_02](/assets/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png)
 
 # SaaS
 
