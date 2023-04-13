@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "**백준 : 10986 나머지 합**"
+title:  "**[Python]백준 : 10986 나머지 합**"
 categories: Python
 toc: true
 toc_label: "Table of Contents"
@@ -93,8 +93,8 @@ if __name__ == '__main__':
 
 ## 도식화
 
-![prefix-sum-reminder01](/assets/images/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg)
+![prefix-sum-reminder01](/assets/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg)
 
 ## 결과
 
-![prefix-sum-reminder02](/assets/images/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder02.png)
+![prefix-sum-reminder02](/assets/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder02.png)
