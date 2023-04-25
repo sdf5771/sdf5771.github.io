@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "**Next JS 학습 01**"
+title:  "**[Next JS] 학습 01 - 프로젝트 생성 및 개념 공부**"
 categories: React, SEO, NextJS
 toc: true
 toc_label: "Table of Contents"
