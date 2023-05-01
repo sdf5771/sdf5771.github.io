@@ -200,6 +200,6 @@ Github Source Link : [https://github.com/sdf5771/my-todo-app.git](https://github
 
 ### 스터디 참고 자료
 
-카카오 FE 기술블로그 : [아토믹 디자인을 활용한 디자인 시스템 도입기 | 카카오엔터테인먼트 FE 기술블로그](https://fe-developers.kakaoent.com/2022/220505-how-page-part-use-atomic-design-system/)
+카카오 FE 기술블로그 : [카카오엔터테인먼트 FE 기술블로그](https://fe-developers.kakaoent.com/2022/220505-how-page-part-use-atomic-design-system/)
 
 유튜브 : [Atomic Design Pattern (아토믹 디자인 패턴)](https://www.youtube.com/watch?v=qUSYwidqgFg)
