@@ -1,7 +1,7 @@
 ---
 layout: single
 title:  "**(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민**"
-categories: Javascript, Browser, Rendering
+categories: Javascript Browser Rendering
 toc: true
 toc_label: "Table of Contents"
 toc_icon: "bookmark"
