@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>React Query + 상태 + 상태 관리 [2편] | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="React Query + 상태 + 상태 관리 [2편]" />
+<meta name="author" content="Seobisback" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="React Query + 상태 + 상태 관리 [2편]" />
+<meta property="og:description" content="React Query + 상태 + 상태 관리 [2편]" />
+<link rel="canonical" href="http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html" />
+<meta property="og:url" content="http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-01-13T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="React Query + 상태 + 상태 관리 [2편]" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Seobisback"},"dateModified":"2023-01-13T00:00:00+09:00","datePublished":"2023-01-13T00:00:00+09:00","description":"React Query + 상태 + 상태 관리 [2편]","headline":"React Query + 상태 + 상태 관리 [2편]","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html"},"url":"http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="React Query + 상태 + 상태 관리 [2편]">
+    <meta name="twitter:description" content="React Query + 상태 + 상태 관리 [2편]  이 글은 유튜브 영상 중 ‘React Query와 상태관리’ 라는 주제로 2022.02 우아한테크세미나의영상을 보며 공부를 하고 정리한 내용을 바탕으로 기술되었습니다. 저의 주관이 섞인 내용이 들어갈 수도 있고,영상에서 다루는...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    <meta name="twitter:image:alt" content="React Query + 상태 + 상태 관리 [2편]">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="React Query + 상태 + 상태 관리 [2편] " aria-label="React Query + 상태 + 상태 관리 [2편]" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="React+Query+%2B+%EC%83%81%ED%83%9C+%2B+%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%5B2%ED%8E%B8%5D" class="title">React Query + 상태 + 상태 관리 [2편]</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      January 13, 2023
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p>React Query + 상태 + 상태 관리 [2편]</p>
+
+<blockquote>
+  <p>이 글은 유튜브 영상 중 <strong>‘React Query와 상태관리’</strong> 라는 주제로 <strong>2022.02 우아한테크세미나</strong>의
+영상을 보며 공부를 하고 정리한 내용을 바탕으로 기술되었습니다. 저의 주관이 섞인 내용이 들어갈 수도 있고,
+영상에서 다루는 내용을 정리하여 기록한 내용이 주로 다루어집니다.</p>
+</blockquote>
+
+<h2 id="react-query">React Query</h2>
+
+<aside>
+🌱 DataBase에서 가져온 데이터를 클라이언트에서 보여주기 위해 개발자는 ajax를 이용하는데, 이 때 서버에서 가져오는 데이터를 `Server State` 라고 한다.
+
+</aside>
+
+<ul>
+  <li>React Query는 서버에서 가져온 데이터를 웹 브라우저 앱에서 사용하기 쉽게 도와주는 기술이다.
+    <ul>
+      <li>데이터 가져오기 (fetching)</li>
+      <li>캐시 (caching)</li>
+      <li>동기화 (synchronizing)</li>
+      <li>데이터 업데이트 (updating server state)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="react-query-공식-예제-code">React Query 공식 예제 Code</h3>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">QueryClient</span><span class="p">,</span> <span class="nx">QueryClientProvider</span><span class="p">,</span> <span class="nx">useQuery</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-query</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">queryClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">QueryClient</span><span class="p">()</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">App</span><span class="p">(){</span>
+	<span class="k">return</span><span class="p">(</span>
+		<span class="p">&lt;</span><span class="nc">QueryClientProvider</span> <span class="na">client</span><span class="p">=</span><span class="si">{</span><span class="nx">queryClient</span><span class="si">}</span><span class="p">&gt;</span>
+			<span class="p">&lt;</span><span class="nc">Example</span> <span class="p">/&gt;</span>
+		<span class="p">&lt;/</span><span class="nc">QueryClientProvider</span><span class="p">&gt;</span>
+	<span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nf">Example</span><span class="p">(){</span>
+	<span class="kd">const</span> <span class="p">{</span> <span class="nx">isLoading</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">data</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">useQuery</span><span class="p">(</span><span class="dl">'</span><span class="s1">repoData</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span>
+		<span class="nf">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://api.github.com/repos/tannerlinsley/react-query</span><span class="dl">'</span><span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span>
+			<span class="nx">res</span><span class="p">.</span><span class="nf">json</span><span class="p">()</span>
+		<span class="p">)</span>
+	<span class="p">)</span>
+
+	<span class="k">if </span><span class="p">(</span><span class="nx">isLoading</span><span class="p">)</span> <span class="k">return</span> <span class="dl">'</span><span class="s1">Loading...</span><span class="dl">'</span>
+
+	<span class="k">if </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">return</span> <span class="dl">'</span><span class="s1">An error has occureed: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span>
+
+	<span class="k">return </span><span class="p">(</span>
+		<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+			<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+			<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">data</span><span class="p">.</span><span class="nx">description</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+       <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>👀 <span class="si">{</span><span class="nx">data</span><span class="p">.</span><span class="nx">subscribers_count</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span><span class="si">{</span><span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="si">}</span>
+       <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>✨ <span class="si">{</span><span class="nx">data</span><span class="p">.</span><span class="nx">stargazers_count</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span><span class="si">{</span><span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="si">}</span>
+       <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>🍴 <span class="si">{</span><span class="nx">data</span><span class="p">.</span><span class="nx">forks_count</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
+		<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+	<span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h3 id="react-query와-상태관리">React Query와 상태관리</h3>
+
+<p><strong>세 가지 core 컨셉 살펴보기</strong></p>
+
+<p>공식 문서 Quick Start에서 짚은 3가지의 개념</p>
+
+<ol>
+  <li>Queries</li>
+  <li>Mutations</li>
+  <li>Query Invalidation</li>
+</ol>
+
+<h3 id="queries">Queries</h3>
+
+<p>보통 GET으로 받아올 대부분의 API를 사용</p>
+
+<ul>
+  <li>Queries는 데이터 Fetching용이다.</li>
+  <li>CRUD중 Reading에 사용한다.</li>
+</ul>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">useQuery</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-query</span><span class="dl">'</span>
+
+<span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">const</span> <span class="nx">info</span> <span class="o">=</span> <span class="nf">useQuery</span><span class="p">(</span><span class="dl">'</span><span class="s1">todos</span><span class="dl">'</span><span class="p">,</span> <span class="nx">fetchTodoList</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="cm">/*
+* useQuery() arguments
+* first arg - Query Key
+* second arg - Query Function
+* third arg - Query Option
+*/</span>
+</code></pre></div></div>
+
+<h3 id="query-key">Query Key</h3>
+
+<p>key, value 맵핑 구조를 생각하면 된다.</p>
+
+<ul>
+  <li>React Query는 Query Key에 따라 query caching을 관리한다.</li>
+</ul>
+
+<p><strong>String 형태</strong></p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// A list of todos</span>
+<span class="nf">useQuery</span><span class="p">(</span><span class="dl">'</span><span class="s1">todos</span><span class="dl">'</span><span class="p">,</span> <span class="p">...)</span> <span class="c1">// queryKey === ('todos')</span>
+
+<span class="c1">// Something else, whatever</span>
+<span class="nf">useQuery</span><span class="p">(</span><span class="dl">'</span><span class="s1">somethingSpecial</span><span class="dl">'</span><span class="p">,</span> <span class="p">...)</span> <span class="c1">// queryKey === ('somethingSpecial')</span>
+</code></pre></div></div>
+
+<p><strong>Array 형태 - 실질적으로 pagination이나 각종 옵션을 줄때</strong></p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// An individual todo</span>
+<span class="nf">useQuery</span><span class="p">([</span><span class="dl">'</span><span class="s1">todos</span><span class="dl">'</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">...)</span>
+<span class="c1">// queryKey === ['todos', 5]</span>
+
+<span class="c1">// An individual todo in a "preview" format</span>
+<span class="nf">useQuery</span><span class="p">([</span><span class="dl">'</span><span class="s1">todos</span><span class="dl">'</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">{</span> <span class="na">preview</span><span class="p">:</span> <span class="kc">true</span><span class="p">}],</span> <span class="p">...)</span>
+<span class="c1">//queryKey === ['todos', 5, { preview: true}]</span>
+
+<span class="c1">// A list of todos that are "done"</span>
+<span class="nf">useQuery</span><span class="p">([</span><span class="dl">'</span><span class="s1">todos</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">done</span><span class="dl">'</span> <span class="p">}],</span> <span class="p">...)</span>
+<span class="c1">//queryKey === ['todos', { type: 'done' }]</span>
+</code></pre></div></div>
+
+<h3 id="query-function">Query Function</h3>
+
+<p>Data Fetching, Promise</p>
+
+<ul>
+  <li>Promise를 반환하는 함수 → 데이터를 resolve하거나 error를 throw</li>
+  <li>fetch, axios 등 데이터를 fetching하는 함수가 들어간다.</li>
+</ul>
+
+<h3 id="usequery가-반환하는-return-값">useQuery가 반환하는 return 값</h3>
+
+<ul>
+  <li>data: 마지막으로 성공한 resolved된 데이터 (Response)</li>
+  <li>error: 에러가 발생했을 때 반환되는 객체</li>
+  <li>isFetching: Request가 in-flight(진행중) 중일 때 true</li>
+  <li>status, isLoading, isSuccess, isLoadingError 등등: 모두 현재 query의 상태</li>
+  <li>refetch: 해당 query refetch하는 함수 제공</li>
+  <li>remove: 해당 query cache에서 지우는 함수 제공</li>
+</ul>
+
+<p>등 을 제공한다.</p>
+
+<h3 id="usequery-option">useQuery Option</h3>
+
+<ul>
+  <li>onSuccess, onError, onSettled: query fetching 성공/실패/완료 시 실행할 Side Effect 정의</li>
+  <li>enabled: 자동으로 query를 실행시킬지 말지 여부</li>
+  <li>retry: query 동작 실패 시, 자동으로 retry 할지 결정하는 옵션</li>
+  <li>select: 성공 시 가져온 data를 가공해서 전달</li>
+  <li>keepPreviousData: 새롭게 fetching 시 이전 데이터 유지 여부</li>
+  <li>refetchInterval: 주기적으로 refetch 할지 결정하는 옵션 (폴링 구현할 일이 있을 때)</li>
+</ul>
+
+<p>등</p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=React+Query+%2B+%EC%83%81%ED%83%9C+%2B+%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%5B2%ED%8E%B8%5D%20http%3A%2F%2Flocalhost%3A4000%2Fsyntax%2F2023%2F01%2F13%2FReactQuery-State-StateManagement-02.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html&quote=React+Query+%2B+%EC%83%81%ED%83%9C+%2B+%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%5B2%ED%8E%B8%5D%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html&media=$description=React+Query+%2B+%EC%83%81%ED%83%9C+%2B+%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%5B2%ED%8E%B8%5D%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html&title=React+Query+%2B+%EC%83%81%ED%83%9C+%2B+%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%5B2%ED%8E%B8%5D%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html&title=React+Query+%2B+%EC%83%81%ED%83%9C+%2B+%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%5B2%ED%8E%B8%5D%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=React Query + 상태 + 상태 관리 [2편]%20%7C%20Seobisback Github Blog&body=http://localhost:4000/syntax/2023/01/13/ReactQuery-State-StateManagement-02.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#React">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> React</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#ReactNative">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> ReactNative</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#State">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> State</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#StateManagement">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> StateManagement</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="[Python] - 그래프 탐색 알고리즘 : DFS/BFS" href="/syntax/2023/01/30/Python-dfs-bfs.html">
+            <p>Previous post</p>
+            [Python] - 그래프 탐색 알고리즘 : DFS/BFS
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="React Query + 상태 + 상태 관리 [1편]" href="/syntax/2023/01/13/ReactQuery-State-StateManagement-01.html">
+            <p>Next post</p>
+            React Query + 상태 + 상태 관리 [1편]
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

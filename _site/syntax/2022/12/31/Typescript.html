@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Typescript를 사용하는 이유 | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Typescript를 사용하는 이유" />
+<meta name="author" content="Seobisback" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="개요" />
+<meta property="og:description" content="개요" />
+<link rel="canonical" href="http://localhost:4000/syntax/2022/12/31/Typescript.html" />
+<meta property="og:url" content="http://localhost:4000/syntax/2022/12/31/Typescript.html" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-12-31T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Typescript를 사용하는 이유" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Seobisback"},"dateModified":"2022-12-31T00:00:00+09:00","datePublished":"2022-12-31T00:00:00+09:00","description":"개요","headline":"Typescript를 사용하는 이유","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/syntax/2022/12/31/Typescript.html"},"url":"http://localhost:4000/syntax/2022/12/31/Typescript.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Typescript를 사용하는 이유">
+    <meta name="twitter:description" content="개요  TypeScript는 JavaScript를 기반으로 만들어진 언어이다.  JavaScript가 가지고 있는 여러 문제를 해결하고 보완하기 위해 만들어짐  TypeScript를 사용하면 타입의 안정성에 있어서 Java나 C#과 비슷한 개발 경험을 제공한다.  JavaScrip...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    <meta name="twitter:image:alt" content="Typescript를 사용하는 이유">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Typescript를 사용하는 이유 " aria-label="Typescript를 사용하는 이유" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Typescript%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%EC%9D%B4%EC%9C%A0" class="title">Typescript를 사용하는 이유</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      December 31, 2022
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <h2 id="개요">개요</h2>
+
+<ul>
+  <li>TypeScript는 JavaScript를 기반으로 만들어진 언어이다.</li>
+  <li>JavaScript가 가지고 있는 여러 문제를 해결하고 보완하기 위해 만들어짐</li>
+  <li>TypeScript를 사용하면 타입의 안정성에 있어서 Java나 C#과 비슷한 개발 경험을 제공한다.</li>
+  <li>JavaScript 개발자가 버그나 코드의 안정성 그리고 생산성을 높이고 싶다면 배우기 좋은 언어이다.
+    <ul>
+      <li>JS의 문제점 (TypeScript를 사용하는 이유)
+        <ul>
+          <li>가장 큰 이유로는 자바스크립트가 매우 유연한 언어임이 크다.</li>
+          <li>
+            <p>해당 코드로 예를 들어보자</p>
+
+            <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">javaScriptResult</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="kc">false</span>
+<span class="cm">/*
+  위 코드는 숫자가 담겨있는 배열에 
+Boolean Type의 false를 더하려고 하는 코드이다.
+*/</span>
+      
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">JS Result </span><span class="dl">'</span><span class="p">,</span> <span class="nx">javaScriptResult</span><span class="p">)</span>
+<span class="c1">// JS Result '1,2,3,4false'</span>
+      
+<span class="cm">/*
+  그리고 해당 코드의 결과로는 console.log 의 결과처럼 출력이 된다.
+      
+  [문제점]
+  1. 첫 번째 문제로는 배열이 사라진다. 
+  결과 값이 그냥 String Type이 되어버린다.
+  2. 두 번째 문제로는 Boolean Type의 false는
+  String이 되어버린다. 
+  3. 세 번째 문제로는 결론적으로 JS는 위의 코드를 그대로 허용해버린다.
+  다른 언어에서는 위와 같은 코드를 허용하지 않고 에러를 띄워주는데,
+  JS는 이런 말도 안되는 코드를 허용해서 결과를 만들어 버리는 문제에 있다.
+      
+  즉, Data Type에 대한 강제가 없다.
+  이런 코드를 쓰는 개발자는 없겠지만 이걸 그대로 
+  결과 값으로 치는 것에 문제가 있다.
+*/</span>
+</code></pre></div>            </div>
+
+            <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//이번에는 divide라는 function을 만들어보겠다.</span>
+<span class="kd">function</span> <span class="nf">divide</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+  <span class="k">return</span> <span class="nx">a</span> <span class="o">/</span> <span class="nx">b</span>
+<span class="p">}</span>
+      
+<span class="cm">/*
+  위와 같은 함수를 이상적으로 사용하는 방법은 당연하게도
+  숫자 타입의 데이터를 a와 b에 넣어주는 것이다.
+  즉 입력 값이 숫자일 때만 해당 함수가 실행이 되어야 한다는 것이다.
+        
+  하지만 자바스크립트는 이 함수를 올바르게 사용하도록 강제하지 않는다.
+*/</span>
+      
+<span class="c1">//올바른 함수 사용</span>
+<span class="kd">let</span> <span class="nx">result1</span> <span class="o">=</span> <span class="nf">divide</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">result1</span><span class="dl">'</span><span class="p">,</span> <span class="nx">result1</span><span class="p">);</span>
+<span class="c1">// result1 0.6666666666666666</span>
+      
+<span class="c1">//잘못된 함수 사용</span>
+<span class="kd">let</span> <span class="nx">result2</span> <span class="o">=</span> <span class="nf">divide</span><span class="p">(</span><span class="dl">"</span><span class="s2">xxxxxx</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">result2 </span><span class="dl">'</span><span class="p">,</span> <span class="nx">result2</span><span class="p">);</span>
+<span class="c1">// result2 NaN</span>
+<span class="c1">// 숫자 타입의 인자를 받아야 하는데 문자열을 입력 받고도 에러가 나지 않고,</span>
+<span class="c1">// Not a Number를 출력한다.</span>
+<span class="c1">// 그리고 입력 값이 두 개인데 하나만 보내도 이걸 실행해준다.</span>
+</code></pre></div>            </div>
+          </li>
+          <li>위 코드 예제를 보면 JavaScript는 divide 함수에서 a와 b가 Number Type이어야 하는지, 그리고 함수의 필수 입력 값이 두 개인지 아니면 선택사항인지를 전혀 고려하지 않는다.</li>
+          <li>
+            <p>가장 심각한 Error는 바로 런타임 에러이다.</p>
+
+            <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">objectVar</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">seobisback</span><span class="dl">'</span> <span class="p">}</span>
+      
+<span class="nx">objectVar</span><span class="p">.</span><span class="nf">email</span><span class="p">()</span>
+<span class="cm">/*
+  위와 같은 에러는 그나마 감사하게도 TypeError 메세지를 띄우고,
+  이런 함수는 없다라고 에러를 띄워줄 것이다.
+      
+  하지만 문제는 이런 코드는 컴파일 자체가 되면 안되는데,
+  실행이 되고 난 후 유저가 해당 코드가 포함된 기능을 사용할 때
+  에러가 발생한다는 것이다.
+      
+  다른 언어같으면 이런 식으로 코드를 작성하면 실행조차 되지 않고
+  컴파일을 시도하는 순간에 막힐 것이다.
+*/</span>
+</code></pre></div>            </div>
+          </li>
+          <li>위와 같은 문제 때문에 JS 개발자가 TypeScript로 넘어가는 것이다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>TypeScript를 사용하면 <strong>VS Code IDE</strong>가 좋은 개발 경험을 준다고 한다. (노마드 코더 강의 중) 이유로는 TS와 VS Code는 Microsoft에서 만들었고, 편한 자동완성을 지원하며 위 코드처럼 런타임 에러가 발생할 수 있는 코드에는 해당 코드를 실행하면 유저에게 런타임 에러가 일어난다고 경고도 해준다고 한다.</li>
+</ul>
+
+<p>TypeScript가 도움을 주는 방식</p>
+
+<p>TypeScript로 작성한 코드를 컴파일하면, 자바스크립트 코드가 된다.</p>
+
+<p>여기서 생기는 의문으로는 ‘타입스크립트 코드가 결국 자바스크립트 코드가 되면 어떻게 에러를 핸들링 해준다는 건데?’ 이다.</p>
+
+<ul>
+  <li>TypeScript는 에러가 있으면 JavaScript 코드로 컴파일 되지 않는다.</li>
+  <li>TypeScript는 에러가 발생할 것 같은 코드를 감지하면, 아예 JavaScript로 컴파일 되지 않는다. 이런 기능은 유저가 코드를 실행하는 런타임에 발생하는 것이 아니기 때문에 만약 TypeScript가 성공적으로 컴파일 되어서 JavaScript 코드를 주면 TypeScript 코드가 제대로 작성이 된 것이고, Data의 Type에도 문제가 없다는 뜻이 된다. 즉 유저가 실행하는 JavaScript 코드에는 해당 에러가 존재하지 않는다는 의미가 된다.</li>
+  <li>TypeScript에는 두 가지의 접근 방식이 있다.
+    <ul>
+      <li>Java처럼 데이터와 <strong>변수의 타입을 명시적으로 정의</strong>할 수 있고,</li>
+      <li>JavaScript처럼 변수만 <strong>생성하고 타입을 명시하지 않을 수도 있다.</strong>
+        <ul>
+          <li>위와 같이 타입을 명시하지 않을 경우 TypeScript가 해당 <strong>변수의 타입을 추론해준다는 것</strong>이다.</li>
+          <li>
+            <p>Type Checker 가 Type을 확인하는 방식</p>
+
+            <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 타입을 명시하지 않는 방식</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">;</span>
+<span class="cm">/*
+  이렇게 코드를 작성하는 것만으로 Typescript는 a의 타입을 추론해준다.
+  a에 담긴 데이터를 보고는 a는 string type 이어야 한다 라는 것을
+  Typescript가 추론하는 것이다.
+*/</span>
+      
+<span class="c1">// 타입을 명시하는 방식</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="p">:</span> <span class="nx">boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="cm">/*
+  이렇게 코드를 작성하면 Typescript는 b의 타입을 추론할 필요 없이
+  개발자가 해당 변수의 타입을 명시하고 생성하였기 때문에 다른 타입으로
+  변수의 값을 수정하려고 할 경우 에러를 발생시켜준다.
+*/</span>
+</code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>많은 타입을 재사용할 수 있게 만들 경우 Alias 타입을 생성하면 된다.</li>
+</ul>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Alias(별칭) 타입을 생성한 경우</span>
+<span class="cm">/*
+	Alias 타입을 생성할 경우
+
+	타입 명은 대문자로 시작한다. - Pascal case
+*/</span> 
+<span class="nx">type</span> <span class="nx">Player</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+	<span class="nx">age</span><span class="p">?</span> <span class="p">:</span> <span class="nx">number</span> <span class="c1">// 선택적 입력 가능</span>
+<span class="p">}</span>
+
+<span class="kd">const</span> <span class="nx">playerOne</span> <span class="p">:</span> <span class="nx">Player</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">PlayerOne</span><span class="dl">'</span>
+<span class="p">}</span>
+
+<span class="kd">const</span> <span class="nx">playerTwo</span> <span class="p">:</span> <span class="nx">Player</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">PlayerTwo</span><span class="dl">'</span><span class="p">,</span>
+	<span class="na">age</span><span class="p">:</span> <span class="mi">20</span>
+<span class="p">}</span>
+
+<span class="c1">// Alias(별칭) 타입을 생성하지 않고 타입을 명시할 경우</span>
+<span class="kd">const</span> <span class="nx">playerThree</span> <span class="p">:</span> <span class="p">{</span>
+	<span class="nl">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+	<span class="nx">age</span><span class="p">?</span> <span class="p">:</span> <span class="nx">number</span>
+<span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">PlayerThree</span><span class="dl">'</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>함수가 return 하는 값의 타입을 설정하는 방법</li>
+</ul>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">Player</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+	<span class="nx">age</span><span class="p">?:</span> <span class="nx">number</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nf">playerMaker</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">:</span> <span class="nx">Player</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="p">{</span>
+		<span class="nx">name</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Arrow Function을 사용할 경우</span>
+<span class="kd">const</span> <span class="nx">playerMaker</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">:</span> <span class="nx">Player</span> <span class="o">=&gt;</span> 
+
+<span class="kd">const</span> <span class="nx">playerOne</span> <span class="o">=</span> <span class="nf">playerMaker</span><span class="p">(</span><span class="dl">'</span><span class="s1">PlayerOne</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">playerOne</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="readonly">ReadOnly</h2>
+
+<p>TypeScript에는 readonly를 설정하는 기능이 있다.</p>
+
+<p>말 그대로 readonly 설정된 변수 등에 write 기능을 허용하지 않는 것이다.</p>
+
+<p>readonly가 설정된 것은 immutability(불변성)을 갖게 된다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// use reedonly</span>
+<span class="kd">const</span> <span class="nx">numbers</span><span class="p">:</span> <span class="nx">readonly</span> <span class="nx">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">];</span>
+
+<span class="nx">numbers</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//Error </span>
+
+<span class="c1">// can write</span>
+<span class="kd">const</span> <span class="nx">numbers</span><span class="p">:</span> <span class="nx">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">];</span>
+
+<span class="nx">numbers</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// work</span>
+</code></pre></div></div>
+
+<h2 id="tuple">Tuple</h2>
+
+<p>Tuple은 Array를 생성할 수 있게 하는데 있어서 최소한의 길이를 가져야 하고,</p>
+
+<p>특정 위치에 특정 타입이 존재해야 한다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">player</span><span class="p">:</span> <span class="p">[</span><span class="nx">string</span><span class="p">,</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">boolean</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">seobisback</span><span class="dl">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">true</span><span class="p">];</span>
+
+<span class="nx">player</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">// Error </span>
+</code></pre></div></div>
+
+<h2 id="any">any</h2>
+
+<p>Typescript 에서는 여러가지 타입이 존재하는데 그것은 Javascript 타입이 많다</p>
+
+<p>하지만 Typescript에서만 사용할 수 있는 타입이 있고 그것은 ‘any’ 이다.</p>
+
+<p>any는 Typescript의 보호장치에서 벗어날 수 있게 해준다.</p>
+
+<p><strong>가장 좋은 것은 any를 사용하지 않는 것이다.</strong> (<del>당연하게도 Typescript의 보호 장치를 사용하고 바보같은 실수를 하지 않기 위해서 Typescript를 사용하기 때문</del>)</p>
+
+<p>하지만 Typescript에는 ‘any’가 존재하고 그렇기 때문에 공부할 필요는 있다.</p>
+
+<p>‘any’를 사용하면 말 그대로 모든 타입을 허용하는 것이다.</p>
+
+<p><strong>코드를 보자</strong></p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// if use 'any'</span>
+<span class="kd">const</span> <span class="nx">a</span> <span class="p">:</span> <span class="nx">any</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="kd">const</span> <span class="nx">b</span> <span class="p">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="kc">true</span>
+
+<span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="c1">// 원래라면 에러를 던져야 하는 Typescript지만 이 코드를 허용해버린다.</span>
+
+<span class="c1">// 현재 코드에서 'any'를 지우면 Typescript는 바로 에러를 던진다.</span>
+</code></pre></div></div>
+
+<h2 id="unknown">unknown</h2>
+
+<p>Typescript에만 존재하는 타입이다.</p>
+
+<p>만약 API에게 응답 데이터를 받는데 해당 데이터의 타입을 알 수 없을 경우</p>
+
+<p>‘unknown’이라는 타입을 사용한다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span><span class="p">:</span> <span class="nx">unknown</span><span class="p">;</span>
+
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">//Error</span>
+
+<span class="c1">// typescript에서 unknown을 사용하려면 type을 check해야한다.</span>
+
+<span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">a</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">){</span>
+	<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 허용</span>
+<span class="p">}</span>
+<span class="c1">// 위와 같이 타입을 체크 후 사용할 경우 typescript는 이를 허용한다.</span>
+<span class="c1">// 왜냐하면 해당 범위 안에서의 a는 number이기 때문이다.</span>
+
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nf">toUpperCase</span><span class="p">()</span> <span class="c1">// Error</span>
+
+<span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">a</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">){</span>
+	<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nf">toUpperCase</span><span class="p">()</span> <span class="c1">// 허용</span>
+<span class="p">}</span>
+<span class="c1">// 위와 같이 타입을 체크 후 사용할 경우 typescript는 이를 허용한다.</span>
+<span class="c1">// 왜냐하면 해당 범위 안에서의 a는 stringr이기 때문이다.</span>
+</code></pre></div></div>
+
+<p>위와 같이 변수의 타입을 미리 알 수 없을 경우 ‘unknown’을 사용한다.</p>
+
+<h2 id="void">void</h2>
+
+<p>Typescript에만 존재하는 타입이다.</p>
+
+<p>void는 아무것도 return하지 않는 함수를 대상으로 사용한다.</p>
+
+<p>보통은 void를 따로 지정해줄 필요가 없다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*region Same Code*/</span>
+<span class="kd">function</span> <span class="nf">hello</span><span class="p">(){</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">say hello</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nf">hello</span><span class="p">():</span> <span class="k">void</span><span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">say hello</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="cm">/*endregion Same Code*/</span>
+
+<span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="nf">hello</span><span class="p">();</span>
+<span class="nx">a</span><span class="p">.</span><span class="nf">toUpperCase</span><span class="p">();</span> <span class="c1">// Error</span>
+</code></pre></div></div>
+
+<h2 id="never">never</h2>
+
+<p>Typescript에만 존재하는 타입이다.</p>
+
+<p>‘never’ 는 함수가 절대 return하지 않을 때 발생한다.</p>
+
+<p>예를 들자면 함수에서 exception(예외)이 발생할 때 등이 있다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 에러가 발생하는 함수</span>
+<span class="kd">function</span> <span class="nf">hello</span><span class="p">():</span><span class="nx">never</span><span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 정상적으로 동작하는 함수</span>
+<span class="kd">function</span> <span class="nf">hello</span><span class="p">():</span><span class="nx">never</span><span class="p">{</span>
+	<span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">xxx</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">// 이 함수는 return 하지 않고 오류를 발생시키는 함수이다.</span>
+<span class="c1">// 위와 같은 상황일 때, never를 사용한다.</span>
+
+<span class="kd">function</span> <span class="nf">hello</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="o">|</span><span class="nx">number</span><span class="p">){</span>
+	<span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">name</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">){</span>
+		<span class="nx">name</span> <span class="c1">// (parameter) name: string</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">name</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">){</span>
+		<span class="nx">name</span> <span class="c1">// (parameter) name: number</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="c1">// 이 코드는 절대 실행되지 않아야 한다라는 뜻</span>
+		<span class="nx">name</span> <span class="c1">// (parameter) name: never</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/syntax/2022/12/31/Typescript.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Typescript%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%EC%9D%B4%EC%9C%A0%20http%3A%2F%2Flocalhost%3A4000%2Fsyntax%2F2022%2F12%2F31%2FTypescript.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/syntax/2022/12/31/Typescript.html&quote=Typescript%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%EC%9D%B4%EC%9C%A0%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/syntax/2022/12/31/Typescript.html&media=$description=%EA%B0%9C%EC%9A%94%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/syntax/2022/12/31/Typescript.html&title=Typescript%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%EC%9D%B4%EC%9C%A0%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/syntax/2022/12/31/Typescript.html&title=Typescript%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%EC%9D%B4%EC%9C%A0%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/syntax/2022/12/31/Typescript.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Typescript를 사용하는 이유%20%7C%20Seobisback Github Blog&body=http://localhost:4000/syntax/2022/12/31/Typescript.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#Javascript">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Javascript</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Typescript">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Typescript</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="[Python] - 리스트 자료형" href="/syntax/2023/01/08/Python-data-type-list.html">
+            <p>Previous post</p>
+            [Python] - 리스트 자료형
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="ReactHook_useRef" href="/syntax/2022/12/27/React-useRef.html">
+            <p>Next post</p>
+            ReactHook_useRef
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

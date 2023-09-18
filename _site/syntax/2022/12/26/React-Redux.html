@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>상태 관리 라이브러리 Redux VS MobX | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="상태 관리 라이브러리 Redux VS MobX" />
+<meta name="author" content="Seobisback" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="회사에서 React로 프로젝트를 진행하게 되어, 상태관리 라이브러리에 관해서 조사를 하게 되었다. 개인적으로 토이 프로젝트를 진행하며 Redux를 사용하여 state를 관리하였고, React 생태계에서 Redux 사용량이 현재도 압도적이기 때문에 Redux를 사용하는게 가장 안전하지 않을까 라고 생각하였지만 회사 선배가 MobX도 현재 많은 기업에서 사용중이고, 조사를 해보니 MobX가 Redux와는 또 다른 매력이 있기 때문에 좀 더 조사를 진행해보았고, 나와 같은 고민을 하는 분이 계실거라 생각하여 그 고민에 도움을 드리면 좋겠다라고 생각이 들어 정리해둔 글을 포스팅 해봅니다." />
+<meta property="og:description" content="회사에서 React로 프로젝트를 진행하게 되어, 상태관리 라이브러리에 관해서 조사를 하게 되었다. 개인적으로 토이 프로젝트를 진행하며 Redux를 사용하여 state를 관리하였고, React 생태계에서 Redux 사용량이 현재도 압도적이기 때문에 Redux를 사용하는게 가장 안전하지 않을까 라고 생각하였지만 회사 선배가 MobX도 현재 많은 기업에서 사용중이고, 조사를 해보니 MobX가 Redux와는 또 다른 매력이 있기 때문에 좀 더 조사를 진행해보았고, 나와 같은 고민을 하는 분이 계실거라 생각하여 그 고민에 도움을 드리면 좋겠다라고 생각이 들어 정리해둔 글을 포스팅 해봅니다." />
+<link rel="canonical" href="http://localhost:4000/syntax/2022/12/26/React-Redux.html" />
+<meta property="og:url" content="http://localhost:4000/syntax/2022/12/26/React-Redux.html" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-12-26T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="상태 관리 라이브러리 Redux VS MobX" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Seobisback"},"dateModified":"2022-12-26T00:00:00+09:00","datePublished":"2022-12-26T00:00:00+09:00","description":"회사에서 React로 프로젝트를 진행하게 되어, 상태관리 라이브러리에 관해서 조사를 하게 되었다. 개인적으로 토이 프로젝트를 진행하며 Redux를 사용하여 state를 관리하였고, React 생태계에서 Redux 사용량이 현재도 압도적이기 때문에 Redux를 사용하는게 가장 안전하지 않을까 라고 생각하였지만 회사 선배가 MobX도 현재 많은 기업에서 사용중이고, 조사를 해보니 MobX가 Redux와는 또 다른 매력이 있기 때문에 좀 더 조사를 진행해보았고, 나와 같은 고민을 하는 분이 계실거라 생각하여 그 고민에 도움을 드리면 좋겠다라고 생각이 들어 정리해둔 글을 포스팅 해봅니다.","headline":"상태 관리 라이브러리 Redux VS MobX","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/syntax/2022/12/26/React-Redux.html"},"url":"http://localhost:4000/syntax/2022/12/26/React-Redux.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="상태 관리 라이브러리 Redux VS MobX">
+    <meta name="twitter:description" content="회사에서 React로 프로젝트를 진행하게 되어, 상태관리 라이브러리에 관해서 조사를 하게 되었다.개인적으로 토이 프로젝트를 진행하며 Redux를 사용하여 state를 관리하였고,React 생태계에서 Redux 사용량이 현재도 압도적이기 때문에 Redux를 사용하는게 가장 안전하지 ...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    <meta name="twitter:image:alt" content="상태 관리 라이브러리 Redux VS MobX">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="상태 관리 라이브러리 Redux VS MobX " aria-label="상태 관리 라이브러리 Redux VS MobX" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+Redux+VS+MobX" class="title">상태 관리 라이브러리 Redux VS MobX</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      December 26, 2022
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p>회사에서 <strong>React</strong>로 프로젝트를 진행하게 되어, 상태관리 라이브러리에 관해서 조사를 하게 되었다.
+개인적으로 토이 프로젝트를 진행하며 <strong>Redux</strong>를 사용하여 state를 관리하였고,
+React 생태계에서 Redux 사용량이 현재도 압도적이기 때문에 Redux를 사용하는게 가장 안전하지 않을까 라고 생각하였지만 회사 선배가 MobX도 현재 많은 기업에서 사용중이고, 조사를 해보니 MobX가 Redux와는 또 다른 매력이 있기 때문에 좀 더 조사를 진행해보았고, 나와 같은 고민을 하는 분이 계실거라 생각하여 그 고민에 도움을 드리면 좋겠다라고 생각이 들어 정리해둔 글을 포스팅 해봅니다.</p>
+
+<h1 id="redux-vs-mobx"><strong>Redux VS Mobx</strong></h1>
+
+<p>상태관리 라이브러리</p>
+
+<ul>
+  <li>Redux</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022-12-26-React-Redux/reactredux1.png" alt="reactredux1" /></p>
+
+<p>일단 기억해야 하는 존재는 <strong>컴포넌트</strong>, 더해주라는 <strong>Action</strong>, <strong>Reducer</strong>, 그리고 <strong>Store</strong> 정도다. 위 그림의 흐름을 정리해보자.</p>
+
+<ul>
+  <li><strong>컴포넌트</strong>에서 전역 <strong>Store</strong>에 관리되고 있는 상태 <code class="language-plaintext highlighter-rouge">num</code> 에 1을 더하고자 한다.</li>
+  <li><strong>컴포넌트</strong>에서 상태에 직접 접근할 수 없고, <strong>Store에서 제공하는 방법</strong>을 사용해야 한다. 여기서 <strong>Reducer</strong>를 이용한다. Reducer는 어떤 Action을 원하는지 확인하고 그에 따라 상태를 업데이트해주는 함수다.</li>
+  <li>이 <strong>Reducer</strong>에 <strong>Action</strong>으로 { type: ‘ADD’ } 를 보내주면 <code class="language-plaintext highlighter-rouge">num</code> 에 1을 더해주는걸로 미리 약속을 해둔 상태다.</li>
+  <li><strong>컴포넌트</strong>는 <strong>Reducer</strong>에 <strong>Action</strong> { type: ‘ADD’ }를 발송(dispatch)한다.</li>
+  <li><strong>Reducer</strong>는 이 요청을 받고 내부에 있는 상태, <code class="language-plaintext highlighter-rouge">num</code> 에다가 1을 더해준다. 즉, <strong>상태를 업데이트</strong>한다.</li>
+  <li>상태가 업데이트된 후 이를 참조하고 있는 컴포넌트들에게 <code class="language-plaintext highlighter-rouge">num</code> 이 업데이트되었으니 <strong>리랜더링을 해야 한다고 알린다</strong>.</li>
+</ul>
+
+<p><strong>이 구조가 저기 위에서 얘기했던 데이터의 흐름을 한 방향으로, 한 지점을 지나도록 하는 전역 상태 관리 라이브러리의 구조</strong>라고 생각할 수 있다.</p>
+
+<p>일단 데이터 변경부터 리랜더링까지 한 방향으로 진행이 되고 있다. 또한, 상태에 직접 접근해 변경하는 것은 불가능하므로, 반드시 Store의 Reducer를 거쳐야 한다. 공통적으로 한 지점을 지나가도록 만들어졌고, 업데이트 로직도 분리되어있음을 알 수 있다.</p>
+
+<ul>
+  <li>Mobx - 글로벌 상태 관리 툴
+    <ul>
+      <li>장점
+        <ul>
+          <li>OOP(객체지향적)코드를 작성할 수 있다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Redux와 Mobx의 차이점</p>
+
+<ul>
+  <li>Redux는 상태를 변경하기 위해 reducer, action 등 코드를 작성해주어야 하고, 프로젝트의 규모가 커짐에 따라 이러한 코드들이 꼬이고 복잡해져 점점 스파게티 코드가 되어간다.</li>
+  <li>Redux는 함수형 프로그래밍에 영향을 받은 라이브러리이다. MobX는 OOP권장하는 라이브러리이다. OOP에 익숙한 개발자들이 쉽게 접근하고 사용할 수 있다.</li>
+  <li>Redux는 Store의 상태를 Immutable(불변)하게 변경하기 때문에 항상 새로운 상태를 반환해주어야함 (Read Only), MobX는 Mutable(변경)하게 변경이 가능함</li>
+  <li>
+    <p>Redux는 구조상 Store와 Component의 연결을 위해 번잡한 코드들을 계속 작성하여야 한다.(reducer, store) MobX는 이러한 코드를 데코레이터를 사용하여 깔끔하게 작성할 수 있다.</p>
+  </li>
+  <li>React MobX tutorial 및 이해</li>
+</ul>
+
+<p><a href="https://www.youtube.com/watch?v=tjHljJRooHU"><img src="https://img.youtube.com/vi/tjHljJRooHU/0.jpg" alt="IMAGE ALT TEXT HERE" /></a></p>
+
+<ul>
+  <li>FileName : MovieStore.js</li>
+</ul>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">action</span><span class="p">,</span> <span class="nx">makeObservable</span><span class="p">,</span> <span class="nx">observable</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">mobx</span><span class="dl">'</span><span class="p">;</span>
+<span class="cm">/*
+action(Function-함수) : action 안에서 observable 값을 변경할 때 사용함
+makeObservable(Function-함수) : makeObservable 안에서 변수를 observable로 변경해 줄 수 있다.
+observable(Variable-변수) : observable이 된 변수가 변경이되면, 
+자동으로 이 observable을 보고 있는 Component들이 observable을 따라서 반응 후 Refresh 된다.
+*/</span>
+
+<span class="kd">class</span> <span class="nc">Movie</span> <span class="p">{</span>
+	<span class="nx">id</span><span class="p">;</span>
+	<span class="nx">title</span><span class="p">;</span>
+	<span class="nx">rate</span><span class="p">;</span>
+
+	<span class="nf">constructor</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">title</span><span class="p">,</span> <span class="nx">rate</span><span class="p">){</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="nx">title</span><span class="p">;</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">rate</span> <span class="o">=</span> <span class="nx">rate</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">MovieStore</span><span class="p">{</span> <span class="c1">// Movie의 repository 역할</span>
+	<span class="nx">rootStore</span><span class="p">;</span>
+	<span class="cm">/*
+		해당 스토어외에 다른 스토어가 있을 경우 rootStore로 관리해주면 편하기 때문에
+		미리 선언해둠
+	*/</span>
+
+	<span class="nx">movies</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// makeObservable 함수 안에서 observable로 변경된 'movies' 변수는 변경되면</span>
+	<span class="c1">//MovieStore를 listening 중인 모든 component가 변경이 된다.</span>
+	<span class="c1">// 만약 Typescript를 사용중이며 decorature 지원을 활성화 하였으면 makeObservable을 사용하는 것이 아닌</span>
+	<span class="c1">//</span>
+	<span class="c1">// @observable</span>
+	<span class="c1">// movies = [];</span>
+	<span class="c1">// 형태로 간소화하여 사용할 수 있다.</span>
+
+	<span class="nf">constructor</span><span class="p">(</span><span class="nx">root</span><span class="p">){</span>
+		<span class="nf">makeObservable</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">{</span>
+			<span class="c1">//해당 class(MovieStore)를 listening 중인 모든 component가 변경되게 할 수 있다.</span>
+			<span class="na">movies</span><span class="p">:</span> <span class="nx">observable</span><span class="p">,</span> <span class="c1">// movies가 observable 변수로 변경이된다.</span>
+	<span class="p">})</span>		
+
+		<span class="k">this</span><span class="p">.</span><span class="nx">rootStore</span> <span class="o">=</span> <span class="nx">root</span><span class="p">;</span>
+
+		<span class="k">this</span><span class="p">.</span><span class="nx">movies</span> <span class="o">=</span> <span class="p">[</span>
+			<span class="k">new</span> <span class="nc">Movie</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="dl">"</span><span class="s2">LOTR</span><span class="dl">"</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+			<span class="k">new</span> <span class="nc">Movie</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Harry Potter</span><span class="dl">"</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+			<span class="k">new</span> <span class="nc">Movie</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="dl">"</span><span class="s2">창궐</span><span class="dl">"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+		<span class="p">]</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>FileName : RootStore.js</li>
+</ul>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">MovieStore</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./MovieStore</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// RootStore에서 가지고 있는 모든 Store들을 Access 가능하게 한다.</span>
+<span class="c1">// 만약 Store를 하나 더 만들려면 class 내부에 넣고, constructor 안에 선언하여 주면 된다.</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">RootStore</span><span class="p">{</span>
+	<span class="nx">movieStore</span><span class="p">;</span>
+
+	<span class="nf">constructor</span><span class="p">(){</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">movieStore</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MovieSotre</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>FileName : Context.js</li>
+</ul>
+
+<p><strong>1. MobX 의 주요 개념들에 대해서 살펴보자.</strong></p>
+
+<p>1) Observable State</p>
+
+<ul>
+  <li>관찰 받고 있는 상태라는 뜻인데, 개발을 하다보면 상태는 항상 변할 수 있기 때문에 이 상태가 바뀐다면 MobX에서는 이를 캐치해낼 수 있습니다. 원시값들(string, number, boolean등등), 객체, 배열안에 객체 던 어떤 값들이 바뀌던지 MobX는 상태의 변화를 캐치할 수 있습니다.</li>
+</ul>
+
+<p>2) Computed Value</p>
+
+<ul>
+  <li>연산된 값이라는 뜻인데, 주로 성능 최적화를 위해서 많이 사용하긴 합니다. 연산에 기반 되는 값(상태값)이 변화할때만 새로 연산하고 바뀌지 않는다면 그냥 기존 값을 사용할 수 있도록 해줍니다.</li>
+</ul>
+
+<p>3) Reactions</p>
+
+<ul>
+  <li>값이 바뀔때에 따라 해야 할 일을 정의하는 것 , 예를들어 1)의 Observable State가 바뀌었을때 이 리액션을 통해 어떤 로직을 실행시키는 것이죠.</li>
+</ul>
+
+<p>4) Actions</p>
+
+<ul>
+  <li>상태에 변화를 일으키는 것, 1)의 Observable State를 변화 시키는 코드를 호출하면 액션</li>
+</ul>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/syntax/2022/12/26/React-Redux.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+Redux+VS+MobX%20http%3A%2F%2Flocalhost%3A4000%2Fsyntax%2F2022%2F12%2F26%2FReact-Redux.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/syntax/2022/12/26/React-Redux.html&quote=%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+Redux+VS+MobX%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/syntax/2022/12/26/React-Redux.html&media=$description=%ED%9A%8C%EC%82%AC%EC%97%90%EC%84%9C+React%EB%A1%9C+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A5%BC+%EC%A7%84%ED%96%89%ED%95%98%EA%B2%8C+%EB%90%98%EC%96%B4%2C+%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%EC%97%90+%EA%B4%80%ED%95%B4%EC%84%9C+%EC%A1%B0%EC%82%AC%EB%A5%BC+%ED%95%98%EA%B2%8C+%EB%90%98%EC%97%88%EB%8B%A4.%0A%EA%B0%9C%EC%9D%B8%EC%A0%81%EC%9C%BC%EB%A1%9C+%ED%86%A0%EC%9D%B4+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A5%BC+%EC%A7%84%ED%96%89%ED%95%98%EB%A9%B0+Redux%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+state%EB%A5%BC+%EA%B4%80%EB%A6%AC%ED%95%98%EC%98%80%EA%B3%A0%2C%0AReact+%EC%83%9D%ED%83%9C%EA%B3%84%EC%97%90%EC%84%9C+Redux+%EC%82%AC%EC%9A%A9%EB%9F%89%EC%9D%B4+%ED%98%84%EC%9E%AC%EB%8F%84+%EC%95%95%EB%8F%84%EC%A0%81%EC%9D%B4%EA%B8%B0+%EB%95%8C%EB%AC%B8%EC%97%90+Redux%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94%EA%B2%8C+%EA%B0%80%EC%9E%A5+%EC%95%88%EC%A0%84%ED%95%98%EC%A7%80+%EC%95%8A%EC%9D%84%EA%B9%8C+%EB%9D%BC%EA%B3%A0+%EC%83%9D%EA%B0%81%ED%95%98%EC%98%80%EC%A7%80%EB%A7%8C+%ED%9A%8C%EC%82%AC+%EC%84%A0%EB%B0%B0%EA%B0%80+MobX%EB%8F%84+%ED%98%84%EC%9E%AC+%EB%A7%8E%EC%9D%80+%EA%B8%B0%EC%97%85%EC%97%90%EC%84%9C+%EC%82%AC%EC%9A%A9%EC%A4%91%EC%9D%B4%EA%B3%A0%2C+%EC%A1%B0%EC%82%AC%EB%A5%BC+%ED%95%B4%EB%B3%B4%EB%8B%88+MobX%EA%B0%80+Redux%EC%99%80%EB%8A%94+%EB%98%90+%EB%8B%A4%EB%A5%B8+%EB%A7%A4%EB%A0%A5%EC%9D%B4+%EC%9E%88%EA%B8%B0+%EB%95%8C%EB%AC%B8%EC%97%90+%EC%A2%80+%EB%8D%94+%EC%A1%B0%EC%82%AC%EB%A5%BC+%EC%A7%84%ED%96%89%ED%95%B4%EB%B3%B4%EC%95%98%EA%B3%A0%2C+%EB%82%98%EC%99%80+%EA%B0%99%EC%9D%80+%EA%B3%A0%EB%AF%BC%EC%9D%84+%ED%95%98%EB%8A%94+%EB%B6%84%EC%9D%B4+%EA%B3%84%EC%8B%A4%EA%B1%B0%EB%9D%BC+%EC%83%9D%EA%B0%81%ED%95%98%EC%97%AC+%EA%B7%B8+%EA%B3%A0%EB%AF%BC%EC%97%90+%EB%8F%84%EC%9B%80%EC%9D%84+%EB%93%9C%EB%A6%AC%EB%A9%B4+%EC%A2%8B%EA%B2%A0%EB%8B%A4%EB%9D%BC%EA%B3%A0+%EC%83%9D%EA%B0%81%EC%9D%B4+%EB%93%A4%EC%96%B4+%EC%A0%95%EB%A6%AC%ED%95%B4%EB%91%94+%EA%B8%80%EC%9D%84+%ED%8F%AC%EC%8A%A4%ED%8C%85+%ED%95%B4%EB%B4%85%EB%8B%88%EB%8B%A4.%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/syntax/2022/12/26/React-Redux.html&title=%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+Redux+VS+MobX%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/syntax/2022/12/26/React-Redux.html&title=%EC%83%81%ED%83%9C+%EA%B4%80%EB%A6%AC+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+Redux+VS+MobX%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/syntax/2022/12/26/React-Redux.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=상태 관리 라이브러리 Redux VS MobX%20%7C%20Seobisback Github Blog&body=http://localhost:4000/syntax/2022/12/26/React-Redux.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#MobX">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> MobX</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#React">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> React</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Redux">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Redux</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#StateManagement">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> StateManagement</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Javascript Types" href="/syntax/2022/12/27/Javascript-type.html">
+            <p>Previous post</p>
+            Javascript Types
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="React Navigation" href="/syntax/2022/12/26/React-Navigation.html">
+            <p>Next post</p>
+            React Navigation
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

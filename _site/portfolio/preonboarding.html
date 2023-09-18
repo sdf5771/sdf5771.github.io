@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/portfolio/onboarding01.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’ | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tech Blog" />
+<meta property="og:description" content="Tech Blog" />
+<link rel="canonical" href="http://localhost:4000/portfolio/preonboarding" />
+<meta property="og:url" content="http://localhost:4000/portfolio/preonboarding" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-01-01T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-01-01T00:00:00+09:00","datePublished":"2023-01-01T00:00:00+09:00","description":"Tech Blog","headline":"프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/portfolio/preonboarding"},"url":"http://localhost:4000/portfolio/preonboarding"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’">
+    <meta name="twitter:description" content="  Wanted 프리온보딩 프론트엔드 챌린지 1월 Thumbnail Image개요      출처 - https://www.wanted.co.kr/events/pre_challenge_fe_5            Wanted - 프리온보딩 프론트엔드 챌린지 1월            ...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/portfolio/onboarding01.png">
+    <meta name="twitter:image:alt" content="프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’ " aria-label="프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9+%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C+%EC%B1%8C%EB%A6%B0%EC%A7%80+1%EC%9B%94+-+CRUD+w+React+Query%E2%80%99" class="title">프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      January 01, 2023
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p><img src="/assets/img/portfolio/onboarding01.png" alt="스크린샷 2022-12-31 오후 12.46.06.png" /></p>
+
+<ul>
+  <li>Wanted 프리온보딩 프론트엔드 챌린지 1월 Thumbnail Image</li>
+</ul>
+
+<h1 id="개요">개요</h1>
+
+<ul>
+  <li>
+    <p>출처 - https://www.wanted.co.kr/events/pre_challenge_fe_5</p>
+
+    <p><img src="/assets/img/portfolio/onboarding02.png" alt="스크린샷 2022-12-31 오후 12.50.56.png" /></p>
+  </li>
+  <li>
+    <p>Wanted - 프리온보딩 프론트엔드 챌린지 1월</p>
+    <ul>
+      <li>
+        <p><strong>12.22 (목) - 1.5 (목) (진행중)</strong></p>
+
+        <p>참가 신청 및 사전 미션 수행 (사전미션 섹션 링크 참조)</p>
+      </li>
+      <li>
+        <p><strong>1.9 (월) - 1.20 (금)</strong></p>
+
+        <p>기술 역량 향상 (2주) - 강의 : 화요일 &amp; 금요일, 저녁 8시 (총 12시간, 온라인)</p>
+      </li>
+      <li>
+        <p><strong>1.23 (월) - 2.19 (일)</strong></p>
+
+        <p>취업 챌린지 진행 (4주) - 이력서 지원부터 ~ 합격까지 (개별 취업 활동)</p>
+      </li>
+      <li>
+        <p><strong>2.20 (월) - 3월 중</strong></p>
+
+        <p>챌린지 종료 및 시상</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="사전-과제">사전 과제</h2>
+
+<ul>
+  <li>기간 <strong>12.22 (목) - 1.5 (목) (진행중)</strong></li>
+  <li>
+    <p>과제 명세 Link</p>
+
+    <p>https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api</p>
+  </li>
+  <li>진행중인 과제 Git Repo
+    <ul>
+      <li>Client - https://github.com/sdf5771/wanted-pre-onboarding-challenge-fe-1.git</li>
+      <li>API SERVER - https://github.com/sdf5771/wanted-pre-onboarding-challenge-fe-1-api.git</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h1 id="명세-본문-내용">명세 본문 내용</h1>
+
+<h1 id="-원티드-프리온보딩-챌린지-프론트엔드-코스-사전과제-안내--api">:: 원티드 프리온보딩 챌린지 프론트엔드 코스 사전과제 안내 &amp; API</h1>
+
+<h1 id="1-1-사전과제-진행-가이드">1-1) 사전과제 진행 가이드</h1>
+
+<ul>
+  <li>제공해드리는 API Repository를 활용하여 가이드에 따라 <code class="language-plaintext highlighter-rouge">Todo App</code>을 작성, 본인의 github에 <code class="language-plaintext highlighter-rouge">Public</code>으로 올려주세요. (주의: Public이 아닐 경우 과제를 확인할 수 없습니다)</li>
+  <li>완성한 과제는 모집 마감 후 설문 조사를 통해 제출해주세요. (개강 시 설문 조사 링크 전달 예정)</li>
+  <li>제출 레파지토리 명은 <code class="language-plaintext highlighter-rouge">wanted-pre-onboarding-challenge-fe-1</code>로 생성해 주세요.</li>
+  <li>과제 수행 개수에 따라 기본적인 평가가 이루어지며, 커리큘럼 운영 과정에서 최소한의 수준을 파악하기 위한 용도입니다.</li>
+  <li>코드의 일관성, 가독성, 함수 분리, 컴포넌트 설계, 코드 퀄리티 등을 기준으로 세부적인 평가가 이루어집니다.</li>
+  <li>해당 과제에 대한 해설은 개강 후 진행될 예정입니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">README.md</code>를 꼭 작성해 주세요. 본인에 대한 소개나 프로젝트 소개 등 자유롭게 작성해주시면 됩니다.</li>
+  <li>반드시 함수 컴포넌트로 개발해주세요. (React Hooks)</li>
+</ul>
+
+<p>* 문의 사항은 사전 과제 Repository의 Issue로 등록해 주세요.</p>
+
+<h1 id="1-2-클라이언트-구현-과제-안내">1-2) 클라이언트 구현 과제 안내</h1>
+
+<h2 id="assignment-1---login--signup">Assignment 1 - Login / SignUp</h2>
+
+<ul>
+  <li>/auth 경로에 로그인 / 회원가입 기능을 개발합니다
+    <ul class="task-list">
+      <li>로그인, 회원가입을 별도의 경로로 분리해도 무방합니다</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />최소한 이메일, 비밀번호 input, 제출 button을 갖도록 구성해주세요</li>
+    </ul>
+  </li>
+  <li>이메일과 비밀번호의 유효성을 확인합니다
+    <ul class="task-list">
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />이메일 조건 : 최소 <code class="language-plaintext highlighter-rouge">@</code>, <code class="language-plaintext highlighter-rouge">.</code> 포함</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />비밀번호 조건 : 8자 이상 입력</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />이메일과 비밀번호가 모두 입력되어 있고, 조건을 만족해야 제출 버튼이 활성화 되도록 해주세요</li>
+    </ul>
+  </li>
+  <li>로그인 API를 호출하고, 올바른 응답을 받았을 때 루트 경로로 이동시켜주세요
+    <ul class="task-list">
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />응답으로 받은 토큰은 로컬 스토리지에 저장해주세요</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />다음 번에 로그인 시 토큰이 존재한다면 루트 경로로 리다이렉트 시켜주세요</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />어떤 경우든 토큰이 유효하지 않다면 사용자에게 알리고 로그인 페이지로 리다이렉트 시켜주세요</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="assignment-2---todo-list">Assignment 2 - Todo List</h2>
+
+<ul>
+  <li>Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요
+    <ul class="task-list">
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />목록 / 상세 영역으로 나누어 구현해주세요</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Todo 목록을 볼 수 있습니다.</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Todo 추가 버튼을 클릭하면 할 일이 추가 됩니다.</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Todo 수정 버튼을 클릭하면 수정 모드를 활성화하고, 수정 내용을 제출하거나 취소할 수 있습니다.</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Todo 삭제 버튼을 클릭하면 해당 Todo를 삭제할 수 있습니다.</li>
+    </ul>
+  </li>
+  <li>한 화면 내에서 Todo List와 개별 Todo의 상세를 확인할 수 있도록 해주세요.
+    <ul class="task-list">
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />새로고침을 했을 때 현재 상태가 유지되어야 합니다.</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />개별 Todo를 조회 순서에 따라 페이지 뒤로가기를 통하여 조회할 수 있도록 해주세요.</li>
+    </ul>
+  </li>
+  <li>한 페이지 내에서 새로고침 없이 데이터가 정합성을 갖추도록 구현해주세요
+    <ul class="task-list">
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />수정되는 Todo의 내용이 목록에서도 실시간으로 반영되어야 합니다</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="과제-참고-사항">과제 참고 사항</h2>
+
+<ol>
+  <li>로컬 서버를 실행했을 때 생성되는 <code class="language-plaintext highlighter-rouge">db/db.json</code>이 DB 역할을 하게 됩니다. 해당 파일을 삭제하면 DB는 초기화 됩니다.</li>
+  <li>로그인 / 회원 가입 기능은 유저를 DB에 추가하고 JWT 토큰을 응답으로 돌려줄 뿐, 실제 유저별로 Todo 목록을 관계 지어 관리하지는 않습니다. (모든 유저가 하나의 Todo를 가짐)</li>
+  <li>로그아웃은 클라이언트 단에서 localStorage에 저장된 token을 삭제하는 방식으로 간단히 구현해주세요.</li>
+</ol>
+
+<h1 id="2-1-api-실행">2-1) API 실행</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; yarn
+
+&gt; yarn start # &lt;http://localhost:8080&gt;
+
+</code></pre></div></div>
+
+<h1 id="2-2-api-스펙">2-2) API 스펙</h1>
+
+<h2 id="todos"><a href="notion://www.notion.so/Developer-Seobwoo-Kim-Portpolio-a2d2e2fb6c6e4a4b9de09c47e99f3010?p=fba4efae1e6d481fa221077ec5de9bf4&amp;pm=c#todos">Todos</a></h2>
+
+<ul>
+  <li><a href="notion://www.notion.so/Developer-Seobwoo-Kim-Portpolio-a2d2e2fb6c6e4a4b9de09c47e99f3010?p=fba4efae1e6d481fa221077ec5de9bf4&amp;pm=c#getTodos">getTodos</a></li>
+  <li><a href="notion://www.notion.so/Developer-Seobwoo-Kim-Portpolio-a2d2e2fb6c6e4a4b9de09c47e99f3010?p=fba4efae1e6d481fa221077ec5de9bf4&amp;pm=c#getTodoById">getTodoById</a></li>
+  <li><a href="notion://www.notion.so/Developer-Seobwoo-Kim-Portpolio-a2d2e2fb6c6e4a4b9de09c47e99f3010?p=fba4efae1e6d481fa221077ec5de9bf4&amp;pm=c#createTodo">createTodo</a></li>
+  <li><a href="notion://www.notion.so/Developer-Seobwoo-Kim-Portpolio-a2d2e2fb6c6e4a4b9de09c47e99f3010?p=fba4efae1e6d481fa221077ec5de9bf4&amp;pm=c#updateTodo">updateTodo</a></li>
+  <li><a href="notion://www.notion.so/Developer-Seobwoo-Kim-Portpolio-a2d2e2fb6c6e4a4b9de09c47e99f3010?p=fba4efae1e6d481fa221077ec5de9bf4&amp;pm=c#deleteTodo">deleteTodo</a></li>
+</ul>
+
+<h2 id="auth"><a href="notion://www.notion.so/Developer-Seobwoo-Kim-Portpolio-a2d2e2fb6c6e4a4b9de09c47e99f3010?p=fba4efae1e6d481fa221077ec5de9bf4&amp;pm=c#auth">Auth</a></h2>
+
+<ul>
+  <li><a href="notion://www.notion.so/Developer-Seobwoo-Kim-Portpolio-a2d2e2fb6c6e4a4b9de09c47e99f3010?p=fba4efae1e6d481fa221077ec5de9bf4&amp;pm=c#login">login</a></li>
+  <li><a href="notion://www.notion.so/Developer-Seobwoo-Kim-Portpolio-a2d2e2fb6c6e4a4b9de09c47e99f3010?p=fba4efae1e6d481fa221077ec5de9bf4&amp;pm=c#signUp">signUp</a></li>
+</ul>
+
+<h1 id="1-3-todos">1-3) Todos</h1>
+
+<h2 id="gettodos">getTodos</h2>
+
+<h3 id="url">URL</h3>
+
+<ul>
+  <li>GET <code class="language-plaintext highlighter-rouge">/todos</code></li>
+  <li>Headers
+    <ul>
+      <li>Authorization: login token</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="응답-예시">응답 예시</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "data": [
+    {
+      "title": "hi",
+      "content": "hello",
+      "id": "z3FGrcRL55qDCFnP4KRtn",
+      "createdAt": "2022-07-24T14:15:55.537Z",
+      "updatedAt": "2022-07-24T14:15:55.537Z"
+    },
+    {
+      "title": "hi",
+      "content": "hello",
+      "id": "z3FGrcRL55qDCFnP4KRtn",
+      "createdAt": "2022-07-24T14:15:55.537Z",
+      "updatedAt": "2022-07-24T14:15:55.537Z"
+    }
+  ]
+}
+
+</code></pre></div></div>
+
+<h2 id="gettodobyid">getTodoById</h2>
+
+<h3 id="url-1">URL</h3>
+
+<ul>
+  <li>GET <code class="language-plaintext highlighter-rouge">/todos/:id</code></li>
+  <li>Headers
+    <ul>
+      <li>Authorization: login token</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="응답-예시-1">응답 예시</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "data": {
+    "title": "hi",
+    "content": "hello",
+    "id": "z3FGrcRL55qDCFnP4KRtn",
+    "createdAt": "2022-07-24T14:15:55.537Z",
+    "updatedAt": "2022-07-24T14:15:55.537Z"
+  }
+}
+
+</code></pre></div></div>
+
+<h2 id="createtodo">createTodo</h2>
+
+<h3 id="url-2">URL</h3>
+
+<ul>
+  <li>POST <code class="language-plaintext highlighter-rouge">/todos</code></li>
+  <li>Parameter
+    <ul>
+      <li>title: string</li>
+      <li>content: string</li>
+    </ul>
+  </li>
+  <li>Headers
+    <ul>
+      <li>Authorization: login token</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="응답-예시-2">응답 예시</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "data": {
+    "title": "hi",
+    "content": "hello",
+    "id": "z3FGrcRL55qDCFnP4KRtn",
+    "createdAt": "2022-07-24T14:15:55.537Z",
+    "updatedAt": "2022-07-24T14:15:55.537Z"
+  }
+}
+
+</code></pre></div></div>
+
+<h2 id="updatetodo">updateTodo</h2>
+
+<h3 id="url-3">URL</h3>
+
+<ul>
+  <li>PUT <code class="language-plaintext highlighter-rouge">/todos/:id</code></li>
+  <li>Parameter
+    <ul>
+      <li>title: string</li>
+      <li>content: string</li>
+    </ul>
+  </li>
+  <li>Headers
+    <ul>
+      <li>Authorization: login token</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="응답-예시-3">응답 예시</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "data": {
+    "title": "제목 변경",
+    "content": "내용 변경",
+    "id": "RMfi3XyOKoI5zd0A_bsPL",
+    "createdAt": "2022-07-24T14:25:48.627Z",
+    "updatedAt": "2022-07-24T14:25:48.627Z"
+  }
+}
+
+</code></pre></div></div>
+
+<h2 id="deletetodo">deleteTodo</h2>
+
+<h3 id="url-4">URL</h3>
+
+<ul>
+  <li>DELETE <code class="language-plaintext highlighter-rouge">/todos/:id</code></li>
+  <li>Headers
+    <ul>
+      <li>Authorization: login token</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="응답-예시-4">응답 예시</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "data": null
+}
+
+</code></pre></div></div>
+
+<h1 id="1-4-auth">1-4) Auth</h1>
+
+<h2 id="login">login</h2>
+
+<h3 id="url-5">URL</h3>
+
+<ul>
+  <li>POST <code class="language-plaintext highlighter-rouge">/users/login</code></li>
+  <li>Parameter
+    <ul>
+      <li>email: string</li>
+      <li>password: string</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="응답-예시-5">응답 예시</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "message": "성공적으로 로그인 했습니다",
+  "token": "eyJhbGciOiJIUzI1NiJ9.YXNkZkBhc2RmYXNkZi5jb20.h-oLZnV0pCeNKa_AM3ilQzerD2Uj7bKUn1xDft5DzOk"
+}
+
+</code></pre></div></div>
+
+<h2 id="signup">signUp</h2>
+
+<h3 id="url-6">URL</h3>
+
+<ul>
+  <li>POST <code class="language-plaintext highlighter-rouge">/users/create</code></li>
+  <li>Parameter
+    <ul>
+      <li>email: string</li>
+      <li>password: string</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="응답-예시-6">응답 예시</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "message": "계정이 성공적으로 생성되었습니다",
+  "token": "eyJhbGciOiJIUzI1NiJ9.YXNkZkBhc2RmYXNkZi5jb20.h-oLZnV0pCeNKa_AM3ilQzerD2Uj7bKUn1xDft5DzOk"
+}
+
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="client-side-구현-사전과제-완료">Client SIde 구현 (사전과제) (완료)</h2>
+
+<h3 id="auth-1">/auth</h3>
+
+<ul>
+  <li>Login - 작업 완료</li>
+  <li>SignUp - 작업 완료</li>
+</ul>
+
+<p>https://youtu.be/GjzYHI-4sx8</p>
+
+<ul>
+  <li>LocalStorage</li>
+</ul>
+
+<p><img src="/assets/img/portfolio/onboarding03.png" alt="Untitled" /></p>
+
+<h3 id="todos---main-page">/todos - main page</h3>
+
+<p><img src="/assets/img/portfolio/onboarding04.png" alt="스크린샷 2023-01-06 오전 11.41.27.png" /></p>
+
+<h2 id="gettodos---작업완료---모든-todo-정보를-서버에-request-후-렌더링">getTodos - 작업완료 - 모든 todo 정보를 서버에 Request 후 렌더링</h2>
+
+<ul>
+  <li>headers - token</li>
+</ul>
+
+<h2 id="createtodo---작업-완료---서버에-해당하는-todo를-만드는-post-요청-후-request-data-기존-state에-병합-후-리렌더링">createTodo - 작업 완료 - 서버에 해당하는 todo를 만드는 POST 요청 후 Request Data 기존 State에 병합 후 리렌더링</h2>
+
+<ul>
+  <li>
+    <p>TodoApp.tsx 코드 중</p>
+
+    <p><img src="/assets/img/portfolio/onboarding05.png" alt="스크린샷 2023-01-06 오전 11.03.56.png" /></p>
+  </li>
+</ul>
+
+<h3 id="gettodobyid---작업완료---해당하는-할-일을-클릭할-시-상세보기-view">getTodoById - 작업완료 - 해당하는 할 일을 클릭할 시 상세보기 View</h3>
+
+<h3 id="updatetodo---작업완료---해당하는-할-일의-내용-변경">updateTodo - 작업완료 - 해당하는 할 일의 내용 변경</h3>
+
+<h3 id="deletetodo---작업완료---해당하는-할-일-삭제">deleteTodo - 작업완료 - 해당하는 할 일 삭제</h3>
+
+<p>https://youtu.be/Ahr69YCvS_s</p>
+
+<h2 id="사전-과제-제출-완료">사전 과제 (제출 완료)</h2>
+
+<p><img src="/assets/img/portfolio/onboarding06.png" alt="Untitled" /></p>
+
+<hr />
+
+<p>2023.01.10일자 교육 후일담</p>
+
+<h2 id="code-refactoring---원티드-프리온보딩-프론트엔드-챌린지---사전과제">[Code refactoring] - 원티드 프리온보딩 프론트엔드 챌린지 - 사전과제</h2>
+
+<p>원티드에서 프리온보딩 프론트엔드 챌린지를 참여하고 있다.</p>
+
+<p>라이브 세션에 참가하신 개발자 분들이 500명이 넘어서 설마 내 코드가 리뷰되겠어? 라는 생각이 있었는데</p>
+
+<p>사전 과제로 제출한 코드 중 유저의 토큰을 관리하는 코드에 관해 멘토님이 리뷰를 진행해주셨다.</p>
+
+<h3 id="멘토님이-리뷰-주신-코드">멘토님이 리뷰 주신 코드</h3>
+
+<ul>
+  <li>path : modules/auth/authValidation.tsx</li>
+</ul>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">getUserInfomation</span> <span class="o">=</span> <span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">getUserInfoResult</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">success</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="na">email</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+        <span class="na">token</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="kd">let</span> <span class="nx">emailResult</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nf">getItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">email</span><span class="dl">'</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">tokenResult</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nf">getItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">token</span><span class="dl">'</span><span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">emailResult</span> <span class="o">&amp;&amp;</span> <span class="nx">tokenResult</span><span class="p">){</span>
+        <span class="nx">getUserInfoResult</span><span class="p">.</span><span class="nx">email</span> <span class="o">=</span> <span class="nx">emailResult</span><span class="p">;</span>
+        <span class="nx">getUserInfoResult</span><span class="p">.</span><span class="nx">token</span> <span class="o">=</span> <span class="nx">tokenResult</span><span class="p">;</span>
+        <span class="nx">getUserInfoResult</span><span class="p">.</span><span class="nx">success</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">getUserInfoResult</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>부끄럽게도 벌써 실수가 눈에 보인다
+얼마전까지 React Native를 공부하면서 ‘Async Storage’를 공부했는데
+localStorage에 비동기 작업을 걸려고 await를 사용하는 아주 기초적인 실수를 해버린 것;;🫠
+구현하고 제출하느라 정신 없어서 눈치를 못채고 제출했더니 이런 실수를 그대로 제출했다니..</p>
+</blockquote>
+
+<p><del>저걸 라이브 세션에서 보고는 어질 어질했다..</del></p>
+
+<p>하지만 실수를 했으면 고쳐야 하는 것</p>
+
+<p>멘토님이 주신 해당 코드의 피드백)</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">get-</code> 접두사 → 동사인가?</li>
+  <li>localStorage는 비동기일까? → 함수의 색(color) 문제 (https://willowryu.github.io/2021-05-21/)</li>
+</ul>
+
+<p>그리고 해당 소스를 더 가독성 좋게 리팩토링 하는 것을 직접 보여주셨다.</p>
+
+<h3 id="리팩토링">리팩토링</h3>
+
+<ul>
+  <li>해당 소스에서 크게 문제가 되는 점은 멘토님이 피드백 주신 두 가지
+    <ul>
+      <li>localStorage는 비동기인가?</li>
+      <li>
+        <p>해당 모듈의 네이밍이 적절한가?</p>
+
+        <blockquote>
+          <p>우선 localStorage의 모든 작업은 동기적으로 이루어진다.
+그렇기 때문에 비동기로 사용하려던 내용을 수정하고 해당 부분의 코드가 수정이 필요하다.</p>
+
+          <p>해당 모듈의 네이밍이 적절한가?
+항상 함수나 변수 이름 작명은 많은 고민을 낳는 것 같다..
+우선 ’get’ 을 떠올릴 때 무엇인가를 얻어온다 라는 느낌까지는 괜찮은데
+지금 다시 보니까 API를 호출할거 같은 느낌이 든다.</p>
+
+          <p>그리고 멘토님의 리팩토링 과정을 보고 좀 더 간결하게 코드를 작성할 수 있을 것 같다.</p>
+
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li>정리가 된 코드</li>
+</ul>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">getUserInfomation</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+		<span class="kd">const</span> <span class="nx">email</span> <span class="o">=</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nf">getItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">email</span><span class="dl">'</span><span class="p">);</span>
+		<span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nf">getItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">token</span><span class="dl">'</span><span class="p">);</span>
+
+		<span class="kd">const</span> <span class="nx">conditions</span> <span class="o">=</span> <span class="p">[</span><span class="nx">email</span><span class="p">,</span> <span class="nx">token</span><span class="p">]</span>
+
+		<span class="k">if</span><span class="p">(</span><span class="nx">conditions</span><span class="p">.</span><span class="nf">every</span><span class="p">(</span><span class="nx">condition</span> <span class="o">=&gt;</span> <span class="o">!!</span><span class="nx">condition</span><span class="p">))</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="p">{</span>
+        <span class="na">success</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">email</span><span class="p">,</span>
+        <span class="nx">token</span><span class="p">,</span>
+	    <span class="p">}</span>
+		<span class="p">}</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="na">success</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="na">email</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+        <span class="na">token</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>비동기 사용을 위한 async await 를 코드에서 덜어내고,</p>
+
+  <p>localStorage에서 해당 값의 정보를 가져오는 부분을 모듈 상단 부로 이동</p>
+
+  <p>array에 localStorage에서 받아온 결과를 넣고,</p>
+
+  <p>token과 email 값의 검사를 Array.prototype.every() 를 통해 테스트한다.
+Boolean 값을 반환하기 때문에 if 문을 통해 해당 모듈에서 반환을 해주기 위한 
+결과 값들을 바로 반환하여 줄 수 있다.</p>
+
+  <p>구현 후 리팩토링에도 정말 많은 신경을 쓰도록 노력해봐야겠다.</p>
+
+</blockquote>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/portfolio/preonboarding" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9+%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C+%EC%B1%8C%EB%A6%B0%EC%A7%80+1%EC%9B%94+-+CRUD+w+React+Query%E2%80%99%20http%3A%2F%2Flocalhost%3A4000%2Fportfolio%2Fpreonboarding"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/portfolio/preonboarding&quote=%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9+%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C+%EC%B1%8C%EB%A6%B0%EC%A7%80+1%EC%9B%94+-+CRUD+w+React+Query%E2%80%99%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/portfolio/preonboarding&media=http://localhost:4000/assets/img/portfolio/onboarding01.png$description=%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/portfolio/preonboarding&title=%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9+%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C+%EC%B1%8C%EB%A6%B0%EC%A7%80+1%EC%9B%94+-+CRUD+w+React+Query%E2%80%99%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/portfolio/preonboarding&title=%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9+%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C+%EC%B1%8C%EB%A6%B0%EC%A7%80+1%EC%9B%94+-+CRUD+w+React+Query%E2%80%99%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/portfolio/preonboarding"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’%20%7C%20Seobisback Github Blog&body=http://localhost:4000/portfolio/preonboarding"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#OnBoarding">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> OnBoarding</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#React">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> React</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#ReactQuery">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> ReactQuery</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Typescript">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Typescript</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="Qualk - ‘맞춤 지식 정보 제공 플랫폼’" href="/portfolio/qualk">
+            <p>Previous post</p>
+            Qualk - ‘맞춤 지식 정보 제공 플랫폼’
+        </a>
+    </div>
+    
+
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/portfolio/onboarding01.png'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

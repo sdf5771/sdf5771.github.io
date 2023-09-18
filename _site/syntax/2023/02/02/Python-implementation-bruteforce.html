@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[Python] - 구현: 시뮬레이션과 완전 탐색 | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="[Python] - 구현: 시뮬레이션과 완전 탐색" />
+<meta name="author" content="Seobisback" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="구현(Implementation)" />
+<meta property="og:description" content="구현(Implementation)" />
+<link rel="canonical" href="http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html" />
+<meta property="og:url" content="http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-02T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[Python] - 구현: 시뮬레이션과 완전 탐색" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Seobisback"},"dateModified":"2023-02-02T00:00:00+09:00","datePublished":"2023-02-02T00:00:00+09:00","description":"구현(Implementation)","headline":"[Python] - 구현: 시뮬레이션과 완전 탐색","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html"},"url":"http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="[Python] - 구현: 시뮬레이션과 완전 탐색">
+    <meta name="twitter:description" content="구현(Implementation)  구현이란, 머릿속에 있는 알고리즘을 소스코드로 바꾸는 과정이다.  알고리즘 대회나 코딩 테스트에서의 구현 유형의 문제란?          풀이를 떠올리는 것은 쉽지만 소스코드로 옮기기 어려운 문제를 지칭한다.        구현 유형의 예시    ...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    <meta name="twitter:image:alt" content="[Python] - 구현: 시뮬레이션과 완전 탐색">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="[Python] - 구현: 시뮬레이션과 완전 탐색 " aria-label="[Python] - 구현: 시뮬레이션과 완전 탐색" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="%5BPython%5D+-+%EA%B5%AC%ED%98%84%3A+%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98%EA%B3%BC+%EC%99%84%EC%A0%84+%ED%83%90%EC%83%89" class="title">[Python] - 구현: 시뮬레이션과 완전 탐색</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      February 02, 2023
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <h1 id="구현implementation">구현(Implementation)</h1>
+
+<ul>
+  <li>구현이란, 머릿속에 있는 알고리즘을 소스코드로 바꾸는 과정이다.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png" alt="implementation01" /></p>
+
+<ul>
+  <li>알고리즘 대회나 코딩 테스트에서의 <strong>구현 유형</strong>의 문제란?
+    <ul>
+      <li><strong>풀이를 떠올리는 것은 쉽지만 소스코드로 옮기기 어려운 문제를 지칭한다.</strong></li>
+    </ul>
+  </li>
+  <li>구현 유형의 예시
+    <ul>
+      <li>알고리즘은 간단한데 코드가 지나칠 만큼 길어지는 문제</li>
+      <li>실수 연산을 다루고, 특정 소수점 자리까지 출력해야 하는 문제</li>
+      <li>문자열을 특정한 기준에 따라서 끊어 처리해야 하는 문제</li>
+      <li>적절한 라이브러리를 찾아서 사용해야 하는 문제</li>
+    </ul>
+  </li>
+  <li>일반적으로 알고리즘 문제에서의 2차원 공간은 <strong>행렬(Matrix)</strong>의 의미로 사용된다.
+    <ul>
+      <li>행렬(Matrix) : 2차원 데이터를 일종의 표와 같은 형태로 쉽게 나타낼 수 있는 것 (2차원 배열)</li>
+    </ul>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>열 (Column)</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>행 (Row)</td>
+      <td>(0, 0)</td>
+      <td>(0, 1)</td>
+      <td>(0, 2)</td>
+      <td>(0, 3)</td>
+      <td>(0, 4)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>(1, 0)</td>
+      <td>(1, 1)</td>
+      <td>(1, 2)</td>
+      <td>(1, 3)</td>
+      <td>(1, 4)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>(2, 0)</td>
+      <td>(2, 1)</td>
+      <td>(2, 2)</td>
+      <td>(2, 3)</td>
+      <td>(2, 4)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>(3, 0)</td>
+      <td>(3, 1)</td>
+      <td>(3, 2)</td>
+      <td>(3, 3)</td>
+      <td>(3, 4)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>(4, 0)</td>
+      <td>(4, 1)</td>
+      <td>(4, 2)</td>
+      <td>(4, 3)</td>
+      <td>(4, 4)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+	<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+		<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">(</span><span class="sh">'</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="sh">'</span><span class="s">,</span><span class="sh">'</span><span class="p">,</span> <span class="n">j</span> <span class="sh">'</span><span class="s">)</span><span class="sh">'</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">'</span><span class="s"> </span><span class="sh">'</span><span class="p">)</span>
+	<span class="nf">print</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li>시뮬레이션 및 완전 탐색 문제에서는 2차원 공간에서의 <strong>방향 벡터</strong>가 자주 활용된다.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>열 (Column)</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>행 (Row)</td>
+      <td>(0, 0)</td>
+      <td>(0, 1)</td>
+      <td>(0, 2)</td>
+      <td>(0, 3)</td>
+      <td>(0, 4)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>(1, 0)</td>
+      <td>(1, 1)</td>
+      <td>(1, 2)</td>
+      <td>(1, 3)</td>
+      <td>(1, 4)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>(2, 0)</td>
+      <td>(2, 1)</td>
+      <td>(2, 2)</td>
+      <td>(2, 3)</td>
+      <td>(2, 4)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>(3, 0)</td>
+      <td>(3, 1)</td>
+      <td>(3, 2)</td>
+      <td>(3, 3)</td>
+      <td>(3, 4)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>(4, 0)</td>
+      <td>(4, 1)</td>
+      <td>(4, 2)</td>
+      <td>(4, 3)</td>
+      <td>(4, 4)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 동, 북, 서, 남
+</span><span class="n">dx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">dy</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># 현재 위치
+</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+	<span class="c1"># 다음 위치
+</span>	<span class="n">nx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+	<span class="n">ny</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+	<span class="nf">print</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="문제-1-상하좌우">문제 1: 상하좌우</h2>
+
+<ul>
+  <li>여행가 A는 N x N 크기의 정사각형 공간 위에 있습니다. 이 공간은 1 x 1 크기의 정사각형으로 나누어져 있습니다. 가장 왼쪽 위 좌표는 (1, 1) 이며, 가장 오른쪽 아래 좌표는 (N, N)에 해당합니다. 여행가 A는 상, 하, 좌, 우 방향으로 이동할 수 있으며, 시작 좌표는 항상 (1, 1)입니다. 우리 앞에는 여행가 A가 이동할 계획이 적힌 계획서가 놓여 있습니다.</li>
+  <li>계획서에는 하나의 줄에 띄어쓰기를 기준으로 하여 L, R, U, D 중 하나의 문자가 반복적으로 적혀 있습니다. 각 문자의 의미는 다음과 같습니다.
+    <ul>
+      <li>L: 왼쪽으로 한 칸 이동</li>
+      <li>R: 오른쪽으로 한 칸 이동</li>
+      <li>U: 위로 한 칸 이동</li>
+      <li>D: 아래로 한 칸 이동</li>
+    </ul>
+  </li>
+  <li>이때 여행가 A가 N x N 크기의 정사각형 공간을 벗어나는 움직임은 무시됩니다. 예를 들어 (1, 1)의 위치에서 L혹은 U를 만나면 무시됩니다. 다음은 N = 인 지도와 계획서입니다.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation02.png" alt="implementation02" /></p>
+
+<h3 id="입력조건">입력조건</h3>
+
+<ul>
+  <li>첫째 줄에 공간의 크기를 나타내는 N이 주어집니다. (1 ≤ N ≤ 100)</li>
+  <li>둘째 줄에 여행가 A가 이동할 계획서 내용이 주어집니다. (1 ≤ 이동 횟수 ≤ 100)</li>
+</ul>
+
+<h3 id="출력조건">출력조건</h3>
+
+<ul>
+  <li>첫째 줄에 여행가 A가 최종적으로 도착할 지점의 좌표 (X, Y)를 공백을 기준으로 구분하여 출력합니다.</li>
+</ul>
+
+<h3 id="입력예시">입력예시</h3>
+
+<blockquote>
+  <p>5</p>
+
+  <p>R R R U D D</p>
+
+</blockquote>
+
+<h3 id="출력-예시">출력 예시</h3>
+
+<blockquote>
+  <p>3 4</p>
+
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">time</span>
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="n">test_data</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">제출한 답:</span><span class="sh">'</span><span class="p">,</span> <span class="n">test_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">test_data</span> <span class="o">==</span> <span class="n">answer</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">정답입니다</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">오답입니다</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">move</span><span class="p">):</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="sh">''</span>
+    <span class="n">move_arr</span> <span class="o">=</span> <span class="n">move</span><span class="p">.</span><span class="nf">split</span><span class="p">()</span>
+
+    <span class="c1"># 현재 위치
+</span>    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">move_arr</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="sh">'</span><span class="s">L</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="sh">"</span><span class="s">R</span><span class="sh">"</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="sh">"</span><span class="s">U</span><span class="sh">"</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="sh">'</span><span class="s">D</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="sh">'</span><span class="s"> </span><span class="sh">'</span> <span class="o">+</span> <span class="nf">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">answer</span>
+
+<span class="n">tc_data</span> <span class="o">=</span> <span class="p">[{</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_input2</span><span class="sh">'</span><span class="p">:</span><span class="sh">'</span><span class="s">R R R U D D</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">3 4</span><span class="sh">'</span><span class="p">},</span> <span class="p">{</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_input2</span><span class="sh">'</span><span class="p">:</span><span class="sh">'</span><span class="s">R U D L R R</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">2 3</span><span class="sh">'</span><span class="p">},</span> <span class="p">{</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_input2</span><span class="sh">'</span><span class="p">:</span><span class="sh">'</span><span class="s">L R D D D R R</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">4 4</span><span class="sh">'</span><span class="p">}]</span>
+
+<span class="k">for</span> <span class="n">for_index</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">tc_data</span><span class="p">)):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">ㅡㅡㅡㅡ</span><span class="sh">'</span><span class="p">,</span> <span class="n">for_index</span><span class="p">,</span><span class="sh">'</span><span class="s">번째 test</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ㅡㅡㅡㅡ</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">],</span> <span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_input2</span><span class="sh">'</span><span class="p">]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">a의 값은</span><span class="sh">'</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">b의 값은</span><span class="sh">'</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">정답은</span><span class="sh">'</span><span class="p">,</span> <span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">])</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+    <span class="nf">test</span><span class="p">(</span><span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">],</span> <span class="nf">solution</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">소요시간:</span><span class="sh">'</span><span class="p">,</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="si">:</span><span class="p">.</span><span class="mi">5</span><span class="n">f</span><span class="si">}</span><span class="s"> sec</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation03.png" alt="implementation03" /></p>
+
+<hr />
+
+<h2 id="문제-2-시각-문제">문제 2: 시각 문제</h2>
+
+<ul>
+  <li>정수 N이 입력되면 00시 00분 00초부터 N시 59분 59초까지의 <strong>모든 시각 중에서 3이 하나라도 포함되는 모든 경우의 수를 구하는 프로그램을 작성</strong>하세요. 예를 들어 1을 입력했을 때 다음은 3이 하나라도 포함되어 있으므로 세어야 하는 시각입니다.
+    <ul>
+      <li>00시 00분 03초</li>
+      <li>00시 13분 30초</li>
+    </ul>
+  </li>
+  <li>반면에 다음은 3이 하나도 포함되어 있지 않으므로 세면 안 되는 시각입니다.
+    <ul>
+      <li>00시 02분 55초</li>
+      <li>01시 27분 45초</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="입력조건-1">입력조건</h3>
+
+<ul>
+  <li>첫째 줄에 정수 N이 입력됩니다. (0 ≤ N ≤ 23)</li>
+</ul>
+
+<h3 id="출력조건-1">출력조건</h3>
+
+<ul>
+  <li>00시 00분 00초부터 N시 59분 59초까지의 모든 시각 중에서 3이 하나라도 포함되는 모든 경우의 수를 출력합니다.</li>
+</ul>
+
+<h3 id="입력예시-1">입력예시</h3>
+
+<blockquote>
+  <p>5</p>
+
+</blockquote>
+
+<h3 id="출력-예시-1">출력 예시</h3>
+
+<blockquote>
+  <p>11475</p>
+
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">time</span>
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="n">test_data</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">제출한 답:</span><span class="sh">'</span><span class="p">,</span> <span class="n">test_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">test_data</span> <span class="o">==</span> <span class="n">answer</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">정답입니다</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">오답입니다</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">minute</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">60</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">second</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">60</span><span class="p">):</span>
+                <span class="k">if</span> <span class="sh">'</span><span class="s">3</span><span class="sh">'</span> <span class="ow">in</span> <span class="nf">str</span><span class="p">(</span><span class="n">hour</span><span class="p">)</span> <span class="o">+</span> <span class="nf">str</span><span class="p">(</span><span class="n">minute</span><span class="p">)</span> <span class="o">+</span> <span class="nf">str</span><span class="p">(</span><span class="n">second</span><span class="p">):</span>
+                    <span class="n">answer</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">answer</span>
+
+<span class="n">tc_data</span> <span class="o">=</span> <span class="p">[{</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">:</span> <span class="mi">11475</span><span class="p">}]</span>
+
+<span class="k">for</span> <span class="n">for_index</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">tc_data</span><span class="p">)):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">ㅡㅡㅡㅡ</span><span class="sh">'</span><span class="p">,</span> <span class="n">for_index</span><span class="p">,</span><span class="sh">'</span><span class="s">번째 test</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ㅡㅡㅡㅡ</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">=</span> <span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">a의 값은</span><span class="sh">'</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">정답은</span><span class="sh">'</span><span class="p">,</span> <span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">])</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+    <span class="nf">test</span><span class="p">(</span><span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">],</span> <span class="nf">solution</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">소요시간:</span><span class="sh">'</span><span class="p">,</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="si">:</span><span class="p">.</span><span class="mi">5</span><span class="n">f</span><span class="si">}</span><span class="s"> sec</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation04.png" alt="implementation04" /></p>
+
+<hr />
+
+<h2 id="문제-3-왕실의-나이트">문제 3: 왕실의 나이트</h2>
+
+<ul>
+  <li>행복 왕국의 왕실 정원은 체스판과 같은 8 x 8 좌표 평면입니다. 왕실 정원의 특정한 한 칸에 나이트가 서 있습니다. 나이트는 매우 충성스러운 신하로서 매일 무술을 연마합니다.</li>
+  <li>나이트는 말을 타고 있기 때문에 이동을 할 때는 L자 형태로만 이동할 수 있으며 정원 밖으로는 나갈 수 없습니다.</li>
+  <li>나이트는 특정 위치에서 다음과 같은 2가지 경우로 이동할 수 있습니다.
+    <ol>
+      <li>수평으로 두 칸 이동한 뒤에 수직으로 한 칸 이동하기</li>
+      <li>수직으로 두 칸 이동한 뒤에 수평으로 한 칸 이동하기</li>
+    </ol>
+  </li>
+  <li>이처럼 8 x 8 좌표 평면상에서 나이트의 위치가 주어졌을 때 나이트가 이동할 수 있는 경우의 수를 출력하는 프로그램을 작성하세요. 왕실의 정원에서 행 위치를 표현할 때는 1부터 8로 표현하며, 열 위치를 표현할때는 a부터 h로 표현합니다.
+    <ul>
+      <li>c2에 있을 때 이동할 수 있는 경우의 수는 6가지 입니다.</li>
+      <li>a1에 있을 때 이동할 수 있는 경우의 수는 2가지 입니다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation05.png" alt="implementation05" /></p>
+
+<h3 id="입력조건-2">입력조건</h3>
+
+<ul>
+  <li>첫째 줄에 8 x 8 좌표 평면상에서 현재 나이트가 위치한 곳의 좌표를 나타내는 두 문자로 구성된 문자열이 입력된다. 입력 문자는 a1처럼 열과 행으로 이뤄진다.</li>
+</ul>
+
+<h3 id="출력조건-2">출력조건</h3>
+
+<ul>
+  <li>첫째 줄에 나이트가 이동할 수 있는 경우의 수를 출력하시오.</li>
+</ul>
+
+<h3 id="입력예시-2">입력예시</h3>
+
+<blockquote>
+  <p>a1</p>
+
+</blockquote>
+
+<h3 id="출력-예시-2">출력 예시</h3>
+
+<blockquote>
+  <p>2</p>
+
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">time</span>
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="n">test_data</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">제출한 답:</span><span class="sh">'</span><span class="p">,</span> <span class="n">test_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">test_data</span> <span class="o">==</span> <span class="n">answer</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">정답입니다</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">오답입니다</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">dx</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">dy</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">parse_column</span><span class="p">(</span><span class="n">row_val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">row_val</span> <span class="o">==</span> <span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">row_val</span> <span class="o">==</span> <span class="sh">'</span><span class="s">b</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">row_val</span> <span class="o">==</span> <span class="sh">'</span><span class="s">c</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">3</span>
+        <span class="k">elif</span> <span class="n">row_val</span> <span class="o">==</span> <span class="sh">'</span><span class="s">d</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">4</span>
+        <span class="k">elif</span> <span class="n">row_val</span> <span class="o">==</span> <span class="sh">'</span><span class="s">e</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">5</span>
+        <span class="k">elif</span> <span class="n">row_val</span> <span class="o">==</span> <span class="sh">'</span><span class="s">f</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">6</span>
+        <span class="k">elif</span> <span class="n">row_val</span> <span class="o">==</span> <span class="sh">'</span><span class="s">g</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">7</span>
+        <span class="k">elif</span> <span class="n">row_val</span> <span class="o">==</span> <span class="sh">'</span><span class="s">h</span><span class="sh">'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">8</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">parse_column</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+        <span class="n">nx</span> <span class="o">=</span> <span class="n">dx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span>
+        <span class="n">ny</span> <span class="o">=</span> <span class="n">dy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span>
+
+        <span class="k">if</span> <span class="n">nx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">ny</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">answer</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">answer</span>
+
+<span class="n">tc_data</span> <span class="o">=</span> <span class="p">[{</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">a1</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">c2</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">:</span> <span class="mi">6</span><span class="p">}]</span>
+
+<span class="k">for</span> <span class="n">for_index</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">tc_data</span><span class="p">)):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">ㅡㅡㅡㅡ</span><span class="sh">'</span><span class="p">,</span> <span class="n">for_index</span><span class="p">,</span><span class="sh">'</span><span class="s">번째 test</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ㅡㅡㅡㅡ</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">=</span> <span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">a의 값은</span><span class="sh">'</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">정답은</span><span class="sh">'</span><span class="p">,</span> <span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">])</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+    <span class="nf">test</span><span class="p">(</span><span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">],</span> <span class="nf">solution</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">소요시간:</span><span class="sh">'</span><span class="p">,</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="si">:</span><span class="p">.</span><span class="mi">5</span><span class="n">f</span><span class="si">}</span><span class="s"> sec</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation06.png" alt="implementation06" /></p>
+
+<hr />
+
+<h2 id="문제-4-문자열-재정렬">문제 4: 문자열 재정렬</h2>
+
+<ul>
+  <li>알파벳 대문자와 숫자(0 ~ 9)로만 구성된 문자열이 입력으로 주어집니다. 이때 모든 알파벳을 오름차순으로 정렬하여 이어서 출력한 뒤에, 그 뒤에 모든 숫자를 더한 값을 이어서 출력합니다.</li>
+  <li>예를 들어 K1KA5CB7이라는 값이 들어오면 ABCKK13을 출력합니다.</li>
+</ul>
+
+<h3 id="입력조건-3">입력조건</h3>
+
+<ul>
+  <li>첫째 줄에 하나의 문자열 S가 주어집니다. (1 ≤ S의 길이 ≤ 10,000)</li>
+</ul>
+
+<h3 id="출력조건-3">출력조건</h3>
+
+<ul>
+  <li>첫째 줄에 문제에서 요구하는 정답을 출력합니다.</li>
+</ul>
+
+<h3 id="입력예시-1">입력예시 1</h3>
+
+<blockquote>
+  <p>K1KA5CB7</p>
+
+</blockquote>
+
+<h3 id="출력-예시-1">출력 예시 1</h3>
+
+<blockquote>
+  <p>ABCKK13</p>
+
+</blockquote>
+
+<h3 id="입력예시-2">입력예시 2</h3>
+
+<blockquote>
+  <p>AJKDLSI412K4JSJ9D</p>
+
+</blockquote>
+
+<h3 id="출력-예시-2">출력 예시 2</h3>
+
+<blockquote>
+  <p>ADDIJJJKKLSS20</p>
+
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">time</span>
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="n">test_data</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">제출한 답:</span><span class="sh">'</span><span class="p">,</span> <span class="n">test_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">test_data</span> <span class="o">==</span> <span class="n">answer</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">정답입니다</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">오답입니다</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="sh">''</span>
+
+    <span class="n">arr_str</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">s</span><span class="p">))]</span>
+
+    <span class="n">arr_str</span><span class="p">.</span><span class="nf">sort</span><span class="p">()</span>
+
+    <span class="n">sum_number</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">arr_str</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">arr_str</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="nf">isalpha</span><span class="p">():</span>
+            <span class="n">sum_number</span> <span class="o">+=</span> <span class="nf">int</span><span class="p">(</span><span class="n">arr_str</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">answer</span> <span class="o">+=</span> <span class="n">arr_str</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+    <span class="n">answer</span> <span class="o">+=</span> <span class="nf">str</span><span class="p">(</span><span class="n">sum_number</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">answer</span>
+
+<span class="n">tc_data</span> <span class="o">=</span> <span class="p">[{</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">K1KA5CB7</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">ABCKK13</span><span class="sh">'</span><span class="p">},</span> <span class="p">{</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">AJKDLSI412K4JSJ9D</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">ADDIJJJKKLSS20</span><span class="sh">'</span><span class="p">}]</span>
+
+<span class="k">for</span> <span class="n">for_index</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">tc_data</span><span class="p">)):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">ㅡㅡㅡㅡ</span><span class="sh">'</span><span class="p">,</span> <span class="n">for_index</span><span class="p">,</span><span class="sh">'</span><span class="s">번째 test</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ㅡㅡㅡㅡ</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">=</span> <span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_input1</span><span class="sh">'</span><span class="p">]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">a의 값은</span><span class="sh">'</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">정답은</span><span class="sh">'</span><span class="p">,</span> <span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">])</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+    <span class="nf">test</span><span class="p">(</span><span class="n">tc_data</span><span class="p">[</span><span class="n">for_index</span><span class="p">][</span><span class="sh">'</span><span class="s">tc_answer</span><span class="sh">'</span><span class="p">],</span> <span class="nf">solution</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">소요시간:</span><span class="sh">'</span><span class="p">,</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="si">:</span><span class="p">.</span><span class="mi">5</span><span class="n">f</span><span class="si">}</span><span class="s"> sec</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation07.png" alt="implementation07" /></p>
+
+<hr />
+
+<h3 id="참고자료">참고자료</h3>
+
+<p><a href="https://youtu.be/2zjoKjt97vQ">(이코테 2021 강의 몰아보기) 2. 그리디 &amp; 구현</a></p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=%5BPython%5D+-+%EA%B5%AC%ED%98%84%3A+%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98%EA%B3%BC+%EC%99%84%EC%A0%84+%ED%83%90%EC%83%89%20http%3A%2F%2Flocalhost%3A4000%2Fsyntax%2F2023%2F02%2F02%2FPython-implementation-bruteforce.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html&quote=%5BPython%5D+-+%EA%B5%AC%ED%98%84%3A+%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98%EA%B3%BC+%EC%99%84%EC%A0%84+%ED%83%90%EC%83%89%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html&media=$description=%EA%B5%AC%ED%98%84%28Implementation%29%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html&title=%5BPython%5D+-+%EA%B5%AC%ED%98%84%3A+%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98%EA%B3%BC+%EC%99%84%EC%A0%84+%ED%83%90%EC%83%89%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html&title=%5BPython%5D+-+%EA%B5%AC%ED%98%84%3A+%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98%EA%B3%BC+%EC%99%84%EC%A0%84+%ED%83%90%EC%83%89%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=[Python] - 구현: 시뮬레이션과 완전 탐색%20%7C%20Seobisback Github Blog&body=http://localhost:4000/syntax/2023/02/02/Python-implementation-bruteforce.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#CodingTest">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> CodingTest</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Python">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Python</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="[Front-end CS] 브라우저 렌더링 프로세스" href="/syntax/2023/02/26/Front-end-cs-browser-rendering.html">
+            <p>Previous post</p>
+            [Front-end CS] 브라우저 렌더링 프로세스
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="[Python] - 그리디 알고리즘" href="/syntax/2023/02/01/Python-greedy-algorithm.html">
+            <p>Next post</p>
+            [Python] - 그리디 알고리즘
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

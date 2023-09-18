@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[Python] - 리스트 자료형 | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="[Python] - 리스트 자료형" />
+<meta name="author" content="Seobisback" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="리스트 자료형" />
+<meta property="og:description" content="리스트 자료형" />
+<link rel="canonical" href="http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html" />
+<meta property="og:url" content="http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-01-08T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[Python] - 리스트 자료형" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Seobisback"},"dateModified":"2023-01-08T00:00:00+09:00","datePublished":"2023-01-08T00:00:00+09:00","description":"리스트 자료형","headline":"[Python] - 리스트 자료형","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html"},"url":"http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="[Python] - 리스트 자료형">
+    <meta name="twitter:description" content="리스트 자료형  여러 개의 데이터를 연속적으로 담아 처리하기 위해 사용하는 자료형이다.          사용자 입장에서 C나 자바에서의 배열(Array)의 기능 및 연결 리스트와 유사한 기능을 지원한다.      C++의 STL vector와 기능적으로 유사하다.      리스트 ...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    <meta name="twitter:image:alt" content="[Python] - 리스트 자료형">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="[Python] - 리스트 자료형 " aria-label="[Python] - 리스트 자료형" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="%5BPython%5D+-+%EB%A6%AC%EC%8A%A4%ED%8A%B8+%EC%9E%90%EB%A3%8C%ED%98%95" class="title">[Python] - 리스트 자료형</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      January 08, 2023
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <h1 id="리스트-자료형">리스트 자료형</h1>
+
+<ul>
+  <li>여러 개의 데이터를 연속적으로 담아 처리하기 위해 사용하는 자료형이다.
+    <ul>
+      <li>사용자 입장에서 C나 자바에서의 배열(Array)의 기능 및 연결 리스트와 유사한 기능을 지원한다.</li>
+      <li>C++의 STL vector와 기능적으로 유사하다.</li>
+      <li>리스트 대신에 배열 혹은 테이블이라고 부르기도 한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="리스트-초기화">리스트 초기화</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 직접 데이터를 넣어 초기화
+</span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="c1"># 실행 결과 : [1, 2, 3, 4, 5, 6, 7, 8, 9]
+</span>
+<span class="c1"># 네 번째 원소만 출력
+</span><span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="c1"># 실행 결과 : 4
+</span>
+<span class="c1"># 크기가 N이고, 모든 값이 0인 1차원 리스트 초기화
+</span><span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="c1"># 실행 결과 : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+</span></code></pre></div></div>
+
+<h3 id="리스트의-인덱싱과-슬라이싱">리스트의 인덱싱과 슬라이싱</h3>
+
+<ul>
+  <li>인덱스 값을 입력하여 리스트의 특정한 원소에 접근하는 것을 인덱싱(Indexing)이라고 한다.
+    <ul>
+      <li>파이썬의 인덱스 값은 양의 정수와 음의 정수를 모두 사용할 수 있다.</li>
+      <li>음의 정수를 넣으면 원소를 거꾸로 탐색하게 된다.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="c1"># 여덟 번째 원소만 출력
+</span><span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+
+<span class="c1"># 뒤에서 첫 번째 원소 출력
+</span><span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># 뒤에서 세 번째 원소 출력
+</span><span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="c1"># 네 번째 원소 값 변경
+</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>리스트에서 <strong>연속적인 위치를 갖는 원소들을 가져와야 할 때는 슬라이싱(Slicing)을 이용</strong>합니다.
+    <ul>
+      <li>대괄호 안에 콜론(:)을 넣어서 시작 인데스와 끝 인덱스를 설정할 수 있습니다.</li>
+      <li>끝 인덱스는 실제 인덱스보다 1을 더 크게 설정합니다.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="c1"># 네 번째 원소만 출력
+</span><span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="c1"># 실행 결괴 : 4
+</span>
+<span class="c1"># 두 번째 원소부터 네 번째 원소까지
+</span><span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span> <span class="p">:</span> <span class="mi">4</span><span class="p">])</span>
+
+<span class="c1"># 실행 결과 : [2, 3, 4]
+</span></code></pre></div></div>
+
+<h3 id="리스트-컴프리헨션">리스트 컴프리헨션</h3>
+
+<ul>
+  <li>리스트를 초기화하는 방법 중 하나이다.
+    <ul>
+      <li><strong>대괄호 안에 조건문과 반복문을 적용하여 리스트를 초기화</strong> 할 수 있다.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 0부터 9까지의 수를 포함하는 리스트
+</span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="c1"># i 라는 변수가 0 ~ 9 까지 매번 증가를 하면서 반복을 할 때 마다,
+# i 의 값들을 원소로 설정해서 리스트를 만든다.
+</span><span class="nf">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+
+<span class="c1">#실행 결과 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</span></code></pre></div></div>
+
+<ul>
+  <li>
+    <p>리스트 컴프리헨션을 할 때는 반복문을 먼저 기입하는 것을 추천</p>
+  </li>
+  <li>
+    <p>리스트 컴프리헨션은 반복문 뿐만 아니라 내부적으로 조건문을 포함해서도 작성이 가능하다.</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 0부터 19까지의 수 중에서 홀수만 포함하는 리스트
+</span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&amp;</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+</span>
+<span class="c1"># 1부터 9까지의 수들의 제곱 값을 포함하는 리스트
+</span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : [1, 4, 9, 16, 25, 36, 49, 64, 81]
+</span></code></pre></div></div>
+
+<h3 id="리스트-컴프리헨션과-일반적인-코드-비교">리스트 컴프리헨션과 일반적인 코드 비교</h3>
+
+<ul>
+  <li><strong>실행 결과는 두 코드 모두 동일</strong>하다.</li>
+  <li>코드 1 : 리스트 컴프리헨션</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 0 부터 19까지의 수 중에서 홀수만 포함하는 리스트
+</span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+
+<span class="c1"># 실행 결과 : [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+</span></code></pre></div></div>
+
+<ul>
+  <li>코드 2 : 일반적인 코드</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 0 부터 19까지의 수 중에서 홀수만 포함하는 리스트
+</span><span class="n">array</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="n">array</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+
+<span class="c1"># 실행 결과 : [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+</span></code></pre></div></div>
+
+<ul>
+  <li>리스트 컴프리헨션은 2차원 리스트를 초기화할 때 효과적으로 사용될 수 있다.</li>
+  <li>특히 N X M 크기의 2차원 리스트를 한 번에 초기화 해야 할 때 매우 유용하다.
+    <ul>
+      <li>좋은 예시 : array = [ [0] * m for _ in range(n) ]</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># N X M 크기의 2차원 리스트 초기화
+</span><span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">array</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+
+<span class="c1"># 실행 결과 : [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
+</span></code></pre></div></div>
+
+<ul>
+  <li>만약 2차원 리스트를 초기화할 때 다음과 같이 작성하면 예기치 않은 결과가 나올 수 있다.
+    <ul>
+      <li>잘못된 예시 : array = [[0] * m] * n</li>
+      <li>위 코드는 전체 리스트 안에 포함된 각 리스트가 모두 같은 객체로 인식된다.</li>
+      <li>파이썬은 기본적으로 리스트 자료형을 이용해서 어떠한 변수 값을 할당하게 되면 내부적으로 해당 리스트느 객체 형태로 처리하게 된다. 별도의 주소 값을 가지게 된다. 그렇기 때문에 잘못된 예시의 코드처럼 어떠한 리스트 객체 값을 n번 곱하게 되면, 단순하게 그 내부적인 길이가 m인 리스트를 n번 만큼 해당 참조 값을 복사하는 것과 같기 때문에 해당 방식을 의도하지 않았다면 잘못된 예시라고 할 수 있다.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># N X M 크기의 2차원 리스트 초기화 (잘못된 방법)
+</span><span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">array</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+
+<span class="c1"># 실행 결과 [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
+</span>
+<span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="c1"># 해당 2차원 리스트는 같은 주소 번지를 참조하고 있기 때문에 밑에 실행 결과처럼 출력 된다.
+# 실행 결과 [[0, 5, 0], [0, 5, 0], [0, 5, 0], [0, 5, 0]]
+</span></code></pre></div></div>
+
+<h3 id="리스트-관련-기타-메서드">리스트 관련 기타 메서드</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>함수명</th>
+      <th>사용법</th>
+      <th>설명</th>
+      <th>시간 복잡도</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>append()</td>
+      <td>변수명.append()</td>
+      <td>리스트에 원소를 하나 삽입할 때 사용한다.</td>
+      <td>O(1)</td>
+    </tr>
+    <tr>
+      <td>sort()</td>
+      <td>변수명.sort()</td>
+      <td>기본 정렬 기능으로 오름차순으로 정렬한다.</td>
+      <td>O(NlogN)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>변수명.sort(reverse = True)</td>
+      <td>내림차순으로 정렬한다.</td>
+      <td>O(NlogN)</td>
+    </tr>
+    <tr>
+      <td>reverse()</td>
+      <td>변수명.reverse()</td>
+      <td>리스트의 원소의 순서를 모두 뒤집어 놓는다.</td>
+      <td>O(N)</td>
+    </tr>
+    <tr>
+      <td>insert()</td>
+      <td>insert(삽입할 위치 인덱스, 삽입할 값)</td>
+      <td>특정한 인덱스 위치에 원소를 삽입할 때 사용한다.</td>
+      <td>O(N)</td>
+    </tr>
+    <tr>
+      <td>count()</td>
+      <td>변수명.count(특정 값)</td>
+      <td>리스트에서 특정한 값을 가지는 데이터의 개수를 셀 때 사용한다.</td>
+      <td>O(N)</td>
+    </tr>
+    <tr>
+      <td>remove()</td>
+      <td>변수명.remove(특정 값)</td>
+      <td>특정한 값을 갖는 원소를 제거하는데, 값을 가진 원소가 여러 개면 하나만 제거한다.</td>
+      <td>O(N)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">기본 리스트 : </span><span class="sh">"</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : 기본 리스트 :  [1, 4, 3]
+</span>
+<span class="c1"># 리스트에 원소 삽입
+</span><span class="n">a</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">삽입 : </span><span class="sh">"</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : 삽입 :  [1, 4, 3, 2]
+</span>
+<span class="c1"># 오름차순 정렬
+</span><span class="n">a</span><span class="p">.</span><span class="nf">sort</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">오름차순 정렬 : </span><span class="sh">"</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : 오름차순 정렬 :  [1, 2, 3, 4]
+</span>
+<span class="c1"># 내림차순 정렬
+</span><span class="n">a</span><span class="p">.</span><span class="nf">sort</span><span class="p">(</span><span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">내림차순 정 렬 : </span><span class="sh">"</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : 내림차순 정렬 :  [4, 3, 2, 1]
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># 리스트 원소 뒤집기
+</span><span class="n">a</span><span class="p">.</span><span class="nf">reverse</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">원소 뒤집기 : </span><span class="sh">"</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : 원소 뒤집기 :  [1, 2, 3, 4]
+</span>
+<span class="c1"># 특정 인덱스에 데이터 추가
+</span><span class="n">a</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">인덱스 2에 3 추가 : </span><span class="sh">"</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : 인덱스 2에 3추가 :  [1, 2, 3, 3, 4]
+</span>
+<span class="c1"># 특정 값인 데이터 개수 세기
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">값이 3인 데이터 개수 : </span><span class="sh">"</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="nf">count</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="c1"># 실행 결과 : 값이 3인 데이터 개수 2
+</span>
+<span class="c1"># 특정 값 데이터 삭제
+</span><span class="n">a</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">값이 1인 데이터 삭제 : </span><span class="sh">"</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : 값이 1인 데이터 삭제 :  [2, 3, 3, 4]
+</span></code></pre></div></div>
+
+<h3 id="리스트에서-특정-값을-가지는-원소를-모두-제거하기">리스트에서 특정 값을 가지는 원소를 모두 제거하기</h3>
+
+<ul>
+  <li>집합 자료형을 사용하면 특정한 원소의 존재 유무를 체크할 때 용이</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">remove_set</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span> <span class="c1"># 집합 자료형
+</span>
+<span class="c1"># remove_list에 포함되지 않는 값만 저장
+</span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">remove_set</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># 실행 결과 : [1, 2, 4]
+</span></code></pre></div></div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=%5BPython%5D+-+%EB%A6%AC%EC%8A%A4%ED%8A%B8+%EC%9E%90%EB%A3%8C%ED%98%95%20http%3A%2F%2Flocalhost%3A4000%2Fsyntax%2F2023%2F01%2F08%2FPython-data-type-list.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html&quote=%5BPython%5D+-+%EB%A6%AC%EC%8A%A4%ED%8A%B8+%EC%9E%90%EB%A3%8C%ED%98%95%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html&media=$description=%EB%A6%AC%EC%8A%A4%ED%8A%B8+%EC%9E%90%EB%A3%8C%ED%98%95%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html&title=%5BPython%5D+-+%EB%A6%AC%EC%8A%A4%ED%8A%B8+%EC%9E%90%EB%A3%8C%ED%98%95%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html&title=%5BPython%5D+-+%EB%A6%AC%EC%8A%A4%ED%8A%B8+%EC%9E%90%EB%A3%8C%ED%98%95%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=[Python] - 리스트 자료형%20%7C%20Seobisback Github Blog&body=http://localhost:4000/syntax/2023/01/08/Python-data-type-list.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tag</li>
+      
+
+      
+        <li><a class="button" href="/tags#Python">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Python</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="[Python] - 언더바는 언제 사용하는가?" href="/syntax/2023/01/08/Python-under-bar.html">
+            <p>Previous post</p>
+            [Python] - 언더바는 언제 사용하는가?
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Typescript를 사용하는 이유" href="/syntax/2022/12/31/Typescript.html">
+            <p>Next post</p>
+            Typescript를 사용하는 이유
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

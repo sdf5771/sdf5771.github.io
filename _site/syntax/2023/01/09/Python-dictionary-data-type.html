@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[Python] - 집합 자료형, 사전 자료 | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="[Python] - 집합 자료형, 사전 자료" />
+<meta name="author" content="Seobisback" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="사전 자료형" />
+<meta property="og:description" content="사전 자료형" />
+<link rel="canonical" href="http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html" />
+<meta property="og:url" content="http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-01-09T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[Python] - 집합 자료형, 사전 자료" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Seobisback"},"dateModified":"2023-01-09T00:00:00+09:00","datePublished":"2023-01-09T00:00:00+09:00","description":"사전 자료형","headline":"[Python] - 집합 자료형, 사전 자료","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html"},"url":"http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="[Python] - 집합 자료형, 사전 자료">
+    <meta name="twitter:description" content="사전 자료형  사전 자료형은 키(Key)와 값(Value)의 쌍을 데이터로 가지는 자료형이다.          앞서 다루었던 리스트나 튜플이 값을 순차적으로 저장하는 것과는 대비된다.        사전 자료형은 키와 값의 쌍을 데이터로 가지며, 원하는 ‘변경 불가능한 (Immuta...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    <meta name="twitter:image:alt" content="[Python] - 집합 자료형, 사전 자료">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="[Python] - 집합 자료형, 사전 자료 " aria-label="[Python] - 집합 자료형, 사전 자료" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="%5BPython%5D+-+%EC%A7%91%ED%95%A9+%EC%9E%90%EB%A3%8C%ED%98%95%2C+%EC%82%AC%EC%A0%84+%EC%9E%90%EB%A3%8C" class="title">[Python] - 집합 자료형, 사전 자료</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      January 09, 2023
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <h3 id="사전-자료형">사전 자료형</h3>
+
+<ul>
+  <li>사전 자료형은 <strong>키(Key)와 값(Value)</strong>의 쌍을 데이터로 가지는 자료형이다.
+    <ul>
+      <li>앞서 다루었던 리스트나 튜플이 값을 순차적으로 저장하는 것과는 대비된다.</li>
+    </ul>
+  </li>
+  <li>사전 자료형은 키와 값의 쌍을 데이터로 가지며, 원하는 <strong>‘변경 불가능한 (Immutable) 자료형’을 키로 사용</strong>할 수 있다.</li>
+  <li>파이썬의 사전 자료형은 해시 테이블(Hash Table)을 이용하므로 <strong>데이터의 조회 및 수정에 있어서 <em>O(1)</em>의 시간에 처리</strong>할 수 있다.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>키(Key)</th>
+      <th>값(Value)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>사과</td>
+      <td>Apple</td>
+    </tr>
+    <tr>
+      <td>바나나</td>
+      <td>Banana</td>
+    </tr>
+    <tr>
+      <td>코코넛</td>
+      <td>Coconut</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">사과</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">Apple</span><span class="sh">'</span>
+<span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">바나나</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">Banana</span><span class="sh">'</span>
+<span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">코코넛</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">Coconut</span><span class="sh">'</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="sh">'</span><span class="s">사과</span><span class="sh">'</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+	<span class="nf">print</span><span class="p">(</span><span class="sh">"'</span><span class="s">사과</span><span class="sh">'</span><span class="s">를 키로 가지는 데이터가 존재합니다.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 실행 결과 : '사과'를 키로 가지는 데이터가 존재합니다.
+</span></code></pre></div></div>
+
+<ul>
+  <li>사전 자료형에서는 키와 값을 별도로 뽑아내기 위한 메서드를 지원한다.
+    <ul>
+      <li>키 데이터만 뽑아서 리스트로 이용할 때는 <strong>keys() 함수</strong>를 이용한다.</li>
+      <li>값 데이터만 뽑아서 리스트로 이용할 때는 <strong>values() 함수</strong>를 이용한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">사과</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">Apple</span><span class="sh">'</span>
+<span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">바나나</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">Banana</span><span class="sh">'</span>
+<span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">코코넛</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">Coconut</span><span class="sh">'</span>
+
+<span class="c1"># 키 데이터만 담은 리스트
+</span><span class="n">key_list</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">keys</span><span class="p">()</span>
+<span class="c1"># 값 데이터만 담은 리스트
+</span><span class="n">value_list</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">values</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">key_list</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : dict_keys(['사과', '바나나', '코코넛'])
+</span><span class="nf">print</span><span class="p">(</span><span class="n">value_list</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : dict_values(['Apple', 'Banana', 'Coconut'])
+</span>
+<span class="c1"># 각 키에 따른 값을 하나씩 출력
+</span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">key_list</span><span class="p">:</span>
+	<span class="nf">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+<span class="c1"># 실행 결과 : 
+# Apple
+# Banana
+# Coconut
+</span></code></pre></div></div>
+
+<h3 id="집합-자료형">집합 자료형</h3>
+
+<ul>
+  <li>집합은 다음과 같은 특징이 있다.
+    <ul>
+      <li>중복을 허용하지 않는다.</li>
+      <li>순서가 없다.</li>
+    </ul>
+  </li>
+  <li>집합은 리스트 혹은 문자열을 이용해서 초기화할 수 있다.
+    <ul>
+      <li>이때 set() 함수를 이용한다.</li>
+    </ul>
+  </li>
+  <li>혹은 중괄호 ({})안에 각 원소를 콤마(,)를 기준으로 구분하여 삽입함으로써 초기화 할 수 있다.</li>
+  <li>데이터의 조회 및 수정에 있어서 <em>O(1)</em>의 시간에 처리할 수 있다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 집합 자료형 초기화 방법 1
+</span><span class="n">data</span> <span class="o">=</span> <span class="nf">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : {1, 2, 3, 4, 5}
+</span>
+<span class="c1"># 집합 자료형 초기화 방법 2
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : {1, 2, 3, 4, 5}
+</span></code></pre></div></div>
+
+<ul>
+  <li>기본적인 집합 연산으로는 합집합, 교집합, 차집합 연산 등이 있다.
+    <ul>
+      <li>합집합 : 집합 A에 속하거나 B에 속하는 원소로 이루어진 집함 ($A ∪ B$)</li>
+      <li>교집합 : 집합 A에도 속하고 B에도 속하는 원소로 이루어진 집합 ($A ∩ B$)</li>
+      <li>차집합 : 집합 A의 원소 중에도 B에 속하지 않는 원소들로 이루어진 집합($A - B$)</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="nf">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nf">set</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+
+<span class="c1"># 합집합
+</span><span class="nf">print</span><span class="p">(</span><span class="n">a</span> <span class="o">|</span> <span class="n">b</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : {1, 2, 3, 4, 5, 6, 7}
+</span>
+<span class="c1"># 교집합
+</span><span class="nf">print</span><span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : {3, 4, 5}
+</span>
+<span class="c1"># 차집합
+</span><span class="nf">print</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : {1, 2}
+</span></code></pre></div></div>
+
+<h3 id="집합-자료형-관련-함수">집합 자료형 관련 함수</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="nf">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : {1, 2, 3}
+</span>
+<span class="c1"># 새로운 원소 추가
+</span><span class="n">data</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : {1, 2, 3, 4}
+</span>
+<span class="c1"># 새로운 원소 여러 개 추가
+</span><span class="n">data</span><span class="p">.</span><span class="nf">update</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="c1"># 실행 결과 : {1, 2, 3, 4, 5, 6}
+</span>
+<span class="c1"># 특정한 값을 갖는 원소 삭제
+</span><span class="n">data</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="c1"># 실행 결과 : {1, 2, 4, 5, 6}
+</span></code></pre></div></div>
+
+<h3 id="사전-자료형과-집합-자료형의-특징">사전 자료형과 집합 자료형의 특징</h3>
+
+<ul>
+  <li>리스트나 튜플은 순서가 있기 때문에 인덱싱을 통해 자료형의 값을 얻을 수 있다.</li>
+  <li>사전 자료형과 집합 자료형은 순서가 없기 때문에 인덱싱으로 값을 얻을 수 있다.
+    <ul>
+      <li>사전의 키(Key) 혹은 집합의 원소(Element)를 이용해 <strong><em>O(1)</em></strong>의 시간 복잡도로 조회한다.</li>
+    </ul>
+  </li>
+</ul>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=%5BPython%5D+-+%EC%A7%91%ED%95%A9+%EC%9E%90%EB%A3%8C%ED%98%95%2C+%EC%82%AC%EC%A0%84+%EC%9E%90%EB%A3%8C%20http%3A%2F%2Flocalhost%3A4000%2Fsyntax%2F2023%2F01%2F09%2FPython-dictionary-data-type.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html&quote=%5BPython%5D+-+%EC%A7%91%ED%95%A9+%EC%9E%90%EB%A3%8C%ED%98%95%2C+%EC%82%AC%EC%A0%84+%EC%9E%90%EB%A3%8C%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html&media=$description=%EC%82%AC%EC%A0%84+%EC%9E%90%EB%A3%8C%ED%98%95%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html&title=%5BPython%5D+-+%EC%A7%91%ED%95%A9+%EC%9E%90%EB%A3%8C%ED%98%95%2C+%EC%82%AC%EC%A0%84+%EC%9E%90%EB%A3%8C%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html&title=%5BPython%5D+-+%EC%A7%91%ED%95%A9+%EC%9E%90%EB%A3%8C%ED%98%95%2C+%EC%82%AC%EC%A0%84+%EC%9E%90%EB%A3%8C%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=[Python] - 집합 자료형, 사전 자료%20%7C%20Seobisback Github Blog&body=http://localhost:4000/syntax/2023/01/09/Python-dictionary-data-type.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tag</li>
+      
+
+      
+        <li><a class="button" href="/tags#Python">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Python</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="[Python] - 기본 입출력" href="/syntax/2023/01/10/Python-default-input-output.html">
+            <p>Previous post</p>
+            [Python] - 기본 입출력
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="[Python] - 언더바는 언제 사용하는가?" href="/syntax/2023/01/08/Python-under-bar.html">
+            <p>Next post</p>
+            [Python] - 언더바는 언제 사용하는가?
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

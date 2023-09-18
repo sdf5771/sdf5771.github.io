@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민 | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민" />
+<meta name="author" content="Seobisback" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="🌱  이 토픽에 관해" />
+<meta property="og:description" content="🌱  이 토픽에 관해" />
+<link rel="canonical" href="http://localhost:4000/syntax/2023/09/17/Browser-rendering.html" />
+<meta property="og:url" content="http://localhost:4000/syntax/2023/09/17/Browser-rendering.html" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-09-17T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Seobisback"},"dateModified":"2023-09-17T00:00:00+09:00","datePublished":"2023-09-17T00:00:00+09:00","description":"🌱  이 토픽에 관해","headline":"(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/syntax/2023/09/17/Browser-rendering.html"},"url":"http://localhost:4000/syntax/2023/09/17/Browser-rendering.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민">
+    <meta name="twitter:description" content="🌱  이 토픽에 관해스터디에서 발표 자료를 준비하기 위해 정리하였으며, 프론트엔드 엔지니어 포지션으로 면접을 보며 많이 받은 질문이다.“웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요?”이론상으로 외우며 공부한 부분을 좀 더 깊게 파해쳐서 정리해보기로 했다.우...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    <meta name="twitter:image:alt" content="(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민 " aria-label="(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="%28Deep+Dive+Study%29%EC%9B%B9+%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%97%90+naver.com+URL%EC%9D%84+%EC%9E%85%EB%A0%A5%ED%95%98%EB%A9%B4+%EC%96%B4%EB%96%A4+%EC%9D%BC%EC%9D%B4+%EC%83%9D%EA%B8%B0%EB%82%98%EC%9A%94%3F+%2B+%EC%9D%B4%EB%A1%A0%EC%9D%84+%ED%86%B5%ED%95%9C+%EB%A0%8C%EB%8D%94%EB%A7%81+%EC%B5%9C%EC%A0%81%ED%99%94+%EA%B3%A0%EB%AF%BC" class="title">(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      September 17, 2023
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <h1 id="-이-토픽에-관해">🌱  이 토픽에 관해</h1>
+
+<p>스터디에서 발표 자료를 준비하기 위해 정리하였으며, 프론트엔드 엔지니어 포지션으로 면접을 보며 많이 받은 질문이다.</p>
+
+<p><strong>“웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요?”</strong></p>
+
+<p>이론상으로 외우며 공부한 부분을 좀 더 깊게 파해쳐서 정리해보기로 했다.</p>
+
+<p>우선적으로, 해당 부분을 깊게 정리하려면 사전에 웹 브라우저가 사이트에 접속할 경우의 동작 순서를 간략하게 정리할 필요가 있다고 생각한다.</p>
+
+<hr />
+
+<h1 id="웹-브라우저와-웹-브라우저의-동작에-관해">🌑 웹 브라우저와 웹 브라우저의 동작에 관해</h1>
+
+<p>우리가 웹 서핑을 위해 익히 사용하는 웹 브라우저는 보통 웹 서버와 통신하고 다양한 사이트 내부의 컨텐츠를 볼 수 있도록 지원하는 소프트웨어이다.</p>
+
+<p><img src="/assets/images/posts/2023-09-17-Browser-rendering/browser01.png" alt="Untitled" /></p>
+
+<p>브라우저는 다양한 종류의 브라우저가 있으며, 해당 브라우저마다 엔진이 다르기 때문에 퍼블리셔와 프론트엔드 엔지니어는 Cross Browsing에 유의하며 자바스크립트와 CSS를 작성해야 한다.</p>
+
+<p><img src="/assets/images/posts/2023-09-17-Browser-rendering/browser02.png" alt="Untitled" /></p>
+
+<p>출처 : <a href="http://mozilla.org">mozilla.org</a> (MDN web docs)</p>
+
+<hr />
+
+<h1 id="-그럼-웹-브라우저는-어떻게-동작해--웹-브라우저의-동작-순서">🌒 그럼 웹 브라우저는 어떻게 동작해 ? (웹 브라우저의 동작 순서)</h1>
+
+<h2 id="동작-순서와-토픽-정리">동작 순서와 토픽 정리</h2>
+
+<ol>
+  <li>사용자가 웹 브라우저 주소창에 URL을 입력하면, 웹 브라우저는 <strong>DNS</strong>에게 해당 호스트의 IP주소를 묻게 된다.
+    <ol>
+      <li>일반 사용자는 <strong><code class="language-plaintext highlighter-rouge">naver.com</code></strong>과 같은 Domain Name을 통해 정보에 엑세스하게 되는데, 웹 브라우저는 인터넷 프로토콜(IP) 주소를 통해 상호작용 하므로 DNS는 브라우저가 인터넷 자원을 로드할 수 있도록 도메인 이름을 IP주소로 변환하는 작업을 행해준다.</li>
+      <li>DNS(Domain Name System) : IP 주소 및 기타 데이터를 저장하고 이름별로 쿼리할 수 있게 해주는 분산 데이터베이스이다. 쉽게 표현하면 인터넷 상의 전화번호부와 같다.</li>
+    </ol>
+  </li>
+  <li>브라우저는 해당 호스트의 IP주소로 서버를 찾아간다. 이때 브라우저는 번호표 역할을 하는 ISN(Random Sequence)를 가지고 간다.
+    <ol>
+      <li>ISN (Random Sequence) : TCP 기반 데이터 통신에서 각각의 새 연결에 할당된 고유한 32비트 시퀀스 번호를 나타낸다. TCP 연결을 통해 전송되는 다른 데이터 바이트와 충돌하지 않는 시퀀스 번호를 할당하는데 도움이 된다. ( 통신마다 충돌이 일어나지 않기 위한 목적 )</li>
+    </ol>
+  </li>
+  <li>서버는 ISN(Random Sequence)를 가지고 1을 더한 후 다시 브라우저에게 주고, 브라우저는 서버에게 응답받은 ISN(Random Sequence)에 다시 한 번 1을 더해 서버에 보내며 데이터를 주고 받기 위한 3 Way-Handshake 를 완료한다.
+    <ol>
+      <li>3 Way-Handshake : 3개의 단계를 기반으로 TCP의 연결을 성립하는 것
+        <ol>
+          <li>
+            <p>(그림) 3 Way-Handshake 연결 성립 단계</p>
+
+            <p><img src="/assets/images/posts/2023-09-17-Browser-rendering/browser03.png" alt="Untitled" /></p>
+
+            <ol>
+              <li>SYN(synchronization) : 연결 요청 플래그</li>
+              <li>ACK(acknowledgement) : 응답 플래그</li>
+            </ol>
+          </li>
+          <li>
+            <p>(그림) Wireshark 패킷 분석 도구에서 요청의 Sequence Number를 조회</p>
+
+            <p><img src="/assets/images/posts/2023-09-17-Browser-rendering/browser04.png" alt="Untitled" /></p>
+          </li>
+          <li>SYN 단계 : 클라이언트는 서버에 클라이언트의 ISN(Random Sequence)을 담아 SYN을 보낸다.</li>
+          <li>SYN + ACK 단계 : 서버는 클라이언트의 SYN을 수신하고 서버의 ISN을 보내며 승인번호로 클라이언트의 ISN + 1을 보낸다.</li>
+          <li>ACK 단계 : 클라이언트는 서버의 ISN + 1한 값인 승인번호를 담아 ACK를 서버에 보낸다.</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>3 Way-Handshake 과정이 끝난 이후 브라우저는 서버에게 데이터를 요청한다. (HTTP Request)</li>
+  <li>서버는 브라우저에게 받은 요청에 응답하여 데이터를 보낸다. (HTTP Response)</li>
+</ol>
+
+<h3 id="construction---가져온-html-css를-parsing하고-합쳐진-하나의-tree를-생성하는-단계"><strong>Construction</strong> - 가져온 HTML, CSS를 Parsing하고 합쳐진 하나의 Tree를 생성하는 단계</h3>
+
+<ol>
+  <li>서버로 부터 받은 데이터를 출력하기 위해 해당 데이터를 W3C 명세에 따라 해석한다. (Parsing)
+    <ol>
+      <li>W3C (World Wide Web Consortium) : 웹의 창시자 팀 버너스리를 중심으로 설립된 웹 표준화 기구, 웹에서 사용되는 HTML, SOAP, XML 등의 표준을 개발한다.</li>
+    </ol>
+  </li>
+  <li>브라우저의 렌더링 엔진은 HTML을 Parsing해서 DOM Tree를 생성한다.
+    <ol>
+      <li>
+        <p>(그림) DOM Tree &amp; CSSOM Tree &amp; Render Tree</p>
+
+        <p><img src="/assets/images/posts/2023-09-17-Browser-rendering/browser05.png" alt="Untitled" /></p>
+      </li>
+      <li>
+        <p>DOM Tree(Document Object Model Tree) : HTML 문서를 태그나 속성의 계층 구조(트리 구조)로 간주하여 참조하는 개념, 웹 문서를 node 구조의 tree 형태로 표시한다. 웹 브라우저는 DOM을 사용하기 때문에 자바스크립트와 CSS를 사용해서 상호작용이 가능하다.</p>
+      </li>
+    </ol>
+  </li>
+  <li>HTML을 Parsing하는 과정에서 렌더링 엔진이 스타일 태그(style)를 만난다면 HTML Parsing 작업을 중지하고, CSS Parsing 작업을 시작하여 CSSOM Tree를 생성한다.
+    <ol>
+      <li>CSSOM Tree(CSS Object Model Tree) : HTML 문서를 DOM Tree로 만든 것처럼, CSS도 브라우저가 이해하고 처리할 수 있도록 변환해서 만든 계층 구조</li>
+    </ol>
+  </li>
+  <li>CSS Parsing을 종료하고 HTML Parsing이 중단된 지점부터 다시 Parsing을 진행한다. 그러다가 스크립트 태그(script)를 만나면 다시 HTML Parsing을 중단하고 자바스크립트 엔진에게 제어 권한을 넘긴다.</li>
+  <li>자바스크립트 엔진은 코드를 해석하여 AST를 생성한 후 실행한다.
+    <ol>
+      <li>
+        <p>(그림) 자바스크립트 코드와 해당 코드를 바탕으로 생성된 AST</p>
+
+        <p><img src="/assets/images/posts/2023-09-17-Browser-rendering/browser06.png" alt="Untitled" /></p>
+      </li>
+      <li>
+        <p>AST(Abstract Syntax Tree) 추상 구문 트리 : 각 노드는 소스코드에서 발생되는 구조를 나타내고, 소스코드를 문법에 맞게 노드로 쪼개서 만든 트리이다. 추상적이라는 의미는 실제 구문에서 나타나는 세세한 정보를 나타내지 않는다는 것을 의미한다.</p>
+      </li>
+    </ol>
+  </li>
+  <li>다음으로 중단되었던 HTML Parsing 작업을 완료한다.</li>
+  <li>
+    <p>앞서 만든 DOM Tree와 CSSOM Tree를 합쳐서 Render Tree를 생성한다.</p>
+
+    <p><img src="/assets/images/posts/2023-09-17-Browser-rendering/browser07.png" alt="Untitled" /></p>
+  </li>
+</ol>
+
+<h3 id="operation---시각화-단계-layout-paint-composition"><strong>Operation - 시각화 단계 (layout, paint, composition)</strong></h3>
+
+<ol>
+  <li>이후 렌더링 엔진은 Layout 작업을 시작하는데 이 작업은 Render Tree의 노드들을 화면의 올바른 위치에 표시하는 것을 의미한다. (layout)</li>
+  <li>UI Backend가 Render Tree의 노드들을 돌면서 UI를 그린다. (paint)</li>
+  <li>노드들의 레이어를 순서대로 구성한다. z-index가 낮은 요소를 먼저 놓고, 그 다음 높은 요소를 놓는다. (composition)
+    <ol>
+      <li>z-index : CSS 스타일 코드 중, 창을 순서대로 배치하는 스타일</li>
+    </ol>
+  </li>
+</ol>
+
+<blockquote>
+  <p>“Better UX” 좀 더 나은 사용자 경험</p>
+
+  <p>이러한 Parsing과 배치(Layout), UI를 paint 하는 과정은 브라우저가 사용자에게 더 빠르게 화면을 출력해주기 위해 서버로부터 데이터의 일부를 받고 나서 화면에 표시하고 또 데이터를 받게 되면 화면에 표시하는 것을 반복한다.</p>
+
+  <p>이 때문에 웹 페이지의 화면은 한 번에 렌더링 되지 않고, 부분적으로 렌더링 되는 현상이 나타나는 것이다.</p>
+</blockquote>
+
+<ol>
+  <li>최종적으로 웹의 사용자에게 결과 화면을 출력한다.</li>
+</ol>
+
+<hr />
+
+<h1 id="이론을-통한-렌더링-최적화-">이론을 통한 렌더링 최적화 🧐</h1>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="p">=</span><span class="s">"script.js"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>여담으로 script 태그를 head가 아닌 body의 끝에 삽입하거나 defer 옵션을 사용하라는 말을 한 번쯤은 들어봤을 것이다.</p>
+
+<p>NHN Cloud 에서 발표한 ‘[2018] 프런트엔드 성능 최적화’ 라는 영상이 있는데,</p>
+
+<p>script 태그의 삽입 위치를 통해서도 렌더링 최적화를 경험할 수 있는 부분이다.</p>
+
+<p><img src="/assets/images/posts/2023-09-17-Browser-rendering/browser08.png" alt="Untitled" /></p>
+
+<p>자료 URL : https://www.youtube.com/watch?v=G1IWq2blu8c&amp;t=970s</p>
+
+<p>이 부분은 브라우저 렌더링 과정을 살펴보면 이해할 수 있는 부분인데,</p>
+
+<p>결론부터 말하면 HTML을 Parsing하는 과정에서 script 태그를 만나 parsing을 중단하고 AST를 생성하고 실행하는 과정이 있기 때문에 스크립트 삽입 위치에 따라 렌더링 시간이 달라진다는 것이다.</p>
+
+<h2 id="head-에-스크립트를-배치할-경우">head 에 스크립트를 배치할 경우</h2>
+
+<p>head에 스크립트를 포함할 경우 parsing을 멈추고, JS 파일을 받아오고 실행한 뒤 다시 HTML을 parsing 하는 과정을 진행할텐데..</p>
+
+<p>Javascript 크기가 클 경우 렌더링이 너무 오래걸려서 사용자가 페이지를 보기까지 많은 시간이 소요될 것이다..</p>
+
+<p>그러므로 head 태그 안에 스크립트 파일을 배치하는 것은 좋은 방법이라고 볼 수 없다.</p>
+
+<h2 id="body-에-스크립트를-배치할-경우">body 에 스크립트를 배치할 경우</h2>
+
+<p>body 하단에 스크립트를 배치할 경우 HTML parsing을 먼저 진행하고 JS파일을 받아와 실행하게 된다.</p>
+
+<p>body에 삽입할 경우 화면 렌더링에 head 보다 좀 더 효과적일 수 있으나, Javascript가 포함된 콘텐츠를 보기 위해서는 오래 걸릴 것이다.</p>
+
+<h2 id="async-속성-사용">async 속성 사용</h2>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">async</span> <span class="na">src</span><span class="p">=</span><span class="s">"script.js"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>async 속성은 head태그 안에 스크립트 태그를 배치하고 async 속성과 함께 사용하게 된다.</p>
+
+<p>async 속성은 파싱과 Javascript 불러오기를 병렬적으로 진행하기 때문에 기존 방법들보다는 다운로드 시간이 절약되어 효율적이긴 하지만, 결국 JS를 실행하는 단계에서 HTML Parsing이 중단되기 때문에 의존성이 있는 페이지라면 문제가 될 수 있으므로 유의해서 사용해야 하는 속성이다.</p>
+
+<hr />
+
+<h2 id="defer-속성-사용">defer 속성 사용</h2>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">defer</span> <span class="na">src</span><span class="p">=</span><span class="s">"script.js"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>defer 속성은 async 속성과 마찬가지로 head에 스크립트 태그를 배치하고 defer 속성과 함께 사용하게 된다.</p>
+
+<p>병렬적으로 파싱과 Javascript 불러오기를 진행하게 되고, 파싱이 모두 끝나면 Javascript를 실행한다.</p>
+
+<p>병렬적으로 진행되기 때문에 다운로드 시간도 절약되고 async 속성과 다르게 파싱하는 도중에 Javscript 파일을 모두 다운 받고, 파싱이 끝난 후 순서대로 파일을 실행하기 때문에 원하는 방향대로 스크립트를 실행할 수 있다.</p>
+
+<p>결론적으로 외부 스크립트를 다운받아 불러와야할 경우에는 defer 속성을 사용하는 것이 최선이라고 생각할 수 있다.</p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/syntax/2023/09/17/Browser-rendering.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=%28Deep+Dive+Study%29%EC%9B%B9+%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%97%90+naver.com+URL%EC%9D%84+%EC%9E%85%EB%A0%A5%ED%95%98%EB%A9%B4+%EC%96%B4%EB%96%A4+%EC%9D%BC%EC%9D%B4+%EC%83%9D%EA%B8%B0%EB%82%98%EC%9A%94%3F+%2B+%EC%9D%B4%EB%A1%A0%EC%9D%84+%ED%86%B5%ED%95%9C+%EB%A0%8C%EB%8D%94%EB%A7%81+%EC%B5%9C%EC%A0%81%ED%99%94+%EA%B3%A0%EB%AF%BC%20http%3A%2F%2Flocalhost%3A4000%2Fsyntax%2F2023%2F09%2F17%2FBrowser-rendering.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/syntax/2023/09/17/Browser-rendering.html&quote=%28Deep+Dive+Study%29%EC%9B%B9+%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%97%90+naver.com+URL%EC%9D%84+%EC%9E%85%EB%A0%A5%ED%95%98%EB%A9%B4+%EC%96%B4%EB%96%A4+%EC%9D%BC%EC%9D%B4+%EC%83%9D%EA%B8%B0%EB%82%98%EC%9A%94%3F+%2B+%EC%9D%B4%EB%A1%A0%EC%9D%84+%ED%86%B5%ED%95%9C+%EB%A0%8C%EB%8D%94%EB%A7%81+%EC%B5%9C%EC%A0%81%ED%99%94+%EA%B3%A0%EB%AF%BC%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/syntax/2023/09/17/Browser-rendering.html&media=$description=%F0%9F%8C%B1%C2%A0+%EC%9D%B4+%ED%86%A0%ED%94%BD%EC%97%90+%EA%B4%80%ED%95%B4%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/syntax/2023/09/17/Browser-rendering.html&title=%28Deep+Dive+Study%29%EC%9B%B9+%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%97%90+naver.com+URL%EC%9D%84+%EC%9E%85%EB%A0%A5%ED%95%98%EB%A9%B4+%EC%96%B4%EB%96%A4+%EC%9D%BC%EC%9D%B4+%EC%83%9D%EA%B8%B0%EB%82%98%EC%9A%94%3F+%2B+%EC%9D%B4%EB%A1%A0%EC%9D%84+%ED%86%B5%ED%95%9C+%EB%A0%8C%EB%8D%94%EB%A7%81+%EC%B5%9C%EC%A0%81%ED%99%94+%EA%B3%A0%EB%AF%BC%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/syntax/2023/09/17/Browser-rendering.html&title=%28Deep+Dive+Study%29%EC%9B%B9+%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%97%90+naver.com+URL%EC%9D%84+%EC%9E%85%EB%A0%A5%ED%95%98%EB%A9%B4+%EC%96%B4%EB%96%A4+%EC%9D%BC%EC%9D%B4+%EC%83%9D%EA%B8%B0%EB%82%98%EC%9A%94%3F+%2B+%EC%9D%B4%EB%A1%A0%EC%9D%84+%ED%86%B5%ED%95%9C+%EB%A0%8C%EB%8D%94%EB%A7%81+%EC%B5%9C%EC%A0%81%ED%99%94+%EA%B3%A0%EB%AF%BC%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/syntax/2023/09/17/Browser-rendering.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민%20%7C%20Seobisback Github Blog&body=http://localhost:4000/syntax/2023/09/17/Browser-rendering.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#Browser">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Browser</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Javascript">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Javascript</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Rendering">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Rendering</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+
+    
+    <div id="next-post">
+        <a alt="Javascript Test - Jest" href="/syntax/2023/09/13/Test-jest-learn.html">
+            <p>Next post</p>
+            Javascript Test - Jest
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

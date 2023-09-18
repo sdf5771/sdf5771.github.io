@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1 | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1" />
+<meta name="author" content="Seobisback" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="아토믹 디자인 패턴이란?" />
+<meta property="og:description" content="아토믹 디자인 패턴이란?" />
+<link rel="canonical" href="http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html" />
+<meta property="og:url" content="http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-05-01T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Seobisback"},"dateModified":"2023-05-01T00:00:00+09:00","datePublished":"2023-05-01T00:00:00+09:00","description":"아토믹 디자인 패턴이란?","headline":"아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html"},"url":"http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1">
+    <meta name="twitter:description" content="아토믹 디자인 패턴이란?  좀 더 효과적인 컴포넌트를 구성하기 위한 방법론 중 하나이다.  일관되고 견고하고 재사용이 가능한 디자인 시스템을 만드는데 도움을 준다.  페이지를 디자인 하는 것이 아닌 컴포넌트들의 시스템을 디자인 하는 것이다.장점과 단점장점  한 번만 구현해 놓고 계...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    <meta name="twitter:image:alt" content="아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1 " aria-label="아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="%EC%95%84%ED%86%A0%EB%AF%B9+%EB%94%94%EC%9E%90%EC%9D%B8+%ED%8C%A8%ED%84%B4+%28Atomic+Design+Pattern%29+%EA%B3%B5%EB%B6%80+%EB%B0%8F+%EC%A0%81%EC%9A%A9%EA%B8%B0+%231" class="title">아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      May 01, 2023
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <h1 id="아토믹-디자인-패턴이란">아토믹 디자인 패턴이란?</h1>
+
+<p><img src="/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png" alt="Untitled" /></p>
+
+<ul>
+  <li>좀 더 효과적인 컴포넌트를 구성하기 위한 방법론 중 하나이다.</li>
+  <li>일관되고 견고하고 재사용이 가능한 디자인 시스템을 만드는데 도움을 준다.</li>
+  <li>페이지를 디자인 하는 것이 아닌 컴포넌트들의 시스템을 디자인 하는 것이다.</li>
+</ul>
+
+<h2 id="장점과-단점">장점과 단점</h2>
+
+<h3 id="장점">장점</h3>
+
+<ul>
+  <li>한 번만 구현해 놓고 계속 가져다 쓸 수 있는 코드가 생긴다.</li>
+  <li>Storybook을 활용해서 컴포넌트들을 더 효과적으로 정리할 수 있다.</li>
+  <li>어플리케이션의 복잡함을 해결해준다.</li>
+  <li>뷰와 비즈니스 로직의 분리로 프로젝트가 확장될 때 코드에서 문제를 디버깅하기 쉽다.</li>
+</ul>
+
+<h3 id="단점">단점</h3>
+
+<ul>
+  <li>단기적으로 봤을 때 개발 시간이 오래걸린다.</li>
+</ul>
+
+<hr />
+
+<h1 id="아토믹-디자인-패턴의-구성">아토믹 디자인 패턴의 구성</h1>
+
+<h2 id="atom-원자">Atom (원자)</h2>
+
+<p><img src="/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom02.png" alt="Untitled" /></p>
+
+<p>&lt; label, input, button atom &gt;</p>
+
+<ul>
+  <li>가장 작은 컴포넌트의 단위이다.</li>
+  <li>원자는 어떠한 context가 주어져도 해당하는 컴포넌트가 생성될 수 있어야 한다.</li>
+  <li>다양한 state(상태)를 가지고 있어야하며 추상적이지만 최대한 포용할 수 있게 설계 되어야 한다.</li>
+  <li>원자는 margin이나 위치 값을 가지지 않는다.</li>
+  <li>label, input, button과 같은 기본 HTML element 태그 혹은 글꼴, 애니메이션, 컬러 팔레트, 레이아웃과 같이 추상적인 요소도 포함될 수 있다.</li>
+</ul>
+
+<h2 id="molecule분자">Molecule(분자)</h2>
+
+<p><img src="/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom03.png" alt="Untitled" /></p>
+
+<p>&lt; search from molecule &gt;</p>
+
+<ul>
+  <li>Atom(원자)을 두 개 이상 조합하면 Molecule(분자)가 된다.</li>
+  <li>분자는 분자만의 프로퍼티를 가지고 있을 수 있고, 이를 활용해 원자에 기능을 만들어 줄 수 있다.</li>
+  <li>분자가 원자의 위치값을 지정하기도 한다.</li>
+</ul>
+
+<h2 id="organism유기체">Organism(유기체)</h2>
+
+<p><img src="/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom04.png" alt="Untitled" /></p>
+
+<p>&lt; haeder organism &gt;</p>
+
+<ul>
+  <li>Organism(유기체)은 분자를 엮어 만들어서 생성되고 때로는 분자가 되지 않은 원자가 엮이기도 한다.</li>
+  <li>유기체가 완성되면 컴포넌트가 최종 모습을 가지게 된다.</li>
+  <li>유기체는 분자와 원자의 위치 값을 조정한다.</li>
+  <li>atom, molecule에 비해 좀 더 구체적으로 표현되고 컨텍스트를 가지기 때문에 상대적으로 재사용성이 낮아지는 특성을 가진다.</li>
+</ul>
+
+<h2 id="template-layout">Template (Layout)</h2>
+
+<p><img src="/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom05.png" alt="Untitled" /></p>
+
+<p>&lt; layout이 적용된 molecule과 organism으로 구성된 template &gt;</p>
+
+<ul>
+  <li>템플릿은 만들어진 유기체와 컴포넌트의 position을 정해주는 역할을 한다.</li>
+  <li>템플릿 파일은 주로 페이지를 구성하기 위해 서로 꿰매어진 유기체 그룹으로 구성되며, 이 부분에서 디자인을 확인하고 레이아웃이 실제로 구동하는지 볼 수 있다.</li>
+  <li>템플릿에는 styling이나 color가 들어가지 않는다.</li>
+  <li>템플릿의 역할은 페이지의 그리드를 정해주는 역할 뿐이다.</li>
+  <li>실제 컴포넌트를 레이아웃에 배치하고 구조를 잡는 와이어 프레임이다.</li>
+  <li>실제 콘텐츠가 없는 page 수준의 스켈레톤이라고 정의할 수 있다.</li>
+</ul>
+
+<h2 id="page">Page</h2>
+
+<p><img src="/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom06.png" alt="Untitled" /></p>
+
+<p>&lt; 여러가지 콘텐츠를 template에 적용하여 최종 UI를 보여주는 page &gt;</p>
+
+<ul>
+  <li>page는 유저가 볼 수 있는 실제 콘텐츠를 담는다.</li>
+  <li>template의 인스턴스라고 할 수 있다.</li>
+  <li>template을 이용해서 각 그리드에 컴포넌트를 그려서 디스플레이 한다.</li>
+</ul>
+
+<hr />
+
+<h1 id="어떻게-프로젝트-구조를-잡을까-">어떻게 프로젝트 구조를 잡을까 ?</h1>
+
+<blockquote>
+  <p>해당 소스는 Atomic Design Pattern과 React Recoil을 통한 어플리케이션 작성을 공부하기 위해 작성중인 코드이다.</p>
+
+</blockquote>
+
+<p>구조는 다른 분들의 소스를 참고하여 구성해보았다.</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">├──</span> <span class="nx">Router</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">├──</span> <span class="nx">components</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="nx">Atoms</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">Button</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">Div</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">Input</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">Span</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="nx">Molecules</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">TodoCreateInput</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="nx">Organisms</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">TodoForm</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="nx">Pages</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">Main</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">└──</span> <span class="nx">Template</span>
+<span class="err">│  </span>     <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">├──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">├──</span> <span class="nx">react</span><span class="o">-</span><span class="nx">app</span><span class="o">-</span><span class="nx">env</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">├──</span> <span class="nx">reportWebVitals</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">├──</span> <span class="nx">setupTests</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">├──</span> <span class="nx">state</span>
+<span class="err">│  </span> <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">└──</span> <span class="nx">test</span>
+    <span class="err">└──</span> <span class="nx">Pages</span>
+        <span class="err">└──</span> <span class="nx">Main</span><span class="p">.</span><span class="nx">test</span><span class="p">.</span><span class="nx">tsx</span>
+</code></pre></div></div>
+
+<ul>
+  <li>src 디렉토리 밑에 components 디렉토리를 만들고 역할 별로 디렉토리를 나눈 후 index에서 관리할 수 있게끔 구조를 잡아보았다.</li>
+</ul>
+
+<p><strong>‘component/Atoms/Input.tsx’</strong></p>
+
+<ul>
+  <li>또한 styled 컴포넌트를 적극 활용하여 스타일 코드를 props로 내려받아 사용할 수 있다.</li>
+</ul>
+
+<blockquote>
+  <p>개인적으로 구조를 잡고 구성하는 것에는 시간이 많이 걸리고 고민이 많지만 정말 깔끔한 코드를 작성할 수 있는 것 같음.</p>
+
+</blockquote>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">styled</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">styled-components</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">Input</span> <span class="o">=</span> <span class="nx">styled</span><span class="p">.</span><span class="nx">input</span><span class="o">&lt;</span><span class="nx">React</span><span class="p">.</span><span class="nx">CSSProperties</span> <span class="o">&amp;</span> <span class="p">{</span>
+    <span class="nx">placeholderColor</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span>
+<span class="p">}</span> 
+<span class="o">&gt;</span><span class="s2">`
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    margin: </span><span class="p">${({</span> <span class="nx">margin</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">margin</span><span class="p">}</span><span class="s2">;
+    padding: </span><span class="p">${({</span> <span class="nx">padding</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">padding</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">8px</span><span class="dl">'</span><span class="p">}</span><span class="s2">;
+    line-height: </span><span class="p">${({</span> <span class="nx">lineHeight</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">lineHeight</span><span class="p">}</span><span class="s2">;
+    height: </span><span class="p">${({</span> <span class="nx">height</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">height</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">40px</span><span class="dl">'</span><span class="p">}</span><span class="s2">;
+    width: </span><span class="p">${({</span> <span class="nx">width</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">width</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">}</span><span class="s2">;
+    border: </span><span class="p">${({</span> <span class="nx">border</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">border</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">1px solid #e8e8e8</span><span class="dl">'</span><span class="p">}</span><span class="s2">;
+    box-sizing: border-box;
+    border-radius: </span><span class="p">${({</span> <span class="nx">borderRadius</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">borderRadius</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">8px</span><span class="dl">'</span><span class="p">}</span><span class="s2">;
+    background-color: </span><span class="p">${({</span><span class="nx">backgroundColor</span><span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">backgroundColor</span><span class="p">}</span><span class="s2">;
+    font-size: </span><span class="p">${({</span> <span class="nx">fontSize</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">fontSize</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">16px</span><span class="dl">'</span><span class="p">}</span><span class="s2">;
+
+    :focus {
+        outline: none;
+    }
+    ::placeholder {
+        color: </span><span class="p">${({</span><span class="nx">placeholderColor</span><span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">placeholderColor</span><span class="p">}</span><span class="s2">;
+    }
+`</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">Input</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>이렇게 구성한 Atom Component를 Molecule Component에서 좀 더 복잡한 구조의 컴포넌트로 만들어서 재사용할 수 있다.</p>
+
+<p><strong>‘component/Molecules/TodoCreateInput.tsx’</strong></p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">Atoms</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">components/Atoms</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nf">TodoCreateInput</span><span class="p">(){</span>
+    <span class="k">return</span><span class="p">(</span>
+        <span class="p">&lt;</span><span class="nc">Atoms</span><span class="p">.</span><span class="nc">Div</span> <span class="na">display</span><span class="p">=</span><span class="s">'flex'</span> <span class="na">gap</span><span class="p">=</span><span class="s">"5px"</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nc">Atoms</span><span class="p">.</span><span class="nc">Input</span> <span class="na">border</span><span class="p">=</span><span class="s">"0px"</span> <span class="na">backgroundColor</span><span class="p">=</span><span class="s">"#f2f2f2"</span> <span class="na">placeholder</span><span class="p">=</span><span class="s">'할 일을 입력해주세요.'</span> <span class="na">placeholderColor</span><span class="p">=</span><span class="s">"#cecece"</span><span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">Atoms</span><span class="p">.</span><span class="nc">Button</span> <span class="na">border</span><span class="p">=</span><span class="s">"1px solid #e0e0e0"</span> <span class="na">borderRadius</span><span class="p">=</span><span class="s">"8px"</span><span class="p">&gt;</span>asdasd<span class="p">&lt;/</span><span class="nc">Atoms</span><span class="p">.</span><span class="nc">Button</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nc">Atoms</span><span class="p">.</span><span class="nc">Div</span><span class="p">&gt;</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">TodoCreateInput</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>더 깔끔하게 해당 디자인 패턴을 사용할 수 있는 방법을 이번 프로젝트를 통해 계속 연구해볼 계획이다.</p>
+
+<p>Recoil도 빨리 공부해서 적용해보고 싶다. 재미있어보임</p>
+
+<p>Github Source Link : <a href="https://github.com/sdf5771/my-todo-app.git">https://github.com/sdf5771/my-todo-app.git</a></p>
+
+<hr />
+
+<h3 id="스터디-참고-자료">스터디 참고 자료</h3>
+
+<p>카카오 FE 기술블로그 : <a href="https://fe-developers.kakaoent.com/2022/220505-how-page-part-use-atomic-design-system/">카카오엔터테인먼트 FE 기술블로그</a></p>
+
+<p>유튜브 : <a href="https://www.youtube.com/watch?v=qUSYwidqgFg">Atomic Design Pattern (아토믹 디자인 패턴)</a></p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=%EC%95%84%ED%86%A0%EB%AF%B9+%EB%94%94%EC%9E%90%EC%9D%B8+%ED%8C%A8%ED%84%B4+%28Atomic+Design+Pattern%29+%EA%B3%B5%EB%B6%80+%EB%B0%8F+%EC%A0%81%EC%9A%A9%EA%B8%B0+%231%20http%3A%2F%2Flocalhost%3A4000%2Fsyntax%2F2023%2F05%2F01%2FAtomicDesignPattern01.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html&quote=%EC%95%84%ED%86%A0%EB%AF%B9+%EB%94%94%EC%9E%90%EC%9D%B8+%ED%8C%A8%ED%84%B4+%28Atomic+Design+Pattern%29+%EA%B3%B5%EB%B6%80+%EB%B0%8F+%EC%A0%81%EC%9A%A9%EA%B8%B0+%231%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html&media=$description=%EC%95%84%ED%86%A0%EB%AF%B9+%EB%94%94%EC%9E%90%EC%9D%B8+%ED%8C%A8%ED%84%B4%EC%9D%B4%EB%9E%80%3F%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html&title=%EC%95%84%ED%86%A0%EB%AF%B9+%EB%94%94%EC%9E%90%EC%9D%B8+%ED%8C%A8%ED%84%B4+%28Atomic+Design+Pattern%29+%EA%B3%B5%EB%B6%80+%EB%B0%8F+%EC%A0%81%EC%9A%A9%EA%B8%B0+%231%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html&title=%EC%95%84%ED%86%A0%EB%AF%B9+%EB%94%94%EC%9E%90%EC%9D%B8+%ED%8C%A8%ED%84%B4+%28Atomic+Design+Pattern%29+%EA%B3%B5%EB%B6%80+%EB%B0%8F+%EC%A0%81%EC%9A%A9%EA%B8%B0+%231%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1%20%7C%20Seobisback Github Blog&body=http://localhost:4000/syntax/2023/05/01/AtomicDesignPattern01.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#DesignPattern">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> DesignPattern</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#React">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> React</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Typescript">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Typescript</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="React에서 Skeleton Loading 만들기" href="/syntax/2023/07/19/Skeleton-loading.html">
+            <p>Previous post</p>
+            React에서 Skeleton Loading 만들기
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="[Next JS] 학습 01 - 프로젝트 생성 및 개념 공부" href="/syntax/2023/04/25/Next-js-practice.html">
+            <p>Next post</p>
+            [Next JS] 학습 01 - 프로젝트 생성 및 개념 공부
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

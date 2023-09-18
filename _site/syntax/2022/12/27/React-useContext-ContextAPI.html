@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>ReactHook_useContext + Context API | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="ReactHook_useContext + Context API" />
+<meta name="author" content="Seobisback" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="useContext + Context API" />
+<meta property="og:description" content="useContext + Context API" />
+<link rel="canonical" href="http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html" />
+<meta property="og:url" content="http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-12-27T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="ReactHook_useContext + Context API" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Seobisback"},"dateModified":"2022-12-27T00:00:00+09:00","datePublished":"2022-12-27T00:00:00+09:00","description":"useContext + Context API","headline":"ReactHook_useContext + Context API","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html"},"url":"http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="ReactHook_useContext + Context API">
+    <meta name="twitter:description" content="useContext + Context APIContext API : Context 는 APP 안에서 전역적으로 사용되는 data를 여러 Component 끼리 공유할 수 있는 방법을 제공한다.Context를 사용하면 상위 Component가 일일이 하위 Component에게 전달하...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/header/main_background_image03.png">
+    <meta name="twitter:image:alt" content="ReactHook_useContext + Context API">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="ReactHook_useContext + Context API " aria-label="ReactHook_useContext + Context API" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="ReactHook_useContext+%2B+Context+API" class="title">ReactHook_useContext + Context API</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      December 27, 2022
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <h1 id="usecontext--context-api">useContext + Context API</h1>
+
+<p><strong>Context API : Context 는 APP 안에서 전역적으로 사용되는 data를 여러 Component 끼리 공유할 수 있는 방법을 제공한다.</strong></p>
+
+<p>Context를 사용하면 상위 Component가 일일이 하위 Component에게 전달하지 않아도 된다.</p>
+
+<p>props를 통해 하위 Component에 계속해서 전달하는 일련의 과정을 Prop Drilling 이라고도 한다.</p>
+
+<p><strong>useContext : useContext는 Context로 공유한 data를 쉽게 받아올 수 있게 도와주는 역할을 한다.</strong></p>
+
+<p><img src="/assets/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png" alt="React_useContext1.png" /></p>
+
+<p>«그림 1. Context와 useContext»</p>
+
+<p><strong>Context 는 필요할 때만 사용해야함</strong></p>
+
+<p>Context의 주된 목적은 다양한 Level에 있는 많은 Component들에게 전역적인 데이터를 전하기 위함이다.</p>
+
+<ul>
+  <li>Context를 사용하면 Component를 재사용하기 어려워 질 수 있다.</li>
+  <li>(React 공식문서 내용중)Prop drilling을 피하기위한 목적이라면 Component Composition(컴포넌트 합성)이 더 간단한 해결책일 수도 있다고 제안하고 있다.</li>
+</ul>
+
+<h2 id="example-1">Example 1</h2>
+
+<p>path : context/ThemeContext.js</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">createContext</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">ThemeContext</span> <span class="o">=</span> <span class="nf">createContext</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>path : App.js</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="dl">'</span><span class="s1">./App.css</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">Page</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./components/Page</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ThemeContext</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./context/ThemeContext</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nf">App</span><span class="p">(){</span>
+	<span class="kd">const</span> <span class="p">[</span><span class="nx">isDark</span><span class="p">,</span> <span class="nx">setIsDark</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+	<span class="k">return </span><span class="p">(</span>
+		<span class="p">&lt;</span><span class="nc">ThemeContext</span><span class="p">.</span><span class="nc">Provider</span> <span class="na">value</span><span class="p">=&gt;</span>
+			<span class="p">&lt;</span><span class="nc">Page</span> <span class="na">isDark</span><span class="p">=</span><span class="si">{</span><span class="nx">isDark</span><span class="si">}</span> <span class="na">setIsDark</span><span class="p">=</span><span class="si">{</span><span class="nx">setIsDark</span><span class="si">}</span> <span class="p">/&gt;</span>
+		<span class="p">&lt;/</span><span class="nc">ThemeContext</span><span class="p">.</span><span class="nc">Provider</span><span class="p">&gt;</span>
+	<span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">App</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>path: component/Page.js</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span><span class="nx">useContext</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">Content</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./Content</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">Footer</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./Footer</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">Header</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./Header</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nf">Page</span><span class="p">(){</span>
+	<span class="k">return </span><span class="p">(</span>
+		<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+			<span class="p">&lt;</span><span class="nc">Header</span> <span class="p">/&gt;</span>
+			<span class="p">&lt;</span><span class="nc">Content</span> <span class="p">/&gt;</span>
+			<span class="p">&lt;</span><span class="nc">Footer</span> <span class="p">/&gt;</span>
+		<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+	<span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">Page</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>path: component/Header.js</p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=ReactHook_useContext+%2B+Context+API%20http%3A%2F%2Flocalhost%3A4000%2Fsyntax%2F2022%2F12%2F27%2FReact-useContext-ContextAPI.html"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html&quote=ReactHook_useContext+%2B+Context+API%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html&media=$description=useContext+%2B+Context+API%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html&title=ReactHook_useContext+%2B+Context+API%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html&title=ReactHook_useContext+%2B+Context+API%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=ReactHook_useContext + Context API%20%7C%20Seobisback Github Blog&body=http://localhost:4000/syntax/2022/12/27/React-useContext-ContextAPI.html"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#Context">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Context</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Hooks">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Hooks</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#React">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> React</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="ReactHook_useMemo" href="/syntax/2022/12/27/React-useMemo.html">
+            <p>Previous post</p>
+            ReactHook_useMemo
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="Javascript Types" href="/syntax/2022/12/27/Javascript-type.html">
+            <p>Next post</p>
+            Javascript Types
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

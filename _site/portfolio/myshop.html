@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/portfolio/myshop01.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트 | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="@lastest-update readme post: 2023-05-26" />
+<meta property="og:description" content="@lastest-update readme post: 2023-05-26" />
+<link rel="canonical" href="http://localhost:4000/portfolio/myshop" />
+<meta property="og:url" content="http://localhost:4000/portfolio/myshop" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-05-01T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-05-01T00:00:00+09:00","datePublished":"2023-05-01T00:00:00+09:00","description":"@lastest-update readme post: 2023-05-26","headline":"반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/portfolio/myshop"},"url":"http://localhost:4000/portfolio/myshop"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트">
+    <meta name="twitter:description" content="@lastest-update readme post: 2023-05-26This project is Initialized create-react-appMake Responsive Web SiteSite Link : https://sdf5771.github.io/my-shop/Desi...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/portfolio/myshop01.png">
+    <meta name="twitter:image:alt" content="반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트 " aria-label="반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="%EB%B0%98%EC%9D%91%ED%98%95+%EC%9B%B9+%EA%B0%9C%EB%B0%9C%EC%97%90+%EC%9D%B4%ED%95%B4+%EB%B0%8F+Atomic+Design+%ED%8C%A8%ED%84%B4+%ED%95%99%EC%8A%B5%EC%9D%84+%EC%9C%84%ED%95%9C+%ED%86%A0%EC%9D%B4+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8" class="title">반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      May 01, 2023
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p><code class="language-plaintext highlighter-rouge">@lastest-update readme post: 2023-05-26</code></p>
+
+<p><img src="/assets/img/portfolio/readme.gif" alt="Untitled" /></p>
+
+<p>This project is Initialized create-react-app</p>
+
+<p>Make Responsive Web Site</p>
+
+<p>Site Link : https://sdf5771.github.io/my-shop/</p>
+
+<p>Design Pattern : <code class="language-plaintext highlighter-rouge">Atomic Design Pattern</code></p>
+
+<p>Use Tech Stacks Version</p>
+
+<ul>
+  <li>react : <code class="language-plaintext highlighter-rouge">18.2.0</code></li>
+  <li>gh-pages : <code class="language-plaintext highlighter-rouge">5.0.0</code></li>
+  <li>typescript : <code class="language-plaintext highlighter-rouge">4.9.5</code></li>
+  <li>react-responsive : <code class="language-plaintext highlighter-rouge">9.0.2</code></li>
+  <li>react-router-dom : <code class="language-plaintext highlighter-rouge">6.11.2</code></li>
+  <li>recoil : <code class="language-plaintext highlighter-rouge">0.7.7</code></li>
+  <li>styled-components : <code class="language-plaintext highlighter-rouge">5.3.10</code></li>
+</ul>
+
+<hr />
+
+<h2 id="1-how-to-use">1. How to use</h2>
+
+<ul>
+  <li>Install Dependency Modules</li>
+</ul>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">npm</span> <span class="nx">install</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Start</li>
+</ul>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">npm</span> <span class="nx">start</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="2-packagejson">2. Package.json</h2>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-shop</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">version</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.1.0</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">private</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">dependencies</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">@testing-library/jest-dom</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^5.16.5</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">@testing-library/react</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^13.4.0</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">@testing-library/user-event</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^13.5.0</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">@types/jest</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^27.5.2</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">@types/node</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^16.18.32</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">@types/react</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^18.2.6</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">@types/react-dom</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^18.2.4</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">@types/react-responsive</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^8.0.5</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">gh-pages</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^5.0.0</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^18.2.0</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">react-dom</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^18.2.0</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">react-responsive</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^9.0.2</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">react-router-dom</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^6.11.2</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">react-scripts</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">5.0.1</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">recoil</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^0.7.7</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">styled-components</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^5.3.10</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">typescript</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^4.9.5</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">web-vitals</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^2.1.4</span><span class="dl">"</span>
+  <span class="p">},</span>
+  <span class="dl">"</span><span class="s2">scripts</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">start</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">react-scripts start</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">build</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">react-scripts build</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">test</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">react-scripts test</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">eject</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">react-scripts eject</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">deploy</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">gh-pages -d build</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">predeploy</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">npm run build</span><span class="dl">"</span>
+  <span class="p">},</span>
+  <span class="dl">"</span><span class="s2">eslintConfig</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">extends</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
+      <span class="dl">"</span><span class="s2">react-app</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">react-app/jest</span><span class="dl">"</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="dl">"</span><span class="s2">browserslist</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">production</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
+      <span class="dl">"</span><span class="s2">&gt;0.2%</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">not dead</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">not op_mini all</span><span class="dl">"</span>
+    <span class="p">],</span>
+    <span class="dl">"</span><span class="s2">development</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
+      <span class="dl">"</span><span class="s2">last 1 chrome version</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">last 1 firefox version</span><span class="dl">"</span><span class="p">,</span>
+      <span class="dl">"</span><span class="s2">last 1 safari version</span><span class="dl">"</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="dl">"</span><span class="s2">devDependencies</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">@types/styled-components</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^5.1.26</span><span class="dl">"</span>
+  <span class="p">},</span>
+  <span class="dl">"</span><span class="s2">homepage</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://sdf5771.github.io/my-shop/</span><span class="dl">"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="3-directories-source-tree">3. Directories (Source Tree)</h2>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span>
+<span class="err">├──</span> <span class="nx">Router</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">├──</span> <span class="err">📁</span> <span class="nx">assets</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="err">📁</span> <span class="nx">images</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">bluetouth_earphone_black</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">bluetouth_earphone_brown</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">earphone_black</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">earphone_gold</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">headphone_black</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">headphone_yellow</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">main_product</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">└──</span> <span class="nx">sub_product</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span> <span class="err">└──</span> <span class="err">📁</span> <span class="nx">logos</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="nx">cart</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="nx">hamburgerIcon</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="nx">logo</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="nx">profile</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="nx">search</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">│  </span>     <span class="err">└──</span> <span class="nx">sns_icon</span><span class="p">.</span><span class="nx">svg</span>
+<span class="err">├──</span> <span class="err">📁</span> <span class="nx">components</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="err">📁</span> <span class="nx">Atoms</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">Button</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">Div</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">Input</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">Span</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="err">📁</span> <span class="nx">Molecules</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">FindColor</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">MenuIconList</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">MenuList</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="err">📁</span> <span class="nx">Organisms</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">HamburgerMenu</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">MainProductElement</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">ProductElement</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">SignUpForm</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">SubProductElement</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="err">📁</span> <span class="nx">Pages</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">├──</span> <span class="nx">Main</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span> <span class="err">│  </span> <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">└──</span> <span class="err">📁</span> <span class="nx">Templates</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="nx">Footer</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="nx">Header</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">│  </span>     <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">├──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">tsx</span>
+<span class="err">├──</span> <span class="err">📁</span> <span class="nx">mediaQuery</span>
+<span class="err">│  </span> <span class="err">└──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">├──</span> <span class="nx">react</span><span class="o">-</span><span class="nx">app</span><span class="o">-</span><span class="nx">env</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">├──</span> <span class="nx">reportWebVitals</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">├──</span> <span class="nx">setupTests</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">├──</span> <span class="err">📁</span> <span class="nx">state</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="nx">hamBurgerMenuState</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="nx">mainProduct</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="nx">products</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">│  </span> <span class="err">└──</span> <span class="nx">subProduct</span><span class="p">.</span><span class="nx">ts</span>
+<span class="err">└──</span> <span class="err">📁</span> <span class="nx">types</span>
+    <span class="err">├──</span> <span class="nx">index</span><span class="p">.</span><span class="nx">ts</span>
+    <span class="err">├──</span> <span class="nx">mainProductType</span><span class="p">.</span><span class="nx">ts</span>
+    <span class="err">├──</span> <span class="nx">productType</span><span class="p">.</span><span class="nx">ts</span>
+    <span class="err">└──</span> <span class="nx">subProductType</span><span class="p">.</span><span class="nx">ts</span>
+
+<span class="mi">13</span> <span class="nx">directories</span><span class="p">,</span> <span class="mi">51</span> <span class="nx">files</span>
+</code></pre></div></div>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/portfolio/myshop" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=%EB%B0%98%EC%9D%91%ED%98%95+%EC%9B%B9+%EA%B0%9C%EB%B0%9C%EC%97%90+%EC%9D%B4%ED%95%B4+%EB%B0%8F+Atomic+Design+%ED%8C%A8%ED%84%B4+%ED%95%99%EC%8A%B5%EC%9D%84+%EC%9C%84%ED%95%9C+%ED%86%A0%EC%9D%B4+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20http%3A%2F%2Flocalhost%3A4000%2Fportfolio%2Fmyshop"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/portfolio/myshop&quote=%EB%B0%98%EC%9D%91%ED%98%95+%EC%9B%B9+%EA%B0%9C%EB%B0%9C%EC%97%90+%EC%9D%B4%ED%95%B4+%EB%B0%8F+Atomic+Design+%ED%8C%A8%ED%84%B4+%ED%95%99%EC%8A%B5%EC%9D%84+%EC%9C%84%ED%95%9C+%ED%86%A0%EC%9D%B4+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/portfolio/myshop&media=http://localhost:4000/assets/img/portfolio/myshop01.png$description=%40lastest-update+readme+post%3A+2023-05-26%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/portfolio/myshop&title=%EB%B0%98%EC%9D%91%ED%98%95+%EC%9B%B9+%EA%B0%9C%EB%B0%9C%EC%97%90+%EC%9D%B4%ED%95%B4+%EB%B0%8F+Atomic+Design+%ED%8C%A8%ED%84%B4+%ED%95%99%EC%8A%B5%EC%9D%84+%EC%9C%84%ED%95%9C+%ED%86%A0%EC%9D%B4+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/portfolio/myshop&title=%EB%B0%98%EC%9D%91%ED%98%95+%EC%9B%B9+%EA%B0%9C%EB%B0%9C%EC%97%90+%EC%9D%B4%ED%95%B4+%EB%B0%8F+Atomic+Design+%ED%8C%A8%ED%84%B4+%ED%95%99%EC%8A%B5%EC%9D%84+%EC%9C%84%ED%95%9C+%ED%86%A0%EC%9D%B4+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/portfolio/myshop"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트%20%7C%20Seobisback Github Blog&body=http://localhost:4000/portfolio/myshop"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#OnBoarding">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> OnBoarding</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#React">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> React</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#ReactQuery">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> ReactQuery</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Typescript">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Typescript</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+
+    
+    <div id="next-post">
+        <a alt="Qualk - ‘맞춤 지식 정보 제공 플랫폼’" href="/portfolio/qualk">
+            <p>Next post</p>
+            Qualk - ‘맞춤 지식 정보 제공 플랫폼’
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/portfolio/myshop01.png'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>

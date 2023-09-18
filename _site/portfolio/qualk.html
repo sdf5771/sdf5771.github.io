@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<!--
+    Type on Strap jekyll theme v2.4.6
+    Theme free for personal and commercial use under the MIT license
+    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+
+    <!-- Theme Mode-->
+    
+    <script>
+        const isAutoTheme = true;
+        document.documentElement.setAttribute('data-theme', sessionStorage.getItem('theme'))
+    </script>
+    
+
+    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
+    <script defer src="/assets/js/main.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    
+
+    <!-- KaTeX 0.15.2 -->
+    
+    <script defer src="/assets/js/vendor/katex.min.js"></script>
+    <script defer src="/assets/js/vendor/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    
+
+    <!-- Mermaid 9.1.1 -->
+    
+    <script defer src="/assets/js/vendor/mermaid.min.js" onload="mermaid.initialize({
+      startOnLoad:true,
+      theme: 'default',
+    });"></script>
+    
+
+    <!-- Simple Jekyll Search 1.10.0 -->
+    <script src="/assets/js/vendor/simple-jekyll-search.min.js" type="text/javascript"></script>
+
+    <!-- Google Analytics / Cookie Consent -->
+    <script>
+      const cookieName = 'cookie-notice-dismissed-http://localhost:4000';
+      const isCookieConsent = 'false';
+      const analyticsName = '';
+      const analyticsNameGA4 = '';
+    </script>
+
+    
+    
+
+    <!-- seo tags -->
+    <meta property="og:image" content="http://localhost:4000/assets/img/portfolio/qualk01.png">
+    
+    <meta property="og:type" content="website" />
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Qualk - ‘맞춤 지식 정보 제공 플랫폼’ | Seobisback Github Blog</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Qualk - ‘맞춤 지식 정보 제공 플랫폼’" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tech Blog" />
+<meta property="og:description" content="Tech Blog" />
+<link rel="canonical" href="http://localhost:4000/portfolio/qualk" />
+<meta property="og:url" content="http://localhost:4000/portfolio/qualk" />
+<meta property="og:site_name" content="Seobisback Github Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-01-01T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Qualk - ‘맞춤 지식 정보 제공 플랫폼’" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-01-01T00:00:00+09:00","datePublished":"2023-01-01T00:00:00+09:00","description":"Tech Blog","headline":"Qualk - ‘맞춤 지식 정보 제공 플랫폼’","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/portfolio/qualk"},"url":"http://localhost:4000/portfolio/qualk"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/atom+xml" title="Seobisback Github Blog" href="http://localhost:4000/feed.xml"/>
+    <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Seobisback Github Blog" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Qualk - ‘맞춤 지식 정보 제공 플랫폼’">
+    <meta name="twitter:description" content="  ‘Qualk’ 현재 메인 페이지Link : https://qualk.co.kr/QualkGithub : https://github.com/sdf5771/tree/main/qualk-frontqualk/qualk-front at main · sdf5771/qualk프로젝트 개요 ...">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="http://localhost:4000/assets/img/portfolio/qualk01.png">
+    <meta name="twitter:image:alt" content="Qualk - ‘맞춤 지식 정보 제공 플랫폼’">
+</head>
+
+  <body>
+    <header class="site-header">
+
+    <!-- Logo and title -->
+	<div class="branding">
+        
+		<a href="/">
+			<img alt="logo img" class="avatar" src="/assets/img/avatar1.png" loading="lazy"/>
+		</a>
+        
+        <a class="site-title" aria-label="Seobisback Github Blog" href="/">
+        Seobisback Github Blog
+		</a>
+	</div>
+
+    <!-- Toggle menu -->
+    <nav class="clear">
+    <a aria-label="pull" id="pull" class="toggle" href="#">
+    <i class="fas fa-bars fa-lg"></i>
+    </a>
+
+    <!-- Menu -->
+    <ul class="hide">
+        
+
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="About Me" title="About Me" href="/about/">
+                     About Me 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Gallery" title="Gallery" href="/gallery/">
+                     Gallery 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Portfolio" title="Portfolio" href="/portfolio/">
+                     Portfolio 
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Search" title="Search" href="/search/">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            <li class="separator"> | </li>
+            <li>
+                <a class="clear" aria-label="Tags" title="Tags" href="/tags/">
+                     <i class="fas fa-tags" aria-hidden="true"></i>
+                    
+                </a>
+            </li>
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        
+        <li class="separator"> | </li>
+        <li><a id="theme-toggle" title="Qualk - ‘맞춤 지식 정보 제공 플랫폼’ " aria-label="Qualk - ‘맞춤 지식 정보 제공 플랫폼’" onclick="themeToggle()"></a></li>
+        
+    </ul>
+
+	</nav>
+</header>
+
+    <div class="content">
+      <article class="feature-image" >
+  <header id="main" style="">
+    <div class="title-padder">
+      
+      <h1 id="Qualk+-+%E2%80%98%EB%A7%9E%EC%B6%A4+%EC%A7%80%EC%8B%9D+%EC%A0%95%EB%B3%B4+%EC%A0%9C%EA%B3%B5+%ED%94%8C%EB%9E%AB%ED%8F%BC%E2%80%99" class="title">Qualk - ‘맞춤 지식 정보 제공 플랫폼’</h1>
+      
+
+
+<div class="post-info">
+    <p class="meta">
+      
+      
+      January 01, 2023
+    </p></div>
+
+      
+    </div>
+  </header>
+
+  <section class="post-content">
+  
+      <p><img src="/assets/img/portfolio/qualk01.png" alt="Untitled" /></p>
+
+<blockquote>
+  <p>‘Qualk’ 현재 메인 페이지</p>
+
+</blockquote>
+
+<p>Link : https://qualk.co.kr/</p>
+
+<p><a href="https://qualk.co.kr/">Qualk</a></p>
+
+<p>Github : https://github.com/sdf5771/tree/main/qualk-front</p>
+
+<p><a href="https://github.com/sdf5771/tree/main/qualk-front">qualk/qualk-front at main · sdf5771/qualk</a></p>
+
+<p>프로젝트 개요</p>
+
+<ul>
+  <li>기획, 설계, 런칭을 목적으로 만든 각 분야의 주니어가 모인 팀 ‘Team Lesser Panda’ 에서 개발중인 ‘맞춤 지식 정보 제공 플랫폼’</li>
+  <li>SEO를 통한 검색 유입</li>
+  <li>Google Ads 를 통한 광고 수익</li>
+  <li>Platform
+    <ul>
+      <li>Web Application</li>
+      <li>Mobile Web Application</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>역할</strong></p>
+
+<ul>
+  <li>프로젝트 전체 인원
+    <ul>
+      <li><strong>Front-End Developer - 김섭우</strong></li>
+      <li>Back-End Developer - 장병익</li>
+      <li>Designer - <em>**</em>장수진, 황현우</li>
+      <li>Data Analyst - <em>**</em>홍지호, 정수경</li>
+    </ul>
+  </li>
+  <li>역할과 기여도
+    <ul>
+      <li>프로젝트의 전반적인 Front-End 개발</li>
+      <li>서비스와 화면 구성 및 프로젝트 컨셉 기획</li>
+      <li>Technical SEO 및 URL 구조 설계</li>
+    </ul>
+  </li>
+</ul>
+
+<p>프로젝트를 진행하며 학습한 사항</p>
+
+<ul>
+  <li>presentational &amp; container 디자인 패턴 사용을 통한 코드의 관심사 분리</li>
+  <li>React Query 사용을 통한 Server State 관리 및 캐싱</li>
+  <li>URL 구조 설계 및 프로젝트 디렉토리 구조 및 아키텍처 고민
+    <ul>
+      <li>기능 및 경로 별 그룹화</li>
+    </ul>
+
+    <p><img src="/assets/img/portfolio/qualk02.png" alt="Untitled" /></p>
+  </li>
+  <li>Technical SEO에 관해 학습</li>
+</ul>
+
+<hr />
+
+<h2 id="사용-중인-협업툴">사용 중인 협업툴</h2>
+
+<ul>
+  <li>태스크 관리를 위해 사용하는 툴 - Jira</li>
+</ul>
+
+<p><img src="/assets/img/portfolio/qualk03.png" alt="Untitled" /></p>
+
+<ul>
+  <li>회의록 및 필요 서류를 관리하는 툴 - Confluence</li>
+</ul>
+
+<p><img src="/assets/img/portfolio/qualk04.png" alt="Untitled" /></p>
+
+<hr />
+
+<h1 id="qualk---메인">Qualk - 메인</h1>
+
+<p><img src="/assets/img/portfolio/qualk05.png" alt="Untitled" /></p>
+
+<p><img src="/assets/img/portfolio/qualk06.png" alt="Untitled" /></p>
+
+<p><img src="/assets/img/portfolio/qualk07.png" alt="Untitled" /></p>
+
+<p><img src="/assets/img/portfolio/qualk08.png" alt="Untitled" /></p>
+
+<p>https://qualk.co.kr/</p>
+
+<h1 id="qualk---로그인">Qualk - 로그인</h1>
+
+<p><img src="/assets/img/portfolio/qualk09.png" alt="Untitled" /></p>
+
+<p>https://qualk.co.kr/login</p>
+
+<h1 id="qualk---회원가입">Qualk - 회원가입</h1>
+
+<p><img src="/assets/img/portfolio/qualk10.png" alt="Untitled" /></p>
+
+<p>https://qualk.co.kr/createAccount</p>
+
+<h1 id="qualk---오픈북-퀴즈">Qualk - 오픈북 퀴즈</h1>
+
+<p><img src="/assets/img/portfolio/qualk11.png" alt="Untitled" /></p>
+
+<p><a href="https://qualk.co.kr/quiz/gaiq">https://qualk.co.kr/quiz/</a>{testName}</p>
+
+<h1 id="qualk---오픈북-퀴즈-상세보기">Qualk - 오픈북 퀴즈 상세보기</h1>
+
+<p><img src="/assets/img/portfolio/qualk12.png" alt="Untitled" /></p>
+
+<p><a href="https://qualk.co.kr/quiz/gaiq/2">https://qualk.co.kr/quiz/{testName}/</a>{quizId}</p>
+
+<h1 id="qualk---퀴즈-모의고사-리스트">Qualk - 퀴즈, 모의고사 리스트</h1>
+
+<p><img src="/assets/img/portfolio/qualk13.png" alt="Untitled" /></p>
+
+<p><a href="https://qualk.co.kr/quiz/test/gaiq">https://qualk.co.kr/quiz/test/</a>{testName}</p>
+
+<h1 id="qualk---퀴즈-문제">Qualk - 퀴즈 문제</h1>
+
+<p><img src="/assets/img/portfolio/qualk14.png" alt="Untitled" /></p>
+
+<p><a href="https://qualk.co.kr/quiz/test/gaiq/mockquiz?quiz=">https://qualk.co.kr/quiz/test/{testName}/mockquiz?quiz=</a>{testId}</p>
+
+<h1 id="qualk---모의고사-시작">Qualk - 모의고사 시작</h1>
+
+<p><img src="/assets/img/portfolio/qualk15.png" alt="Untitled" /></p>
+
+<p>https://qualk.co.kr/quiz/test/mockexam/start/</p>
+
+<h1 id="qualk---모의고사-문제">Qualk - 모의고사 문제</h1>
+
+<p><img src="/assets/img/portfolio/qualk16.png" alt="Untitled" /></p>
+
+<p><a href="https://qualk.co.kr/quiz/test/gaiq/mockexam?quiz=abc8eea4-aa91-4370-aa3d-8cde906f9ce2">https://qualk.co.kr/quiz/test/{testName}/mockexam?quiz=</a>{testId}</p>
+
+<h1 id="qualk---모의고사-시험결과-분석">Qualk - 모의고사 시험결과 분석</h1>
+
+<p><img src="/assets/img/portfolio/qualk17.png" alt="Untitled" /></p>
+
+<p><a href="https://qualk.co.kr/quiz/test/mockexam/result/?test-id=abc8eea4-aa91-4370-aa3d-8cde906f9ce2">https://qualk.co.kr/quiz/test/mockexam/result/?test-id=</a>{testId}</p>
+
+<h1 id="qualk---검색-결과">Qualk - 검색 결과</h1>
+
+<p><img src="/assets/img/portfolio/qualk18.png" alt="Untitled" /></p>
+
+<p><a href="https://qualk.co.kr/quiz/search?keyword=BigQuery&amp;type=all">https://qualk.co.kr/quiz/search?keyword={searchKeyword}&amp;type=</a>{searchType}</p>
+
+<hr />
+
+<h1 id="seo-작업---동적-메타태그-작성">SEO 작업 - 동적 메타태그 작성</h1>
+
+<p><a href="https://sdf5771.github.io/react,/seo/Technical-SEO-meta-tag/">Technical SEO를 위한 동적 메타태그 작성 feat.React Project</a></p>
+
+<hr />
+
+<h3 id="lighthouse-성능-측정-결과">Lighthouse 성능 측정 결과</h3>
+
+<p><img src="/assets/img/portfolio/qualk19.png" alt="Untitled" /></p>
+
+    
+  </section>
+
+  <!-- Social media shares -->
+  
+
+<div class="share-buttons">
+    <ul class="share-buttons">
+        <li class="meta">Share</li>
+        
+        <li>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/portfolio/qualk" target="_blank"
+               title=" Facebook">
+                <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Facebook</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://twitter.com/intent/tweet?text=Qualk+-+%E2%80%98%EB%A7%9E%EC%B6%A4+%EC%A7%80%EC%8B%9D+%EC%A0%95%EB%B3%B4+%EC%A0%9C%EA%B3%B5+%ED%94%8C%EB%9E%AB%ED%8F%BC%E2%80%99%20http%3A%2F%2Flocalhost%3A4000%2Fportfolio%2Fqualk"
+               target="_blank" title="">
+                <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Tweet</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.tumblr.com/share?v=3&u=http://localhost:4000/portfolio/qualk&quote=Qualk+-+%E2%80%98%EB%A7%9E%EC%B6%A4+%EC%A7%80%EC%8B%9D+%EC%A0%95%EB%B3%B4+%EC%A0%9C%EA%B3%B5+%ED%94%8C%EB%9E%AB%ED%8F%BC%E2%80%99%20%7C%20Seobisback+Github+Blog&s="
+               target="_blank" title=" Tumblr">
+                <i class="fab fa-tumblr-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Tumblr</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/portfolio/qualk&media=http://localhost:4000/assets/img/portfolio/qualk01.png$description=%0A"
+               target="_blank" title="">
+                <i class="fab fa-pinterest-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Pin it</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="https://www.reddit.com/submit?url=http://localhost:4000/portfolio/qualk&title=Qualk+-+%E2%80%98%EB%A7%9E%EC%B6%A4+%EC%A7%80%EC%8B%9D+%EC%A0%95%EB%B3%B4+%EC%A0%9C%EA%B3%B5+%ED%94%8C%EB%9E%AB%ED%8F%BC%E2%80%99%20%7C%20Seobisback+Github+Blog"
+               target="_blank" title=" Reddit">
+                <i class="fab fa-reddit-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on Reddit</span>
+            </a>
+        </li>
+         
+        <li>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/portfolio/qualk&title=Qualk+-+%E2%80%98%EB%A7%9E%EC%B6%A4+%EC%A7%80%EC%8B%9D+%EC%A0%95%EB%B3%B4+%EC%A0%9C%EA%B3%B5+%ED%94%8C%EB%9E%AB%ED%8F%BC%E2%80%99%20%7C%20Seobisback+Github+Blog&summary=&source=http://localhost:4000/portfolio/qualk"
+               target="_blank" title=" LinkedIn">
+                <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Share on LinkedIn</span>
+            </a>
+        </li>
+          
+        <li>
+            <a href="mailto:?subject=Qualk - ‘맞춤 지식 정보 제공 플랫폼’%20%7C%20Seobisback Github Blog&body=http://localhost:4000/portfolio/qualk"
+               target="_blank" title="">
+                <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
+                <span class="sr-only">Email</span></a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+   <!-- Tag list -->
+  
+  
+
+
+  <div class="tag-list">
+    <ul>
+      
+        <li class="meta">Tags</li>
+      
+
+      
+        <li><a class="button" href="/tags#React">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> React</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#React+Query">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> React Query</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Redux">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Redux</p>
+        </a></li>
+      
+        <li><a class="button" href="/tags#Typescript">
+          <p><i class="fas fa-tag fa-fw fa-sm"></i> Typescript</p>
+        </a></li>
+      
+    </ul>
+  </div>
+
+
+
+</article>
+
+<!-- Post navigation -->
+
+<div id="post-nav">
+    
+    <div id="previous-post">
+        <a alt="반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트" href="/portfolio/myshop">
+            <p>Previous post</p>
+            반응형 웹 개발에 이해 및 Atomic Design 패턴 학습을 위한 토이 프로젝트
+        </a>
+    </div>
+    
+
+    
+    <div id="next-post">
+        <a alt="프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’" href="/portfolio/preonboarding">
+            <p>Next post</p>
+            프리온보딩 프론트엔드 챌린지 1월 - CRUD w React Query’
+        </a>
+    </div>
+    
+</div>
+
+
+
+<!--Utterances-->
+
+
+<!-- Cusdis -->
+
+
+<!-- Disqus -->
+
+
+<!-- To change color of links in the page -->
+<style>
+  header#main {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  
+
+  
+  header#main { background-image: url('/assets/img/portfolio/qualk01.png'); }
+  
+</style>
+
+    </div>
+    <footer class="site-footer">
+    <p class="text">
+        <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">My Notion Portpolio</a>
+</p>
+            <div class="footer-icons">
+                <ul>
+                <!-- Social icons from Font Awesome, if enabled -->
+                
+<li>
+    <a feed.xml href="/feed.xml"
+       title="Follow RSS feed"
+       target="_blank">
+        <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+</li>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+        
+        
+        <li>
+            <a href="https://github.com/sdf5771"
+               title="Follow on Github"
+               target="_blank"
+               rel="noopener">
+            <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+            </a>
+        </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+                </ul>
+            </div>
+</footer>
+
+
+
+  </body>
+</html>
