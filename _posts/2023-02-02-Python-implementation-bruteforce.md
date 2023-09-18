@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python] - 구현: 시뮬레이션과 완전 탐색**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python] - 구현: 시뮬레이션과 완전 탐색"
+author: Seobisback
+tags: [Python, CodingTest]
+categories: Syntax
 ---
 
 # 구현(Implementation)

@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "1929 : (재귀함수) 우박수 (3n+1) (reverse)"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "1929 : (재귀함수) 우박수 (3n+1) (reverse)"
+author: Seobisback
+tags: [Python, CodingTest]
+categories: Syntax
 ---
 
 문제 링크 :

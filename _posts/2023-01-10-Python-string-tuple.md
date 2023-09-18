@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python] - 문자열 자료형, 튜플 자료형**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python] - 문자열 자료형, 튜플 자료형"
+author: Seobisback
+tags: [Python]
+categories: Syntax
 ---
 
 ## 문자열 자료형

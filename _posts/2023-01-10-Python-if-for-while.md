@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python] - 조건문, 반복문**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python] - 조건문, 반복문"
+author: Seobisback
+tags: [Python]
+categories: Syntax
 ---
 
 ### 조건문

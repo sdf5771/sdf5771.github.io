@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python] - 그래프 탐색 알고리즘 : DFS/BFS**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python] - 그래프 탐색 알고리즘 : DFS/BFS"
+author: Seobisback
+tags: [Python, CodingTest]
+categories: Syntax
 ---
 
 # 그래프 탐색 알고리즘 : DFS/BFS

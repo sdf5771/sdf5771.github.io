@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Front-end CS] 브라우저 렌더링 프로세스**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Front-end CS] 브라우저 렌더링 프로세스"
+author: Seobisback
+tags: [Front-end, Computer Science, Browser]
+categories: Syntax
 ---
 
 # Browser Rendering Process

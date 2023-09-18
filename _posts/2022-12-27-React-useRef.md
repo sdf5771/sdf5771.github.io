@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**ReactHook_useRef**"
-categories: React ReactHook
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "ReactHook_useRef"
+author: Seobisback
+tags: [React, Hooks, useRef]
+categories: Syntax
 ---
 
 

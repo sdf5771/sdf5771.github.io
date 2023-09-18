@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**React에서 Skeleton Loading 만들기**"
-categories: React, Typescript
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "React에서 Skeleton Loading 만들기"
+author: Seobisback
+tags: [React, Typescript]
+categories: Syntax
 ---
 
 ![ezgif.com-video-to-gif (1).gif](/assets/images/posts/2023-07-19-Skeleton-loading/skeleton-loading.gif)

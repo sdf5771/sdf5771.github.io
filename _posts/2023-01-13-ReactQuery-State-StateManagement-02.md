@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**React Query + 상태 + 상태 관리 [2편]**"
-categories: React, ReactNative, State, StateManagement
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "React Query + 상태 + 상태 관리 [2편]"
+author: Seobisback
+tags: [React, ReactNative, State, StateManagement]
+categories: Syntax
 ---
 
 React Query + 상태 + 상태 관리 [2편]

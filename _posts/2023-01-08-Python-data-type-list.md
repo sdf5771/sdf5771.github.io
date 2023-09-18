@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python] - 리스트 자료형**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python] - 리스트 자료형"
+author: Seobisback
+tags: [Python]
+categories: Syntax
 ---
 
 # 리스트 자료형

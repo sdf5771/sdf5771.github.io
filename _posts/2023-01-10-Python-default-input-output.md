@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python] - 기본 입출력**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python] - 기본 입출력"
+author: Seobisback
+tags: [Python]
+categories: Syntax
 ---
 
 ### 기본 입출력

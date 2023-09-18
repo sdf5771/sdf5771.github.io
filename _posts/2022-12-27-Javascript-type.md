@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**Javascript Types**"
-categories: JavaScript
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "Javascript Types"
+author: Seobisback
+tags: [JavaScript]
+categories: Syntax
 ---
 
 ### 원시 (Primitive) 타입

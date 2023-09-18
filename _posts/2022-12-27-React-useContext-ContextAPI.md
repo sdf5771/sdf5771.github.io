@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**ReactHook_useContext + Context API**"
-categories: React ReactHook
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "ReactHook_useContext + Context API"
+author: Seobisback
+tags: [React, Hooks, Context]
+categories: Syntax
 ---
 
 # useContext + Context API

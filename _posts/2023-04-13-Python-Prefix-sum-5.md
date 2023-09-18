@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python]백준 : 11660 구간 합 구하기 5**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python]백준 : 11660 구간 합 구하기 5"
+author: Seobisback
+tags: [Python, CodingTest]
+categories: Syntax
 ---
 
 # 백준 : 11660 구간 합 구하기 5

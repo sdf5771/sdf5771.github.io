@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "코드 업 : 1920 : (재귀함수) 2진수 변환"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "코드 업 : 1920 : (재귀함수) 2진수 변환"
+author: Seobisback
+tags: [Python, CodingTest]
+categories: Syntax
 ---
 
 문제 링크 :

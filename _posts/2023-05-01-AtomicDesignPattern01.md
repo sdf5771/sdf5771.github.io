@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1**"
-categories: React, DesignPattern, Typescript
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1"
+author: Seobisback
+tags: [React, DesignPattern, Typescript]
+categories: Syntax
 ---
 
 # 아토믹 디자인 패턴이란?

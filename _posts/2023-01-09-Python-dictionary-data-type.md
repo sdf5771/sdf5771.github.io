@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python] - 집합 자료형, 사전 자료형**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python] - 집합 자료형, 사전 자료"
+author: Seobisback
+tags: [Python]
+categories: Syntax
 ---
 
 ### 사전 자료형

@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python] - 그리디 알고리즘**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python] - 그리디 알고리즘"
+author: Seobisback
+tags: [Python, CodingTest]
+categories: Syntax
 ---
 
 # 그리디 알고리즘

@@ -1,11 +1,11 @@
 ---
-layout: single
-title:  "**Javascript Test - Jest**"
-categories: Javascript, Test, Jest
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "Javascript Test - Jest"
+author: Seobisback
+tags: [React, Javascript, Typescript, Test, Jest]
+categories: Syntax
 ---
+
 
 # Jest 란?
 

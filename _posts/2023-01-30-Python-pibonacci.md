@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python] - 동적 프로그래밍 : 피보나치 수**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python] - 동적 프로그래밍 : 피보나치 수"
+author: Seobisback
+tags: [Python, CodingTest]
+categories: Syntax
 ---
 
 # 피보나치 수열 문제

@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Python] - 언더바는 언제 사용하는가?**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Python] - 언더바는 언제 사용하는가?"
+author: Seobisback
+tags: [Python]
+categories: Syntax
 ---
 
 ### Python에서 언더바 ( _ ) 는 어제 사용하는가?

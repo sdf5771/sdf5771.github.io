@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**클라우드, SaaS, IaaS, PasS**"
-categories: Python
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "클라우드, SaaS, IaaS, PasS"
+author: Seobisback
+tags: [Cloud, SaaS, IaaS, PasS]
+categories: Syntax
 ---
 
 # 클라우드(Cloud)

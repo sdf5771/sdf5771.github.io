@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**Technical SEO를 위한 동적 메타태그 작성 feat.React Project**"
-categories: React, SEO
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "Technical SEO를 위한 동적 메타태그 작성 feat.React Project"
+author: Seobisback
+tags: [React, SEO, MetaTag]
+categories: Syntax
 ---
 
 현재 작업중인 팀 프로젝트에서 SEO를 위한 메타 태그를 작업하며 공부한 것을 기록해본다.

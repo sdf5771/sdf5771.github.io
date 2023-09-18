@@ -1,10 +1,9 @@
 ---
-layout: single
-title:  "**[Next JS] 학습 01 - 프로젝트 생성 및 개념 공부**"
-categories: React, SEO, NextJS
-toc: true
-toc_label: "Table of Contents"
-toc_icon: "bookmark"
+layout: post
+title: "[Next JS] 학습 01 - 프로젝트 생성 및 개념 공부"
+author: Seobisback
+tags: [React, SEO, NextJS]
+categories: Syntax
 ---
 
 # 1. next js app 프로젝트 만들기
