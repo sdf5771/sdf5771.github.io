@@ -65,10 +65,12 @@ BD Assistant 서비스의 전체 DB를 담당
 ### 세션 2: What’s New in MongoDB 8.0
 - 주요 발표자 및 인사이트
 	- [MongoDB] - Product Management - XiaochenWu
+
 #### Feature
 - 현재 8.0 Release Candidas
 - 간소화된 개발자 생산성, 개발자 경험
 - MongoDB 커뮤니티에서 Search와 Vector Search를 사용할 수 있다.
+
 #### 핵심영역
 - 성능
 	- 벤치마크를 통해 성능 향상 지표 소개
@@ -134,18 +136,23 @@ BD Assistant 서비스의 전체 DB를 담당
 ---
 
 `Track B` Sessions
+
 ### 세션 4: MongoDB Atlas에서 이벤트 기반 애플리케이션을 구축하는 방법
 - 주요 발표자 및 인사이트
 	- [MongoDB] - Senior Solutions Architect 이규현 상무
+
 #### Atlas 스트림 프로세싱을 구축한 이유
 - 현재 트렌드는 AI도 트렌드지만 Real TIme Streaming도 많이 이야기가 나온다.
 - 스트리밍 데이터는 최신 앱의 핵심이다.
 	- 스트림 처리는 유입되는 데이터의 폭주를 제어하고, 스트림에서 중요한 이벤트를 찾거나, 이동 중인 데이터와 저장 중인 데이터를 결합하는 등. 이러한 애플리케이션을 구동하는데 있어 기본적인 구성 요소이다.
+
 #### Atlas 스트림 프로세싱 소개
 - 문서 모델과 유연한 스키마를 중심으로 구축
 - 연속 처리, 유효성 검사 및 상태 저장 창 처리
 - 이동 중인 데이터와 저장 중인 데이터를 
+
 #### Atlas 스트림 처리 아키텍처
+
 #### Atlas 스트림 프로세싱의 장점
 - 실시간 데이터 처리
 	- 신속한 처리
@@ -165,6 +172,7 @@ BD Assistant 서비스의 전체 DB를 담당
 ### 세션 5: Vertex AI Agent Builder 소개
 - 주요 발표자 및 인사이트
 	- [Google Cloud] - Partner Engineer 황장준
+
 #### Vertex AI
 - Agent Builder
 	- AI Application을 만들어 내는 것 ( No code, Low code, Full code )
@@ -200,6 +208,7 @@ BD Assistant 서비스의 전체 DB를 담당
 - 야놀자 MongoDB로 데이터 관리 패러다임을 바꾸다. - [야놀자] - 클라우드기술전략실장 김지환
 - AI 애플리케이션을 위한 데이터 모델링 - [MongoDB] - Senior Pre-sales Solutions Architect 조건호 상무
 - MongoDB Atlas로 해결한 주류(酒) 도메인의 문제들 - [데일리샷] - 최희재
+
 ---
 
 
@@ -221,6 +230,7 @@ BD Assistant 서비스의 전체 DB를 담당
 - 주요 발표자 및 인사이트
 	- [SOCAR] - 양준영 매니저
 	- [SOCAR] - 차현철 매니저
+
 #### Mission
 - 쏘카 서비스 외에도 다른 서비스에서도 숙박 관련 정보를 검색으로 제공해주어야함
 - 고성능 검색 엔진 ( 필터 등 )
@@ -240,6 +250,7 @@ BD Assistant 서비스의 전체 DB를 담당
 - 지도 검색 Geo Search - Geo location 정보를 통해서
 
 ---
+
 ## 개인적인 소감 및 학습 포인트
 
 개인적으로는 SOCAR에 Backend Engineer 분들이 소개하는 세션이 가장 흥미로운 부분이였습니다.
