@@ -118,8 +118,8 @@ BD Assistant 서비스의 전체 DB를 담당
 
 
 ### 점심시간 - JMT
-    ![KakaoTalk_Photo_2024-09-04-10-24-34 008.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-34 008.jpeg)
-    ![KakaoTalk_Photo_2024-09-04-10-24-36 009.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-36 009.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-34 008.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-34 008.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-36 009.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-36 009.jpeg)
 
 > 점심식사 이후 부터는 Track 별로 세션이 나뉘어졌습니다. 
 > 저는 `Track B` 에 세션을 들었으며, `Track A` 에서 소개된 세션 목록은 다음과 같습니다
