@@ -130,6 +130,7 @@ BD Assistant 서비스의 전체 DB를 담당
 - MongoDB 데이터 모델링의 원리와 방법론 - [MongoDB] - Advisory Solutions Architect 김규동 상무
 - LG U+ Cloud Management Platform의 MongoDB 활용 사례 - [LG유플러스] - Software Engineer 진보은
 - Relational Migrator를 이용한 애플리케이션 현대화 - [MongoDB] - Senior Solutions Architect 나가진 상무
+
 ---
 
 `Track B` Sessions
