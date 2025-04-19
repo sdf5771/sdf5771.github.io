@@ -24,8 +24,8 @@ categories: Syntax
 
 ### 2부
 
-1. [WebXR: 공간적 웹 경험의 기술적 기반](/syntax/2025/03/13/ux-trends-and-spatial-computing-paradigm-1.html#section3)
-2. [미래 전망: 2025년과 그 이후](/syntax/2025/03/13/ux-trends-and-spatial-computing-paradigm-1.html#section4)
+1. [WebXR: 공간적 웹 경험의 기술적 기반](/syntax/2025/03/14/ux-trends-and-spatial-computing-paradigm-2.html#section3)
+2. [미래 전망: 2025년과 그 이후](/syntax/2025/03/14/ux-trends-and-spatial-computing-paradigm-2.html#section4)
 
 ---
 
@@ -64,6 +64,7 @@ categories: Syntax
 - 제한된 색상과 그래픽 사용
 - 초기 검색 서비스 도입
   ![1999년 당시의 네이버](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02.jpg)
+
   (1999년 당시의 네이버)
 
 #### **2000년대 중반**
@@ -97,7 +98,9 @@ categories: Syntax
 - 모바일 최적화 UX/UI 개편
 - 실시간 검색어, 뉴스 피드 등 실시간성 강화
 - SNS 통합과 소셜 기능 확대
+
   ![02-2.jpg](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02-2.jpg)
+
   (2010년 당시의 네이버 모바일 버전)
 
 #### 2010년대 후반 ~ 2020년대 초반
