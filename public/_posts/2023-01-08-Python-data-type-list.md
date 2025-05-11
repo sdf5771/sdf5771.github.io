@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "[Python] - 리스트 자료형"
+date: "2023-01-08"
 author: Seobisback
 tags: [Python]
 categories: Syntax

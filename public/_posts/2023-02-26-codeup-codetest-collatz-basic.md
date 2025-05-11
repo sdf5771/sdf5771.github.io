@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "코드 업 : 1928 : (재귀함수) 우박수 (3n + 1) (basic)"
+date: "2023-02-26"
 author: Seobisback
 tags: [Python, CodingTest]
 categories: Syntax
 ---
-
 문제 링크 :
 
 [(재귀함수) 우박수 (3n+1) (basic)](https://codeup.kr/problem.php?id=1928)
@@ -60,7 +60,7 @@ sys.setrecursionlimit(10 ** 6)
 def solution(a):
     answer = ''
     print(a)
-    
+  
     def collatz(num):
         if num == 1:
             return

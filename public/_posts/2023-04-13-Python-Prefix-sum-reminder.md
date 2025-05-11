@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "[Python]백준 : 10986 나머지 합"
+date: "2023-04-13"
 author: Seobisback
 tags: [Python, CodingTest]
 categories: Syntax
 ---
-
 # 백준 : 10986 나머지 합
 
 ## 문제

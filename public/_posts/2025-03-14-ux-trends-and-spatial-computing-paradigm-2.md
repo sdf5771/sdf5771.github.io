@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임 시프트 - WebXR: 공간적 웹 경험과 2025 미래 기술 전망 (2부)"
+date: "2025-03-14"
 author: Seobisback
 tags: [Web, Frontend, Design, UX, UI, VR, AR, WebXR, Apple, Google, Vision Pro, Android XR, Spatial, WebGL, Naver]
 categories: Syntax
 ---
-
 #### - 프론트엔드 개발자와 디자이너가 주목해야 할 WebXR과 3차원 웹의 미래
 
 > 최근 몇 년간 웹 개발과 디자인 영역은 유례없는 속도로 진화하고 있습니다. 특히 WebXR과 같은 혁신적인 기술의 등장으로, 우리는 이제 평면적 인터페이스를 넘어 공간적 경험을 설계하는 시대를 마주하고 있습니다.

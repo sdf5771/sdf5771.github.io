@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import type { PostMetadata } from '../types';
+
 // Markdown File Path
 const MARKDOWN_DIRECTORY_PATH = 'public/_posts';
 const postsDirectory = path.join(process.cwd(), MARKDOWN_DIRECTORY_PATH);

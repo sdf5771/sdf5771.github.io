@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "[Python] - 집합 자료형, 사전 자료"
+date: "2023-01-09"
 author: Seobisback
 tags: [Python]
 categories: Syntax

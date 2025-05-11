@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "1929 : (재귀함수) 우박수 (3n+1) (reverse)"
+date: "2023-02-26"
 author: Seobisback
 tags: [Python, CodingTest]
 categories: Syntax
 ---
-
 문제 링크 :
 
 [(재귀함수) 우박수 (3n+1) (reverse)](https://codeup.kr/problem.php?id=1929)

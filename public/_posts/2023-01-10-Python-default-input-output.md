@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "[Python] - 기본 입출력"
+date: "2023-01-10"
 author: Seobisback
 tags: [Python]
 categories: Syntax

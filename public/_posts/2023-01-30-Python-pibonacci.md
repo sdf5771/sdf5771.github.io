@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "[Python] - 동적 프로그래밍 : 피보나치 수"
+date: "2023-01-30"
 author: Seobisback
 tags: [Python, CodingTest]
 categories: Syntax
 ---
-
 # 피보나치 수열 문제
 
 프로그래머스 문제 (링크) - [https://school.programmers.co.kr/learn/courses/30/lessons/12945](https://school.programmers.co.kr/learn/courses/30/lessons/12945)
@@ -38,9 +38,9 @@ categories: Syntax
 ### 입출력 예
 
 | n | return |
-| --- | --- |
-| 3 | 2 |
-| 5 | 5 |
+| - | ------ |
+| 3 | 2      |
+| 5 | 5      |
 
 ### 입출력 예 설명
 
@@ -62,7 +62,6 @@ def solution(n):
 ```
 
 > 유튜브에서 피보나치 수열 관련 알고리즘을 좀 찾아봤는데, 보통 재귀적으로 구현하게 되면 1초 정도의 시간제한이 있을 경우 타임 아웃이 일어나는 것을 확인했다. 그래서 보통 이런 유형의 문제는 동적 프로그래밍(Dynamic Programming)을 통해 풀어야 시간 초과가 나지 않음을 확인하였고, 동적 프로그래밍의 경우 경험 정보를 이용하여 문제를 해결하기 때문에 빠른 연산이 가능하다.
->
 
 ![pibonacci_result](/assets/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png)
 
@@ -77,7 +76,6 @@ def solution(n):
 첫 번째 수와 두 번째 수는 모두 11이고, 세 번째 수부터는 이전의 두 수를 더하여 나타낸다. 피보나치 수열을 나열해 보면 다음과 같다.
 
 > 1,1,2,3,5,8,13…
->
 
 자연수 N을 입력받아 N번째 피보나치 수를 출력하는 프로그램을 작성하시오.
 
@@ -110,7 +108,7 @@ dict = {} # 메모이제이션을 위한 딕셔너리
 def pibonacchi(num):
     if num in dict:
         return dict[num]
-        
+      
     if num == 1 or num == 2:
         dict[num] = 1
         return dict[num]

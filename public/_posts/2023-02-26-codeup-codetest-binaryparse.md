@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "코드 업 : 1920 : (재귀함수) 2진수 변환"
+date: "2023-02-26"
 author: Seobisback
 tags: [Python, CodingTest]
 categories: Syntax
 ---
-
 문제 링크 :
 
 [(재귀함수) 2진수 변환](https://codeup.kr/problem.php?id=1920)
@@ -66,7 +66,7 @@ def solution(a):
     answer = parseBinary(a, answer)
 
     return answer
-    
+  
 input_val = int(input())
 test_val = solution(input_val)
 

@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "클라우드, SaaS, IaaS, PasS"
+date: "2023-04-13"
 author: Seobisback
 tags: [Cloud, SaaS, IaaS, PasS]
 categories: Syntax
 ---
-
 # 클라우드(Cloud)
 
 - 인터넷을 통해 접근할 수 있는 서버 그리고 그 안에서 구동되는 소프트웨어, 데이터베이스 등을 의미함.

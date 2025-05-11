@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1"
+date: "2023-05-01"
 author: Seobisback
 tags: [React, DesignPattern, Typescript]
 categories: Syntax
 ---
-
 # 아토믹 디자인 패턴이란?
 
 ![Untitled](/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png)
@@ -92,7 +92,6 @@ categories: Syntax
 # 어떻게 프로젝트 구조를 잡을까 ?
 
 > 해당 소스는 Atomic Design Pattern과 React Recoil을 통한 어플리케이션 작성을 공부하기 위해 작성중인 코드이다.
-> 
 
 구조는 다른 분들의 소스를 참고하여 구성해보았다.
 
@@ -134,7 +133,6 @@ categories: Syntax
 - 또한 styled 컴포넌트를 적극 활용하여 스타일 코드를 props로 내려받아 사용할 수 있다.
 
 > 개인적으로 구조를 잡고 구성하는 것에는 시간이 많이 걸리고 고민이 많지만 정말 깔끔한 코드를 작성할 수 있는 것 같음.
-> 
 
 ```tsx
 import styled from 'styled-components';

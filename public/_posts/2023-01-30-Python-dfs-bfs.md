@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "[Python] - 그래프 탐색 알고리즘 : DFS/BFS"
+date: "2023-01-30"
 author: Seobisback
 tags: [Python, CodingTest]
 categories: Syntax
 ---
-
 # 그래프 탐색 알고리즘 : DFS/BFS
 
 - 탐색(Search)이란 많은 양의 데이터 중에서 **원하는 데이터를 찾는 과정**을 말한다.
@@ -182,7 +182,7 @@ graph = [
 	[3, 4],
 	[7],
 	[2, 6, 8],
-	[1, 7],	
+	[1, 7],
 ]
 
 # 각 노드가 방문된 정보를 표현 (1차원 리스트)
@@ -269,10 +269,10 @@ bfs(graph, 1, visited)
 
 ### 입출력 예
 
-| maps | result |
-| --- | --- |
+| maps                               | result     |
+| ---------------------------------- | ---------- |
 | ["X591X","X1X5X","X231X", "1XXX1"] | [1, 1, 27] |
-| ["XXX","XXX","XXX"] | [-1] |
+| ["XXX","XXX","XXX"]                | [-1]       |
 
 ### 입출력 예 설명
 
@@ -307,41 +307,41 @@ def solution(maps):
     answer = []
     a, b = len(maps), len(maps[0])
     visit = [[False] * b for _ in range(a)]
-    
+  
     def bfs(x, y):
         queue = deque();
         queue.append((x, y))
         bfs_result = int(maps[x][y])
-        
+      
         while queue:
             current_x, current_y = queue.popleft()
-            
+          
             for l in range(4):
                 next_x = dx[l] + current_x
                 next_y = dy[l] + current_y
-                
+              
                 if next_x < 0 or next_x >= a or next_y < 0 or next_y >= b:
                     continue
-                    
+                  
                 if not visit[next_x][next_y] and maps[next_x][next_y] != 'X':
                     queue.append((next_x, next_y)) 
                     visit[next_x][next_y] = True
                     bfs_result += int(maps[next_x][next_y])
-            
+          
         return bfs_result
-    
+  
     for i in range(a):
         for j in range(b):
             if maps[i][j] != 'X' and not visit[i][j]:
                 visit[i][j] = True
                 answer.append(bfs(i,j))
-    
+  
     return sorted(answer) if answer else [-1]
 ```
 
 ### 음료수 얼려 먹기
 
-- <문제 링크>  이것이 취업을 위한 코딩 테스트다 with 파이썬 (동영상 59:39) : [https://www.youtube.com/watch?v=PqzyFDUnbrY&list=PLRx0vPvlEmdBFBFOoK649FlEMouHISo8N&index=3](https://www.youtube.com/watch?v=PqzyFDUnbrY&list=PLRx0vPvlEmdBFBFOoK649FlEMouHISo8N&index=3)
+- <문제 링크>  이것이 취업을 위한 코딩 테스트다 with 파이썬 (동영상 59:39) : [https://www.youtube.com/watch?v=PqzyFDUnbrY&amp;list=PLRx0vPvlEmdBFBFOoK649FlEMouHISo8N&amp;index=3](https://www.youtube.com/watch?v=PqzyFDUnbrY&list=PLRx0vPvlEmdBFBFOoK649FlEMouHISo8N&index=3)
 
 ### **문제 설명**
 
@@ -350,14 +350,13 @@ N x M 크기의 얼음 틀이 있습니다. 구멍이 뚫려 있는 부분은 0,
 ### 입출력 예
 
 > 입력 예 #1
-4 5
-00110
-00011
-11111
-00000
-출력 예 #1
-3
->
+> 4 5
+> 00110
+> 00011
+> 11111
+> 00000
+> 출력 예 #1
+> 3
 
 ```python
 def validationResult(result):

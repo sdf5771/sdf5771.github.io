@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "[Python] - 함수, 람다 표현식"
+date: "2023-01-10"
 author: Seobisback
 tags: [Python]
 categories: Syntax

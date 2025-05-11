@@ -1,12 +1,11 @@
 ---
 layout: post
 title: "Javascript Test - Jest"
+date: "2023-09-13"
 author: Seobisback
 tags: [React, Javascript, Typescript, Test, Jest]
 categories: Syntax
 ---
-
-
 # Jest 란?
 
 - Facebook에서 만든 테스트 도구이다.
@@ -44,7 +43,6 @@ npm install jest --save-dev
 ```
 
 > 테스트 케이스를 작성할 파일의 경우 ‘test.js’로 끝나거나, ‘__tests__’ 폴더에 있는 파일들은 자동으로 인식한다. 만약 직접 선택한 파일만 test하고 싶다면 npm test 뒤에 파일 명 혹은 경로를 입력하면 된다.
-> 
 
 ## 함수를 모아두고 테스트하기 위한 파일
 
@@ -124,7 +122,7 @@ test('이름과 나이를 전달받아서 객체를 반환해줘', () => {
 // (2) 객체나 배열은 재귀적으로 돌면서 값을 확인해야 하기 때문에 toEqual을 사용해야한다.
 // 보다 엄격하게 검사하려면 toStrictEqual을 사용하는게 좋다.
 test('이름과 나이를 전달받아서 객체를 반환해줘', () => {
-    
+  
     expect(fn.makeUser('Mike', 30)).toStrictEqual(
         {
             name : 'Mike',
@@ -295,8 +293,7 @@ Ran all test suites.
 ```
 
 > Jest에는 다양한 Matcher가 존재하고 Test할 함수나 기능에 따라 유용하게 사용할 수 있기 때문에 공식 Docs를 보면서 필요한 Matcher를 찾아보며 테스트를 진행하면 좋을거 같다.
-> 
 
-Jest Matchers : 
+Jest Matchers :
 
 [Using Matchers · Jest](https://jestjs.io/docs/using-matchers)

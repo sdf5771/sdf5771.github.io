@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "Technical SEO를 위한 동적 메타태그 작성 feat.React Project"
+date: "2023-04-15"
 author: Seobisback
 tags: [React, SEO, MetaTag]
 categories: Syntax
 ---
-
 현재 작업중인 팀 프로젝트에서 SEO를 위한 메타 태그를 작업하며 공부한 것을 기록해본다.
 
 # Technical SEO
@@ -28,7 +28,7 @@ categories: Syntax
 
 웹페이지 자체의 정보를 명시하기 위한 목적으로 사용되는 HTML 태그를 의미한다.
 
-보통 <head> 요소 아래 배치하고 일반 유저가 보는 웹 컨텐츠에는 영향을 주지 않는다.
+보통 `<head>` 요소 아래 배치하고 일반 유저가 보는 웹 컨텐츠에는 영향을 주지 않는다.
 
 ### 그럼에도 왜 이것을 중요하게 작업해야 하는가?
 

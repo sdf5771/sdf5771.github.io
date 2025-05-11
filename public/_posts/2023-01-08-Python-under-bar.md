@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "[Python] - 언더바는 언제 사용하는가?"
+date: "2023-01-08"
 author: Seobisback
 tags: [Python]
 categories: Syntax

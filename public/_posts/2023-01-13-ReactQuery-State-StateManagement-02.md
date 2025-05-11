@@ -1,16 +1,16 @@
 ---
 layout: post
 title: "React Query + 상태 + 상태 관리 [2편]"
+date: "2023-01-13"
 author: Seobisback
 tags: [React, ReactNative, State, StateManagement]
 categories: Syntax
 ---
-
 React Query + 상태 + 상태 관리 [2편]
 
 > 이 글은 유튜브 영상 중 **‘React Query와 상태관리’** 라는 주제로 **2022.02 우아한테크세미나**의
-영상을 보며 공부를 하고 정리한 내용을 바탕으로 기술되었습니다. 저의 주관이 섞인 내용이 들어갈 수도 있고,
-영상에서 다루는 내용을 정리하여 기록한 내용이 주로 다루어집니다.
+> 영상을 보며 공부를 하고 정리한 내용을 바탕으로 기술되었습니다. 저의 주관이 섞인 내용이 들어갈 수도 있고,
+> 영상에서 다루는 내용을 정리하여 기록한 내용이 주로 다루어집니다.
 
 ## React Query
 

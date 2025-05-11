@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "[Python] - 조건문, 반복문"
+date: "2023-01-10"
 author: Seobisback
 tags: [Python]
 categories: Syntax

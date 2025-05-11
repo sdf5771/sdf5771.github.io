@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "[Python] - 문자열 자료형, 튜플 자료형"
+date: "2023-01-10"
 author: Seobisback
 tags: [Python]
 categories: Syntax
 ---
-
 ## 문자열 자료형
 
 - 문자열 변수를 초기화할 때는 큰 따옴표(”)나 작은 따옴표(’)를 이용한다.

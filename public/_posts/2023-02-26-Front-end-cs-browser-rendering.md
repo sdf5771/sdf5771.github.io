@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "[Front-end CS] 브라우저 렌더링 프로세스"
+date: "2023-02-26"
 author: Seobisback
 tags: [Front-end, Computer Science, Browser]
 categories: Syntax
 ---
-
 # Browser Rendering Process
 
 - Browser Elements
@@ -65,21 +65,11 @@ render tree에 node를 그린다 (2, 3, 4번)
 ![rendering03](/assets/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering03.png)
 
 1. HTML을 parsing 하여 DOM tree 를 생성한다.
-  - 아래와 같은 HTML을 parsing하여 DOM tree를 생성한다. (DOM 으로 바꾼 HTML은 Javascript가 조작할 수 있다.)
-  -
 
-    ```html
-    <html>
-    	<body>
-    		<p>Hello World</p>
-    		<div>
-    			<img src="example.png" />
-    		</div>
-    		<script></script>
-    	</body>
-    </html>
-    ```
+- 아래와 같은 HTML을 parsing하여 DOM tree를 생성한다. (DOM 으로 바꾼 HTML은 Javascript가 조작할 수 있다.)
+- 
 
+    ``html     <html>     	<body>     		<p>Hello World</p>     		<div>     			<img src="example.png" />     		</div>     		<script></script>     	</body>     </html>     ``
 
 ![rendering04](/assets/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering04.png)
 
@@ -88,35 +78,40 @@ render tree에 node를 그린다 (2, 3, 4번)
 그러므로 아래 과정으로 HTML tag를 parsing 한다.
 
 > <script> tag는 가장 마지막 위치에 위치하는 것이 좋다. <script> 코드를 parsing하고 실행하는 동안 추가적으로 parsing할 HTML tag가 남지 않기 때문 - ‘모든 tag가 parsing과 동시에 실행된 후 <script>로 해당 tag에게 인터렉션을 주거나 조작’
->
 
 1. <script> tag를 parsing한다.
 2. <script> tag를 실행한다.
 3. 실행이 완료된 후 다음 tag를 파싱한다.
 
 > <script> tag의 실행이 완료된 후, 다음 tag를 parsing 한다.
->
 
 그러므로
 
 HTML5에서 추가된 기능이 있다.
 
-> HTML5에서는 <script> tag를 비동기로 처리하는 속성을 추가했다.
->
+> HTML5에서는 `<script>` tag를 비동기로 처리하는 속성을 추가했다.
+
 1. CSS(style sheets)를 parsing 하여 스타일 규칙을 얻는다.
-  - ‘webkit’ 은 CSS 문법 파일로부터 자동으로 파서를 생성하기 위해 플렉스와 바이슨 파서 생성기를 사용한다. 파서 소개에서 언급했던 것처럼 바이슨은 상향식 이동 감소 파서를 생성한다. 파이어폭스는 직접 작성한 하향식 파서를 사용한다. 두 경우 모두 각 CSS 파일은 스타일 시트 객체로 파싱되고 각 객체는 CSS 규칙을 포함한다. CSS 규칙 객체는 선택자와 선언 객체 그리고 CSS 문법과 일치하는 다른 객체를 포함한다.
-  - css parsing 하여 CSSOM 생성
+
+- ‘webkit’ 은 CSS 문법 파일로부터 자동으로 파서를 생성하기 위해 플렉스와 바이슨 파서 생성기를 사용한다. 파서 소개에서 언급했던 것처럼 바이슨은 상향식 이동 감소 파서를 생성한다. 파이어폭스는 직접 작성한 하향식 파서를 사용한다. 두 경우 모두 각 CSS 파일은 스타일 시트 객체로 파싱되고 각 객체는 CSS 규칙을 포함한다. CSS 규칙 객체는 선택자와 선언 객체 그리고 CSS 문법과 일치하는 다른 객체를 포함한다.
+- css parsing 하여 CSSOM 생성
+
 2. DOM tree를 생성하는 동시에, 이미 생성된 DOM tree와 스타일 규칙(CSSOM)을 Attachment 한다.
-  - DOM tree를 구성하는 하나의 DOM node는 attach 라는 method를 가진다. (새로운 DOM node가 추가되면 attach가 호출되어 render object를 생성한다.)
-  - render object는 render tree의 구성요소로써, 자신과 자식 요소를 어떻게 배치하고 그려야할지 안다.
-  - node의 css box를 표시할 정보를 가지고 있다.
-  - 모든 DOM node가 전부 render obejct로 생성되는 것은 아니다.(ex head tag, display none tag 등)
-  - <htmll>과 <body> DOM node 또한 render object로 구성되는데 이들은 render tree root 로써 render view 라고 부른다.
-  - 나머지 DOM node 들은 render object로 생성되어 이 render tree root에 추가된다.
+
+- DOM tree를 구성하는 하나의 DOM node는 attach 라는 method를 가진다. (새로운 DOM node가 추가되면 attach가 호출되어 render object를 생성한다.)
+- render object는 render tree의 구성요소로써, 자신과 자식 요소를 어떻게 배치하고 그려야할지 안다.
+- node의 css box를 표시할 정보를 가지고 있다.
+- 모든 DOM node가 전부 render obejct로 생성되는 것은 아니다.(ex head tag, display none tag 등)
+- `<htmll>`과 `<body>` DOM node 또한 render object로 구성되는데 이들은 render tree root 로써 render view 라고 부른다.
+- 나머지 DOM node 들은 render object로 생성되어 이 render tree root에 추가된다.
+
 3. 구축한 render tree를 배치(layout)한다.
-  - 배치는 <html> 요소에 해당하는 최상위 render object에서 시작한다. 화면에 왼쪽 위부터 render object에 해당하는 DOM node를 그려나간다.
+
+- 배치는 `<html>` 요소에 해당하는 최상위 render object에서 시작한다. 화면에 왼쪽 위부터 render object에 해당하는 DOM node를 그려나간다.
+
 4. 배치가 끝난 render tree를 그린다.
-  - render tree 탐색 후 해당하는 render object의 paint method 를 호출한다.
+
+- render tree 탐색 후 해당하는 render object의 paint method 를 호출한다.
 
 ### 모질라의 게코 렌더링 엔진 동작 과정
 

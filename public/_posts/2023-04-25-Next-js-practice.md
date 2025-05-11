@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "[Next JS] 학습 01 - 프로젝트 생성 및 개념 공부"
+date: "2023-04-25"
 author: Seobisback
 tags: [React, SEO, NextJS]
 categories: Syntax
 ---
-
 # 1. next js app 프로젝트 만들기
 
 ```tsx
@@ -15,13 +15,12 @@ npx create-next-app@latest
 ![next-js-01](/assets/images/posts/2023-04-25-Next-js-practice/next-js-01.png)
 
 - create-next-app으로 프로젝트를 만들면 여러 옵션을 선택한다.
-    - Would you like to use TypeScript with this project? - 타입스크립트 사용 여부를 선택
-    - Would you like to use ESLint with this project - ESLint 사용 여부를 선택 (코딩 컨벤션에 위배되는 코드나 안티 패턴을 자동 검출하는 도구)
-    - Would you like to use Tailwind CSS with this project? - Tailwind CSS 사용 여부를 선택 ([https://fe-developers.kakaoent.com/2022/220303-tailwind-tips/](https://fe-developers.kakaoent.com/2022/220303-tailwind-tips/))
-    - Would you like to use ‘src/’ directory with this project? - src 폴더에서 관리를 할 것인지 root에서 관리를 할 것인지 선택
-    - Would you like to use experimental ‘app/’ directory with this project? - app 디렉토리를 실험적인걸 사용할건지 선택
-    - What import alias would you like configured? - import 시 Base 경로를 설정
-    
+  - Would you like to use TypeScript with this project? - 타입스크립트 사용 여부를 선택
+  - Would you like to use ESLint with this project - ESLint 사용 여부를 선택 (코딩 컨벤션에 위배되는 코드나 안티 패턴을 자동 검출하는 도구)
+  - Would you like to use Tailwind CSS with this project? - Tailwind CSS 사용 여부를 선택 ([https://fe-developers.kakaoent.com/2022/220303-tailwind-tips/](https://fe-developers.kakaoent.com/2022/220303-tailwind-tips/))
+  - Would you like to use ‘src/’ directory with this project? - src 폴더에서 관리를 할 것인지 root에서 관리를 할 것인지 선택
+  - Would you like to use experimental ‘app/’ directory with this project? - app 디렉토리를 실험적인걸 사용할건지 선택
+  - What import alias would you like configured? - import 시 Base 경로를 설정
 
 # 2. Next js에서의 Page
 
@@ -49,10 +48,10 @@ Next js는 React js로 만든 웹사이트와 다르게 라우터를 설정해 �
 - request time에 반드시 데이터를 fetch해야 하는 페이지를 pre-render해야 하는 경우에만 getServerSideProps를 사용해야 한다.
 - 데이터를 pre-render할 필요가 없다면 client side에서 데이터를 가져오는 것을 고려해야 한다.
 - 페이지에 자주 업데이트되는 데이터가 포함되어 있고 데이터를 pre-render할 필요가 없는 경우 클라이언트 측에서 데이터를 가져올 수 있다.
-    1. 먼저 데이터가 없는 페이지를 즉시 표시한다.
-    2. 페이지의 일부는 Static Generation을 사용해 pre-render할 수 있다.
-    3. 없는 데이터를 위해 loading 상태를 표시할 수 있다.
-    4. 클라이언트 측에서 데이터를 가져와 준비가 되면 표시한다.
+  1. 먼저 데이터가 없는 페이지를 즉시 표시한다.
+  2. 페이지의 일부는 Static Generation을 사용해 pre-render할 수 있다.
+  3. 없는 데이터를 위해 loading 상태를 표시할 수 있다.
+  4. 클라이언트 측에서 데이터를 가져와 준비가 되면 표시한다.
 
 해당 접근 방식은 사용자 대시보드 페이지에 적합하다.
 

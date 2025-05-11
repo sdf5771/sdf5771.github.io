@@ -1,16 +1,16 @@
 ---
 layout: post
 title: "React Query + 상태 + 상태 관리 [1편]"
+date: "2023-01-13"
 author: Seobisback
 tags: [React, ReactNative, State, StateManagement]
 categories: Syntax
 ---
-
 React Query + 상태 + 상태 관리 [1편]
 
 > 이 글은 유튜브 영상 중 **‘React Query와 상태관리’** 라는 주제로 **2022.02 우아한테크세미나**의
-영상을 보며 공부를 하고 정리한 내용을 바탕으로 기술되었습니다. 저의 주관이 섞인 내용이 들어갈 수도 있고,
-영상에서 다루는 내용을 정리하여 기록한 내용이 주로 다루어집니다.
+> 영상을 보며 공부를 하고 정리한 내용을 바탕으로 기술되었습니다. 저의 주관이 섞인 내용이 들어갈 수도 있고,
+> 영상에서 다루는 내용을 정리하여 기록한 내용이 주로 다루어집니다.
 
 우선적으로 React Query에 이야기를 하시기 전에 상태에 관한 이야기로 세미나의 서두를 띄우셨다.
 
@@ -34,14 +34,12 @@ React Query + 상태 + 상태 관리 [1편]
 - 이처럼 상태를 어떻게 Handle 하는지를 통 틀어서 상태 관리라고 말할 수 밖에 없을 것 같다.
 
 > 정리하자면 모던 웹 프론트 환경에서는 여러 가지 상태들이 존재하고, 그 상태들을 체계적으로 관리하기 위한 여러가지 상태 관리 정돈 방식이 등장했다 라고 정리할 수 있다.
->
 
 ## 상태(state)의 Ownership에 따라 관리 포인트를 나눈다.
 
 ### Client State ? Server State?
 
 > Key Point는 데이터의 Ownership이 있는 곳
->
 
 ### Client State - Ownership이 Client에 있다.
 

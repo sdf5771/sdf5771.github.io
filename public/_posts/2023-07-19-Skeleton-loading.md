@@ -1,14 +1,14 @@
 ---
 layout: post
 title: "React에서 Skeleton Loading 만들기"
+date: "2023-07-19"
 author: Seobisback
 tags: [React, Typescript]
 categories: Syntax
 ---
-
 ![ezgif.com-video-to-gif (1).gif](/assets/images/posts/2023-07-19-Skeleton-loading/skeleton-loading.gif)
 
-진행중인 팀 프로젝트에 여러 컨텐츠가 나오게 되면서 
+진행중인 팀 프로젝트에 여러 컨텐츠가 나오게 되면서
 
 UX적인 부분을 개선하기 위해 디자이너님과 로딩에 대해서 고민을 하다가 스켈레톤 로딩을 만들게 되었다.
 
@@ -20,7 +20,7 @@ UX적인 부분을 개선하기 위해 디자이너님과 로딩에 대해서 �
 
 불러온 이후 레이아웃이 동일하여 레이아웃이 망가지지 않는 장점이 있다.
 
-조사를 진행하며 라이브러리를 사용하시는 분들도 많고 따로 구현하시는 분들도 많아 
+조사를 진행하며 라이브러리를 사용하시는 분들도 많고 따로 구현하시는 분들도 많아
 
 본인도 따로 구현하는 방법으로 진행하였다.
 

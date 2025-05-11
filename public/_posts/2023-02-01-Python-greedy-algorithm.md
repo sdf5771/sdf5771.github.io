@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "[Python] - 그리디 알고리즘"
+date: "2023-02-01"
 author: Seobisback
 tags: [Python, CodingTest]
 categories: Syntax
 ---
-
 # 그리디 알고리즘
 
 - 그리디 알고리즘(탐욕법)은 **현재 상황에서 지금 당장 좋은 것만 고르는 방법**을 의미한다.
@@ -37,12 +37,10 @@ categories: Syntax
 ### 입력예시
 
 > 25 5
->
 
 ### 출력 예시
 
 > 2
->
 
 ```python
 import time
@@ -103,22 +101,18 @@ for i in range(len(tc_data)):
 ### 입력예시 1
 
 > 02984
->
 
 ### 출력 예시 1
 
 > 576
->
 
 ### 입력예시 2
 
 > 567
->
 
 ### 출력 예시 2
 
 > 210
->
 
 ```python
 import time
@@ -169,7 +163,7 @@ for for_index in range(len(tc_data)):
 - 예를 들어 N = 5 이고, 각 모험가의 공포도가 다음과 같다고 가정합시다.
 
 > 2 3 1 2 2
->
+
 - 이 경우 그룹 1에 공포도가 1, 2, 3인 모험가를 한 명씩 넣고, 그룹 2에 공포도가 2인 남은 두 명을 넣게되면 총 2개의 그룹을 만들 수 있습니다.
 - 또한 몇 명의 모험가는 마을에 그대로 남아 있어도 되기 때문에, 모든 모험가를 특정한 그룹에 넣을 필요는 없습니다.
 
@@ -185,13 +179,12 @@ for for_index in range(len(tc_data)):
 ### 입력예시 1
 
 > 5
-> 
+>
 > 2 3 1 2 2
 
 ### 출력 예시 1
 
 > 2
->
 
 ```python
 import time
@@ -235,4 +228,4 @@ for for_index in range(len(tc_data)):
 
 ### 참고자료
 
-[(이코테 2021 강의 몰아보기) 2. 그리디 & 구현](https://youtu.be/2zjoKjt97vQ)
+[(이코테 2021 강의 몰아보기) 2. 그리디 &amp; 구현](https://youtu.be/2zjoKjt97vQ)
