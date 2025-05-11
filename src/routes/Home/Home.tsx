@@ -1,10 +1,11 @@
 import styles from './Home.module.css';
-import PostList from '../../components/shared/PostList';
+import { GlobalNavigationBar, PostList } from '../../components/shared';
 
 function Home(){
 
     return (
         <main className={styles.main}>
+            <GlobalNavigationBar />
             <section>
                 <header>
                     <div>

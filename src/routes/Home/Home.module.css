@@ -19,6 +19,13 @@
             width: 100%;
             max-width: 1024px;
     }
+    .main > section > header {
+        margin-top: 208px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
 }
 
 /* pad */
@@ -32,6 +39,13 @@
         width: 100%;
         max-width: 1023px;
     }
+    .main > section > header {
+        margin-top: 153px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
 }
 
 /* mobile */
@@ -44,5 +58,12 @@
         justify-content: center;
         width: 100%;
         max-width: 767px;
+    }
+    .main > section > header {
+        margin-top: 139px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
     }
 }

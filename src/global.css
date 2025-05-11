@@ -71,3 +71,12 @@ body {
     font-family: 'Pretendard', sans-serif;
     font-weight: 400;
 }
+
+:root {
+    /* 주요 컬러 */
+    /* 블루 계열 컬러 파렛트 ( https://colorhunt.co/palette/fff2f2a9b5df7886c72d336b ) 참고 */
+    --brand-primary: #7886C7;   /* 메인 컬러 */
+    --brand-secondary: #A9B5DF; /* 보조 컬러 */
+    --brand-accent: #2D336B;    /* 강조색 */
+    --brand-neutral: #FFF2F2;   /* 중립색 */
+}
