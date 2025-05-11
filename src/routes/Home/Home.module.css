@@ -21,11 +21,45 @@
     }
     .main > section > header {
         /* margin-top: 208px; */
-        margin-top: 60px;
+        margin-top: 80px;
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
+        gap: 10px;
+    }
+    header > .title{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    header > .title > h1{
+        margin: 0;
+        font-family: Pretendard;
+        font-size: 3.2rem;
+        font-weight: 600;
+        color: var(--brand-accent);
+    }
+    header > .description{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    header > .description > p{
+        margin: 0;
+        font-family: Pretendard;
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: var(--brand-primary);
+    }
+    .post_list{
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 

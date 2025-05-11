@@ -18,8 +18,8 @@ function GlobalNavigationBar(){
                 <div className={styles.right_container}>
                     <ul className={styles.menu_list}>
                         <li onClick={() => navigate('/')}>Home</li>
-                        <li onClick={() => navigate('/about')}>About</li>
-                        <li onClick={() => navigate('/contact')}>Contact</li>
+                        <li onClick={() => navigate('/works')}>Works</li>
+                        <li>Search</li>
                     </ul>
                 </div>
             </div>
