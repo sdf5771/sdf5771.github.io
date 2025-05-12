@@ -5,3 +5,11 @@
     gap: 20px;
     padding: 0 10px;
 }
+.pagination{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}

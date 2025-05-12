@@ -30,8 +30,8 @@ function Pagination({ currentPage, totalPage, urlPath }: PaginationProps) {
 
     return (
         <div className={styles.pagination_container}>
-            <button onClick={handleFirstPageButtonClick}>{ '<<' }</button>
-            <button onClick={handlePrevButtonClick}>{ '<' }</button>
+            <button className={styles.control_button} onClick={handleFirstPageButtonClick}>{ '<<' }</button>
+            <button style={{ marginRight: '10px' }} className={styles.control_button} onClick={handlePrevButtonClick}>{ '<' }</button>
             {
                 Array.from({ length: totalPage }, (_, index) => (
                     <button 
@@ -41,8 +41,8 @@ function Pagination({ currentPage, totalPage, urlPath }: PaginationProps) {
                     >{index + 1}</button>
                 ))
             }
-            <button onClick={handleNextButtonClick}>{ '>' }</button>
-            <button onClick={handleLastPageButtonClick}>{ '>>' }</button>
+            <button style={{ marginLeft: '10px' }} className={styles.control_button} onClick={handleNextButtonClick}>{ '>' }</button>
+            <button className={styles.control_button} onClick={handleLastPageButtonClick}>{ '>>' }</button>
         </div>
     )
 }

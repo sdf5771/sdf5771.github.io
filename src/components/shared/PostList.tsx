@@ -44,11 +44,13 @@ function PostList({ searchKeyword, pagination, sort, urlPath }: PostListProps) {
                     <h2>No posts</h2>
                 </div>
             )}
-            {
-                pagination && pagination.limit && pagination.page && (
-                    <Pagination currentPage={pagination.page} totalPage={pagination.limit} urlPath={urlPath} />
-                )
-            }
+            <div className={styles.pagination}>
+                {
+                    pagination && pagination.limit && pagination.page && (
+                        <Pagination currentPage={pagination.page} totalPage={pagination.limit} urlPath={urlPath} />
+                    )
+                }
+            </div>
         </div>
     );
 }
