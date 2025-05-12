@@ -1,5 +1,5 @@
 import styles from './Home.module.css';
-import { GlobalNavigationBar, PostList, PageTitle } from '../../components/shared';
+import { GlobalNavigationBar, PostList, PageTitle, Footer } from '../../components/shared';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 function Home(){
@@ -37,6 +37,7 @@ function Home(){
                     </div>
                 </div>
             </section>
+            <Footer />
         </main>
     )
 }
