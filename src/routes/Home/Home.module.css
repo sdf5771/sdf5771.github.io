@@ -39,6 +39,7 @@
         font-size: 3.2rem;
         font-weight: 600;
         color: var(--brand-accent);
+        text-decoration: underline;
     }
     header > .description{
         width: 100%;
@@ -54,8 +55,25 @@
         font-weight: 400;
         color: var(--brand-primary);
     }
-    .post_list{
+    .post_container{
         margin-top: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .post_container > .post_title{
+        width: 100%;
+        display: flex;
+    }
+    .post_container > .post_title > h2{
+        margin: 0;
+        font-family: Pretendard;
+        font-size: 2.4rem;
+        font-weight: 600;
+        color: var(--brand-accent);
+    }
+    .post_container > .post_list{
         width: 100%;
         display: flex;
         flex-direction: column;

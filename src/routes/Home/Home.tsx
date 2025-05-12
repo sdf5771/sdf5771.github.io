@@ -32,8 +32,13 @@ function Home(){
                         </p>
                     </div>
                 </header>
-                <div className={styles.post_list}>
-                    <PostList />
+                <div className={styles.post_container}>
+                    <div className={styles.post_title}>
+                        <h2>Posts</h2>
+                    </div>
+                    <div className={styles.post_list}>
+                        <PostList />
+                    </div>
                 </div>
             </section>
         </main>
