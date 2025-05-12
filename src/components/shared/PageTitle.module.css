@@ -1,0 +1,13 @@
+.title{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.title > h1{
+    margin: 0;
+    font-family: Pretendard;
+    font-size: 3.2rem;
+    font-weight: 600;
+    color: var(--brand-accent);
+    text-decoration: underline;
+}

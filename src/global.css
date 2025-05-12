@@ -79,4 +79,6 @@ body {
     --brand-secondary: #A9B5DF; /* 보조 컬러 */
     --brand-accent: #2D336B;    /* 강조색 */
     --brand-neutral: #FFF2F2;   /* 중립색 */
+    --brand-gray-black: #333333;
+    --brand-black: #1e293b;
 }

@@ -8,9 +8,13 @@ interface UsePostsOptions {
         category?: string;
         tag?: string;
     }
+    pagination?: {
+        page?: number;
+        limit?: number;
+    }
 }
 
-function usePosts({ filter, sort = 'desc' }: UsePostsOptions = {}){
+function usePosts({ filter, sort = 'desc', pagination }: UsePostsOptions){
     const [posts, setPosts] = useState<PostMetadata[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -19,6 +23,8 @@ function usePosts({ filter, sort = 'desc' }: UsePostsOptions = {}){
         const loadPosts = async () => {
             try {
                 setLoading(true);
+                const isSortAsc = sort === 'asc';
+                const isLimitPagination = pagination?.limit;
 
                 // read json file and filter posts
                 const response = await fetch('/posts-data.json');
@@ -30,7 +36,7 @@ function usePosts({ filter, sort = 'desc' }: UsePostsOptions = {}){
                 let allPostDatas: PostMetadata[] = await response.json();
 
                 /** sort posts */
-                if(sort === 'asc'){
+                if(isSortAsc){
                     allPostDatas = allPostDatas.sort((a, b) => a.date.localeCompare(b.date));
                     console.log('asc ', allPostDatas);
                 } else {
@@ -38,24 +44,29 @@ function usePosts({ filter, sort = 'desc' }: UsePostsOptions = {}){
                     console.log('desc ', allPostDatas);
                 }
                 
-                if(!filter){
-                    setPosts(allPostDatas);
+                // filter posts
+                /** title filter */
+                if(filter?.title){
+                    allPostDatas = allPostDatas.filter(post => post.title === filter.title);
+                }
+
+                /** category filter */
+                if(filter?.category){
+                    allPostDatas = allPostDatas.filter(post => post.category === filter.category);
+                }
+
+                /** tag filter */
+                if(filter?.tag){
+                    allPostDatas = allPostDatas.filter(post => post.keywords.includes(filter.tag || ''));
+                }
+
+                /** pagination */
+                if(pagination && pagination.page && pagination.limit && isLimitPagination){
+                    const startIndex = (pagination.page - 1) * pagination.limit;
+                    const endIndex = startIndex + pagination.limit;
+                    setPosts(allPostDatas.slice(startIndex, endIndex));
                 } else {
-                    // filter posts
-                    /** title filter */
-                    if(filter.title){
-                        allPostDatas = allPostDatas.filter(post => post.title === filter.title);
-                    }
-
-                    /** category filter */
-                    if(filter.category){
-                        allPostDatas = allPostDatas.filter(post => post.category === filter.category);
-                    }
-
-                    /** tag filter */
-                    if(filter.tag){
-                        allPostDatas = allPostDatas.filter(post => post.keywords.includes(filter.tag || ''));
-                    }
+                    setPosts(allPostDatas);
                 }
             } catch (error) {
                 console.error('Failed to load posts:', error);
@@ -66,7 +77,7 @@ function usePosts({ filter, sort = 'desc' }: UsePostsOptions = {}){
         }
 
         loadPosts();
-    }, [filter]);
+    }, [filter, sort, pagination]);
 
     return {
         posts,

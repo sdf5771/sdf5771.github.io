@@ -28,19 +28,6 @@
         width: 100%;
         gap: 10px;
     }
-    header > .title{
-        display: flex;
-        width: 100%;
-        justify-content: center;
-    }
-    header > .title > h1{
-        margin: 0;
-        font-family: Pretendard;
-        font-size: 3.2rem;
-        font-weight: 600;
-        color: var(--brand-accent);
-        text-decoration: underline;
-    }
     header > .description{
         width: 100%;
         display: flex;
@@ -53,7 +40,7 @@
         font-family: Pretendard;
         font-size: 1.6rem;
         font-weight: 400;
-        color: var(--brand-primary);
+        color: var(--brand-black);
     }
     .post_container{
         margin-top: 20px;
