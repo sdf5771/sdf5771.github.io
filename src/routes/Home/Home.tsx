@@ -2,6 +2,8 @@ import styles from './Home.module.css';
 import { GlobalNavigationBar, PostList, PageTitle, Footer } from '../../components/shared';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Profile } from '../../components/home';
+
 function Home(){
     const location = useLocation();
     const [page, setPage] = useState<number>(1);
@@ -28,6 +30,12 @@ function Home(){
                         </p>
                     </div>
                 </header>
+                <div className={styles.profile_container}>
+                    <div className={styles.profile_title}>
+                        <h2>Profile</h2>
+                    </div>
+                    <Profile />
+                </div>
                 <div className={styles.post_container}>
                     <div className={styles.post_title}>
                         <h2>Posts</h2>

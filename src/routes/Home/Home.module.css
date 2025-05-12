@@ -44,6 +44,24 @@
         font-weight: 400;
         color: var(--brand-black);
     }
+    .profile_container{
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .profile_container > .profile_title{
+        width: 100%;
+        display: flex;
+    }
+    .profile_container > .profile_title > h2{
+        margin: 0;
+        font-family: Pretendard;
+        font-size: 2.4rem;
+        font-weight: 600;
+        color: var(--brand-accent);
+    }
     .post_container{
         margin-top: 20px;
         width: 100%;

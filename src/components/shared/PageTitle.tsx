@@ -15,7 +15,7 @@ export default function PageTitle({ title }: { title: string }) {
         }, 1500);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [title]);
 
     return (
         <div className={styles.title}>
