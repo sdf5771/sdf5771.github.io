@@ -3,13 +3,20 @@
     flex-direction: column;
     width: 100%;
     max-width: 320px;
+    gap: 5px;
 }
 .post_card > .title{
     margin: 0;
     font-family: Pretendard;
     font-size: 1.4rem;
     font-weight: 600;
-    color: var(--brand-accent);
+    color: var(--brand-black);
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .post_card > .container{
     display: flex;
@@ -21,8 +28,9 @@
     width: 100%;
     height: 210px;
     border-radius: 8px;
-    background-color: var(--brand-primary);
+    background-color: var(--brand-gray-light);
     position: relative;
+    padding: 10px;
 }
 .tags{
     display: flex;
@@ -49,19 +57,18 @@
 .graphic_dot{
     width: 5px;
     height: 5px;
-    background-color: var(--brand-primary);
+    background-color: var(--brand-gray-light);
     border-radius: 50%;
 }
 .author{
     font-family: Pretendard;
     font-size: 1rem;
     font-weight: 400;
-    color: var(--brand-primary);
+    color: var(--brand-gray-dark);
 }
 .date{
     font-family: Pretendard;
     font-size: 1rem;
     font-weight: 400;
-    color: var(--brand-primary);
+    color: var(--brand-gray-dark);
 }
-

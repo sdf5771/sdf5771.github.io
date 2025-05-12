@@ -81,4 +81,6 @@ body {
     --brand-neutral: #FFF2F2;   /* 중립색 */
     --brand-gray-black: #333333;
     --brand-black: #1e293b;
+    --brand-gray-light: #eaeaea;
+    --brand-gray-dark: #9BA3AF;
 }

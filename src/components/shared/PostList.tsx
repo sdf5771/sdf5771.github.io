@@ -1,17 +1,26 @@
 import React, { useMemo } from 'react';
 import { usePosts } from '../../hooks';
-import { PostCard } from '.';
+import { PostCard, Pagination } from '.';
 import styles from './PostList.module.css';
 interface PostListProps {
-    title?: string;
+    searchKeyword?: string;
     pagination?: {
         page: number;
         limit: number;
     }
     sort?: 'asc' | 'desc';
+    urlPath: string;
 }
 
-function PostList({ title, pagination, sort }: PostListProps) {
+function PostList({ searchKeyword, pagination, sort, urlPath }: PostListProps) {
+    const filterOptions = useMemo(() => {
+        return {
+            title: searchKeyword ?? undefined,
+            tag: searchKeyword ?? undefined,
+            category: searchKeyword ?? undefined,
+        }
+    }, [searchKeyword]);
+
     const paginationOptions = useMemo(() => ({
         page: pagination?.page ?? 1,
         limit: pagination?.limit ?? 10
@@ -19,10 +28,9 @@ function PostList({ title, pagination, sort }: PostListProps) {
     
     const { posts, loading, error } = usePosts({
         sort: sort ?? 'desc',
-        pagination: paginationOptions
+        pagination: paginationOptions,
+        filter: filterOptions
     });
-
-    console.log('posts', posts);
 
     if (loading) return <div>로딩 중...</div>;
     if (error) return <div>에러 발생: {error.message}</div>;
@@ -36,6 +44,11 @@ function PostList({ title, pagination, sort }: PostListProps) {
                     <h2>No posts</h2>
                 </div>
             )}
+            {
+                pagination && pagination.limit && pagination.page && (
+                    <Pagination currentPage={pagination.page} totalPage={pagination.limit} urlPath={urlPath} />
+                )
+            }
         </div>
     );
 }

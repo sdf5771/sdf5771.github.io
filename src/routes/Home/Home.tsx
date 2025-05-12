@@ -33,7 +33,7 @@ function Home(){
                         <h2>Posts</h2>
                     </div>
                     <div className={styles.post_list}>
-                        <PostList pagination={{ page: page, limit: 6 }} />
+                        <PostList pagination={{ page: page, limit: 6 }} urlPath={`/`} />
                     </div>
                 </div>
             </section>
