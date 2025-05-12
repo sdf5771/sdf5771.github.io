@@ -11,10 +11,12 @@ function Pagination({ currentPage, totalPage, urlPath }: PaginationProps) {
     const navigate = useNavigate();
 
     const handlePrevButtonClick = () => {
+        if(currentPage === 1) return;
         navigate(`${urlPath}?page=${currentPage - 1}`);
     }
 
     const handleNextButtonClick = () => {
+        if(currentPage === totalPage) return;
         navigate(`${urlPath}?page=${currentPage + 1}`);
     }
 
