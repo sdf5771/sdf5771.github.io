@@ -46,7 +46,7 @@ function Profile() {
                         <a href="https://sdf5771.github.io">https://sdf5771.github.io</a>
                     </div>
                     <div className={styles.contact_box}>
-                        <span>Email | </span>
+                        <span>Email</span>
                         <span> | </span>
                         <a href="mailto:seobisback@gmail.com">seobisback@gmail.com</a>
                     </div>
@@ -58,6 +58,21 @@ function Profile() {
                     <span>🌱 자라나라 <strong>잔디 잔디</strong></span>
                 </div>
                 <img src="https://ghchart.rshah.org/33333/sdf5771" alt="github chart" />
+            </div>
+            <div className={styles.horizontal_divider} />
+            <div className={styles.stats_container}> 
+                <div className={styles.stats_title}>
+                    <span>🏅 Stats</span> 
+                </div>
+                <div className={styles.stats_wrapper}> 
+                    <div className={styles.stats_box}>
+                        <img src="https://github-readme-stats.vercel.app/api/top-langs?username=sdf5771&show_icons=true&locale=en&layout=compact" alt="sdf5771" />
+                        <img src="https://github-readme-stats.vercel.app/api?username=sdf5771&show_icons=true&theme=tokyonight&locale=en" alt="sdf5771" />
+                    </div>
+                    <div className={styles.trophy_box}>
+                        <img src="https://github-profile-trophy.vercel.app/?username=sdf5771&theme=dark_lover" alt="github trophy" />
+                    </div>
+                </div> 
             </div>
         </div>
     );

@@ -13,6 +13,7 @@
 }
 .github_chart_container{
     margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,7 +47,7 @@
     background-color: var(--brand-gray-dark);
 }
 .vertical_divider{
-    width: 1px;
+    width: 2px;
     height: 50px;
     background-color: var(--brand-gray-dark);
 }
@@ -151,4 +152,55 @@
     font-size: 0.8rem;
     font-weight: 400;
     color: var(--brand-black);
+}
+.stats_container{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+}
+.stats_container > .stats_title{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px;
+}
+.stats_container > .stats_title > span{
+    font-family: Pretendard;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--brand-accent);
+}
+.stats_wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.stats_box{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 30px;
+}
+.stats_box > img{
+    height: 195px;
+}
+.trophy_box{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 10px;
+}
+.trophy_box > img{
+    width: 100%;
+    height: 100%;
 }
