@@ -42,8 +42,8 @@
 .tags > .tag{
     height: 30px;
     padding: 5px 10px;
-    border-radius: 5px;
-    background-color: #ffffff;
+    border-radius: 16px;
+    background-color: rgba(0,59,99,.25);
     font-family: Pretendard;
     font-size: 0.8rem;
     font-weight: 400;
