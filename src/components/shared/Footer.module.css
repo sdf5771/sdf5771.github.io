@@ -10,15 +10,24 @@
 .list_container{
     background-color: var(--brand-gray-medium);
     display: flex;
+    justify-content: space-between;
     width: 100%;
     max-width: 1024px;
     height: 70%;
     gap: 40px;
     padding-top: 40px;
 }
+.lists{
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+    height: 100%;
+    gap: 40px;
+}
 .info_container{
     display: flex;
     flex-direction: column;
+    width: 60%;
 }
 .info_container > .title{
     font-family: Pretendard;
