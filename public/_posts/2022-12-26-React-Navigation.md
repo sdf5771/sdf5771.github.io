@@ -3,11 +3,10 @@ layout: post
 title: "React Navigation"
 author: Seobisback
 tags: [React, ReactNative]
-categories: Syntax
+categories: Survey
 ---
-
-이 포스팅은 회사에서 React Native를 사용한 프로젝트를 진행하며, 
-React Navigation에 관해 조사한 내용을 정리한 글이다. 
+이 포스팅은 회사에서 React Native를 사용한 프로젝트를 진행하며,
+React Navigation에 관해 조사한 내용을 정리한 글이다.
 
 ## React Navigation
 

@@ -3,9 +3,8 @@ layout: post
 title: "상태 관리 라이브러리 Redux VS MobX"
 author: Seobisback
 tags: [React, StateManagement, Redux, MobX]
-categories: Syntax
+categories: Survey
 ---
-
 회사에서 **React**로 프로젝트를 진행하게 되어, 상태관리 라이브러리에 관해서 조사를 하게 되었다.
 개인적으로 토이 프로젝트를 진행하며 **Redux**를 사용하여 state를 관리하였고,
 React 생태계에서 Redux 사용량이 현재도 압도적이기 때문에 Redux를 사용하는게 가장 안전하지 않을까 라고 생각하였지만 회사 선배가 MobX도 현재 많은 기업에서 사용중이고, 조사를 해보니 MobX가 Redux와는 또 다른 매력이 있기 때문에 좀 더 조사를 진행해보았고, 나와 같은 고민을 하는 분이 계실거라 생각하여 그 고민에 도움을 드리면 좋겠다라고 생각이 들어 정리해둔 글을 포스팅 해봅니다.
@@ -41,7 +40,6 @@ Redux와 Mobx의 차이점
 - Redux는 함수형 프로그래밍에 영향을 받은 라이브러리이다. MobX는 OOP권장하는 라이브러리이다. OOP에 익숙한 개발자들이 쉽게 접근하고 사용할 수 있다.
 - Redux는 Store의 상태를 Immutable(불변)하게 변경하기 때문에 항상 새로운 상태를 반환해주어야함 (Read Only), MobX는 Mutable(변경)하게 변경이 가능함
 - Redux는 구조상 Store와 Component의 연결을 위해 번잡한 코드들을 계속 작성하여야 한다.(reducer, store) MobX는 이러한 코드를 데코레이터를 사용하여 깔끔하게 작성할 수 있다.
-
 - React MobX tutorial 및 이해
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/tjHljJRooHU/0.jpg)](https://www.youtube.com/watch?v=tjHljJRooHU)
@@ -88,7 +86,7 @@ export class MovieStore{ // Movie의 repository 역할
 		makeObservable(this, {
 			//해당 class(MovieStore)를 listening 중인 모든 component가 변경되게 할 수 있다.
 			movies: observable, // movies가 observable 변수로 변경이된다.
-	})		
+	})
 
 		this.rootStore = root;
 

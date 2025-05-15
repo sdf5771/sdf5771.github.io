@@ -3,9 +3,8 @@ layout: post
 title: "Javascript Types"
 author: Seobisback
 tags: [JavaScript]
-categories: Syntax
+categories: Study
 ---
-
 ### 원시 (Primitive) 타입
 
 - String

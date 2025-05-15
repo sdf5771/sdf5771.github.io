@@ -4,7 +4,7 @@ title: "[Python] - 구현: 시뮬레이션과 완전 탐색"
 date: "2023-02-02"
 author: Seobisback
 tags: [Python, CodingTest]
-categories: Syntax
+categories: Study
 ---
 # 구현(Implementation)
 

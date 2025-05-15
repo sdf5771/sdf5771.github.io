@@ -4,7 +4,7 @@ title: "클라우드, SaaS, IaaS, PasS"
 date: "2023-04-13"
 author: Seobisback
 tags: [Cloud, SaaS, IaaS, PasS]
-categories: Syntax
+categories: Study
 ---
 # 클라우드(Cloud)
 

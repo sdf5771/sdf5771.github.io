@@ -4,7 +4,7 @@ title: "React Query + 상태 + 상태 관리 [1편]"
 date: "2023-01-13"
 author: Seobisback
 tags: [React, ReactNative, State, StateManagement]
-categories: Syntax
+categories: Study
 ---
 React Query + 상태 + 상태 관리 [1편]
 

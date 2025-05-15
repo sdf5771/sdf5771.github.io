@@ -83,6 +83,7 @@
     gap: 10px;
     border-radius: 30px;
     background: rgba(188, 200, 206, 0.30);
+    border: 1px solid var(--brand-gray-black);
 }
 .tag > span{
     color: #003B63;

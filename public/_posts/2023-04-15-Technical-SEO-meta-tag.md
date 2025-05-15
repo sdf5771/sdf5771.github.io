@@ -4,7 +4,7 @@ title: "Technical SEO를 위한 동적 메타태그 작성 feat.React Project"
 date: "2023-04-15"
 author: Seobisback
 tags: [React, SEO, MetaTag]
-categories: Syntax
+categories: Survey
 ---
 현재 작업중인 팀 프로젝트에서 SEO를 위한 메타 태그를 작업하며 공부한 것을 기록해본다.
 

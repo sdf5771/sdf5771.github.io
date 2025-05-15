@@ -8,7 +8,7 @@
       "ReactNative"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Survey",
     "slug": "2022-12-26-React-Navigation",
     "thumbnail": "/images/posts/2022-12-26-React-Navigation/ReactNavigation1.png"
   },
@@ -23,7 +23,7 @@
       "MobX"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Survey",
     "slug": "2022-12-26-React-Redux",
     "thumbnail": "/images/posts/2022-12-26-React-Redux/reactredux1.png"
   },
@@ -35,7 +35,7 @@
       "JavaScript"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2022-12-27-Javascript-type",
     "thumbnail": "/images/posts/2022-12-27-Javascript-type/javascript1.png"
   },
@@ -49,7 +49,7 @@
       "Context"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2022-12-27-React-useContext-ContextAPI",
     "thumbnail": "/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png"
   },
@@ -63,7 +63,7 @@
       "useMemo"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2022-12-27-React-useMemo",
     "thumbnail": ""
   },
@@ -77,7 +77,7 @@
       "useRef"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2022-12-27-React-useRef",
     "thumbnail": ""
   },
@@ -103,7 +103,7 @@
       "Naver"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Survey",
     "slug": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2",
     "thumbnail": "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/15.png"
   },
@@ -129,7 +129,7 @@
       "Naver"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Survey",
     "slug": "2025-03-13-ux-trends-and-spatial-computing-paradigm-1",
     "thumbnail": "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1/01.jpg"
   },
@@ -143,7 +143,7 @@
       "Event"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Activity",
     "slug": "2024-09-04-mongodb-local",
     "thumbnail": "/images/posts/2024-09-04-mongodb-local/01.png"
   },
@@ -160,7 +160,7 @@
       "Login"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Survey",
     "slug": "2024-03-06-jwttoken",
     "thumbnail": "/images/posts/2024-03-06-jwttoken/jwttoken01.png"
   },
@@ -174,7 +174,7 @@
       "Rendering"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Survey",
     "slug": "2023-09-17-Browser-rendering",
     "thumbnail": "/images/posts/2023-09-17-Browser-rendering/browser01.png"
   },
@@ -190,7 +190,7 @@
       "Jest"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-09-13-Test-jest-learn",
     "thumbnail": ""
   },
@@ -203,7 +203,7 @@
       "Typescript"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Survey",
     "slug": "2023-07-19-Skeleton-loading",
     "thumbnail": "/images/posts/2023-07-19-Skeleton-loading/folder_image01.png"
   },
@@ -217,7 +217,7 @@
       "Typescript"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-05-01-AtomicDesignPattern01",
     "thumbnail": "/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png"
   },
@@ -231,7 +231,7 @@
       "NextJS"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-04-25-Next-js-practice",
     "thumbnail": "/images/posts/2023-04-25-Next-js-practice/next-js-01.png"
   },
@@ -245,7 +245,7 @@
       "MetaTag"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Survey",
     "slug": "2023-04-15-Technical-SEO-meta-tag",
     "thumbnail": "/images/posts/2023-04-15-Technical-SEO-meta-tag/seo01.png"
   },
@@ -257,7 +257,7 @@
       "API"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-04-13-API",
     "thumbnail": "/images/posts/2023-04-13-API/api01.png"
   },
@@ -272,7 +272,7 @@
       "PasS"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-04-13-Cloud-SaaS-IaaS-PaaS",
     "thumbnail": "/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png"
   },
@@ -285,7 +285,7 @@
       "XML"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-04-13-JSON-XML",
     "thumbnail": ""
   },
@@ -298,7 +298,7 @@
       "CodingTest"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-04-13-Python-Prefix-sum-5",
     "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum01.jpg"
   },
@@ -311,7 +311,7 @@
       "CodingTest"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-04-13-Python-Prefix-sum-reminder",
     "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg"
   },
@@ -325,7 +325,7 @@
       "Browser"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-02-26-Front-end-cs-browser-rendering",
     "thumbnail": "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering01.png"
   },
@@ -338,7 +338,7 @@
       "CodingTest"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-02-26-codeup-codetest-binaryparse",
     "thumbnail": ""
   },
@@ -351,7 +351,7 @@
       "CodingTest"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-02-26-codeup-codetest-collatz-basic",
     "thumbnail": ""
   },
@@ -364,7 +364,7 @@
       "CodingTest"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-02-26-codeup-codetest-collatz-reverse",
     "thumbnail": ""
   },
@@ -377,7 +377,7 @@
       "CodingTest"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-02-02-Python-implementation-bruteforce",
     "thumbnail": "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png"
   },
@@ -390,7 +390,7 @@
       "CodingTest"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-02-01-Python-greedy-algorithm",
     "thumbnail": "/images/posts/2023-02-01-Python-greedy-algorithm/greedy_01.png"
   },
@@ -403,7 +403,7 @@
       "CodingTest"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-30-Python-dfs-bfs",
     "thumbnail": "/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_01.png"
   },
@@ -416,7 +416,7 @@
       "CodingTest"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-30-Python-pibonacci",
     "thumbnail": "/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png"
   },
@@ -431,7 +431,7 @@
       "StateManagement"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-13-ReactQuery-State-StateManagement-01",
     "thumbnail": ""
   },
@@ -446,7 +446,7 @@
       "StateManagement"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-13-ReactQuery-State-StateManagement-02",
     "thumbnail": ""
   },
@@ -460,7 +460,7 @@
       "CodeReview"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Activity",
     "slug": "2023-01-11-Wanted-pre-onboarding-01",
     "thumbnail": ""
   },
@@ -472,7 +472,7 @@
       "Python"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-10-Python-default-input-output",
     "thumbnail": "/images/posts/2023-01-10-Python-default-input-output/input_output.png"
   },
@@ -484,7 +484,7 @@
       "Python"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-10-Python-function-lambda",
     "thumbnail": ""
   },
@@ -496,7 +496,7 @@
       "Python"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-10-Python-if-for-while",
     "thumbnail": ""
   },
@@ -508,7 +508,7 @@
       "Python"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-10-Python-string-tuple",
     "thumbnail": ""
   },
@@ -520,7 +520,7 @@
       "Python"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-09-Python-dictionary-data-type",
     "thumbnail": ""
   },
@@ -532,7 +532,7 @@
       "Python"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-08-Python-data-type-list",
     "thumbnail": ""
   },
@@ -544,7 +544,7 @@
       "Python"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2023-01-08-Python-under-bar",
     "thumbnail": ""
   },
@@ -557,7 +557,7 @@
       "Javascript"
     ],
     "description": "",
-    "category": "Syntax",
+    "category": "Study",
     "slug": "2022-12-31-Typescript",
     "thumbnail": ""
   }

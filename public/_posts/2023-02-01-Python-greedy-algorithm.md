@@ -4,7 +4,7 @@ title: "[Python] - 그리디 알고리즘"
 date: "2023-02-01"
 author: Seobisback
 tags: [Python, CodingTest]
-categories: Syntax
+categories: Study
 ---
 # 그리디 알고리즘
 

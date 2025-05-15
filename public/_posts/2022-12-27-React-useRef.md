@@ -3,10 +3,8 @@ layout: post
 title: "ReactHook_useRef"
 author: Seobisback
 tags: [React, Hooks, useRef]
-categories: Syntax
+categories: Study
 ---
-
-
 ## useRef 는 언제 사용이 되는가?
 
 - useRef를 사용하는 대표적인 두 가지 상황

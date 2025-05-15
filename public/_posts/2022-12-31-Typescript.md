@@ -4,7 +4,7 @@ title: "Typescript를 사용하는 이유"
 date: "2022-12-31"
 author: Seobisback
 tags: [Typescript, Javascript]
-categories: Syntax
+categories: Study
 ---
 ## 개요
 

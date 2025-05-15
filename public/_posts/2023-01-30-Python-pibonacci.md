@@ -4,7 +4,7 @@ title: "[Python] - 동적 프로그래밍 : 피보나치 수"
 date: "2023-01-30"
 author: Seobisback
 tags: [Python, CodingTest]
-categories: Syntax
+categories: Study
 ---
 # 피보나치 수열 문제
 
@@ -108,7 +108,7 @@ dict = {} # 메모이제이션을 위한 딕셔너리
 def pibonacchi(num):
     if num in dict:
         return dict[num]
-      
+    
     if num == 1 or num == 2:
         dict[num] = 1
         return dict[num]

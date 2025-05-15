@@ -4,9 +4,8 @@ title: "[Python] - 기본 입출력"
 date: "2023-01-10"
 author: Seobisback
 tags: [Python]
-categories: Syntax
+categories: Study
 ---
-
 ### 기본 입출력
 
 - 모든 프로그램은 적절한 (약속된) 입출력 양식을 가지고 있다.
@@ -21,16 +20,14 @@ categories: Syntax
 - map() 함수는 리스트의 모든 원소에 각각 특정한 함수를 적용할 때 사용한다.
 - 예시) 공백을 기준으로 구분된 데이터를 입력 받을 때는 다음과 같이 사용한다.
 
-    ```python
-    list(map(int, input().split()))
-    ```
-
+  ```python
+  list(map(int, input().split()))
+  ```
 - 예시) 공백을 기준으로 구분된 데이터의 개수가 많지 않다면, 단순히 다음과 같이 사용한다.
 
-    ```python
-    a, b, c = map(int, input().split())
-    ```
-
+  ```python
+  a, b, c = map(int, input().split())
+  ```
 
 ### 입력을 위한 전형적인 소스코드 1)
 

@@ -4,9 +4,8 @@ title: "[Python] - 집합 자료형, 사전 자료"
 date: "2023-01-09"
 author: Seobisback
 tags: [Python]
-categories: Syntax
+categories: Study
 ---
-
 ### 사전 자료형
 
 - 사전 자료형은 **키(Key)와 값(Value)**의 쌍을 데이터로 가지는 자료형이다.
@@ -15,10 +14,10 @@ categories: Syntax
 - 파이썬의 사전 자료형은 해시 테이블(Hash Table)을 이용하므로 **데이터의 조회 및 수정에 있어서 *O(1)*의 시간에 처리**할 수 있다.
 
 | 키(Key) | 값(Value) |
-| --- | --- |
-| 사과 | Apple |
-| 바나나 | Banana |
-| 코코넛 | Coconut |
+| ------- | --------- |
+| 사과    | Apple     |
+| 바나나  | Banana    |
+| 코코넛  | Coconut   |
 
 ```python
 data = dict()

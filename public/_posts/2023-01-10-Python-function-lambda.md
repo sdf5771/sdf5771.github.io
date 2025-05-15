@@ -4,9 +4,8 @@ title: "[Python] - 함수, 람다 표현식"
 date: "2023-01-10"
 author: Seobisback
 tags: [Python]
-categories: Syntax
+categories: Study
 ---
-
 ### 함수
 
 - 함수(Function)란 특정한 작업을 하나의 단위로 묶어 놓은 것을 의미한다.

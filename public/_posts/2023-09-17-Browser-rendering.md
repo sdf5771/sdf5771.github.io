@@ -4,7 +4,7 @@ title: "(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어�
 date: "2023-09-17"
 author: Seobisback
 tags: [Javascript, Browser, Rendering]
-categories: Syntax
+categories: Survey
 ---
 # 🌱  이 토픽에 관해
 

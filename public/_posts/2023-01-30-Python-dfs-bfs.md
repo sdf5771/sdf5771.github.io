@@ -4,7 +4,7 @@ title: "[Python] - 그래프 탐색 알고리즘 : DFS/BFS"
 date: "2023-01-30"
 author: Seobisback
 tags: [Python, CodingTest]
-categories: Syntax
+categories: Study
 ---
 # 그래프 탐색 알고리즘 : DFS/BFS
 
@@ -312,22 +312,22 @@ def solution(maps):
         queue = deque();
         queue.append((x, y))
         bfs_result = int(maps[x][y])
-      
+    
         while queue:
             current_x, current_y = queue.popleft()
-          
+        
             for l in range(4):
                 next_x = dx[l] + current_x
                 next_y = dy[l] + current_y
-              
+            
                 if next_x < 0 or next_x >= a or next_y < 0 or next_y >= b:
                     continue
-                  
+                
                 if not visit[next_x][next_y] and maps[next_x][next_y] != 'X':
                     queue.append((next_x, next_y)) 
                     visit[next_x][next_y] = True
                     bfs_result += int(maps[next_x][next_y])
-          
+        
         return bfs_result
   
     for i in range(a):

@@ -3,9 +3,8 @@ layout: post
 title: "ReactHook_useContext + Context API"
 author: Seobisback
 tags: [React, Hooks, Context]
-categories: Syntax
+categories: Study
 ---
-
 # useContext + Context API
 
 **Context API : Context 는 APP 안에서 전역적으로 사용되는 data를 여러 Component 끼리 공유할 수 있는 방법을 제공한다.**

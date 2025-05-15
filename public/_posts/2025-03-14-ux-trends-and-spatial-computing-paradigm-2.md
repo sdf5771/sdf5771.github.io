@@ -4,7 +4,7 @@ title: "2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 
 date: "2025-03-14"
 author: Seobisback
 tags: [Web, Frontend, Design, UX, UI, VR, AR, WebXR, Apple, Google, Vision Pro, Android XR, Spatial, WebGL, Naver]
-categories: Syntax
+categories: Survey
 ---
 #### - 프론트엔드 개발자와 디자이너가 주목해야 할 WebXR과 3차원 웹의 미래
 

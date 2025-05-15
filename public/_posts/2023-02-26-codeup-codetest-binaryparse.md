@@ -4,7 +4,7 @@ title: "코드 업 : 1920 : (재귀함수) 2진수 변환"
 date: "2023-02-26"
 author: Seobisback
 tags: [Python, CodingTest]
-categories: Syntax
+categories: Study
 ---
 문제 링크 :
 

@@ -4,7 +4,7 @@ title: "[Python]백준 : 11660 구간 합 구하기 5"
 date: "2023-04-13"
 author: Seobisback
 tags: [Python, CodingTest]
-categories: Syntax
+categories: Study
 ---
 # 백준 : 11660 구간 합 구하기 5
 

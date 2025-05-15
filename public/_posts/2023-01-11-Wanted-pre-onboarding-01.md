@@ -4,7 +4,7 @@ title: "[Code refactoring] - 원티드 프리온보딩 프론트엔드 챌린지
 date: "2023-01-11"
 author: Seobisback
 tags: [React, Refactoring, CodeReview]
-categories: Syntax
+categories: Activity
 ---
 원티드에서 프리온보딩 프론트엔드 챌린지를 참여하고 있다.
 

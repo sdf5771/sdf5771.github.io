@@ -4,9 +4,8 @@ title: "[Python] - 언더바는 언제 사용하는가?"
 date: "2023-01-08"
 author: Seobisback
 tags: [Python]
-categories: Syntax
+categories: Study
 ---
-
 ### Python에서 언더바 ( _ ) 는 어제 사용하는가?
 
 - 파이썬에서는 반복을 수행하되 반복을 위한 변수의 값을 무시하고자 할 때 **언더바(_)**를 자주 사용한다.

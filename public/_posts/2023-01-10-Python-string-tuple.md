@@ -4,7 +4,7 @@ title: "[Python] - 문자열 자료형, 튜플 자료형"
 date: "2023-01-10"
 author: Seobisback
 tags: [Python]
-categories: Syntax
+categories: Study
 ---
 ## 문자열 자료형
 

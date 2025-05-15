@@ -4,7 +4,7 @@ title: "MongoDB.local Seoul 2024 - 컨퍼런스 참여 후기"
 date: "2024-09-04"
 author: Seobisback
 tags: [MongoDB, Conference, Event]
-categories: Syntax
+categories: Activity
 ---
 # MongoDB.local Seoul 2024 컨퍼런스 참여 후기
 

@@ -4,7 +4,7 @@ title: "Javascript Test - Jest"
 date: "2023-09-13"
 author: Seobisback
 tags: [React, Javascript, Typescript, Test, Jest]
-categories: Syntax
+categories: Study
 ---
 # Jest 란?
 

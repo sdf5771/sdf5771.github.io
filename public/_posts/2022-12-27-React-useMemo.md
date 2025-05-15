@@ -3,18 +3,17 @@ layout: post
 title: "ReactHook_useMemo"
 author: Seobisback
 tags: [React, Hooks, useMemo]
-categories: Syntax
+categories: Study
 ---
-
-
 ## useMemo
 
 - **Memo 는 Memoization(메모이제이션)을 뜻한다.**
+
   - Memoization - 동일한 값을 return 하는 함수를 반복적으로 호출해야 된다면, 해당 값을 메모리에 저장해서 필요할 때 마다 메모리에서 꺼내서 재사용을 하는 기법이다 (메모리에 캐싱)
   - 쉽게 말하면 자주 필요한 값을 맨 처음 계산할 때 캐싱을 해두고, 다시 계산 하는 것이 아니라 캐시에서 꺼내쓰는 방법
   - React에서 함수형 컴포넌트는 함수이기 때문에 state 나 props의 변화로 인해 자동으로 렌더링 될 때 항상 재 실행된다. 그 때마다 무거운 로직을 가졌지만 변경이 되지 않을 계산 값을 맨 처음에만 계산하여 useMemo로 ‘메모이제이션’ 해두고 필요한 곳에 캐싱해둔 값을 재사용하여 해당 컴포넌트가 렌더링 되어도 무거운 로직은 다시 사용하지 않은 채 렌더링하여 컴포넌트의 성능을 최적화 시킬 수 있는 것이다.
-
 - **useMemo 는 꼭 필요한 곳에서만 사용해야한다.**
+
   - useMemo를 남용하면 오히려 성능에 무리가 될 수 있다.
   - useMemo를 사용한다는 것은 값을 재활용해서 사용하기 위해 따로 메모리를 사용하여 저장을 해놓는 것이기 때문에 불필요한 값들까지 모두 Memoization 해버리면 오히려 성능이 악화 될 수 있다.
 
