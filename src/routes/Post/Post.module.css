@@ -67,12 +67,12 @@
     align-items: center;
     gap: 10px;
     border-radius: 30px;
-    background: var(--brand-accent);
+    border: 1px solid var(--brand-gray-black);
 }
 .category > span{
-    color: #FFF;
+    color: var(--brand-accent);
     font-family: "Pretendard";
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: 700;
 }
 .tag{
@@ -82,11 +82,11 @@
     align-items: center;
     gap: 10px;
     border-radius: 30px;
-    background: rgba(188, 200, 206, 0.30);
+    background: #fff;
     border: 1px solid var(--brand-gray-black);
 }
 .tag > span{
-    color: #003B63;
+    color: var(--brand-gray-black);
     font-family: "Pretendard";
     font-size: 0.75rem;
     font-style: normal;

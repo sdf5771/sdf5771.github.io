@@ -41,15 +41,15 @@ WebXR이란 XR 장치에서 증강 현실(AR) 및 가상 현실(VR)에 대한 �
 
 #### 지원 브라우저와 디바이스 ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API#browser_compatibility))
 
-![VR을 서포트하지 않는 기기](/assets/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/15.png)
+![VR을 서포트하지 않는 기기](/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/15.png)
 (MDN - WebXR 기술을 지원하는 웹 브라우저)
 
 MDN 에서 설명하는 WebXR 기술의 공식 지원 브라우저는 다음과 같으며, 아직까지는 실험적인 API 이므로 이 부분은 좀 더 지켜볼 필요가 있습니다.
 
-![Android XR WebXR 지원](/assets/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/16.png)
+![Android XR WebXR 지원](/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/16.png)
 (AndroidXR - WebXR 지원)
 
-![WWDC2024 WebXR 세션](/assets/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/17.png)
+![WWDC2024 WebXR 세션](/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/17.png)
 (WWDC2024 -Vision OS - WebXR)
 
 ### 1.2 구현
@@ -118,11 +118,11 @@ export default Home;
 
 (React + TypeScript + Three js + WebXR)
 
-![VR을 서포트하지 않는 기기](/assets/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/18.png)
+![VR을 서포트하지 않는 기기](/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/18.png)
 (VR을 서포트하지 않는 기기)
 
-![Apple Vision Pro 시뮬레이터에서 WebXR을 활성화한 이미지](/assets/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/19.png)
-![Apple Vision Pro 시뮬레이터에서 WebXR을 활성화한 이미지 2](/assets/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/20.png)
+![Apple Vision Pro 시뮬레이터에서 WebXR을 활성화한 이미지](/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/19.png)
+![Apple Vision Pro 시뮬레이터에서 WebXR을 활성화한 이미지 2](/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/20.png)
 (Apple Vision Pro 시뮬레이터를 이용해 WebXR 기능을 활성화한 이미지)
 
 ### 1.3 개발자 도구와 리소스

@@ -22,11 +22,11 @@ categories: Survey
 
 우리가 웹 서핑을 위해 익히 사용하는 웹 브라우저는 보통 웹 서버와 통신하고 다양한 사이트 내부의 컨텐츠를 볼 수 있도록 지원하는 소프트웨어이다.
 
-![Untitled](/assets/images/posts/2023-09-17-Browser-rendering/browser01.png)
+![Untitled](/images/posts/2023-09-17-Browser-rendering/browser01.png)
 
 브라우저는 다양한 종류의 브라우저가 있으며, 해당 브라우저마다 엔진이 다르기 때문에 퍼블리셔와 프론트엔드 엔지니어는 Cross Browsing에 유의하며 자바스크립트와 CSS를 작성해야 한다.
 
-![Untitled](/assets/images/posts/2023-09-17-Browser-rendering/browser02.png)
+![Untitled](/images/posts/2023-09-17-Browser-rendering/browser02.png)
 
 출처 : [mozilla.org](http://mozilla.org) (MDN web docs)
 
@@ -45,13 +45,13 @@ categories: Survey
    1. 3 Way-Handshake : 3개의 단계를 기반으로 TCP의 연결을 성립하는 것
       1. (그림) 3 Way-Handshake 연결 성립 단계
 
-         ![Untitled](/assets/images/posts/2023-09-17-Browser-rendering/browser03.png)
+         ![Untitled](/images/posts/2023-09-17-Browser-rendering/browser03.png)
 
          1. SYN(synchronization) : 연결 요청 플래그
          2. ACK(acknowledgement) : 응답 플래그
       2. (그림) Wireshark 패킷 분석 도구에서 요청의 Sequence Number를 조회
 
-         ![Untitled](/assets/images/posts/2023-09-17-Browser-rendering/browser04.png)
+         ![Untitled](/images/posts/2023-09-17-Browser-rendering/browser04.png)
       3. SYN 단계 : 클라이언트는 서버에 클라이언트의 ISN(Random Sequence)을 담아 SYN을 보낸다.
       4. SYN + ACK 단계 : 서버는 클라이언트의 SYN을 수신하고 서버의 ISN을 보내며 승인번호로 클라이언트의 ISN + 1을 보낸다.
       5. ACK 단계 : 클라이언트는 서버의 ISN + 1한 값인 승인번호를 담아 ACK를 서버에 보낸다.
@@ -67,7 +67,7 @@ categories: Survey
 
    1. (그림) DOM Tree & CSSOM Tree & Render Tree
 
-      ![Untitled](/assets/images/posts/2023-09-17-Browser-rendering/browser05.png)
+      ![Untitled](/images/posts/2023-09-17-Browser-rendering/browser05.png)
    2. DOM Tree(Document Object Model Tree) : HTML 문서를 태그나 속성의 계층 구조(트리 구조)로 간주하여 참조하는 개념, 웹 문서를 node 구조의 tree 형태로 표시한다. 웹 브라우저는 DOM을 사용하기 때문에 자바스크립트와 CSS를 사용해서 상호작용이 가능하다.
 8. HTML을 Parsing하는 과정에서 렌더링 엔진이 스타일 태그(style)를 만난다면 HTML Parsing 작업을 중지하고, CSS Parsing 작업을 시작하여 CSSOM Tree를 생성한다.
 
@@ -77,12 +77,12 @@ categories: Survey
 
     1. (그림) 자바스크립트 코드와 해당 코드를 바탕으로 생성된 AST
 
-       ![Untitled](/assets/images/posts/2023-09-17-Browser-rendering/browser06.png)
+       ![Untitled](/images/posts/2023-09-17-Browser-rendering/browser06.png)
     2. AST(Abstract Syntax Tree) 추상 구문 트리 : 각 노드는 소스코드에서 발생되는 구조를 나타내고, 소스코드를 문법에 맞게 노드로 쪼개서 만든 트리이다. 추상적이라는 의미는 실제 구문에서 나타나는 세세한 정보를 나타내지 않는다는 것을 의미한다.
 11. 다음으로 중단되었던 HTML Parsing 작업을 완료한다.
 12. 앞서 만든 DOM Tree와 CSSOM Tree를 합쳐서 Render Tree를 생성한다.
 
-    ![Untitled](/assets/images/posts/2023-09-17-Browser-rendering/browser07.png)
+    ![Untitled](/images/posts/2023-09-17-Browser-rendering/browser07.png)
 
 ### **Operation - 시각화 단계 (layout, paint, composition)**
 
@@ -113,7 +113,7 @@ NHN Cloud 에서 발표한 ‘[2018] 프런트엔드 성능 최적화’ 라는 
 
 script 태그의 삽입 위치를 통해서도 렌더링 최적화를 경험할 수 있는 부분이다.
 
-![Untitled](/assets/images/posts/2023-09-17-Browser-rendering/browser08.png)
+![Untitled](/images/posts/2023-09-17-Browser-rendering/browser08.png)
 
 자료 URL : https://www.youtube.com/watch?v=G1IWq2blu8c&t=970s
 

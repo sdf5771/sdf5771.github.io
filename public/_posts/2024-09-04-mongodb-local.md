@@ -12,30 +12,30 @@ categories: Activity
 
 [[https://www.mongodb.com/ko-kr/events/mongodb-local/seoul](https://www.mongodb.com/ko-kr/events/mongodb-local/seoul)]
 
-![01.png](/assets/images/posts/2024-09-04-mongodb-local/01.png)
+![01.png](/images/posts/2024-09-04-mongodb-local/01.png)
 
 - 일시 및 장소
   - 장소 : 서울특별시 송파구 올림픽로 240, 롯데호텔 월드 3층 크리스탈볼룸
   - 일시 : 2024년 09월 03일, 화요일 09:00 AM - 05:00 PM KST
-    ![02.png](/assets/images/posts/2024-09-04-mongodb-local/02.png)
+    ![02.png](/images/posts/2024-09-04-mongodb-local/02.png)
 
 > 행사를 소개하는 페이지에서 등록을 마치고, 참여가 결정되면 다음과 같이 QR 초대장을 메일로 줍니다!
 
-![KakaoTalk_Photo_2024-09-04-10-24-26 002.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-26 002.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-26 002.jpeg](/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-26 002.jpeg)
 등록대에서 메일로 받은 초대장을 등록하면 행사가 진행되는 동안 착용할 목걸이와 Lunch coupon, 그리고 MongoDB NameTag을 수령할 수 있습니다.
 
-![KakaoTalk_Photo_2024-09-04-10-24-25 001.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-25 001.jpeg)
-![KakaoTalk_Photo_2024-09-04-10-24-30 004.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-30 004.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-25 001.jpeg](/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-25 001.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-30 004.jpeg](/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-30 004.jpeg)
 행사장에는 참여를 위해 정말 많은 업계 종사자 분들이 계셨습니다!
 
-![KakaoTalk_Photo_2024-09-04-10-24-28 003.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-28 003.jpeg)
-![KakaoTalk_Photo_2024-09-04-10-24-37 010.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-37 010.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-28 003.jpeg](/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-28 003.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-37 010.jpeg](/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-37 010.jpeg)
 행사가 진행된 홀이 넓었고 많은 분들이 참여하는 만큼 거대한 스크린이 여러 대가 설치되어 있었습니다.
 
-![KakaoTalk_Photo_2024-09-04-10-24-31 005.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-31 005.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-31 005.jpeg](/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-31 005.jpeg)
 저도 자리를 잡고 세션 시작 전에 행사 준비를 완료했습니다.
 
-![KakaoTalk_Photo_2024-09-04-10-24-33 007.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-33 007.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-33 007.jpeg](/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-33 007.jpeg)
 MongoDB에 신재성 지사장님의 환영사와 함께 행사 시작
 
 ## [주요 세션 요약]
@@ -132,8 +132,8 @@ BD Assistant 서비스의 전체 DB를 담당
 
 ### 점심시간 - JMT
 
-![KakaoTalk_Photo_2024-09-04-10-24-34 008.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-34 008.jpeg)
-![KakaoTalk_Photo_2024-09-04-10-24-36 009.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-36 009.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-34 008.jpeg](/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-34 008.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-36 009.jpeg](/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-36 009.jpeg)
 
 > 점심식사 이후 부터는 Track 별로 세션이 나뉘어졌습니다.
 > 저는 `Track B` 에 세션을 들었으며, `Track A` 에서 소개된 세션 목록은 다음과 같습니다
@@ -295,5 +295,5 @@ Frontend Engineer 로써 AI 에 관련 지식에서 미흡한 부분이 많았�
 
 ## 마무리
 
-![KakaoTalk_Photo_2024-09-04-10-24-38 011.jpeg](/assets/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-38 011.jpeg)
+![KakaoTalk_Photo_2024-09-04-10-24-38 011.jpeg](/images/posts/2024-09-04-mongodb-local/KakaoTalk_Photo_2024-09-04-10-24-38 011.jpeg)
 같이 행사에 참여한 팀원들과 회식으로 마무리하였습니다.

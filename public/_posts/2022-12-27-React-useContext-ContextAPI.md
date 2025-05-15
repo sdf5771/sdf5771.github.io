@@ -15,7 +15,7 @@ props를 통해 하위 Component에 계속해서 전달하는 일련의 과정�
 
 **useContext : useContext는 Context로 공유한 data를 쉽게 받아올 수 있게 도와주는 역할을 한다.**
 
-![React_useContext1.png](/assets/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png)
+![React_useContext1.png](/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png)
 
 <<그림 1. Context와 useContext>>
 

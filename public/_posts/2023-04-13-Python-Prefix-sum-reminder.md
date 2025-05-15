@@ -92,8 +92,8 @@ if __name__ == '__main__':
 
 ## 도식화
 
-![prefix-sum-reminder01](/assets/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg)
+![prefix-sum-reminder01](/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg)
 
 ## 결과
 
-![prefix-sum-reminder02](/assets/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder02.png)
+![prefix-sum-reminder02](/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder02.png)

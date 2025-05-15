@@ -8,7 +8,7 @@ categories: Study
 ---
 # 아토믹 디자인 패턴이란?
 
-![Untitled](/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png)
+![Untitled](/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png)
 
 - 좀 더 효과적인 컴포넌트를 구성하기 위한 방법론 중 하나이다.
 - 일관되고 견고하고 재사용이 가능한 디자인 시스템을 만드는데 도움을 준다.
@@ -33,7 +33,7 @@ categories: Study
 
 ## Atom (원자)
 
-![Untitled](/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom02.png)
+![Untitled](/images/posts/2023-05-01-AtomicDesignPattern01/atom02.png)
 
 < label, input, button atom >
 
@@ -45,7 +45,7 @@ categories: Study
 
 ## Molecule(분자)
 
-![Untitled](/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom03.png)
+![Untitled](/images/posts/2023-05-01-AtomicDesignPattern01/atom03.png)
 
 < search from molecule >
 
@@ -55,7 +55,7 @@ categories: Study
 
 ## Organism(유기체)
 
-![Untitled](/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom04.png)
+![Untitled](/images/posts/2023-05-01-AtomicDesignPattern01/atom04.png)
 
 < haeder organism >
 
@@ -66,7 +66,7 @@ categories: Study
 
 ## Template (Layout)
 
-![Untitled](/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom05.png)
+![Untitled](/images/posts/2023-05-01-AtomicDesignPattern01/atom05.png)
 
 < layout이 적용된 molecule과 organism으로 구성된 template >
 
@@ -79,7 +79,7 @@ categories: Study
 
 ## Page
 
-![Untitled](/assets/images/posts/2023-05-01-AtomicDesignPattern01/atom06.png)
+![Untitled](/images/posts/2023-05-01-AtomicDesignPattern01/atom06.png)
 
 < 여러가지 콘텐츠를 template에 적용하여 최종 UI를 보여주는 page >
 

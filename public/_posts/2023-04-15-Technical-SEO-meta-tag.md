@@ -90,7 +90,7 @@ root.render(
 
 ## Component 화
 
-![seo01](/assets/images/posts/2023-04-15-Technical-SEO-meta-tag/seo01.png)
+![seo01](/images/posts/2023-04-15-Technical-SEO-meta-tag/seo01.png)
 
 ```tsx
 import React from 'react';
@@ -141,7 +141,7 @@ export default SEOMetaTag;
 
 ## SEOMetaTag Component 사용
 
-![seo02](/assets/images/posts/2023-04-15-Technical-SEO-meta-tag/seo02.png)
+![seo02](/images/posts/2023-04-15-Technical-SEO-meta-tag/seo02.png)
 
 나중에 검색 키워드가 회의를 통해 확립되면 해당 부분들을 동적으로 변경해주면 된다.
 

@@ -12,7 +12,7 @@ categories: Study
 - 프로그램 동작의 첫 번째 단계는 데이터를 입력 받거나 생성하는 것이다.
 - 예시 ) 학생의 성적 데이터가 주어지고, 이를 내림차순으로 정렬한 결과를 출력하는 프로그램
 
-![input_output](/assets/images/posts/2023-01-10-Python-default-input-output/input_output.png)
+![input_output](/images/posts/2023-01-10-Python-default-input-output/input_output.png)
 
 ### 자주 사용되는 표준 입력 방법
 

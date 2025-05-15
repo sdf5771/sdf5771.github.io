@@ -36,7 +36,7 @@ categories: Survey
 
 96년생인 저는 이전의 네이버를 기억하기로는 유년 시절 쥬니어 네이버에서 플래시를 기반으로 만들어진 게임을 플레이 하느라 많은 시간을 쥬니어 네이버에서 보냈는데요.
 
-![쥬니어 네이버](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//01.jpg)
+![쥬니어 네이버](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//01.jpg)
 (당시의 쥬니어 네이버)
 
 때문에 귀여운 이미지 리소스가 많이 있었음에도 불구하고,
@@ -62,7 +62,7 @@ categories: Survey
 - 테이블 기반의 레이아웃과 기본적인 HTML 요소들로 구성
 - 제한된 색상과 그래픽 사용
 - 초기 검색 서비스 도입
-  ![1999년 당시의 네이버](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02.jpg)
+  ![1999년 당시의 네이버](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02.jpg)
 
   (1999년 당시의 네이버)
 
@@ -80,7 +80,7 @@ categories: Survey
 - 검색 서비스의 고도화
 - 카페, 블로그 등 커뮤니티 서비스 확장
 - AJAX 기술을 활용한 실시간 검색어 등 동적 기능 구현
-  ![02-1.jpg](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02-1.jpg)
+  ![02-1.jpg](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02-1.jpg)
   (2007년 당시의 네이버)
 
 #### **2010년대**
@@ -98,7 +98,7 @@ categories: Survey
 - 실시간 검색어, 뉴스 피드 등 실시간성 강화
 - SNS 통합과 소셜 기능 확대
 
-  ![02-2.jpg](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02-2.jpg)
+  ![02-2.jpg](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02-2.jpg)
 
   (2010년 당시의 네이버 모바일 버전)
 
@@ -122,7 +122,7 @@ categories: Survey
 - 사용자 맞춤형 콘텐츠 추천
 - 실시간 트래픽 분석 기반의 뉴스 배치
 - 다크모드 지원 등 최신 UX 트렌드 반영
-  ![02-3.png](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02-3.png)
+  ![02-3.png](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02-3.png)
   (2020년 이후 네이버 - 사용자 맞춤형 콘텐츠 추천)
 
 이러한 네이버의 발전 과정은 웹 기술의 진화와 각 시대의 사용자 요구사항의 변화를 잘 보여주는 사례입니다.
@@ -141,7 +141,7 @@ categories: Survey
 이제는 최근 5년간(2020 - 2024)의 변화에 대해서 이야기 해보도록 할까요?
 UI 디자인은 스큐어모피즘에서 시작하여 플랫 디자인의 미니멀리즘의 다음으로 뉴모피즘이라는 새로운 트렌드로 진화했습니다.
 
-![계산기 이미지](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//03.jpg)
+![계산기 이미지](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//03.jpg)
 (계산기 어플리케이션 디자인 - 좌측부터 스큐어모피즘, 플랫디자인)
 
 마치 기존 계산기를 그대로 옮긴 것 같은 디자인이 스큐어모피즘이며, 계산기의 형태 자체는 동일하나 미니멀리즘을 추구한 디자인이 플랫 디자인 입니다.
@@ -155,12 +155,12 @@ UI 디자인은 스큐어모피즘에서 시작하여 플랫 디자인의 미니
 
 이러한 스큐어모피즘의 단점을 보완하고 디자인을 좀 더 단순화시켜서 **플랫**하고 **미니멀**한 그래픽에 그림자를 두어 보다 입체감있고 심플해진 것이 바로 뉴모피즘입니다.
 
-![뉴모피즘 스타일](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//04.png)
+![뉴모피즘 스타일](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//04.png)
 (뉴모피즘 스타일)
 
 #### 글래스모피즘의 등장 및 Spatial UI/UX의 만남
 
-![글래스모피즘](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//05.png)
+![글래스모피즘](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//05.png)
 (글래스모피즘) Apple WWDC 2023 공간 사용자 인터페이스를 위한 디자인 영상 중
 
 글래스모피즘(Glassmorphism)은 반투명한 유리 효과를 활용한 디자인 트렌드입니다.
@@ -184,7 +184,7 @@ UI 디자인은 스큐어모피즘에서 시작하여 플랫 디자인의 미니
 
 그렇다면 해당 유형의 기술들의 차이와 실제로 구현되는 것은 어떤 것이 다른지 알아보도록 하죠.
 
-![viewport](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//06.png)
+![viewport](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//06.png)
 (Viewport 영역)
 
 **반응형 디자인**은 웹 페이지의 디자인과 레이아웃을 화면 크기에 맞춰 렌더링하는 기술입니다.
@@ -192,7 +192,7 @@ UI 디자인은 스큐어모피즘에서 시작하여 플랫 디자인의 미니
 
 현재 AiNEWT의 웹 페이지도 반응형 디자인을 통해 개발 되어 있습니다.
 
-![viewport_breakpoint](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//07.png)
+![viewport_breakpoint](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//07.png)
 (Device Size 별 분기)
 
 ```css
@@ -230,9 +230,9 @@ UI 디자인은 스큐어모피즘에서 시작하여 플랫 디자인의 미니
 또한 서브 도메인을 통해 URL을 변경해서 Desktop 버전의 웹 페이지와 Mobile 버전의 웹 페이지에 분기를 두고 있습니다.
 
 - PC 버전 : https://www.naver.com/
-  - ( PC 버전의 네이버) ![PC_size_Naver](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//08.png)
+  - ( PC 버전의 네이버) ![PC_size_Naver](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//08.png)
 - Mobile 버전 : https://m.naver.com/
-  - ( Mobile 버전의 네이버)  ![Mobile_size_Naver](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//09.png)
+  - ( Mobile 버전의 네이버)  ![Mobile_size_Naver](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//09.png)
 
 이 기술이 더 좋다 저 기술이 더 좋다 라고 나눌 수도 없고, 결국에는 사용자 경험적인 측면에서는 큰 차이를 보이지 않습니다. 어떠한 기술이 현재 내가 구현하고자 하는 서비스에 가장 적합한지를 다음과 같은 특징들을 통해 가장 최적의 경험을 사용자에게 제공하는 것이 필요한 판단 근거가 아닐까 싶습니다.
 
@@ -280,7 +280,7 @@ AI/ML 통합 인터페이스의 대표적인 예시로 유튜브의 콘텐츠 �
 > 크로스 플랫폼 ( cross-platform ) 이란 ?
 > 개발에서는 여러 환경에서 동시 개발이 가능한 프레임워크를 말하며, 응용프로그램을 놓고 보자면 다양한 운영 체제에서 사용할 수 있는 응용프로그램으로 생각할 수 있습니다.
 
-![10-1.png](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//10-1.png)
+![10-1.png](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//10-1.png)
 (여러 플랫폼을 지원하는 크로스 플랫폼)
 
 PC에서 출시한 게임이나 모바일에서 출시한 게임이 다른 디바이스 플랫폼의 클라이언트도 같이 개발되는게 다양해졌는데요.
@@ -357,10 +357,10 @@ Spatial Computing은 다음과 같은 특징을 가집니다.
 
 #### 기존 UX/UI와의 차이점
 
-![평면 형태 인터페이스 예시](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//08.png)
+![평면 형태 인터페이스 예시](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//08.png)
 (네이버 - 기존 평면 형태의 인터페이스 예시)
 
-![Spatial UI 예시](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//10.png)
+![Spatial UI 예시](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//10.png)
 (Apple Vision Pro의 Spatial UI 예시)
 
 1. **차원의 확장**
@@ -396,7 +396,7 @@ Apple에서는 자연스러운 상호작용을 위해 손동작과 음성 명령
 
 오늘 날 운전 중 네비게이션의 목적지를 변경할 때에도 보통 음성을 통한 목적지 설정을 진행하는 경우가 많은데요. Apple Vision Pro의 가상 키보드의 인식률이 좋은 편이라고는 하지만 기존 익숙한 키보드를 사용한 컴퓨팅 경험에 비하면 개선이 더 필요할 것으로 보입니다. (~~독수리 타법으로만 타이핑이 가능하다는 등~~) 그러므로 음성을 통한 사용자 인터페이스 등이 이런 사용성을 보완할 수 있지 않을까도 생각됩니다.
 
-![Vision Pro 제스처](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//11.png)
+![Vision Pro 제스처](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//11.png)
 (Vision Pro의 제스처 인터랙션 - Pinch)
 
 **핵심 인터랙션 방식**
@@ -452,7 +452,7 @@ Spatial UI를 설계할 때는 기존 평면적이던 2차원적 사고에서 �
 - 중요 정보의 가시성 확보
 - 피로도를 고려한 배치
 
-![시야각 고려사항](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//12.png)
+![시야각 고려사항](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//12.png)
 (FOV - 한 번에 볼 수 있는 시야 영역)
 
 #### Flexible Interface - 유연한 인터페이스
@@ -460,8 +460,8 @@ Spatial UI를 설계할 때는 기존 평면적이던 2차원적 사고에서 �
 Apple Vision Pro 에서는 Window(창)를 굉장히 유연하게 사용할 수 있다고 소개합니다.
 그 말은 앞으로 출시하게될 공간 컴퓨팅 경험을 줄 기기에서도 **화면을 유연하게 늘리고 줄여서 때로는 넓게 때로는 좁게 사용자가 원하는 크기**로 저희가 만든 서비스를 사용할 수 있으므로 반응형 디자인의 중요성이 더욱 대두 되었다고 생각합니다.
 
-![VR을 서포트하지 않는 기기](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//13.png)
-![VR을 서포트하지 않는 기기](/assets/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//14.png)
+![VR을 서포트하지 않는 기기](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//13.png)
+![VR을 서포트하지 않는 기기](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//14.png)
 (WWDC2023 - 공간 디자인의 원리 중)
 
 ---

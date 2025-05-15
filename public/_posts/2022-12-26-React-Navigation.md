@@ -10,7 +10,7 @@ React Navigation에 관해 조사한 내용을 정리한 글이다.
 
 ## React Navigation
 
-![ReactNavigation1](/assets/images/posts/2022-12-26-React-Navigation/ReactNavigation1.png)
+![ReactNavigation1](/images/posts/2022-12-26-React-Navigation/ReactNavigation1.png)
 
 - 모바일 애플리케이션은 보통 여러 화면으로 구성되어 있다. 이러한 애플리케이션을 만들려면 내비게이션 관련 서드 파티 라이브러리를 사용해야 함.
 - 대표적인 내비게이션에 괸련하여 사용할 수 있는 라이브러리

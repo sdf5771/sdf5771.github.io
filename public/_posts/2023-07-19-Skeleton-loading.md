@@ -6,7 +6,7 @@ author: Seobisback
 tags: [React, Typescript]
 categories: Survey
 ---
-![ezgif.com-video-to-gif (1).gif](/assets/images/posts/2023-07-19-Skeleton-loading/skeleton-loading.gif)
+![ezgif.com-video-to-gif (1).gif](/images/posts/2023-07-19-Skeleton-loading/skeleton-loading.gif)
 
 진행중인 팀 프로젝트에 여러 컨텐츠가 나오게 되면서
 
@@ -89,7 +89,7 @@ SkeletonLoading 의 뼈대가 되는 컴포넌트를 만들어서 string 타입�
 
 SkeletonLoading 컴포넌트를 활용해서 로딩 UI가 필요한 컴포넌트 레이아웃과 비슷하게 배치하여 새로운 컴포넌트를 만들어준다.
 
-![folder01](/assets/images/posts/2023-07-19-Skeleton-loading/folder_image01.png)
+![folder01](/images/posts/2023-07-19-Skeleton-loading/folder_image01.png)
 
 ### skeleton-componenet/index.ts
 
@@ -160,7 +160,7 @@ export default SkeletonTopViewWorkbook;
 
 동적인 느낌을 주기 위해 조사를 진행하여 보니 컴포넌트와 CSS를 하나 더 생성하여 처리하는 방법이 있어서 이를 활용해보았다.
 
-![folder02](/assets/images/posts/2023-07-19-Skeleton-loading/forder_image02.png)
+![folder02](/images/posts/2023-07-19-Skeleton-loading/forder_image02.png)
 
 ### Shimmer.tsx
 
@@ -214,4 +214,4 @@ export default Shimmer;
 
 React Query의 isLoading을 활용해서 이렇게 사용할 수 있다.
 
-![sourceImage](/assets/images/posts/2023-07-19-Skeleton-loading/source.png)
+![sourceImage](/images/posts/2023-07-19-Skeleton-loading/source.png)

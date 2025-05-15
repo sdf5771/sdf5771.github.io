@@ -10,7 +10,7 @@ categories: Study
 
 - 구현이란, 머릿속에 있는 알고리즘을 소스코드로 바꾸는 과정이다.
 
-![implementation01](/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png)
+![implementation01](/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png)
 
 - 알고리즘 대회나 코딩 테스트에서의 **구현 유형**의 문제란?
 
@@ -77,7 +77,7 @@ for i in range(4):
   - D: 아래로 한 칸 이동
 - 이때 여행가 A가 N x N 크기의 정사각형 공간을 벗어나는 움직임은 무시됩니다. 예를 들어 (1, 1)의 위치에서 L혹은 U를 만나면 무시됩니다. 다음은 N = 인 지도와 계획서입니다.
 
-![implementation02](/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation02.png)
+![implementation02](/images/posts/2023-02-02-Python-implementation-bruteforce/implementation02.png)
 
 ### 입력조건
 
@@ -145,7 +145,7 @@ for for_index in range(len(tc_data)):
     print('소요시간:',f"{end - start:.5f} sec")
 ```
 
-![implementation03](/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation03.png)
+![implementation03](/images/posts/2023-02-02-Python-implementation-bruteforce/implementation03.png)
 
 ---
 
@@ -208,7 +208,7 @@ for for_index in range(len(tc_data)):
     print('소요시간:',f"{end - start:.5f} sec")
 ```
 
-![implementation04](/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation04.png)
+![implementation04](/images/posts/2023-02-02-Python-implementation-bruteforce/implementation04.png)
 
 ---
 
@@ -223,7 +223,7 @@ for for_index in range(len(tc_data)):
   - c2에 있을 때 이동할 수 있는 경우의 수는 6가지 입니다.
   - a1에 있을 때 이동할 수 있는 경우의 수는 2가지 입니다.
 
-![implementation05](/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation05.png)
+![implementation05](/images/posts/2023-02-02-Python-implementation-bruteforce/implementation05.png)
 
 ### 입력조건
 
@@ -299,7 +299,7 @@ for for_index in range(len(tc_data)):
     print('소요시간:',f"{end - start:.5f} sec")
 ```
 
-![implementation06](/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation06.png)
+![implementation06](/images/posts/2023-02-02-Python-implementation-bruteforce/implementation06.png)
 
 ---
 
@@ -374,7 +374,7 @@ for for_index in range(len(tc_data)):
     print('소요시간:',f"{end - start:.5f} sec")
 ```
 
-![implementation07](/assets/images/posts/2023-02-02-Python-implementation-bruteforce/implementation07.png)
+![implementation07](/images/posts/2023-02-02-Python-implementation-bruteforce/implementation07.png)
 
 ---
 

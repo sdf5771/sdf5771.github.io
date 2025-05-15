@@ -63,7 +63,7 @@ def solution(n):
 
 > 유튜브에서 피보나치 수열 관련 알고리즘을 좀 찾아봤는데, 보통 재귀적으로 구현하게 되면 1초 정도의 시간제한이 있을 경우 타임 아웃이 일어나는 것을 확인했다. 그래서 보통 이런 유형의 문제는 동적 프로그래밍(Dynamic Programming)을 통해 풀어야 시간 초과가 나지 않음을 확인하였고, 동적 프로그래밍의 경우 경험 정보를 이용하여 문제를 해결하기 때문에 빠른 연산이 가능하다.
 
-![pibonacci_result](/assets/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png)
+![pibonacci_result](/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png)
 
 ---
 
@@ -126,7 +126,7 @@ A = int(input())
 solution(A)
 ```
 
-![pibonacci_result2](/assets/images/posts/2023-01-30-Python-pibonacci/pibonacci_result2.png)
+![pibonacci_result2](/images/posts/2023-01-30-Python-pibonacci/pibonacci_result2.png)
 
 시간 초과가 나는 것은 DP를 이용한 메모이제이션 기법을 사용하지 않았기 때문이다.
 

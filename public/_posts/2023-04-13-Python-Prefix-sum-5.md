@@ -123,8 +123,8 @@ if __name__ == "__main__":
 
 ## 풀이 과정 (도식화)
 
-![prefixsum01](/assets/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum01.jpg)
+![prefixsum01](/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum01.jpg)
 
 ## 결과
 
-![prefixsum02](/assets/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum02.png)
+![prefixsum02](/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum02.png)

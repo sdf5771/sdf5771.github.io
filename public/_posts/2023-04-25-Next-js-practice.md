@@ -12,7 +12,7 @@ categories: Study
 npx create-next-app@latest
 ```
 
-![next-js-01](/assets/images/posts/2023-04-25-Next-js-practice/next-js-01.png)
+![next-js-01](/images/posts/2023-04-25-Next-js-practice/next-js-01.png)
 
 - create-next-app으로 프로젝트를 만들면 여러 옵션을 선택한다.
   - Would you like to use TypeScript with this project? - 타입스크립트 사용 여부를 선택
@@ -29,15 +29,15 @@ Next js는 React js로 만든 웹사이트와 다르게 라우터를 설정해 �
 - pages 디렉토리 내부에 생성한 자바스크립트 파일이 곧 URL의 path가 되며, 해당 컴포넌트는 export default 해야한다.
 - 해당 컴포넌트의 이름은 크게 중요하지 않다. URL이 되는 것은 파일명이다.
 
-![next-js-02](/assets/images/posts/2023-04-25-Next-js-practice/next-js-02.png)
+![next-js-02](/images/posts/2023-04-25-Next-js-practice/next-js-02.png)
 
-![next-js-03](/assets/images/posts/2023-04-25-Next-js-practice/next-js-03.png)
+![next-js-03](/images/posts/2023-04-25-Next-js-practice/next-js-03.png)
 
-![next-js-04](/assets/images/posts/2023-04-25-Next-js-practice/next-js-04.png)
+![next-js-04](/images/posts/2023-04-25-Next-js-practice/next-js-04.png)
 
 - 그리고 Next js에는 기본적으로 404 페이지가 제공된다.
 
-![next-js-05](/assets/images/posts/2023-04-25-Next-js-practice/next-js-05.png)
+![next-js-05](/images/posts/2023-04-25-Next-js-practice/next-js-05.png)
 
 # 3. getServerSideProps
 
@@ -143,4 +143,4 @@ export async function getServerSideProps(){
 
 ### 결과
 
-![next-js-06](/assets/images/posts/2023-04-25-Next-js-practice/next-js-06.png)
+![next-js-06](/images/posts/2023-04-25-Next-js-practice/next-js-06.png)

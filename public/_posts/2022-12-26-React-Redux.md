@@ -15,7 +15,7 @@ React 생태계에서 Redux 사용량이 현재도 압도적이기 때문에 Red
 
 - Redux
 
-![reactredux1](/assets/images/posts/2022-12-26-React-Redux/reactredux1.png)
+![reactredux1](/images/posts/2022-12-26-React-Redux/reactredux1.png)
 
 일단 기억해야 하는 존재는 **컴포넌트**, 더해주라는 **Action**, **Reducer**, 그리고 **Store** 정도다. 위 그림의 흐름을 정리해보자.
 

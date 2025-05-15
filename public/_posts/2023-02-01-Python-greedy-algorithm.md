@@ -81,7 +81,7 @@ for i in range(len(tc_data)):
     print('소요시간:',f"{end - start:.5f} sec")
 ```
 
-![greedy_01](/assets/images/posts/2023-02-01-Python-greedy-algorithm/greedy_01.png)
+![greedy_01](/images/posts/2023-02-01-Python-greedy-algorithm/greedy_01.png)
 
 ---
 
@@ -151,7 +151,7 @@ for for_index in range(len(tc_data)):
     print('소요시간:',f"{end - start:.5f} sec")
 ```
 
-![greedy_02](/assets/images/posts/2023-02-01-Python-greedy-algorithm/greedy_02.png)
+![greedy_02](/images/posts/2023-02-01-Python-greedy-algorithm/greedy_02.png)
 
 ---
 
@@ -222,7 +222,7 @@ for for_index in range(len(tc_data)):
     print('소요시간:',f"{end - start:.5f} sec")
 ```
 
-![greedy_03](/assets/images/posts/2023-02-01-Python-greedy-algorithm/greedy_03.png)
+![greedy_03](/images/posts/2023-02-01-Python-greedy-algorithm/greedy_03.png)
 
 ---
 

@@ -16,7 +16,7 @@ categories: Study
 
 ## 브라우저 기본 구조 (Browser Elements)
 
-![rendering01](/assets/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering01.png)
+![rendering01](/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering01.png)
 
 1. 사용자 인터페이스 - 주소 표시줄, 이전/다음 버튼, 북마크 메뉴 등. 요청한 페이지를 보여주는 창을 제외한 나머지 모든 부분
 2. 브라우저 엔진 - 사용자 인터페이스와 렌더링 엔진 사이의 동작을 제어
@@ -45,7 +45,7 @@ categories: Study
 
 ### 대략적인 rendering engine 동작 과정
 
-![rendering02](/assets/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering02.png)
+![rendering02](/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering02.png)
 
 1. DOM tree 구축을 위한 HTML parsing, CSS, Javascript parsing : HTML 문서를 파싱한 후, content tree 내부에서 tag(a, div)를 DOM node 로 변환한다. 그 다음 CSS 파일과 함께 모든 스타일 요소를 파싱한다. 스타일 요소와 HTML 표시 규칙, Javascript 의 파싱 결과물은 render tree를 생성한다.
 2. render tree 구축 : HTML 과 CSS 를 파싱해서 만들어진 render tree 는 색상 또는 면적 등 시각적 속성을 갖는 사각형을 포함한다. 정해진 순서대로 렌더링한다.
@@ -62,7 +62,7 @@ render tree에 node를 그린다 (2, 3, 4번)
 
 ### webkit의 동작 과정
 
-![rendering03](/assets/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering03.png)
+![rendering03](/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering03.png)
 
 1. HTML을 parsing 하여 DOM tree 를 생성한다.
 
@@ -71,7 +71,7 @@ render tree에 node를 그린다 (2, 3, 4번)
 
     ``html     <html>     	<body>     		<p>Hello World</p>     		<div>     			<img src="example.png" />     		</div>     		<script></script>     	</body>     </html>     ``
 
-![rendering04](/assets/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering04.png)
+![rendering04](/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering04.png)
 
 브라우저는 tag의 parsing과 실행을 동시에 진행한다.
 
@@ -115,7 +115,7 @@ HTML5에서 추가된 기능이 있다.
 
 ### 모질라의 게코 렌더링 엔진 동작 과정
 
-![rendering05](/assets/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering05.png)
+![rendering05](/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering05.png)
 
 ---
 

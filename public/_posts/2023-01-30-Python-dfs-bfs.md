@@ -280,11 +280,11 @@ bfs(graph, 1, visited)
 
 위 문자열은 다음과 같은 지도를 나타냅니다.
 
-![dfs_bfs_01](/assets/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_01.png)
+![dfs_bfs_01](/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_01.png)
 
 연결된 땅들의 값을 합치면 다음과 같으며
 
-![dfs_bfs_02](/assets/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_02.png)
+![dfs_bfs_02](/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_02.png)
 
 이를 오름차순으로 정렬하면 [1, 1, 27]이 됩니다.
 
@@ -292,7 +292,7 @@ bfs(graph, 1, visited)
 
 위 문자열은 다음과 같은 지도를 나타냅니다.
 
-![dfs_bfs_03](/assets/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_03.png)
+![dfs_bfs_03](/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_03.png)
 
 섬이 존재하지 않기 때문에 -1을 배열에 담아 반환합니다.
 
