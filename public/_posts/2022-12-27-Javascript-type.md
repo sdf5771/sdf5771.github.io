@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Javascript Types"
+date: "2022-12-27"
 author: Seobisback
 tags: [JavaScript]
 categories: Study

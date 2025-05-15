@@ -16,6 +16,7 @@ interface UsePostsOptions {
 
 function usePosts({ filter, sort = 'desc', pagination }: UsePostsOptions){
     const [posts, setPosts] = useState<PostMetadata[]>([]);
+    const [allPostCount, setAllPostCount] = useState<number>(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
@@ -43,6 +44,8 @@ function usePosts({ filter, sort = 'desc', pagination }: UsePostsOptions){
                     allPostDatas = allPostDatas.sort((a, b) => b.date.localeCompare(a.date));
                     console.log('desc ', allPostDatas);
                 }
+
+                setAllPostCount(allPostDatas.length);
                 
                 // filter posts
                 /** title filter */
@@ -59,6 +62,8 @@ function usePosts({ filter, sort = 'desc', pagination }: UsePostsOptions){
                 if(filter?.tag){
                     allPostDatas = allPostDatas.filter(post => post.keywords.includes(filter.tag || ''));
                 }
+
+                
 
                 /** pagination */
                 if(pagination && pagination.page && pagination.limit && isLimitPagination){
@@ -83,6 +88,7 @@ function usePosts({ filter, sort = 'desc', pagination }: UsePostsOptions){
         posts,
         loading,
         error,
+        allPostCount,
     };
 }
 

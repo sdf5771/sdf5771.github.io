@@ -91,8 +91,8 @@
     font-family: Pretendard;
     font-size: 0.8rem;
     font-weight: 400;
-    color: var(--brand-primary);
-    border: 1px solid var(--brand-primary);
+    color: var(--brand-gray-black);
+    border: 1px solid var(--brand-gray-black);
     background-color: #fff;
 }
 .post_card:hover > .thumbnail > .tags{
@@ -100,12 +100,13 @@
 }
 .info_container{
     display: flex;
+    align-items: center;
     gap: 5px;
 }
 .graphic_dot{
     width: 5px;
     height: 5px;
-    background-color: var(--brand-gray-light);
+    background-color: var(--brand-gray-dark);
     border-radius: 50%;
 }
 .author{
@@ -115,6 +116,12 @@
     color: var(--brand-gray-dark);
 }
 .date{
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--brand-gray-dark);
+}
+.category{
     font-family: Pretendard;
     font-size: 1rem;
     font-weight: 400;

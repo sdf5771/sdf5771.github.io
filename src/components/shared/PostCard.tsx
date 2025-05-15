@@ -27,6 +27,8 @@ function PostCard({ post }: { post: PostMetadata }) {
                     <span className={styles.author}>{post.author}</span>
                     <div className={styles.graphic_dot}></div>
                     <span className={styles.date}>{post.date}</span>
+                    <div className={styles.graphic_dot}></div>
+                    <span className={styles.category}>{post.category}</span>
                 </div>
             </div>
         </div>

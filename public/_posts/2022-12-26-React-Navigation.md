@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "React Navigation"
+date: "2022-12-26"
 author: Seobisback
 tags: [React, ReactNative]
 categories: Survey

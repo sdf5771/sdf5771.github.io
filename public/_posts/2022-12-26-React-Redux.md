@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "상태 관리 라이브러리 Redux VS MobX"
+date: "2022-12-26"
 author: Seobisback
 tags: [React, StateManagement, Redux, MobX]
 categories: Survey

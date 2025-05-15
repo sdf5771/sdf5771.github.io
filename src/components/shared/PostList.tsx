@@ -23,10 +23,10 @@ function PostList({ searchKeyword, pagination, sort, urlPath }: PostListProps) {
 
     const paginationOptions = useMemo(() => ({
         page: pagination?.page ?? 1,
-        limit: pagination?.limit ?? 10
+        limit: pagination?.limit ?? 6
     }), [pagination?.page, pagination?.limit]);
     
-    const { posts, loading, error } = usePosts({
+    const { posts, loading, error, allPostCount } = usePosts({
         sort: sort ?? 'desc',
         pagination: paginationOptions,
         filter: filterOptions
@@ -40,14 +40,22 @@ function PostList({ searchKeyword, pagination, sort, urlPath }: PostListProps) {
             {posts && posts.length > 0 ? posts.map((post) => (
                 <PostCard key={post.slug} post={post} />
             )) : (
-                <div>
-                    <h2>No posts</h2>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                    width: '100%',
+                    fontSize: '2rem',
+                    fontWeight: 'bold',
+                }}>
+                    <h2>Oops! Sorry, no posts found.</h2>
                 </div>
             )}
             <div className={styles.pagination}>
                 {
-                    pagination && pagination.limit && pagination.page && (
-                        <Pagination currentPage={pagination.page} totalPage={pagination.limit} urlPath={urlPath} />
+                    pagination && pagination.page && (
+                        <Pagination currentPage={pagination.page} totalPage={Math.ceil(allPostCount / (pagination.limit ?? 6))} urlPath={urlPath} />
                     )
                 }
             </div>
