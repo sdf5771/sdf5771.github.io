@@ -58,6 +58,7 @@ const Post = () => {
             }
         }
         getPost();
+        scrollTo(0, 0);
     }, [location.search])
 
     return (

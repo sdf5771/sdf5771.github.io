@@ -18,8 +18,8 @@ categories: Survey
 
 ### 1부
 
-1. [최근 5년간의 UX/UI 진화: 2020-2024](/syntax/2025/03/13/ux-trends-and-spatial-computing-paradigm-1.html#section1)
-2. [새로운 패러다임, Spatial UX/UI](/syntax/2025/03/13/ux-trends-and-spatial-computing-paradigm-1.html#section2)
+1. [최근 5년간의 UX/UI 진화: 2020-2024](/post?id=2025-03-14-ux-trends-and-spatial-computing-paradigm-2#section1)
+2. [새로운 패러다임, Spatial UX/UI](/post?id=2025-03-14-ux-trends-and-spatial-computing-paradigm-2#section2)
 
 ### 2부 📌
 

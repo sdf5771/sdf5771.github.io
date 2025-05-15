@@ -23,8 +23,8 @@ categories: Survey
 
 ### 2부
 
-1. [WebXR: 공간적 웹 경험의 기술적 기반](/syntax/2025/03/14/ux-trends-and-spatial-computing-paradigm-2.html#section3)
-2. [미래 전망: 2025년과 그 이후](/syntax/2025/03/14/ux-trends-and-spatial-computing-paradigm-2.html#section4)
+1. [WebXR: 공간적 웹 경험의 기술적 기반](/post?id=2025-03-14-ux-trends-and-spatial-computing-paradigm-2#section3)
+2. [미래 전망: 2025년과 그 이후](/post?id=2025-03-14-ux-trends-and-spatial-computing-paradigm-2#section4)
 
 ---
 
