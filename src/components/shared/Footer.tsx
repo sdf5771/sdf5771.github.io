@@ -12,36 +12,41 @@ function Footer() {
                 </div>
                 <div className={styles.lists}>
                     <div className={styles.list}>
-                        <span className={styles.title}>My Socials</span>
+                        <span className={styles.title}>Channels</span>
                         <ul>
                             <li>
-                                <a href="/">
+                                <a href="https://github.com/sdf5771">
                                     Github
                                 </a>
                             </li>
                             <li>
-                                <a href="/">
+                                <a href="https://www.instagram.com/real_seobisback/">
                                     Instagram
                                 </a>
                             </li>
                             <li>
-                                <a href="/">
+                                <a href="https://www.facebook.com/profile.php?id=100004827672196">
                                     Facebook
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4">
+                                    Notion
                                 </a>
                             </li>
                         </ul>
                     </div>
                     <div className={styles.list}>
-                        <span className={styles.title}>title</span>
+                        <span className={styles.title}>Services</span>
                         <ul>
                             <li>
-                                <a href="/">
-                                    Home
+                                <a href="https://sdf5771.github.io">
+                                    Blog
                                 </a>
                             </li>
                             <li>
-                                <a href="/">
-                                    Home
+                                <a href="https://www.qualk.co.kr/">
+                                    Qualk
                                 </a>
                             </li>
                         </ul>
@@ -50,7 +55,7 @@ function Footer() {
                         <span className={styles.title}>Contacts</span>
                         <ul>
                             <li>
-                                <a href="/">
+                                <a href="mailto:seobisback@gmail.com">
                                     Email
                                 </a>
                             </li>
