@@ -1,8 +1,11 @@
 import styles from './PostCard.module.css';
 import type { PostMetadata } from '../../types';
+import { useNavigate } from 'react-router-dom';
 function PostCard({ post }: { post: PostMetadata }) {
+
+    const navigate = useNavigate();
     return (
-        <div className={styles.post_card}>
+        <div className={styles.post_card} onClick={() => navigate(`/post?id=${post.slug}`)}>
             <div className={styles.thumbnail}>
                 {
                     post.thumbnail ?
