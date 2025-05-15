@@ -13,7 +13,7 @@ function Profile() {
                         <img src="https://avatars.githubusercontent.com/sdf5771" alt="github profile" />
                     </div>
                 </div>
-                <div className={styles.vertical_divider} />
+                <div className={styles.responsive_divider} />
                 <div className={styles.introduce_wrapper}>
                     <div className={styles.introduce_box}>
                         <span>Frontend 개발자 김섭우입니다.</span>
@@ -25,7 +25,7 @@ function Profile() {
                         <span>해당 블로그에는 학습하거나 조사한 내용을 바탕으로 블로그에 기록하고 있습니다.</span>
                     </div>
                 </div>
-                <div className={styles.vertical_divider} />
+                <div className={styles.responsive_divider} />
                 <div className={styles.contact_wrapper}>
                     <div className={styles.title}>
                         <span>Contact & Channel</span>

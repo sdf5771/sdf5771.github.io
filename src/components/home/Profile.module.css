@@ -46,25 +46,252 @@
     height: 1px;
     background-color: var(--brand-gray-dark);
 }
+/* pc */
+@media screen and (min-width: 1024px) {
+    .info_container{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 10px;
+    }
+    .info_wrapper{
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        gap: 10px;
+    }
+    .responsive_divider{
+        width: 2px;
+        height: 50px;
+        background-color: var(--brand-gray-dark);
+    }
+    .introduce_wrapper{
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        gap: 30px;
+    }
+    .introduce_box{
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    }
+    .introduce_box > span{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+    }
+    .contact_wrapper{
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        gap: 30px;
+    }
+    .contact_wrapper > .title{
+        font-family: Pretendard;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--brand-accent);
+    }
+    .contact_wrapper > .contact_box{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .contact_wrapper > .contact_box > span:first-child{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+        background-color: #d1d1b1;
+    }
+    .contact_wrapper > .contact_box > span{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+    }
+    .contact_wrapper > .contact_box > a{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+    }
+}
+/* pad */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .info_container{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 0 10px;
+    }
+    .info_wrapper{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    .responsive_divider{
+        display: none;
+    }
+    .introduce_wrapper{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 30px;
+    }
+    .introduce_box{
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    }
+    .introduce_box > span{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+    }
+    .contact_wrapper{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 30px;
+    }
+    .contact_wrapper > .title{
+        font-family: Pretendard;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--brand-accent);
+    }
+    .contact_wrapper > .contact_box{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .contact_wrapper > .contact_box > span:first-child{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+        background-color: #d1d1b1;
+    }
+    .contact_wrapper > .contact_box > span{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+    }
+    .contact_wrapper > .contact_box > a{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+    }
+}
+/* mobile */
+@media screen and (max-width: 767px) {
+    .info_container{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        padding: 0 10px;
+    }
+    .info_wrapper{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    .responsive_divider{
+        display: none;
+    }
+    .introduce_wrapper{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 30px;
+    }
+    .introduce_box{
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    }
+    .introduce_box > span{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+    }
+    .contact_wrapper{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 30px;
+    }
+    .contact_wrapper > .title{
+        font-family: Pretendard;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--brand-accent);
+    }
+    .contact_wrapper > .contact_box{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .contact_wrapper > .contact_box > span:first-child{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+        background-color: #d1d1b1;
+    }
+    .contact_wrapper > .contact_box > span{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+    }
+    .contact_wrapper > .contact_box > a{
+        font-family: Pretendard;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--brand-black);
+    }
+}
+
 .vertical_divider{
     width: 2px;
     height: 50px;
     background-color: var(--brand-gray-dark);
-}
-.info_container{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 10px;
-}
-.info_wrapper{
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    gap: 10px;
 }
 .name_container{
     display: flex;
@@ -95,63 +322,6 @@
 .info_container > .info_wrapper > .image_container > img{
     width: 100%;
     height: 100%;
-}
-.introduce_wrapper{
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    gap: 30px;
-}
-.introduce_box{
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-}
-.introduce_box > span{
-    font-family: Pretendard;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: var(--brand-black);
-}
-.contact_wrapper{
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    gap: 30px;
-}
-.contact_wrapper > .title{
-    font-family: Pretendard;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--brand-accent);
-}
-.contact_wrapper > .contact_box{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-.contact_wrapper > .contact_box > span:first-child{
-    font-family: Pretendard;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: var(--brand-black);
-    background-color: #d1d1b1;
-}
-.contact_wrapper > .contact_box > span{
-    font-family: Pretendard;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: var(--brand-black);
-}
-.contact_wrapper > .contact_box > a{
-    font-family: Pretendard;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: var(--brand-black);
 }
 .stats_container{
     margin-top: 20px;
@@ -184,12 +354,14 @@
 .stats_box{
     margin-top: 20px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     width: 100%;
     gap: 30px;
 }
 .stats_box > img{
+    /* width: 100%; */
     height: 195px;
 }
 .trophy_box{

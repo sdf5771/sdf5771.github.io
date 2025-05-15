@@ -1,6 +1,7 @@
 .post_list{
     margin-top: 20px;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
     padding: 0 10px;
