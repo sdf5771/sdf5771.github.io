@@ -2,10 +2,15 @@ import styles from './PageTitle.module.css';
 import { useEffect, useRef } from 'react';
 
 export default function PageTitle({ title }: { title: string }) {
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+        }
+
+        intervalRef.current = setInterval(() => {
             const text = title;
             for (let i = 0; i < text.length; i++) {
                 setTimeout(() => {
@@ -14,7 +19,11 @@ export default function PageTitle({ title }: { title: string }) {
             }
         }, 1500);
 
-        return () => clearInterval(interval);
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+        };
     }, [title]);
 
     return (

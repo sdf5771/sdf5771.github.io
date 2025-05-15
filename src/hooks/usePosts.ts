@@ -39,10 +39,8 @@ function usePosts({ filter, sort = 'desc', pagination }: UsePostsOptions){
                 /** sort posts */
                 if(isSortAsc){
                     allPostDatas = allPostDatas.sort((a, b) => a.date.localeCompare(b.date));
-                    console.log('asc ', allPostDatas);
                 } else {
                     allPostDatas = allPostDatas.sort((a, b) => b.date.localeCompare(a.date));
-                    console.log('desc ', allPostDatas);
                 }
 
                 setAllPostCount(allPostDatas.length);
