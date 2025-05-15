@@ -9,7 +9,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2022-12-26-React-Navigation"
+    "slug": "2022-12-26-React-Navigation",
+    "thumbnail": "/images/posts/2022-12-26-React-Navigation/ReactNavigation1.png"
   },
   {
     "title": "상태 관리 라이브러리 Redux VS MobX",
@@ -23,7 +24,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2022-12-26-React-Redux"
+    "slug": "2022-12-26-React-Redux",
+    "thumbnail": "/images/posts/2022-12-26-React-Redux/reactredux1.png"
   },
   {
     "title": "Javascript Types",
@@ -34,7 +36,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2022-12-27-Javascript-type"
+    "slug": "2022-12-27-Javascript-type",
+    "thumbnail": "/images/posts/2022-12-27-Javascript-type/javascript1.png"
   },
   {
     "title": "ReactHook_useContext + Context API",
@@ -47,7 +50,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2022-12-27-React-useContext-ContextAPI"
+    "slug": "2022-12-27-React-useContext-ContextAPI",
+    "thumbnail": "/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png"
   },
   {
     "title": "ReactHook_useMemo",
@@ -60,7 +64,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2022-12-27-React-useMemo"
+    "slug": "2022-12-27-React-useMemo",
+    "thumbnail": ""
   },
   {
     "title": "ReactHook_useRef",
@@ -73,7 +78,60 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2022-12-27-React-useRef"
+    "slug": "2022-12-27-React-useRef",
+    "thumbnail": ""
+  },
+  {
+    "title": "2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임 시프트 - WebXR: 공간적 웹 경험과 2025 미래 기술 전망 (2부)",
+    "date": "2025-03-14",
+    "author": "Seobisback",
+    "keywords": [
+      "Web",
+      "Frontend",
+      "Design",
+      "UX",
+      "UI",
+      "VR",
+      "AR",
+      "WebXR",
+      "Apple",
+      "Google",
+      "Vision Pro",
+      "Android XR",
+      "Spatial",
+      "WebGL",
+      "Naver"
+    ],
+    "description": "",
+    "category": "Syntax",
+    "slug": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2",
+    "thumbnail": "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/15.png"
+  },
+  {
+    "title": "2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임 시프트 - UX/UI의 진화와 Spatial UX/UI (1부)",
+    "date": "2025-03-13",
+    "author": "Seobisback",
+    "keywords": [
+      "Web",
+      "Frontend",
+      "Design",
+      "UX",
+      "UI",
+      "VR",
+      "AR",
+      "WebXR",
+      "Apple",
+      "Google",
+      "Vision Pro",
+      "Android XR",
+      "Spatial",
+      "WebGL",
+      "Naver"
+    ],
+    "description": "",
+    "category": "Syntax",
+    "slug": "2025-03-13-ux-trends-and-spatial-computing-paradigm-1",
+    "thumbnail": "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1/01.jpg"
   },
   {
     "title": "MongoDB.local Seoul 2024 - 컨퍼런스 참여 후기",
@@ -86,7 +144,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2024-09-04-mongodb-local"
+    "slug": "2024-09-04-mongodb-local",
+    "thumbnail": "/images/posts/2024-09-04-mongodb-local/01.png"
   },
   {
     "title": "[인증과 인가] - 토큰 기반 인증을 풀스택으로 구현해보자 (Next js, Typescript)",
@@ -102,7 +161,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2024-03-06-jwttoken"
+    "slug": "2024-03-06-jwttoken",
+    "thumbnail": "/images/posts/2024-03-06-jwttoken/jwttoken01.png"
   },
   {
     "title": "(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민",
@@ -115,7 +175,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-09-17-Browser-rendering"
+    "slug": "2023-09-17-Browser-rendering",
+    "thumbnail": "/images/posts/2023-09-17-Browser-rendering/browser01.png"
   },
   {
     "title": "Javascript Test - Jest",
@@ -130,7 +191,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-09-13-Test-jest-learn"
+    "slug": "2023-09-13-Test-jest-learn",
+    "thumbnail": ""
   },
   {
     "title": "React에서 Skeleton Loading 만들기",
@@ -142,7 +204,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-07-19-Skeleton-loading"
+    "slug": "2023-07-19-Skeleton-loading",
+    "thumbnail": "/images/posts/2023-07-19-Skeleton-loading/folder_image01.png"
   },
   {
     "title": "아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1",
@@ -155,7 +218,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-05-01-AtomicDesignPattern01"
+    "slug": "2023-05-01-AtomicDesignPattern01",
+    "thumbnail": "/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png"
   },
   {
     "title": "[Next JS] 학습 01 - 프로젝트 생성 및 개념 공부",
@@ -168,7 +232,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-04-25-Next-js-practice"
+    "slug": "2023-04-25-Next-js-practice",
+    "thumbnail": "/images/posts/2023-04-25-Next-js-practice/next-js-01.png"
   },
   {
     "title": "Technical SEO를 위한 동적 메타태그 작성 feat.React Project",
@@ -181,7 +246,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-04-15-Technical-SEO-meta-tag"
+    "slug": "2023-04-15-Technical-SEO-meta-tag",
+    "thumbnail": "/images/posts/2023-04-15-Technical-SEO-meta-tag/seo01.png"
   },
   {
     "title": "API (API, Application Programming Interface)",
@@ -192,7 +258,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-04-13-API"
+    "slug": "2023-04-13-API",
+    "thumbnail": "/images/posts/2023-04-13-API/api01.png"
   },
   {
     "title": "클라우드, SaaS, IaaS, PasS",
@@ -206,7 +273,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-04-13-Cloud-SaaS-IaaS-PaaS"
+    "slug": "2023-04-13-Cloud-SaaS-IaaS-PaaS",
+    "thumbnail": "/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png"
   },
   {
     "title": "[데이터 포맷]  JSON & XML",
@@ -218,7 +286,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-04-13-JSON-XML"
+    "slug": "2023-04-13-JSON-XML",
+    "thumbnail": ""
   },
   {
     "title": "[Python]백준 : 11660 구간 합 구하기 5",
@@ -230,7 +299,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-04-13-Python-Prefix-sum-5"
+    "slug": "2023-04-13-Python-Prefix-sum-5",
+    "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum01.jpg"
   },
   {
     "title": "[Python]백준 : 10986 나머지 합",
@@ -242,7 +312,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-04-13-Python-Prefix-sum-reminder"
+    "slug": "2023-04-13-Python-Prefix-sum-reminder",
+    "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg"
   },
   {
     "title": "[Front-end CS] 브라우저 렌더링 프로세스",
@@ -255,7 +326,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-02-26-Front-end-cs-browser-rendering"
+    "slug": "2023-02-26-Front-end-cs-browser-rendering",
+    "thumbnail": "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering01.png"
   },
   {
     "title": "코드 업 : 1920 : (재귀함수) 2진수 변환",
@@ -267,7 +339,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-02-26-codeup-codetest-binaryparse"
+    "slug": "2023-02-26-codeup-codetest-binaryparse",
+    "thumbnail": ""
   },
   {
     "title": "코드 업 : 1928 : (재귀함수) 우박수 (3n + 1) (basic)",
@@ -279,7 +352,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-02-26-codeup-codetest-collatz-basic"
+    "slug": "2023-02-26-codeup-codetest-collatz-basic",
+    "thumbnail": ""
   },
   {
     "title": "1929 : (재귀함수) 우박수 (3n+1) (reverse)",
@@ -291,7 +365,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-02-26-codeup-codetest-collatz-reverse"
+    "slug": "2023-02-26-codeup-codetest-collatz-reverse",
+    "thumbnail": ""
   },
   {
     "title": "[Python] - 구현: 시뮬레이션과 완전 탐색",
@@ -303,7 +378,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-02-02-Python-implementation-bruteforce"
+    "slug": "2023-02-02-Python-implementation-bruteforce",
+    "thumbnail": "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png"
   },
   {
     "title": "[Python] - 그리디 알고리즘",
@@ -315,7 +391,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-02-01-Python-greedy-algorithm"
+    "slug": "2023-02-01-Python-greedy-algorithm",
+    "thumbnail": "/images/posts/2023-02-01-Python-greedy-algorithm/greedy_01.png"
   },
   {
     "title": "[Python] - 그래프 탐색 알고리즘 : DFS/BFS",
@@ -327,7 +404,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-30-Python-dfs-bfs"
+    "slug": "2023-01-30-Python-dfs-bfs",
+    "thumbnail": "/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_01.png"
   },
   {
     "title": "[Python] - 동적 프로그래밍 : 피보나치 수",
@@ -339,7 +417,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-30-Python-pibonacci"
+    "slug": "2023-01-30-Python-pibonacci",
+    "thumbnail": "/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png"
   },
   {
     "title": "React Query + 상태 + 상태 관리 [1편]",
@@ -353,7 +432,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-13-ReactQuery-State-StateManagement-01"
+    "slug": "2023-01-13-ReactQuery-State-StateManagement-01",
+    "thumbnail": ""
   },
   {
     "title": "React Query + 상태 + 상태 관리 [2편]",
@@ -367,7 +447,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-13-ReactQuery-State-StateManagement-02"
+    "slug": "2023-01-13-ReactQuery-State-StateManagement-02",
+    "thumbnail": ""
   },
   {
     "title": "[Code refactoring] - 원티드 프리온보딩 프론트엔드 챌린지 - 사전과제 리팩토링",
@@ -380,7 +461,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-11-Wanted-pre-onboarding-01"
+    "slug": "2023-01-11-Wanted-pre-onboarding-01",
+    "thumbnail": ""
   },
   {
     "title": "[Python] - 기본 입출력",
@@ -391,7 +473,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-10-Python-default-input-output"
+    "slug": "2023-01-10-Python-default-input-output",
+    "thumbnail": "/images/posts/2023-01-10-Python-default-input-output/input_output.png"
   },
   {
     "title": "[Python] - 함수, 람다 표현식",
@@ -402,7 +485,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-10-Python-function-lambda"
+    "slug": "2023-01-10-Python-function-lambda",
+    "thumbnail": ""
   },
   {
     "title": "[Python] - 조건문, 반복문",
@@ -413,7 +497,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-10-Python-if-for-while"
+    "slug": "2023-01-10-Python-if-for-while",
+    "thumbnail": ""
   },
   {
     "title": "[Python] - 문자열 자료형, 튜플 자료형",
@@ -424,7 +509,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-10-Python-string-tuple"
+    "slug": "2023-01-10-Python-string-tuple",
+    "thumbnail": ""
   },
   {
     "title": "[Python] - 집합 자료형, 사전 자료",
@@ -435,7 +521,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-09-Python-dictionary-data-type"
+    "slug": "2023-01-09-Python-dictionary-data-type",
+    "thumbnail": ""
   },
   {
     "title": "[Python] - 리스트 자료형",
@@ -446,7 +533,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-08-Python-data-type-list"
+    "slug": "2023-01-08-Python-data-type-list",
+    "thumbnail": ""
   },
   {
     "title": "[Python] - 언더바는 언제 사용하는가?",
@@ -457,7 +545,8 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2023-01-08-Python-under-bar"
+    "slug": "2023-01-08-Python-under-bar",
+    "thumbnail": ""
   },
   {
     "title": "Typescript를 사용하는 이유",
@@ -469,6 +558,7 @@
     ],
     "description": "",
     "category": "Syntax",
-    "slug": "2022-12-31-Typescript"
+    "slug": "2022-12-31-Typescript",
+    "thumbnail": ""
   }
 ]

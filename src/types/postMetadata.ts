@@ -6,4 +6,5 @@ export interface PostMetadata {
     description: string;
     category: string;
     slug: string;
+    thumbnail: string;
 }

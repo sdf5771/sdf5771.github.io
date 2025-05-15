@@ -4,6 +4,14 @@ function PostCard({ post }: { post: PostMetadata }) {
     return (
         <div className={styles.post_card}>
             <div className={styles.thumbnail}>
+                {
+                    post.thumbnail ?
+                        <img src={post.thumbnail} alt={post.title} />
+                    :
+                        <div className={styles.thumbnail_placeholder}>
+                            <span>NO THUMBNAIL IMAGE!</span>
+                        </div>
+                }
                 <div className={styles.tags}>
                     {post.keywords.map((keyword) => (
                         <span key={keyword} className={styles.tag}>{keyword}</span>
