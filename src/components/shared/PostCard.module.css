@@ -62,11 +62,11 @@
     background-color: var(--brand-secondary);
     transition: opacity 0.3s ease-in-out, filter 0.3s ease-in-out;
 }
-.post_card > .thumbnail > .thumbnail_placeholder > span{
-    font-family: Pretendard;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #fff;
+.post_card > .thumbnail > .thumbnail_placeholder > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
 }
 .post_card:hover > .thumbnail > .thumbnail_placeholder{
     visibility: visible;

@@ -9,7 +9,7 @@ function PostCard({ post }: { post: PostMetadata }) {
                         <img src={post.thumbnail} alt={post.title} />
                     :
                         <div className={styles.thumbnail_placeholder}>
-                            <span>NO THUMBNAIL IMAGE!</span>
+                            <img src='/images/shared/thumbnail_placeholder.png' alt={post.title} />
                         </div>
                 }
                 <div className={styles.tags}>
