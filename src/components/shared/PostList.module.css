@@ -1,11 +1,3 @@
-.post_list{
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 0 10px;
-}
 .pagination{
     width: 100%;
     display: flex;
@@ -13,4 +5,39 @@
     align-items: center;
     margin-top: 40px;
     margin-bottom: 40px;
+}
+
+/* pc */
+@media screen and (min-width: 1024px) {
+    .post_list{
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 0 10px;
+    }
+}
+
+/* pad */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .post_list{
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 0 10px;
+    }
+}
+
+/* mobile */
+@media screen and (max-width: 767px) {
+    .post_list{
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 0 10px;
+    }
 }

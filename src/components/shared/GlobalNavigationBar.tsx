@@ -1,9 +1,11 @@
 import styles from './GlobalNavigationBar.module.css';
 import logo from '../../assets/images/memoji.png';
 import { useNavigate } from 'react-router-dom';
-
+import { ResponsiveMobile, ResponsiveTabletPC, ResponsivePC } from './ResponsiveWrapper';
+import { useState } from 'react';
 function GlobalNavigationBar(){
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <nav className={styles.nav}>
             <div className={styles.nav_container}>
@@ -15,13 +17,40 @@ function GlobalNavigationBar(){
                         <span>Seobisback's Blog</span>
                     </div>
                 </div>
-                <div className={styles.right_container}>
-                    <ul className={styles.menu_list}>
-                        <li onClick={() => navigate('/')}>Home</li>
-                        <li onClick={() => alert('😅 Oops! This Page is under construction.')}>Works</li>
-                        <li onClick={() => alert('😅 Oops! This Feature is under construction.')}>Search</li>
-                    </ul>
-                </div>
+                <ResponsivePC>
+                    <div className={styles.right_container}>
+                        <ul className={styles.menu_list}>
+                            <li onClick={() => navigate('/')}>Home</li>
+                            <li onClick={() => alert('😅 Oops! This Page is under construction.')}>Works</li>
+                            <li onClick={() => alert('😅 Oops! This Feature is under construction.')}>Search</li>
+                        </ul>
+                    </div>
+                </ResponsivePC>
+                <ResponsiveTabletPC>
+                    <div className={styles.right_container}>
+                        <ul className={styles.menu_list}>
+                            <li onClick={() => navigate('/')}>Home</li>
+                            <li onClick={() => alert('😅 Oops! This Page is under construction.')}>Works</li>
+                            <li onClick={() => alert('😅 Oops! This Feature is under construction.')}>Search</li>
+                        </ul>
+                    </div>
+                </ResponsiveTabletPC>
+                <ResponsiveMobile>
+                    <div className={styles.right_container}>
+                        <a 
+                            className={`${styles.menu_trigger} ${styles.type7} ${isOpen ? styles.active : ''}`} 
+                            href="#" 
+                            onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+                                event.preventDefault();
+                                setIsOpen(prev => !prev);
+                                
+                            }}>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                    </div>
+                </ResponsiveMobile>
             </div>
         </nav>
     )
