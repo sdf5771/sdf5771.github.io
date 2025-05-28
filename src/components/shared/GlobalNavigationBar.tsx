@@ -7,7 +7,7 @@ function GlobalNavigationBar(){
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <nav className={styles.nav}>
+        <nav className={`${styles.nav} ${isOpen ? styles.active : ''}`}>
             <div className={styles.nav_container}>
                 <div className={styles.left_container}>
                     <div onClick={() => navigate('/')} className={styles.title_container}>
@@ -38,7 +38,7 @@ function GlobalNavigationBar(){
                 <ResponsiveMobile>
                     <div className={styles.right_container}>
                         <a 
-                            className={`${styles.menu_trigger} ${styles.type7} ${isOpen ? styles.active : ''}`} 
+                            className={`${styles.menu_trigger} ${isOpen ? styles.active : ''}`} 
                             href="#" 
                             onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
                                 event.preventDefault();
@@ -50,6 +50,14 @@ function GlobalNavigationBar(){
                             <span></span>
                         </a>
                     </div>
+                    <ul className={`${styles.menu_list_mobile} ${isOpen ? styles.active : ''}`}>
+                        <li onClick={() => {
+                            navigate('/')
+                            setIsOpen(false)
+                        }}>Home</li>
+                        <li onClick={() => alert('😅 Oops! This Page is under construction.')}>Works</li>
+                        <li onClick={() => alert('😅 Oops! This Feature is under construction.')}>Search</li>
+                    </ul>
                 </ResponsiveMobile>
             </div>
         </nav>
