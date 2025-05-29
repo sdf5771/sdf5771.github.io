@@ -188,6 +188,8 @@ translateButton.addEventListener('click', async () => {
 ![Translator API Demo App GIF](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/03.gif)
 `<font color="#7f7f7f">`(Translator API Demo App GIF)`</font>`
 
+> Github Repository: [@sdf5771/2025-google-io/translator-api](https://github.com/sdf5771/2025-google-io/tree/main/translator-api)
+
 ### Language Detector API (언어 감지 API)
 
 > [Language Detector API Docs](https://developer.chrome.com/docs/ai/language-detection)
@@ -337,6 +339,8 @@ UI가 포함된 간단하게 만든 Demo를 확인해보겠습니다.
 ![Language Detector API Demo App GIF](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/06.gif)
 `<font color="#7f7f7f">`(Language Detector API Demo App GIF)`</font>`
 
+> Github Repository: [@sdf5771/2025-google-io/language-detector-api](https://github.com/sdf5771/2025-google-io/tree/main/language-detector-api)
+
 ### Summarizer API (요약 API)
 
 > [Summarizer API Docs](https://developer.chrome.com/docs/ai/summarizer-api)
@@ -468,6 +472,8 @@ summarizeButton.addEventListener('click', async () => {
 
 ![Summarizer API Demo App GIF](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/09.gif)
 `<font color="#7f7f7f">`(Summarizer API Demo App GIF)`</font>`
+
+> Github Repository: [@sdf5771/2025-google-io/summarizer-api](https://github.com/sdf5771/2025-google-io/tree/main/summarizer-api)
 
 ---
 
