@@ -19,7 +19,11 @@ const Post = () => {
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const postId = searchParams.get('id');
-        if(!postId) return navigate('/');
+        if(!postId) {
+            navigate('/');
+            return;
+        }
+        
         const getPost = async () => {
             try {
                 const post = postsData.find(post => post.slug === postId);
@@ -44,6 +48,7 @@ const Post = () => {
                 .use(markdownItMath) // 수식 플러그인 추가
                 .use(markdownItTaskLists) // 체크리스트 플러그인 추가
                 .use(markdownItFootnote); // 각주 플러그인 추가
+                
                 const contentText = await response.text();
                 setPostData(post);
 
@@ -56,10 +61,12 @@ const Post = () => {
                 console.error('Failed to fetch post');
                 navigate('/');
             }
-        }
-        getPost();
+        };
+        
+        // async 함수를 즉시 호출하되, Promise를 반환하지 않도록 void 처리
+        void getPost();
         scrollTo(0, 0);
-    }, [location.search])
+    }, [location.search, navigate]);
 
     return (
         <main className={styles.main}>
@@ -73,7 +80,9 @@ const Post = () => {
                     </div>
                     <h1 className={styles.title}>{postData?.title}</h1>
                     <div className={styles.info_container}>
-                        <span className={styles.date}>{new Date(postData?.date).toLocaleDateString()}</span>
+                        <span className={styles.date}>
+                            {postData?.date ? new Date(postData.date).toLocaleDateString() : ''}
+                        </span>
                         <div className={styles.dot}></div>
                         <span className={styles.author}>{postData?.author}</span>
                     </div>

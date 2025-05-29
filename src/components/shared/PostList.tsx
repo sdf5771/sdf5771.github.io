@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { usePosts } from '../../hooks';
 import { PostCard, Pagination } from '.';
 import styles from './PostList.module.css';
