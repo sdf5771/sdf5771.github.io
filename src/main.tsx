@@ -8,7 +8,7 @@ import './global.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename="/sdf5771.github.io">
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </StrictMode>,
