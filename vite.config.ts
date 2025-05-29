@@ -10,6 +10,7 @@ export default defineConfig({
     ViteFaviconsPlugin({
       logo: './src/assets/images/memoji.png',
       favicons: {
+        path: '/sdf5771.github.io/',
         icons: {
           android: true,
           appleIcon: true,
