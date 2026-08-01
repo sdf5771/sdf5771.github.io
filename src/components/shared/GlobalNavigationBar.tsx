@@ -1,20 +1,27 @@
+import { useCallback, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './GlobalNavigationBar.module.css';
 import Wordmark from './Wordmark';
 import ThemeToggle from './ThemeToggle';
+import MobileDrawer from './MobileDrawer';
 import { NAV_ITEMS, WORDMARK_TEXT, isNavItemActive } from '../../constants/site';
 import { useTerminalPath } from '../../hooks';
+
+const DRAWER_ID = 'mobile-drawer';
 
 /**
  * 전역 헤더.
  * 반응형은 CSS 미디어쿼리 하나로 처리합니다 — 내비 <ul> 은 DOM 에 하나뿐이고,
  * 뷰포트에 따라 배치·표시 여부만 바뀝니다. (데스크톱용·모바일용 메뉴가 DOM 에
  * 둘 다 있으면 스크린리더가 메뉴를 두 번 읽습니다.)
- * 명세: docs/handoff-step1-shell.md §6-1
+ * 명세: docs/handoff-step1-shell.md §6-1 / §6-2 / §6-3
  */
 function GlobalNavigationBar() {
     const { pathname } = useLocation();
     const terminalPath = useTerminalPath();
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+    const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
 
     return (
         <header className={styles.header}>
@@ -62,8 +69,21 @@ function GlobalNavigationBar() {
 
                 <div className={styles.actions}>
                     <ThemeToggle />
+
+                    <button
+                        className={styles.menu_trigger}
+                        type="button"
+                        aria-label={isDrawerOpen ? '메뉴 닫기' : '메뉴 열기'}
+                        aria-expanded={isDrawerOpen}
+                        aria-controls={DRAWER_ID}
+                        onClick={() => setIsDrawerOpen(prev => !prev)}
+                    >
+                        <span aria-hidden="true">☰</span>
+                    </button>
                 </div>
             </div>
+
+            <MobileDrawer id={DRAWER_ID} isOpen={isDrawerOpen} onClose={closeDrawer} />
         </header>
     );
 }

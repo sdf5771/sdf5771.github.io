@@ -157,6 +157,29 @@
     margin-left: auto;
 }
 
+.menu_trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    /* 터치 영역 최소 44×44 */
+    width: var(--tap-min);
+    height: var(--tap-min);
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    font-size: var(--fs-xl);
+    line-height: 1;
+    color: var(--color-accent-text);
+    cursor: pointer;
+    transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.menu_trigger:hover {
+    background-color: var(--color-accent-subtle);
+}
+
 /* ------------------------------------------------------------
  * md 이상 (≥768px) — 경로 표시 · 내비 노출, 헤더 높이 48px
  * ---------------------------------------------------------- */
@@ -183,6 +206,11 @@
 
     .actions {
         margin-left: 0;
+    }
+
+    /* 내비가 헤더에 직접 나오므로 드로어가 필요 없습니다 */
+    .menu_trigger {
+        display: none;
     }
 
     .nav_link {
