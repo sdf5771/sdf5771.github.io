@@ -23,3 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 package-lock.json
+
+# Claude Code agents (my-agents 저장소로 향하는 로컬 심볼릭 링크)
+CLAUDE.md
+.claude/
+agent-log.md
+agent-log/
