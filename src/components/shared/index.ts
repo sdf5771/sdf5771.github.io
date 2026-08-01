@@ -6,8 +6,10 @@ import Pagination from './Pagination';
 import Footer from './Footer';
 import Wordmark from './Wordmark';
 import ThemeToggle from './ThemeToggle';
+import ContributionGraph from './ContributionGraph';
 
 export {
+    ContributionGraph,
     GlobalNavigationBar,
     PostList,
     PageTitle,

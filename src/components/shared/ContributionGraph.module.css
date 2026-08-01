@@ -1,0 +1,222 @@
+/*
+ * 기여 활동(잔디) 공유 컴포넌트.
+ * 시각 규격: docs/handoff-step5-404-about.md §5-4 (STEP 2 §6.2 그대로 · 변경 금지)
+ *
+ * 잔디 5단계는 라이트가 어두워지는 방향(#e4dfd2 → #7d5c0e), 다크가 밝아지는
+ * 방향(#232a44 → #ffd770)입니다. **두 모드의 진행 방향이 반대인 것이 정상**이며,
+ * 같은 방향으로 만들면 한쪽에서 배경과 구별되지 않습니다.
+ */
+
+.section {
+    display: flex;
+    flex-direction: column;
+}
+
+.heading {
+    /* 22px — 11의 정수배 + 22 이상이라 한글 픽셀 서체 허용(§3-3a) */
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-2);
+    font-weight: 400;
+    line-height: var(--lh-heading);
+    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: none;
+}
+
+.prompt {
+    color: var(--color-accent-text);
+}
+
+.caption {
+    margin: var(--space-4) 0 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    color: var(--color-text-secondary);
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ------------------------------------------------------------
+ * 격자
+ * ------------------------------------------------------------
+ * overflow-x 를 걸지 않습니다. md 까지 스크롤이 필요 없음이 산술로 확인됐고,
+ * 잘못 발동하면 페이지 가로 스크롤 위험만 남습니다(§5-4).
+ * ---------------------------------------------------------- */
+.grid_frame {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.grid {
+    display: flex;
+    gap: var(--space-px);
+}
+
+.week {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-px);
+}
+
+.cell {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-grass-0);
+}
+
+.cell[data-level='1'] {
+    background-color: var(--color-grass-1);
+}
+
+.cell[data-level='2'] {
+    background-color: var(--color-grass-2);
+}
+
+.cell[data-level='3'] {
+    background-color: var(--color-grass-3);
+}
+
+.cell[data-level='4'] {
+    background-color: var(--color-grass-4);
+}
+
+/* 포인터가 있는 기기에서만. 터치에서는 호버가 붙어 남습니다 */
+@media (hover: hover) {
+    .cell:hover {
+        outline: 1px solid var(--color-accent-hover);
+    }
+}
+
+.skeleton {
+    /* 격자와 같은 크기를 차지해 데이터가 오면 레이아웃이 튀지 않습니다 */
+    width: 100%;
+    height: 68px;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-bg-raised);
+}
+
+/* ------------------------------------------------------------
+ * 요약 · 범례
+ * ------------------------------------------------------------
+ * `회`·`마지막 활동`·`적음`·`많음` 이 한글이라 픽셀 서체를 쓸 수 없습니다.
+ * 12px 은 11px 그리드의 정수배가 아니므로 Pretendard 입니다(§3-2 #8·#9).
+ * ---------------------------------------------------------- */
+.footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
+.summary,
+.range_label {
+    margin: 0;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-secondary);
+}
+
+.legend {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-left: auto;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+.legend_cells {
+    display: flex;
+    gap: var(--space-px);
+}
+
+.legend_cell {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-grass-0);
+}
+
+.legend_cell[data-level='1'] {
+    background-color: var(--color-grass-1);
+}
+
+.legend_cell[data-level='2'] {
+    background-color: var(--color-grass-2);
+}
+
+.legend_cell[data-level='3'] {
+    background-color: var(--color-grass-3);
+}
+
+.legend_cell[data-level='4'] {
+    background-color: var(--color-grass-4);
+}
+
+/* ------------------------------------------------------------
+ * 로드 실패 — 격자·범례를 숨기고 그 자리에 회복 경로 하나
+ * ---------------------------------------------------------- */
+.error_title {
+    margin: 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-lg);
+    color: var(--color-text-primary);
+}
+
+.error_description {
+    margin: 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    color: var(--color-text-secondary);
+}
+
+.error_action {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: var(--tap-min);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    color: var(--color-accent-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.error_action:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------
+ * sm (≤767px) — 16주 × 16px 셀
+ * ------------------------------------------------------------
+ * 16주 × 18 − 2 = 286px 로 sm 가용폭 326px 안에 들어갑니다(STEP 2 §6.3 산술).
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .grid_frame {
+        justify-content: center;
+    }
+
+    .cell {
+        width: 16px;
+        height: 16px;
+    }
+
+    .skeleton {
+        height: 124px;
+    }
+}
