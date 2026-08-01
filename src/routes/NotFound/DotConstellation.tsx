@@ -62,11 +62,28 @@ const LOST = { glyph: 2, row: 3, column: 4 };
 const LOST_DIRECTION = { x: 0.8, y: -0.6 };
 
 /*
- * 시안 원문: drift = 0.6 + sin(t × 0.55) × 0.42  → 범위 [0.18, 1.02]
- * 0.6 이 중앙값이자 **정지 위치**입니다. 0(원래 자리)으로 멈추면 별이 격자로
- * 돌아가 "끊어진 연결"이 깨집니다(§8-2).
+ * 이탈 별의 **정지 위치**. 0(원래 자리)으로 멈추면 별이 격자로 돌아가
+ * "끊어진 연결"이 깨집니다(§8-2).
+ *
+ * 🔴 값이 아니라 **공식이 명세**입니다 (handoff-step1-shell.md §14-1a A).
+ *
+ *      가시 간격 = 중심거리 D − (r₁ + r₂) ≥ 10px
+ *
+ * 10px 의 근거: 점선이 "끊어진 연결"로 읽히려면 대시 2개 + 사이 간격(6px)이
+ * 필요하고, 양 끝이 원에 닿지 않게 2px 씩(4px) 더합니다.
+ * 시안 원문의 `drift = 0.6` 은 데스크톱에서 D = 12px, r₁+r₂ = 13px 이라
+ * 가시 간격이 **−1px** — 점선이 가려진 게 아니라 **두 원이 겹쳐** 있었습니다.
+ *
+ * 그래서 상수를 두지 않고 cell 과 반지름에서 매번 계산합니다.
+ * 데스크톱(cell 20): (6 + 7 + 11) / 20 = **1.2**  → D 24px, 가시 간격 11px
+ * 모바일  (cell 12): (3.6 + 4.2 + 11) / 12 ≈ **1.57** → D 18.8px, 가시 간격 11px
+ * 반지름을 줄이지 않는 이유: 13px 은 별이 "별"로 읽히는 최소 크기에 가깝고,
+ * 위치는 조정해도 조형이 약해지지 않습니다.
  */
-const DRIFT_REST = 0.6;
+const MIN_VISIBLE_GAP = 10;
+/** 반지름 배율이 조금 바뀌어도 공식이 깨지지 않게 두는 여유 */
+const GAP_MARGIN = 1;
+
 const DRIFT_AMPLITUDE = 0.42;
 
 interface Point {
@@ -132,10 +149,17 @@ function buildScene(cell: number) {
         }
     });
 
+    const dotRadius = round(cell * 0.3);
+    const starRadius = round(cell * 0.35);
+
+    /* 위 공식으로 정지 위치를 뽑습니다. 저감 모션은 애니메이션이 없어 이 자리에
+       그대로 멈추므로, 가장 잘 읽혀야 하는 상태가 곧 이 값입니다(§4-4 조건 4) */
+    const driftRest = (dotRadius + starRadius + MIN_VISIBLE_GAP + GAP_MARGIN) / cell;
+
     const lostSlot = center(LOST.glyph, LOST.row, LOST.column);
     const star: Point = {
-        x: round(lostSlot.x + LOST_DIRECTION.x * DRIFT_REST * cell),
-        y: round(lostSlot.y + LOST_DIRECTION.y * DRIFT_REST * cell),
+        x: round(lostSlot.x + LOST_DIRECTION.x * driftRest * cell),
+        y: round(lostSlot.y + LOST_DIRECTION.y * driftRest * cell),
     };
 
     return {
@@ -145,8 +169,8 @@ function buildScene(cell: number) {
         segments,
         lostSlot,
         star,
-        dotRadius: round(cell * 0.3),
-        starRadius: round(cell * 0.35),
+        dotRadius,
+        starRadius,
         /* 표류 애니메이션의 진폭. 정지 위치를 기준으로 ± 로 흔듭니다 */
         driftX: round(LOST_DIRECTION.x * DRIFT_AMPLITUDE * cell),
         driftY: round(LOST_DIRECTION.y * DRIFT_AMPLITUDE * cell),
@@ -225,13 +249,20 @@ function DotConstellation() {
              * 빈 자리 윤곽 — **정지 상태 성립의 필요조건**입니다(§4-4).
              * 도트를 그냥 지우면 "빠졌다"는 사실 자체가 사라집니다. 특히 이 자리가
              * `4`의 가로 획 끝이라, 윤곽이 없으면 짧아진 획이 원래 모양처럼 보입니다.
+             *
+             * 색은 `--color-border-interactive` 입니다(web-design 판정, M-1).
+             * `--color-border-strong` 은 대비가 라이트 1.40 / 다크 1.58 뿐이라
+             * "반드시 지각되어야 하는 경계"를 감당하지 못했습니다
+             * (interactive: 라이트 3.78 / 다크 4.32). 새 토큰은 만들지 않습니다.
+             * 골드 별이 그 두 배쯤 되어 **별이 주인공, 윤곽은 명확하되 종속**이라는
+             * 위계도 그대로입니다.
              */}
             <circle
                 cx={scene.lostSlot.x}
                 cy={scene.lostSlot.y}
                 r={scene.dotRadius}
                 fill="none"
-                stroke="var(--color-border-strong)"
+                stroke="var(--color-border-interactive)"
                 strokeWidth={accentStrokeWidth}
             />
 
