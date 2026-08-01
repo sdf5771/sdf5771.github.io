@@ -1,4 +1,4 @@
-import { useCallback, useSyncExternalStore } from 'react';
+import { useCallback, useMemo, useSyncExternalStore } from 'react';
 
 /**
  * 미디어 쿼리 일치 여부를 **구독**합니다.
@@ -12,20 +12,25 @@ import { useCallback, useSyncExternalStore } from 'react';
  * (react-responsive 의 useMediaQuery 는 첫 렌더에서 false 를 반환해 플래시가 납니다).
  */
 function useMediaMatch(query: string): boolean {
+    /*
+     * MediaQueryList 는 쿼리당 하나만 만듭니다.
+     * getSnapshot 안에서 window.matchMedia() 를 부르면 React 가 스냅샷을 읽을
+     * 때마다 새 객체가 생깁니다 — 부팅 한 번에 8개, 리사이즈를 반복하면 수십 개까지
+     * 늘어납니다. 값은 같아 동작은 맞지만 만들 이유가 없는 객체입니다.
+     */
+    const mediaQueryList = useMemo(() => window.matchMedia(query), [query]);
+
     const subscribe = useCallback(
         (onStoreChange: () => void) => {
-            const list = window.matchMedia(query);
-            list.addEventListener('change', onStoreChange);
-            return () => list.removeEventListener('change', onStoreChange);
+            mediaQueryList.addEventListener('change', onStoreChange);
+            return () => mediaQueryList.removeEventListener('change', onStoreChange);
         },
-        [query],
+        [mediaQueryList],
     );
 
-    return useSyncExternalStore(
-        subscribe,
-        () => window.matchMedia(query).matches,
-        () => false,
-    );
+    const getSnapshot = useCallback(() => mediaQueryList.matches, [mediaQueryList]);
+
+    return useSyncExternalStore(subscribe, getSnapshot, () => false);
 }
 
 export default useMediaMatch;
