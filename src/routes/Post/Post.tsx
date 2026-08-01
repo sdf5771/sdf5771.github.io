@@ -39,7 +39,9 @@ const Post = () => {
                         if (lang && hljs.getLanguage(lang)) {
                             try {
                                 return hljs.highlight(str, { language: lang }).value;
-                            } catch (__) {}
+                            } catch {
+                                // 하이라이트에 실패하면 아래에서 원문 그대로 렌더합니다
+                            }
                         }
                         return ''; // 언어가 지정되지 않은 경우 기본값 사용
                     }
@@ -57,7 +59,7 @@ const Post = () => {
                 const htmlContent = md.render(content);
                 setHtmlContent(htmlContent);
             } catch (error) {
-                console.error('Failed to fetch post');
+                console.error('Failed to fetch post', error);
                 navigate('/');
             }
         };
