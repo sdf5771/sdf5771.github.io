@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import NotFound from '../NotFound/NotFound';
+import { toPostSlug } from '../../utils/postSlug';
 
 /**
  * 구 경로 `/post?id=<slug>` → 신 경로 `/posts/<slug>`.
@@ -24,8 +25,8 @@ function LegacyPostRedirect() {
         return <NotFound />;
     }
 
-    /* 소문자 slug 가 정본입니다 */
-    return <Navigate to={`/posts/${slug.toLowerCase()}`} replace />;
+    /* 정본 slug 규칙(소문자 + 연속 하이픈 정리)은 toPostSlug 한 곳에만 둡니다 */
+    return <Navigate to={`/posts/${toPostSlug(slug)}`} replace />;
 }
 
 export default LegacyPostRedirect;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import styles from './Post.module.css';
 import NotFound from '../NotFound/NotFound';
 import MarkdownIt from 'markdown-it';
@@ -9,6 +9,7 @@ import markdownItFootnote from 'markdown-it-footnote';
 import hljs from 'highlight.js';
 import postsData from '../../../public/posts-data.json';
 import type { PostMetadata } from '../../types';
+import { toPostSlug } from '../../utils/postSlug';
 
 const Post = () => {
     /*
@@ -18,9 +19,17 @@ const Post = () => {
     const { slug } = useParams<{ slug: string }>();
     const [htmlContent, setHtmlContent] = useState('');
 
+    /*
+     * 정본 slug 는 **소문자**입니다(product.md §7-3 R3). 대문자가 섞인 주소로
+     * 들어와도 같은 글을 찾을 수 있게 요청 slug 를 같은 규칙으로 정규화합니다 —
+     * 41편 중 33편의 파일명에 대문자가 있어, 정규화가 없으면 그 글들의 딥링크가
+     * 전부 404 가 됩니다.
+     */
+    const requestedSlug = slug ? toPostSlug(slug) : '';
+
     /* 글 목록은 빌드 타임 JSON 이라 동기적으로 찾습니다 */
-    const post: PostMetadata | undefined = slug
-        ? postsData.find(item => item.slug === slug)
+    const post: PostMetadata | undefined = requestedSlug
+        ? postsData.find(item => item.slug === requestedSlug)
         : undefined;
 
     useEffect(() => {
@@ -33,7 +42,13 @@ const Post = () => {
 
         const getPost = async () => {
             try {
-                const response = await fetch(`/_posts/${post.slug}.md`);
+                /*
+                 * 🔴 slug 가 아니라 **원본 파일명(post.file)** 으로 읽습니다.
+                 * slug 는 소문자 정본이고 디스크의 파일명에는 대문자가 남아
+                 * 있는데, GitHub Pages(Linux)는 대소문자를 구분합니다.
+                 * macOS 로컬에서는 둘 다 통과해 차이가 드러나지 않습니다.
+                 */
+                const response = await fetch(`/_posts/${encodeURIComponent(post.file)}`);
                 if(!response.ok) throw new Error('Failed to fetch post');
 
                 const md = new MarkdownIt({
@@ -80,6 +95,16 @@ const Post = () => {
     /* 없는 slug 는 홈으로 튕기지 않고 404 를 보여 줍니다 — 주소가 그대로 남습니다 */
     if (!post) {
         return <NotFound />;
+    }
+
+    /*
+     * 대문자 등 비정본 표기로 들어왔으면 정본 주소로 한 번 바꿔 둡니다(§15-1).
+     * 프로덕션에서는 404.html 인라인 스크립트가 먼저 처리하지만, dev 서버와
+     * SPA 내부 이동에는 그 스크립트가 없습니다. 주소·공유 링크·`~/posts/…` 경로
+     * 표시가 항상 한 가지 형태로 수렴합니다. `replace` 라 뒤로 가기가 튕기지 않습니다.
+     */
+    if (slug !== post.slug) {
+        return <Navigate to={`/posts/${post.slug}`} replace />;
     }
 
     return (

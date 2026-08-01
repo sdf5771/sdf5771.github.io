@@ -22,6 +22,7 @@
     "description": "Google I/O 2025 핵심 API 살펴보기",
     "category": "Survey",
     "slug": "2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer",
+    "file": "2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer.md",
     "thumbnail": "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/thumbnail.png"
   },
   {
@@ -48,6 +49,7 @@
     "description": "",
     "category": "Survey",
     "slug": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2",
+    "file": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2.md",
     "thumbnail": "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/15.png"
   },
   {
@@ -74,6 +76,7 @@
     "description": "",
     "category": "Survey",
     "slug": "2025-03-13-ux-trends-and-spatial-computing-paradigm-1",
+    "file": "2025-03-13-ux-trends-and-spatial-computing-paradigm-1.md",
     "thumbnail": "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1/01.jpg"
   },
   {
@@ -88,6 +91,7 @@
     "description": "",
     "category": "Activity",
     "slug": "2024-09-04-mongodb-local",
+    "file": "2024-09-04-mongodb-local.md",
     "thumbnail": "/images/posts/2024-09-04-mongodb-local/01.png"
   },
   {
@@ -105,6 +109,7 @@
     "description": "",
     "category": "Survey",
     "slug": "2024-03-06-jwttoken",
+    "file": "2024-03-06-jwttoken.md",
     "thumbnail": "/images/posts/2024-03-06-jwttoken/jwttoken01.png"
   },
   {
@@ -118,7 +123,8 @@
     ],
     "description": "",
     "category": "Survey",
-    "slug": "2023-09-17-Browser-rendering",
+    "slug": "2023-09-17-browser-rendering",
+    "file": "2023-09-17-Browser-rendering.md",
     "thumbnail": "/images/posts/2023-09-17-Browser-rendering/browser01.png"
   },
   {
@@ -134,7 +140,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-09-13-Test-jest-learn",
+    "slug": "2023-09-13-test-jest-learn",
+    "file": "2023-09-13-Test-jest-learn.md",
     "thumbnail": ""
   },
   {
@@ -147,7 +154,8 @@
     ],
     "description": "",
     "category": "Survey",
-    "slug": "2023-07-19-Skeleton-loading",
+    "slug": "2023-07-19-skeleton-loading",
+    "file": "2023-07-19-Skeleton-loading.md",
     "thumbnail": "/images/posts/2023-07-19-Skeleton-loading/folder_image01.png"
   },
   {
@@ -161,7 +169,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-05-01-AtomicDesignPattern01",
+    "slug": "2023-05-01-atomicdesignpattern01",
+    "file": "2023-05-01-AtomicDesignPattern01.md",
     "thumbnail": "/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png"
   },
   {
@@ -175,7 +184,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-25-Next-js-practice",
+    "slug": "2023-04-25-next-js-practice",
+    "file": "2023-04-25-Next-js-practice.md",
     "thumbnail": "/images/posts/2023-04-25-Next-js-practice/next-js-01.png"
   },
   {
@@ -189,7 +199,8 @@
     ],
     "description": "",
     "category": "Survey",
-    "slug": "2023-04-15-Technical-SEO-meta-tag",
+    "slug": "2023-04-15-technical-seo-meta-tag",
+    "file": "2023-04-15-Technical-SEO-meta-tag.md",
     "thumbnail": "/images/posts/2023-04-15-Technical-SEO-meta-tag/seo01.png"
   },
   {
@@ -201,7 +212,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-13-API",
+    "slug": "2023-04-13-api",
+    "file": "2023-04-13-API.md",
     "thumbnail": "/images/posts/2023-04-13-API/api01.png"
   },
   {
@@ -216,7 +228,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-13-Cloud-SaaS-IaaS-PaaS",
+    "slug": "2023-04-13-cloud-saas-iaas-paas",
+    "file": "2023-04-13-Cloud-SaaS-IaaS-PaaS.md",
     "thumbnail": "/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png"
   },
   {
@@ -229,7 +242,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-13-JSON-XML",
+    "slug": "2023-04-13-json-xml",
+    "file": "2023-04-13-JSON-XML.md",
     "thumbnail": ""
   },
   {
@@ -242,7 +256,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-13-Python-Prefix-sum-5",
+    "slug": "2023-04-13-python-prefix-sum-5",
+    "file": "2023-04-13-Python-Prefix-sum-5.md",
     "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum01.jpg"
   },
   {
@@ -255,7 +270,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-13-Python-Prefix-sum-reminder",
+    "slug": "2023-04-13-python-prefix-sum-reminder",
+    "file": "2023-04-13-Python-Prefix-sum-reminder.md",
     "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg"
   },
   {
@@ -269,7 +285,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-02-26-Front-end-cs-browser-rendering",
+    "slug": "2023-02-26-front-end-cs-browser-rendering",
+    "file": "2023-02-26-Front-end-cs-browser-rendering.md",
     "thumbnail": "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering01.png"
   },
   {
@@ -283,6 +300,7 @@
     "description": "",
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-binaryparse",
+    "file": "2023-02-26-codeup-codetest-binaryparse.md",
     "thumbnail": ""
   },
   {
@@ -296,6 +314,7 @@
     "description": "",
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-collatz-basic",
+    "file": "2023-02-26-codeup-codetest-collatz-basic.md",
     "thumbnail": ""
   },
   {
@@ -309,6 +328,7 @@
     "description": "",
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-collatz-reverse",
+    "file": "2023-02-26-codeup-codetest-collatz-reverse.md",
     "thumbnail": ""
   },
   {
@@ -321,7 +341,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-02-02-Python-implementation-bruteforce",
+    "slug": "2023-02-02-python-implementation-bruteforce",
+    "file": "2023-02-02-Python-implementation-bruteforce.md",
     "thumbnail": "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png"
   },
   {
@@ -334,7 +355,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-02-01-Python-greedy-algorithm",
+    "slug": "2023-02-01-python-greedy-algorithm",
+    "file": "2023-02-01-Python-greedy-algorithm.md",
     "thumbnail": "/images/posts/2023-02-01-Python-greedy-algorithm/greedy_01.png"
   },
   {
@@ -347,7 +369,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-30-Python-dfs-bfs",
+    "slug": "2023-01-30-python-dfs-bfs",
+    "file": "2023-01-30-Python-dfs-bfs.md",
     "thumbnail": "/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_01.png"
   },
   {
@@ -360,7 +383,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-30-Python-pibonacci",
+    "slug": "2023-01-30-python-pibonacci",
+    "file": "2023-01-30-Python-pibonacci.md",
     "thumbnail": "/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png"
   },
   {
@@ -375,7 +399,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-13-ReactQuery-State-StateManagement-01",
+    "slug": "2023-01-13-reactquery-state-statemanagement-01",
+    "file": "2023-01-13-ReactQuery-State-StateManagement-01.md",
     "thumbnail": ""
   },
   {
@@ -390,7 +415,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-13-ReactQuery-State-StateManagement-02",
+    "slug": "2023-01-13-reactquery-state-statemanagement-02",
+    "file": "2023-01-13-ReactQuery-State-StateManagement-02.md",
     "thumbnail": ""
   },
   {
@@ -404,7 +430,8 @@
     ],
     "description": "",
     "category": "Activity",
-    "slug": "2023-01-11-Wanted-pre-onboarding-01",
+    "slug": "2023-01-11-wanted-pre-onboarding-01",
+    "file": "2023-01-11-Wanted-pre-onboarding-01.md",
     "thumbnail": ""
   },
   {
@@ -416,7 +443,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-10-Python-default-input-output",
+    "slug": "2023-01-10-python-default-input-output",
+    "file": "2023-01-10-Python-default-input-output.md",
     "thumbnail": "/images/posts/2023-01-10-Python-default-input-output/input_output.png"
   },
   {
@@ -428,7 +456,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-10-Python-function-lambda",
+    "slug": "2023-01-10-python-function-lambda",
+    "file": "2023-01-10-Python-function-lambda.md",
     "thumbnail": ""
   },
   {
@@ -440,7 +469,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-10-Python-if-for-while",
+    "slug": "2023-01-10-python-if-for-while",
+    "file": "2023-01-10-Python-if-for-while.md",
     "thumbnail": ""
   },
   {
@@ -452,7 +482,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-10-Python-string-tuple",
+    "slug": "2023-01-10-python-string-tuple",
+    "file": "2023-01-10-Python-string-tuple.md",
     "thumbnail": ""
   },
   {
@@ -464,7 +495,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-09-Python-dictionary-data-type",
+    "slug": "2023-01-09-python-dictionary-data-type",
+    "file": "2023-01-09-Python-dictionary-data-type.md",
     "thumbnail": ""
   },
   {
@@ -476,7 +508,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-08-Python-data-type-list",
+    "slug": "2023-01-08-python-data-type-list",
+    "file": "2023-01-08-Python-data-type-list.md",
     "thumbnail": ""
   },
   {
@@ -488,7 +521,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-08-Python-under-bar",
+    "slug": "2023-01-08-python-under-bar",
+    "file": "2023-01-08-Python-under-bar.md",
     "thumbnail": ""
   },
   {
@@ -501,7 +535,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2022-12-31-Typescript",
+    "slug": "2022-12-31-typescript",
+    "file": "2022-12-31-Typescript.md",
     "thumbnail": ""
   },
   {
@@ -513,7 +548,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2022-12-27-Javascript-type",
+    "slug": "2022-12-27-javascript-type",
+    "file": "2022-12-27-Javascript-type.md",
     "thumbnail": "/images/posts/2022-12-27-Javascript-type/javascript1.png"
   },
   {
@@ -527,7 +563,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2022-12-27-React-useContext-ContextAPI",
+    "slug": "2022-12-27-react-usecontext-contextapi",
+    "file": "2022-12-27-React-useContext-ContextAPI.md",
     "thumbnail": "/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png"
   },
   {
@@ -541,7 +578,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2022-12-27-React-useMemo",
+    "slug": "2022-12-27-react-usememo",
+    "file": "2022-12-27-React-useMemo.md",
     "thumbnail": ""
   },
   {
@@ -555,7 +593,8 @@
     ],
     "description": "",
     "category": "Study",
-    "slug": "2022-12-27-React-useRef",
+    "slug": "2022-12-27-react-useref",
+    "file": "2022-12-27-React-useRef.md",
     "thumbnail": ""
   },
   {
@@ -568,7 +607,8 @@
     ],
     "description": "",
     "category": "Survey",
-    "slug": "2022-12-26-React-Navigation",
+    "slug": "2022-12-26-react-navigation",
+    "file": "2022-12-26-React-Navigation.md",
     "thumbnail": "/images/posts/2022-12-26-React-Navigation/ReactNavigation1.png"
   },
   {
@@ -583,7 +623,8 @@
     ],
     "description": "",
     "category": "Survey",
-    "slug": "2022-12-26-React-Redux",
+    "slug": "2022-12-26-react-redux",
+    "file": "2022-12-26-React-Redux.md",
     "thumbnail": "/images/posts/2022-12-26-React-Redux/reactredux1.png"
   }
 ]
