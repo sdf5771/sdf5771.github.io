@@ -1,0 +1,235 @@
+/*
+ * 소개(About).
+ * 명세: docs/handoff-step5-404-about.md §7-1 · §3-2
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ */
+
+.root {
+    width: 100%;
+    padding: var(--space-12) var(--space-6) var(--space-16);
+}
+
+.inner {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin: 0 auto;
+}
+
+.title {
+    /* 44px — 11의 정수배 + 22 이상이라 한글 픽셀 서체 허용(§3-3a) */
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-4);
+    font-weight: 400;
+    line-height: var(--lh-heading);
+    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: none;
+}
+
+/* ------------------------------------------------------------
+ * 자기소개 — 아바타 + 본문 2열
+ * ---------------------------------------------------------- */
+.intro {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-6);
+    margin-top: var(--space-12);
+}
+
+.avatar {
+    flex: 0 0 auto;
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-raised);
+}
+
+.intro_text {
+    display: flex;
+    flex-direction: column;
+    /* 세 문장이 한 호흡으로 읽혀야 하므로 문단 간격을 좁게 둡니다 */
+    gap: var(--space-3);
+    /* 920px 컨테이너에서 아바타 120 + gap 24 를 빼면 776px 이라 명시가 필요합니다 */
+    max-width: var(--measure-reading);
+    min-width: 0;
+}
+
+.intro_text p {
+    margin: 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-relaxed);
+    color: var(--color-text-body);
+}
+
+/* ------------------------------------------------------------
+ * 섹션 공통
+ * ---------------------------------------------------------- */
+.section {
+    margin-top: var(--space-12);
+}
+
+.heading {
+    /* 22px — 한글 픽셀 서체 하한 */
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-2);
+    font-weight: 400;
+    line-height: var(--lh-heading);
+    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: none;
+}
+
+.prompt {
+    color: var(--color-accent-text);
+}
+
+.section_note {
+    margin: var(--space-4) 0 0;
+    max-width: var(--measure-reading);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    line-height: var(--lh-normal);
+    color: var(--color-text-secondary);
+}
+
+/* ------------------------------------------------------------
+ * 자주 쓴 태그 — 칩
+ * ------------------------------------------------------------
+ * 서체는 GalmuriMono11 11px 입니다. 태그명·숫자가 전부 라틴·숫자라 위반이
+ * 아닙니다(§3-2 #13). 한글 태그가 생기면 칩 전체를 Pretendard 로 바꾸세요.
+ *
+ * 11px 은 **시각 크기이고 터치 타깃이 아닙니다.** 시각 높이를 키우지 말고
+ * 세로 여백으로 히트 영역만 --tap-min 까지 넓힙니다.
+ * ---------------------------------------------------------- */
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-raised);
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    line-height: 1;
+    color: var(--color-text-secondary);
+}
+
+/*
+ * 목적지가 없으므로 호버·포커스 스타일을 두지 않습니다 — 누를 수 있다는
+ * 잘못된 신호가 됩니다. STEP 4/6 이 목적지를 주면 <Link> 로 바꾸면서
+ * 아래 규칙을 되살리세요.
+ *   .chip:hover  { border-color: var(--color-accent-border); background-color: var(--color-accent-subtle); }
+ *   .chip:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+ */
+
+/* ------------------------------------------------------------
+ * 연락처
+ * ---------------------------------------------------------- */
+.contacts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    max-width: var(--measure-reading);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.contact_card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap-min);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-surface);
+    /* 라틴 전용 라벨이라 모노 11px 이 위반이 아닙니다(§3-2 #12) */
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
+}
+
+.contact_card:hover {
+    border-color: var(--color-accent-border);
+    background-color: var(--color-accent-subtle);
+}
+
+.contact_card:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------
+ * 이력서 — 텍스트 링크 한 줄. 버튼으로 만들지 마세요
+ * ---------------------------------------------------------- */
+.resume {
+    margin: var(--space-10) 0 0;
+    text-align: right;
+}
+
+.resume_link {
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+.resume_link:hover {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.resume_link:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------
+ * sm (≤767px)
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .root {
+        padding: var(--space-10) var(--space-4) var(--space-12);
+    }
+
+    .intro {
+        flex-direction: column;
+        gap: var(--space-4);
+        margin-top: var(--space-10);
+    }
+
+    .avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .section {
+        margin-top: var(--space-10);
+    }
+
+    .contacts {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .resume {
+        text-align: center;
+    }
+}

@@ -82,12 +82,33 @@ export interface ContactLink {
     href: string;
 }
 
+export const GITHUB_URL = 'https://github.com/sdf5771';
+export const EMAIL_URL = 'mailto:seobisback@gmail.com';
+
+/**
+ * 이력서. **Notion 링크입니다 — PDF 를 리포에 올리지 않습니다.**
+ * 이 리포는 public 이라 한 번 올린 PDF 는 git 히스토리에 영구히 남습니다.
+ */
+export const RESUME_URL =
+    'https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4';
+
 /** GitHub · Notion · Email 3개만. Instagram · Facebook · Qualk 는 제거됐습니다(§6-5). */
 export const CONTACT_LINKS: ContactLink[] = [
-    { label: 'GitHub', href: 'https://github.com/sdf5771' },
-    {
-        label: 'Notion',
-        href: 'https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4',
-    },
-    { label: 'Email', href: 'mailto:seobisback@gmail.com' },
+    { label: 'GitHub', href: GITHUB_URL },
+    { label: 'Notion', href: RESUME_URL },
+    { label: 'Email', href: EMAIL_URL },
+];
+
+/**
+ * 소개 화면의 연락처 — **GitHub · Email 2종.** 푸터(3종)와 다른 것이 정상입니다.
+ *
+ * Notion 을 뺀 이유: ① Notion 링크는 포트폴리오/이력서이지 **연락 수단이 아닙니다**
+ * ② 소개 화면 하단의 `이력서 보기 ↗` 가 같은 곳으로 가므로 한 화면에 같은 목적지가
+ * 두 개가 됩니다 ③ WRITING_GUIDE §5.2 가 이력서를 "About 하단의 보조 링크로만"
+ * 두라고 요구하는데, 연락처 카드에 두면 페이지 중단에 하나 더 생깁니다.
+ * 근거: handoff-step5-404-about.md §7-4
+ */
+export const ABOUT_CONTACT_LINKS: ContactLink[] = [
+    { label: 'GitHub', href: GITHUB_URL },
+    { label: 'Email', href: EMAIL_URL },
 ];
