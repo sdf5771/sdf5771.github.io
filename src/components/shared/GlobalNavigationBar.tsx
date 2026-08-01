@@ -9,7 +9,7 @@ import HeaderSearch from './HeaderSearch';
 import SearchPanel from './SearchPanel';
 import SearchIcon from './SearchIcon';
 import { useShellContext } from '../shell';
-import { NAV_ITEMS, WORDMARK_TEXT, isNavItemActive } from '../../constants/site';
+import { AVAILABLE_NAV_ITEMS, WORDMARK_TEXT, isNavItemActive } from '../../constants/site';
 import { MEDIA_DESKTOP, MEDIA_MOBILE } from '../../styles/breakpoints';
 import { useHeaderScroll, useLeftTruncate, useMediaMatch, useTerminalPath } from '../../hooks';
 
@@ -130,7 +130,7 @@ function GlobalNavigationBar() {
 
                 <nav className={styles.nav} aria-label="주요 메뉴">
                     <ul className={styles.nav_list}>
-                        {NAV_ITEMS.map(item => {
+                        {AVAILABLE_NAV_ITEMS.map(item => {
                             const isActive = isNavItemActive(item, pathname);
 
                             return (

@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import styles from './MobileDrawer.module.css';
 import Wordmark from './Wordmark';
-import { CONTACT_LINKS, NAV_ITEMS, isNavItemActive } from '../../constants/site';
+import { AVAILABLE_NAV_ITEMS, CONTACT_LINKS, isNavItemActive } from '../../constants/site';
 import { THEME_LABEL } from '../../constants/theme';
 import { useOverlayBehavior } from '../../hooks';
 import { useTheme } from '../../theme';
@@ -58,7 +58,7 @@ function MobileDrawer({ id, isOpen, onClose }: MobileDrawerProps) {
 
             <nav className={styles.nav} aria-label="주요 메뉴">
                 <ul className={styles.nav_list}>
-                    {NAV_ITEMS.map(item => {
+                    {AVAILABLE_NAV_ITEMS.map(item => {
                         const isActive = isNavItemActive(item, pathname);
 
                         return (

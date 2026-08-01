@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from './NotFound.module.css';
 import DotConstellation from './DotConstellation';
 import { useShell } from '../../components/shell';
+import { IS_POST_LIST_READY, POST_LIST_PATH } from '../../constants/site';
 import { safeDisplayPath } from '../../utils/url';
 
 /**
@@ -45,14 +46,28 @@ function NotFound() {
                     <span className={styles.path}>{displayPath}</span>
                 </p>
 
-                <nav className={styles.actions} aria-label="여기서 갈 수 있는 곳">
+                {/* 랜드마크 이름은 명사구 4~10자, 역할 단어 금지 (WRITING_GUIDE §7.3a) */}
+                <nav className={styles.actions} aria-label="돌아가기">
                     {/* 이동이므로 <a>(Link) 입니다 */}
                     <Link className={`${styles.button} ${styles.button_primary}`} to="/">
                         홈으로
                     </Link>
-                    <Link className={styles.button} to="/posts">
-                        글 목록 보기
-                    </Link>
+
+                    {/*
+                     * 🔴 **회복 경로는 회복시켜야 합니다.**
+                     * `/posts` 라우트는 STEP 4 라 지금 누르면 다시 404 로 갑니다.
+                     * 404 에서 404 로 보내는 버튼은 회복 경로가 아니라 이탈 경로입니다.
+                     * 그래서 라우트가 생길 때까지 **노출하지 않습니다** — 홈으로·
+                     * 검색으로 찾기 두 경로가 남아 회복 수단은 그대로입니다.
+                     * (홈으로 대체하는 안은 같은 목적지 버튼이 둘이 되어 폐기했습니다.)
+                     * 라벨은 확정 카피이며, STEP 4 에서 site.ts 의 `isRouteReady` 만
+                     * true 로 바꾸면 그대로 살아납니다.
+                     */}
+                    {IS_POST_LIST_READY && (
+                        <Link className={styles.button} to={POST_LIST_PATH}>
+                            글 목록으로
+                        </Link>
+                    )}
                 </nav>
 
                 {/*

@@ -52,18 +52,39 @@ export interface NavItem {
     path: string;
     /** 이 항목을 활성으로 볼 추가 경로. 예: 글 상세(/post)도 `글` 항목이 활성 */
     activePaths?: string[];
+    /**
+     * 이 경로가 **App.tsx 에 실재하는가.**
+     * 🔴 라우트를 추가하는 STEP 에서 이 값도 함께 true 로 바꾸세요.
+     */
+    isRouteReady: boolean;
 }
 
 /**
  * 내비 4항목. `작업`은 작업 항목이 4건 이상 준비된 뒤 노출합니다(STEP 7).
- * ⚠️ 홈(/)을 제외한 3개 라우트는 아직 App.tsx 에 없습니다 — STEP 2~7 에서 추가됩니다.
+ *
+ * 이 배열은 **확정된 내비 인벤토리**이고, 실제로 그릴 항목은 아래
+ * `AVAILABLE_NAV_ITEMS` 입니다. 아직 라우트가 없는 항목을 그대로 링크로 두면
+ * 내비를 눌렀는데 404 가 뜹니다 — 내비는 화면을 여는 물건이라, 열 화면이 없으면
+ * 보여 주지 않는 편이 정직합니다.
  */
 export const NAV_ITEMS: NavItem[] = [
-    { label: '홈', path: '/' },
-    { label: '글', path: '/posts', activePaths: ['/post'] },
-    { label: '태그', path: '/tags' },
-    { label: '소개', path: '/about' },
+    { label: '홈', path: '/', isRouteReady: true },
+    /* STEP 4 */
+    { label: '글', path: '/posts', activePaths: ['/post'], isRouteReady: false },
+    /* STEP 6 */
+    { label: '태그', path: '/tags', isRouteReady: false },
+    { label: '소개', path: '/about', isRouteReady: true },
 ];
+
+/** 지금 실제로 열리는 내비 항목만. 헤더·드로어가 공통으로 씁니다 */
+export const AVAILABLE_NAV_ITEMS: NavItem[] = NAV_ITEMS.filter(item => item.isRouteReady);
+
+/** 글 목록 경로. 404 의 회복 경로가 이 경로의 준비 여부를 보고 노출을 정합니다 */
+export const POST_LIST_PATH = '/posts';
+
+export const IS_POST_LIST_READY: boolean = NAV_ITEMS.some(
+    item => item.path === POST_LIST_PATH && item.isRouteReady,
+);
 
 /** 현재 경로가 이 내비 항목에 속하는가 */
 export function isNavItemActive(item: NavItem, pathname: string): boolean {
@@ -108,7 +129,15 @@ export const CONTACT_LINKS: ContactLink[] = [
  * 두라고 요구하는데, 연락처 카드에 두면 페이지 중단에 하나 더 생깁니다.
  * 근거: handoff-step5-404-about.md §7-4
  */
+/*
+ * 라벨은 **동사로 끝냅니다**(WRITING_GUIDE §6.1-1 — 명사 단독 금지).
+ * 같은 화면의 `이력서 보기 ↗` 와 규격이 갈리지 않게 맞췄고, 영어 UI 라벨
+ * `Email` 은 §3.3 예외(워드마크·카테고리 원본값·코드/경로) 어디에도 없어
+ * §5.2 가 쓰는 `이메일` 로 바꿨습니다.
+ * 이 라벨이 곧 aria-label 의 앞부분입니다 — 보이는 텍스트로 시작해야
+ * 음성 제어에서 이름이 맞습니다(§7.3-1).
+ */
 export const ABOUT_CONTACT_LINKS: ContactLink[] = [
-    { label: 'GitHub', href: GITHUB_URL },
-    { label: 'Email', href: EMAIL_URL },
+    { label: 'GitHub 프로필 보기', href: GITHUB_URL },
+    { label: '이메일 보내기', href: EMAIL_URL },
 ];
