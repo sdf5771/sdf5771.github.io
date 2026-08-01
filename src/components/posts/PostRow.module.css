@@ -89,7 +89,15 @@
     color: var(--color-text-primary);
 }
 
+/*
+ * 🔴 `outline: none` 은 접근성 후퇴가 아니라 **중복 제거**입니다.
+ *    global.css 의 `:where(a, button, …):focus-visible` 이 이 <a>(제목 박스)에
+ *    링을 주고, 아래 `.row:has(.link:focus-visible)` 이 행에 또 줍니다. 그대로 두면
+ *    Tab 한 번에 링이 **두 겹**(제목 448×22 + 행 460×102)으로 그려집니다.
+ *    남기는 쪽은 행입니다 — 실제 클릭 영역이 행 전체이기 때문입니다(§10-2).
+ */
 .link {
+    outline: none;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -222,7 +230,7 @@
 }
 
 .meta_detail {
-    /* 읽기 시간은 41편 중 17편이 `1분` 이라 정보량이 낮습니다. 강조하지 않습니다 */
+    /* 읽기 시간은 41편 중 16편이 `1분` 이라 정보량이 낮습니다. 강조하지 않습니다 */
     color: var(--color-text-muted);
 }
 

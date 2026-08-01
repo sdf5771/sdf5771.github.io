@@ -46,8 +46,20 @@ export function tokenizeQuery(query: string): string[] {
  *    `description` 은 41편 중 1편뿐이라 안내 문구에 넣지 않고 조용히 포함합니다.
  */
 export function buildSearchHaystack(post: PostMetadata): string {
+    /*
+     * 🔴 필드 접근을 전부 방어합니다. 이 함수는 `data/posts.ts` 의 **모듈 평가
+     *    시점**에 41번 호출됩니다 — `createRoot().render()` 보다 먼저입니다.
+     *    여기서 throw 하면 ErrorBoundary 가 마운트되기 전이라 아무도 잡지 못하고
+     *    **흰 화면**이 됩니다. 지금 41편은 전부 정상이고 생성기가 기본값을 주지만,
+     *    프론트매터가 손으로 편집되는 이상 `keywords` 누락은 언제든 들어옵니다.
+     *    검색 한 건이 덜 걸리는 것과 사이트 전체가 안 뜨는 것은 비용이 다릅니다.
+     */
+    const keywords = Array.isArray(post?.keywords) ? post.keywords.join(' ') : '';
+
     return normalizeSearchText(
-        [post.title, post.keywords.join(' '), post.category, post.description].join('\n'),
+        [post?.title, keywords, post?.category, post?.description]
+            .filter((field): field is string => typeof field === 'string')
+            .join('\n'),
     );
 }
 

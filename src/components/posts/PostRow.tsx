@@ -111,8 +111,14 @@ function PostRow({ post, tokens }: PostRowProps) {
                     <HighlightedText text={post.category} tokens={tokens} />
                 </span>
 
+                {/*
+                 * 읽기 시간이 비면(값 누락) `·` 구분자까지 함께 빠집니다 —
+                 * `2023.04.13 · ` 처럼 꼬리가 남으면 안 됩니다(postMeta.ts 주석)
+                 */}
                 <span className={styles.meta_detail}>
-                    {`${formatPostDate(post.date)} · ${formatReadingMinutes(post.readingMinutes)}`}
+                    {[formatPostDate(post.date), formatReadingMinutes(post.readingMinutes)]
+                        .filter(Boolean)
+                        .join(' · ')}
                 </span>
 
                 {/* 호버 시 나타나는 장식. 방향만 말하고 정보는 없습니다 */}

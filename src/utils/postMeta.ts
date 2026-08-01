@@ -12,9 +12,19 @@ export function formatPostDate(date: string): string {
     return date.split('-').join('.');
 }
 
-/** `6분`. `약 6분`·`6 min read` 를 쓰지 않습니다(§3.4) */
-export function formatReadingMinutes(minutes: number): string {
-    return `${minutes}분`;
+/**
+ * `6분`. `약 6분`·`6 min read` 를 쓰지 않습니다(§3.4)
+ *
+ * ⚠️ 값이 없거나 유한수가 아니면 **빈 문자열**을 돌려줍니다. 그대로 템플릿에
+ *    넣으면 화면에 `undefined분` 이 그려집니다 — 호출부는 빈 문자열일 때
+ *    항목 자체를 렌더하지 않습니다. 최솟값은 1분입니다(0분은 표시하지 않음).
+ */
+export function formatReadingMinutes(minutes: number | undefined | null): string {
+    if (typeof minutes !== 'number' || !Number.isFinite(minutes) || minutes < 1) {
+        return '';
+    }
+
+    return `${Math.round(minutes)}분`;
 }
 
 /** 발행 후 며칠까지 새 글로 볼 것인가 */
