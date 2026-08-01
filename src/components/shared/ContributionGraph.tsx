@@ -6,8 +6,12 @@ import { loadContributions } from '../../utils/contributions';
 import type { Contributions } from '../../utils/contributions';
 
 /**
- * 기여 활동(잔디) — **홈과 소개가 함께 쓰는 공유 컴포넌트**.
+ * 기여 활동(잔디) — **현재는 소개(About)에서만 씁니다. STEP 2 에서 홈에도 붙습니다.**
  * 명세: docs/handoff-step5-404-about.md §5
+ *
+ * 즉 지금은 사용처가 하나뿐이지만 **공유 컴포넌트로 설계돼 있습니다.** 아래
+ * props 금지 규칙은 그래서 미리 걸어 둔 것입니다 — 두 번째 사용처가 붙는
+ * 시점에 두 화면이 갈리는 것을 막습니다.
  *
  * 🔴 props 를 늘리지 마세요. 주 수·요약 문구·색·캡션·범례를 props 로 열면
  *    두 화면이 갈리는 문을 여는 것입니다. "소개와 홈에서 주 수·요약 표기가

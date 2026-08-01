@@ -60,17 +60,31 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
                     {/*
                      * WRITING_GUIDE §6.3 필수 3요소 — ① 무엇이 실패했는지
                      * ② 사용자 잘못이 아님 ③ 회복 경로. 해요체, 이모지·농담 없음(S1·§3.6).
+                     *
+                     * 🔴 `잠시 후 다시 시도해 주세요` 를 쓰지 않습니다. 그 문장은
+                     *    **시간이 지나면 낫는 문제**를 뜻하는데, ErrorBoundary 가 잡는
+                     *    것은 대개 코드 결함이라 기다려도 그대로입니다 — contributions
+                     *    의 실패 캐시(Y-1)와 정확히 같은 거짓말 패턴입니다.
+                     *    렌더 크래시는 전체 새로고침이 상태를 지워 실제로 해결되는
+                     *    경우가 많으므로, 그 사실을 그대로 말합니다.
                      */}
                     <p className={styles.title}>화면을 표시하지 못했어요</p>
-                    <p className={styles.description}>잠시 후 다시 시도해 주세요.</p>
+                    <p className={styles.description}>
+                        새로고침하면 대부분 해결돼요. 그래도 안 되면 잠시 뒤에 다시 들러 주세요.
+                    </p>
 
                     <div className={styles.actions}>
+                        {/*
+                         * 🔴 `다시 시도` 가 아니라 `새로고침` 입니다. 리렌더는 같은
+                         *    결함을 다시 밟아 또 실패하므로, **실제로 통하는 수단을
+                         *    이름으로 불러야** 합니다. 라벨과 동작을 일치시킵니다.
+                         */}
                         <button
                             className={styles.action}
                             type="button"
                             onClick={() => window.location.reload()}
                         >
-                            다시 시도
+                            새로고침
                         </button>
                         <a className={styles.action} href="/">
                             홈으로

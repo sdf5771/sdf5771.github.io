@@ -113,11 +113,23 @@ export const EMAIL_URL = 'mailto:seobisback@gmail.com';
 export const RESUME_URL =
     'https://tender-lemongrass-345.notion.site/f8dcc2d59c1045368ed2023ac9327029?pvs=4';
 
-/** GitHub · Notion · Email 3개만. Instagram · Facebook · Qualk 는 제거됐습니다(§6-5). */
+/**
+ * 푸터·드로어의 연락처 3개. Instagram · Facebook · Qualk 는 제거됐습니다(§6-5).
+ *
+ * 🔴 셋 중 `이메일 보내기` 만 라벨이 긴 것은 실수가 아닙니다.
+ *    `GitHub`·`Notion` 은 **제품 고유명**이라 영어 그대로 둡니다(§3.3 예외).
+ *    반면 `mailto:` 는 페이지 이동이 아니라 **메일 앱을 여는 동작**이라 결과의
+ *    성격 자체가 다릅니다. 그 비대칭을 라벨에 드러내 누르기 전에 알 수 있게
+ *    합니다. 소개 화면의 ABOUT_CONTACT_LINKS 와도 같은 문구입니다.
+ *
+ * ⚠️ handoff-step1-shell.md §6-5 는 `GitHub · Notion · Email` 로 지정했지만
+ *    그 명세가 오류였고 web-design 이 정정했습니다. 셋을 나란히 맞추겠다고
+ *    `Email` 로 되돌리지 마세요.
+ */
 export const CONTACT_LINKS: ContactLink[] = [
     { label: 'GitHub', href: GITHUB_URL },
     { label: 'Notion', href: RESUME_URL },
-    { label: 'Email', href: EMAIL_URL },
+    { label: '이메일 보내기', href: EMAIL_URL },
 ];
 
 /**
