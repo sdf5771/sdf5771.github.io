@@ -9,7 +9,7 @@ import HeaderSearch from './HeaderSearch';
 import SearchPanel from './SearchPanel';
 import { NAV_ITEMS, WORDMARK_TEXT, isNavItemActive } from '../../constants/site';
 import { MEDIA_DESKTOP, MEDIA_MOBILE } from '../../styles/breakpoints';
-import { useHeaderScroll, useLeftTruncate, useTerminalPath } from '../../hooks';
+import { useHeaderScroll, useLeftTruncate, useMediaMatch, useTerminalPath } from '../../hooks';
 
 const DRAWER_ID = 'mobile-drawer';
 const SEARCH_PANEL_ID = 'header-search-overlay';
@@ -28,7 +28,17 @@ function GlobalNavigationBar() {
     const { ref: pathRef, display: pathDisplay } = useLeftTruncate<HTMLSpanElement>(terminalPath);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
-    const [isSearchModal, setIsSearchModal] = useState(false);
+
+    /*
+     * 검색 UI 의 형태는 뷰포트에 따라 셋으로 갈립니다.
+     *   ≤767px  전체화면 모달 오버레이 (포커스 트랩 + body 스크롤 락)
+     *   768~1023px  헤더 아래 전폭 행 — 모달이 아님
+     *   ≥1024px  헤더 인라인 입력 — 오버레이를 쓰지 않음
+     * 여는 시점의 값에 고착되면 창 크기를 바꿨을 때 오버레이가 남고 스크롤 락이
+     * 풀리지 않으므로(QA A-3) 구독해서 따라갑니다.
+     */
+    const isMobileViewport = useMediaMatch(MEDIA_MOBILE);
+    const isDesktopViewport = useMediaMatch(MEDIA_DESKTOP);
 
     /* 홈에서만 헤더가 반투명하게 시작해 히어로 그래픽이 화면 끝까지 이어져 보입니다 */
     const scroll = useHeaderScroll({ isTransparentAtTop: pathname === '/' });
@@ -36,15 +46,18 @@ function GlobalNavigationBar() {
     const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
     const closeSearch = useCallback(() => setIsSearchOpen(false), []);
 
+    const openSearch = useCallback(() => setIsSearchOpen(true), []);
+
     /*
-     * 검색 패널이 전체화면 모달인지(≤767px)는 여는 시점에 결정합니다.
-     * 768~1023px 의 전폭 행은 모달이 아니라서 포커스 트랩·스크롤 락을 걸면 안 됩니다.
-     * 레이아웃이 아니라 "JS 가 뷰포트를 알아야 하는" 경우라 matchMedia 를 직접 씁니다(§7).
+     * 데스크톱으로 넘어가면 오버레이를 닫습니다.
+     * 인라인 입력이 이미 헤더에 있어서, 그대로 두면 검색 UI 가 화면에 둘이 되고
+     * role="dialog" 가 남은 채로 페이지가 잠깁니다(QA A-3).
      */
-    const openSearch = useCallback(() => {
-        setIsSearchModal(window.matchMedia(MEDIA_MOBILE).matches);
-        setIsSearchOpen(true);
-    }, []);
+    useEffect(() => {
+        if (isSearchOpen && isDesktopViewport) {
+            setIsSearchOpen(false);
+        }
+    }, [isSearchOpen, isDesktopViewport]);
 
     /* ⌘K / Ctrl+K — 헤더에 노출된 힌트가 실제로 동작하게 합니다 */
     useEffect(() => {
@@ -55,18 +68,17 @@ function GlobalNavigationBar() {
 
             event.preventDefault();
 
-            if (window.matchMedia(MEDIA_DESKTOP).matches) {
+            if (isDesktopViewport) {
                 document.querySelector<HTMLInputElement>('[data-header-search-input]')?.focus();
                 return;
             }
 
-            setIsSearchModal(window.matchMedia(MEDIA_MOBILE).matches);
             setIsSearchOpen(true);
         };
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [isDesktopViewport]);
 
     return (
         <>
@@ -165,7 +177,7 @@ function GlobalNavigationBar() {
                 id={SEARCH_PANEL_ID}
                 isOpen={isSearchOpen}
                 onClose={closeSearch}
-                isModal={isSearchModal}
+                isModal={isMobileViewport}
             />
         </>
     );

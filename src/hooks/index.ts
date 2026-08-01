@@ -3,6 +3,7 @@ import useTerminalPath from './useTerminalPath';
 import useOverlayBehavior from './useOverlayBehavior';
 import useHeaderScroll from './useHeaderScroll';
 import useLeftTruncate from './useLeftTruncate';
+import useMediaMatch from './useMediaMatch';
 
 export {
     usePosts,
@@ -10,4 +11,5 @@ export {
     useOverlayBehavior,
     useHeaderScroll,
     useLeftTruncate,
+    useMediaMatch,
 }
