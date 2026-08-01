@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { RefObject } from 'react';
+import { lockBodyScroll } from '../utils/bodyScrollLock';
 
 const FOCUSABLE_SELECTOR = [
     'a[href]',
@@ -131,39 +132,17 @@ function useOverlayBehavior<T extends HTMLElement>({
         };
     }, [isOpen, onClose, isModal]);
 
+    /*
+     * 스크롤 락은 **전역 참조 카운트**가 관리합니다(utils/bodyScrollLock).
+     * 오버레이마다 body.style 스냅샷을 들면 드로어 위에 검색이 겹쳐 열렸다가
+     * 둘이 같은 커밋에서 닫힐 때 잠금이 영구히 남습니다 — 사유는 그 파일에 있습니다.
+     */
     useEffect(() => {
         if (!isOpen || !isModal) {
             return;
         }
 
-        /*
-         * overflow: hidden 만 쓰면 iOS 에서 배경이 밀립니다.
-         * position: fixed + top: -scrollY 로 잠그고 풀 때 스크롤 위치를 복원합니다.
-         */
-        const scrollY = window.scrollY;
-        const { body } = document;
-        const previous = {
-            position: body.style.position,
-            top: body.style.top,
-            left: body.style.left,
-            right: body.style.right,
-            overflow: body.style.overflow,
-        };
-
-        body.style.position = 'fixed';
-        body.style.top = `-${scrollY}px`;
-        body.style.left = '0';
-        body.style.right = '0';
-        body.style.overflow = 'hidden';
-
-        return () => {
-            body.style.position = previous.position;
-            body.style.top = previous.top;
-            body.style.left = previous.left;
-            body.style.right = previous.right;
-            body.style.overflow = previous.overflow;
-            window.scrollTo(0, scrollY);
-        };
+        return lockBodyScroll();
     }, [isOpen, isModal]);
 
     return containerRef;
