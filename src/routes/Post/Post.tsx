@@ -37,6 +37,15 @@ const Post = () => {
             return;
         }
 
+        /*
+         * 🔴 경합 가드. 글 A → B 로 빠르게 이동하면 A 의 fetch 가 B 보다 늦게
+         *    resolve 될 수 있고, 그러면 **B 의 제목·태그 아래에 A 의 본문**이
+         *    남습니다. 머리말은 동기 렌더라 이미 B 인데 본문만 A 인 상태이고,
+         *    다시 이동하기 전까지 스스로 교정되지 않습니다.
+         *    늦게 도착한 응답은 버립니다 — 같은 패턴이 ContributionGraph 에도 있습니다.
+         */
+        let isActive = true;
+
         /* 다른 글로 이동했을 때 이전 본문이 잠깐 남지 않게 비웁니다 */
         setHtmlContent('');
 
@@ -44,9 +53,17 @@ const Post = () => {
             try {
                 /*
                  * 🔴 slug 가 아니라 **원본 파일명(post.file)** 으로 읽습니다.
-                 * slug 는 소문자 정본이고 디스크의 파일명에는 대문자가 남아
-                 * 있는데, GitHub Pages(Linux)는 대소문자를 구분합니다.
-                 * macOS 로컬에서는 둘 다 통과해 차이가 드러나지 않습니다.
+                 * slug 는 소문자 정본이지만 디스크의 파일명에는 대문자가 남아
+                 * 있고(41편 중 33편), GitHub Pages(Linux)는 대소문자를 구분합니다.
+                 *
+                 * ⚠️ 기록 정정: 이 줄이 고친 것은 "원래 깨져 있던 fetch" 가 아닙니다.
+                 *    구 코드는 `slug = 파일명(대문자 보존)` 이라 `/_posts/${slug}.md`
+                 *    가 41편 모두 200 이었습니다 — **구 fetch 는 정상이었습니다.**
+                 *    함정은 채택되지 않은 순진한 수정안 쪽에 있었습니다: `file` 필드
+                 *    없이 slug 만 소문자화했다면 그 순간 33편의 본문이 404 가 되고,
+                 *    macOS 로컬에서는 대소문자를 가리지 않아 끝까지 보이지 않았을
+                 *    것입니다. slug(URL)와 file(디스크)을 나눈 것이 그것을 피한
+                 *    이유입니다. 둘을 다시 하나로 합치지 마세요.
                  */
                 const response = await fetch(`/_posts/${encodeURIComponent(post.file)}`);
                 if(!response.ok) throw new Error('Failed to fetch post');
@@ -76,7 +93,11 @@ const Post = () => {
                 const content = contentText.replace(/^---[\s\S]*?---\n/, '');
 
                 const htmlContent = md.render(content);
-                setHtmlContent(htmlContent);
+
+                /* 그 사이 다른 글로 이동했으면 이 응답은 버립니다 */
+                if (isActive) {
+                    setHtmlContent(htmlContent);
+                }
             } catch (error) {
                 /*
                  * 본문 로드 실패는 글이 없다는 뜻이 아닙니다(글 목록에는 있음).
@@ -90,6 +111,10 @@ const Post = () => {
         // async 함수를 즉시 호출하되, Promise를 반환하지 않도록 void 처리
         void getPost();
         scrollTo(0, 0);
+
+        return () => {
+            isActive = false;
+        };
     }, [post]);
 
     /* 없는 slug 는 홈으로 튕기지 않고 404 를 보여 줍니다 — 주소가 그대로 남습니다 */
