@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import styles from './App.module.css';
-import { Home, Post } from './routes';
+import { About, Home, LegacyPostRedirect, NotFound, Post } from './routes';
 import { GlobalNavigationBar, Footer } from './components/shared';
 import { ShellProvider } from './components/shell';
 import { useDocumentTitle } from './hooks';
@@ -25,7 +25,16 @@ function App() {
                 <main className={styles.main} id="main">
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/post" element={<Post />} />
+                        <Route path="/posts/:slug" element={<Post />} />
+                        {/* 구 경로. 프로덕션에서는 dist/404.html 이 먼저 잡아 넘깁니다 */}
+                        <Route path="/post" element={<LegacyPostRedirect />} />
+                        <Route path="/about" element={<About />} />
+                        {/*
+                         * 반드시 **마지막**입니다. GitHub Pages 가 404.html 을 서빙할 때
+                         * 주소창 URL 을 바꾸지 않으므로, 여기 들어오는 경로는 사용자가
+                         * 실제로 요청한 경로 그대로입니다(§4-8).
+                         */}
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
                 <Footer />

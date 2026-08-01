@@ -5,7 +5,8 @@ function PostCard({ post }: { post: PostMetadata }) {
 
     const navigate = useNavigate();
     return (
-        <div className={styles.post_card} onClick={() => navigate(`/post?id=${post.slug}`)}>
+        // 신 경로 `/posts/<slug>`. 구 경로 `/post?id=` 는 리다이렉트로만 남습니다(§4-8)
+        <div className={styles.post_card} onClick={() => navigate(`/posts/${post.slug}`)}>
             <div className={styles.thumbnail}>
                 {
                     post.thumbnail ?

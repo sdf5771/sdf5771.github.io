@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import postsData from '../../public/posts-data.json';
 import { HOME_TITLE, NOT_FOUND_TITLE_NAME, buildPageTitle } from '../constants/site';
+import { safeDecodeURIComponent } from '../utils/url';
 
 /**
  * 현재 라우트에 해당하는 `<title>` 문자열.
@@ -12,13 +13,23 @@ function resolveDocumentTitle(pathname: string, search: string): string {
         return HOME_TITLE;
     }
 
-    if (pathname === '/post') {
-        const slug = new URLSearchParams(search).get('id');
-        // 글 데이터는 빌드 타임 JSON 이라 동기적으로 찾을 수 있습니다 — 본문 fetch 를
-        // 기다리지 않으므로 제목이 뒤늦게 바뀌는 깜빡임이 없습니다.
+    // 글 데이터는 빌드 타임 JSON 이라 동기적으로 찾을 수 있습니다 — 본문 fetch 를
+    // 기다리지 않으므로 제목이 뒤늦게 바뀌는 깜빡임이 없습니다.
+    const findTitle = (slug: string | null | undefined): string => {
         const post = slug ? postsData.find(item => item.slug === slug) : undefined;
 
+        // 없는 slug 는 이제 404 화면으로 갑니다. 제목도 거기에 맞춥니다.
         return buildPageTitle(post ? post.title : NOT_FOUND_TITLE_NAME);
+    };
+
+    const slugMatch = /^\/posts\/(.+)$/.exec(pathname);
+    if (slugMatch) {
+        return findTitle(safeDecodeURIComponent(slugMatch[1]));
+    }
+
+    /* 구 경로. 리다이렉트 전 한 프레임 동안만 쓰이므로 깜빡임을 줄여 둡니다 */
+    if (pathname === '/post') {
+        return findTitle(new URLSearchParams(search).get('id'));
     }
 
     if (pathname === '/posts') {
@@ -35,7 +46,7 @@ function resolveDocumentTitle(pathname: string, search: string): string {
 
     const tagMatch = /^\/tags\/(.+)$/.exec(pathname);
     if (tagMatch) {
-        return buildPageTitle(`#${decodeURIComponent(tagMatch[1])}`);
+        return buildPageTitle(`#${safeDecodeURIComponent(tagMatch[1])}`);
     }
 
     return buildPageTitle(NOT_FOUND_TITLE_NAME);
