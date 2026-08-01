@@ -90,11 +90,20 @@ function useHeaderScroll({ isTransparentAtTop }: UseHeaderScrollOptions): Header
 
         update();
         window.addEventListener('scroll', handleScroll, { passive: true });
+
+        /*
+         * 두 쿼리를 똑같이 다룹니다. `update` 가 둘 다 읽으므로 한쪽에만 리스너를
+         * 달면 그쪽 변화에만 반응합니다 — 데스크톱 폭에서 헤더를 숨긴 채 창을
+         * 넓히면(또는 기기를 회전하면) 스크롤을 다시 건드릴 때까지 숨은 상태가
+         * 남습니다. mobileQuery 만 빠져 있을 이유가 없습니다.
+         */
         reducedMotionQuery.addEventListener('change', update);
+        mobileQuery.addEventListener('change', update);
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
             reducedMotionQuery.removeEventListener('change', update);
+            mobileQuery.removeEventListener('change', update);
 
             if (frame) {
                 cancelAnimationFrame(frame);

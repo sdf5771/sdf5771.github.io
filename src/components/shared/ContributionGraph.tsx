@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styles from './ContributionGraph.module.css';
 import { useMediaMatch } from '../../hooks';
 import { MEDIA_MOBILE } from '../../styles/breakpoints';
@@ -102,6 +102,41 @@ function ContributionGraph({ showPrompt = false }: ContributionGraphProps) {
 
     const weekCount = isMobileViewport ? WEEKS_MOBILE : WEEKS_DESKTOP;
 
+    /*
+     * 🔴 아래 두 useMemo 는 **이른 return 보다 위**에 있어야 합니다.
+     *    훅은 렌더마다 같은 순서로 같은 개수가 호출돼야 하는데, 실패·로딩
+     *    분기가 먼저 return 하므로 그 아래에 두면 상태가 바뀔 때 훅 개수가
+     *    달라집니다. 그래서 `ready` 가 아닐 때는 빈 배열로 돌립니다.
+     */
+    const readyData = state.status === 'ready' ? state.data : null;
+
+    const weeks = useMemo(
+        () => (readyData ? readyData.weeks.slice(-weekCount) : []),
+        [readyData, weekCount],
+    );
+
+    /*
+     * 셀 title 을 미리 계산해 둡니다. 셀 하나마다 `new Date` + `toISOString` 이
+     * 들어가는데(shiftDate), 데스크톱 기준 52주 × 7 = 364개라 렌더마다 다시
+     * 만들면 스크롤·테마 전환 같은 무관한 갱신에서도 그 비용을 전부 냅니다.
+     * 날짜는 weeks 가 바뀌지 않는 한 달라지지 않습니다.
+     */
+    const cellTitles = useMemo(
+        () =>
+            weeks.map(week =>
+                week.days.map(
+                    (level, dayIndex) =>
+                        /*
+                         * `<날짜> · <레벨 표현>`. 횟수(`N회`)는 데이터에 없어 쓸 수
+                         * 없고, 레벨을 말로 옮기면 색을 구분하지 못해도 셀의 세기를
+                         * 알 수 있습니다.
+                         */
+                        `${formatDisplayDate(shiftDate(week.start, dayIndex))} · ${LEVEL_LABELS[level] ?? LEVEL_LABELS[0]}`,
+                ),
+            ),
+        [weeks],
+    );
+
     const heading = (
         <h2 className={styles.heading}>
             {showPrompt && (
@@ -160,7 +195,6 @@ function ContributionGraph({ showPrompt = false }: ContributionGraphProps) {
     }
 
     const { data } = state;
-    const weeks = data.weeks.slice(-weekCount);
 
     const summary =
         data.lastActiveDate === null
@@ -181,25 +215,21 @@ function ContributionGraph({ showPrompt = false }: ContributionGraphProps) {
                 {isMobileViewport && <p className={styles.range_label}>최근 16주</p>}
 
                 {/*
-                 * 격자 전체가 하나의 이미지입니다. 셀 371개를 낱개로 읽히면
-                 * 소음이라 안쪽은 전부 aria-hidden 이고, 수치는 aria-label 이
-                 * 담습니다 — 요약만으로는 시각 사용자와 정보량이 달라집니다.
+                 * 격자 전체가 하나의 이미지입니다. 셀을 낱개로 읽히면 소음이라
+                 * (데스크톱 52주 × 7 = 364개, sm 은 16주 × 7 = 112개) 안쪽은 전부
+                 * aria-hidden 이고, 수치는 aria-label 이 담습니다 — 요약만으로는
+                 * 시각 사용자와 정보량이 달라집니다.
                  */}
                 <div className={styles.grid_frame} role="img" aria-label={gridLabel}>
                     <div className={styles.grid} aria-hidden="true">
-                        {weeks.map(week => (
+                        {weeks.map((week, weekIndex) => (
                             <div className={styles.week} key={week.start}>
                                 {week.days.map((level, dayIndex) => (
                                     <div
                                         className={styles.cell}
                                         key={`${week.start}-${dayIndex}`}
                                         data-level={level}
-                                        /*
-                                         * `<날짜> · <레벨 표현>`. 횟수(`N회`)는 데이터에
-                                         * 없어 쓸 수 없고, 레벨을 말로 옮기면 색을
-                                         * 구분하지 못해도 셀의 세기를 알 수 있습니다.
-                                         */
-                                        title={`${formatDisplayDate(shiftDate(week.start, dayIndex))} · ${LEVEL_LABELS[level] ?? LEVEL_LABELS[0]}`}
+                                        title={cellTitles[weekIndex][dayIndex]}
                                     />
                                 ))}
                             </div>

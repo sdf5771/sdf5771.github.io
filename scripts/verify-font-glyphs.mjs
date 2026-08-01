@@ -199,14 +199,32 @@ function readFormat4(cmap, start, into) {
     }
 }
 
-/** cmap format 12 (BMP 밖 포함) 에서 코드포인트 집합을 읽습니다 */
+/**
+ * cmap format 12 (BMP 밖 포함) 에서 코드포인트 집합을 읽습니다.
+ *
+ * ⚠️ 그룹 범위는 **파일이 주장하는 값**이라 믿고 순회하면 안 됩니다.
+ *    format 12 의 endCode 는 32비트라 손상되거나 악의적인 폰트가
+ *    `0 ~ 0xFFFFFFFF` 를 주장할 수 있고, 그러면 이 루프가 42억 번 돌면서
+ *    Set 에 담다가 빌드가 멈춥니다. 검증 스크립트가 빌드를 세우는 방식이
+ *    "에러" 가 아니라 "영원히 안 끝남" 이면 원인을 찾기 어렵습니다.
+ *    우리가 검사하는 것은 장식 기호(BMP)와 한글(BMP)뿐이라 상한을 둬도
+ *    잃는 정보가 없습니다.
+ */
+const MAX_CODEPOINT = 0x30000;
+
 function readFormat12(cmap, start, into) {
     const groupCount = cmap.readUInt32BE(start + 12);
 
     for (let group = 0; group < groupCount; group += 1) {
         const base = start + 16 + group * 12;
+
+        /* 그룹 배열이 테이블 밖을 가리키면 더 읽지 않습니다 */
+        if (base + 12 > cmap.length) {
+            break;
+        }
+
         const startCode = cmap.readUInt32BE(base);
-        const endCode = cmap.readUInt32BE(base + 4);
+        const endCode = Math.min(cmap.readUInt32BE(base + 4), MAX_CODEPOINT);
 
         for (let code = startCode; code <= endCode; code += 1) {
             into.add(code);

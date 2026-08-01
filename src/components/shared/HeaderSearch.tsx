@@ -92,8 +92,6 @@ function HeaderSearch({ request, onClose }: HeaderSearchProps) {
                     ref={inputRef}
                     type="search"
                     value={query}
-                    /* 헤더의 ⌘K 핸들러가 이 입력을 찾습니다 */
-                    data-header-search-input
                     /* 플레이스홀더와 같은 확정 문구를 접근 가능한 이름으로도 씁니다 */
                     aria-label={SEARCH_PLACEHOLDER}
                     placeholder={SEARCH_PLACEHOLDER}

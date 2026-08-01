@@ -16,6 +16,16 @@ function ShellProvider({ children }: { children: ReactNode }) {
     const { pathname, search } = useLocation();
 
     const openSearch = useCallback((options?: OpenSearchOptions) => {
+        /*
+         * 🔴 `document.activeElement` 는 업데이터 **밖에서** 읽습니다.
+         *    업데이터는 순수해야 하고 React 가 호출 횟수·시점을 보장하지
+         *    않습니다 — StrictMode 는 개발 중 일부러 두 번 호출하고, 그 사이
+         *    포커스가 옮겨 갔다면 두 번째 호출이 다른 값을 읽습니다.
+         *    여기서 한 번 잡아 클로저로 넘기면 "openSearch 를 부른 그 순간의
+         *    포커스" 라는 의도가 그대로 지켜집니다.
+         */
+        const focusedAtCallTime = document.activeElement as HTMLElement | null;
+
         setSearchRequest(previous => ({
             id: (previous?.id ?? 0) + 1,
             query: options?.query,
@@ -25,9 +35,7 @@ function ShellProvider({ children }: { children: ReactNode }) {
              * 복귀 대상이 되어 버립니다.
              */
             returnFocusTo:
-                options?.returnFocusTo ??
-                previous?.returnFocusTo ??
-                (document.activeElement as HTMLElement | null),
+                options?.returnFocusTo ?? previous?.returnFocusTo ?? focusedAtCallTime,
         }));
     }, []);
 
