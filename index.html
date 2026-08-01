@@ -2,6 +2,28 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="dark light" />
+    <!--
+      테마 부트스트랩. 모든 CSS·React 보다 먼저 실행돼야 합니다.
+      React 마운트를 기다리면 다크 사용자가 매 진입마다 흰 화면 섬광(FOUC)을 봅니다.
+      localStorage["theme"]("system" | "light" | "dark") 를 해석해
+      <html data-theme> 에 실제 적용값만 씁니다.
+      근거: docs/handoff-step1-shell.md §5-2
+    -->
+    <script>
+      (function () {
+        try {
+          var s = localStorage.getItem('theme') || 'system';
+          var d =
+            s === 'dark' ||
+            (s === 'system' &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Seobisback Github Blog" />
