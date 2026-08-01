@@ -10,8 +10,37 @@
     top: 0;
     z-index: var(--z-header);
     width: 100%;
-    background-color: var(--color-bg-raised);
-    border-bottom: 1px solid var(--color-border-strong);
+    /*
+     * 배경 불투명도만 스크롤에 따라 바뀝니다(§6-1b).
+     * --header-bg-alpha 는 useHeaderScroll 이 인라인 스타일로 넣습니다.
+     * --color-bg-raised-rgb 는 --color-bg-raised 의 RGB 분해값입니다.
+     */
+    background-color: rgba(var(--color-bg-raised-rgb), var(--header-bg-alpha, 1));
+    border-bottom: 1px solid transparent;
+    transition:
+        transform var(--dur-slow) var(--ease-emphasized),
+        border-bottom-color var(--dur-base) var(--ease-out);
+}
+
+/* 진행률 15% 지점부터 나타납니다 */
+.header[data-has-border='true'] {
+    border-bottom-color: var(--color-border-strong);
+}
+
+/* 모바일 스크롤 다운 시 숨김. 헤더의 위치·크기는 그 외에는 절대 변하지 않습니다. */
+.header[data-hidden='true'] {
+    transform: translateY(-100%);
+}
+
+/*
+ * reduced-motion 에서는 숨김 **동작 자체**를 끕니다.
+ * 전환만 끄면 헤더가 순간이동해 더 나쁩니다(§6-2).
+ * useHeaderScroll 도 같은 조건에서 isHidden 을 켜지 않지만, CSS 로도 못 박아 둡니다.
+ */
+@media (prefers-reduced-motion: reduce) {
+    .header[data-hidden='true'] {
+        transform: none;
+    }
 }
 
 /* 포커스를 받을 때만 나타납니다 */

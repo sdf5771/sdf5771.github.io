@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './GlobalNavigationBar.module.css';
 import Wordmark from './Wordmark';
@@ -8,7 +9,7 @@ import HeaderSearch from './HeaderSearch';
 import SearchPanel from './SearchPanel';
 import { NAV_ITEMS, WORDMARK_TEXT, isNavItemActive } from '../../constants/site';
 import { MEDIA_DESKTOP, MEDIA_MOBILE } from '../../styles/breakpoints';
-import { useTerminalPath } from '../../hooks';
+import { useHeaderScroll, useTerminalPath } from '../../hooks';
 
 const DRAWER_ID = 'mobile-drawer';
 const SEARCH_PANEL_ID = 'header-search-overlay';
@@ -26,6 +27,9 @@ function GlobalNavigationBar() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [isSearchModal, setIsSearchModal] = useState(false);
+
+    /* 홈에서만 헤더가 반투명하게 시작해 히어로 그래픽이 화면 끝까지 이어져 보입니다 */
+    const scroll = useHeaderScroll({ isTransparentAtTop: pathname === '/' });
 
     const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
     const closeSearch = useCallback(() => setIsSearchOpen(false), []);
@@ -63,13 +67,19 @@ function GlobalNavigationBar() {
     }, []);
 
     return (
-        <header className={styles.header}>
-            {/* 헤더가 sticky 라 스킵 링크가 필수입니다. 포커스 시에만 노출됩니다. */}
-            <a className={styles.skip_link} href="#main">
-                본문 바로가기
-            </a>
+        <>
+            <header
+                className={styles.header}
+                data-has-border={scroll.hasBorder}
+                data-hidden={scroll.isHidden && !isDrawerOpen && !isSearchOpen}
+                style={{ '--header-bg-alpha': scroll.backgroundAlpha } as CSSProperties}
+            >
+                {/* 헤더가 sticky 라 스킵 링크가 필수입니다. 포커스 시에만 노출됩니다. */}
+                <a className={styles.skip_link} href="#main">
+                    본문 바로가기
+                </a>
 
-            <div className={styles.inner}>
+                <div className={styles.inner}>
                 <Link className={styles.brand} to="/" aria-label={`${WORDMARK_TEXT} 홈`}>
                     <Wordmark className={styles.wordmark} withMemoji />
                 </Link>
@@ -134,9 +144,16 @@ function GlobalNavigationBar() {
                     >
                         <span aria-hidden="true">☰</span>
                     </button>
+                    </div>
                 </div>
-            </div>
+            </header>
 
+            {/*
+             * 드로어·검색 패널은 <header> **밖**에 둡니다.
+             * 헤더가 숨을 때 transform 이 걸리는데, transform 이 걸린 요소는
+             * position: fixed 자손의 컨테이닝 블록이 되어 전체화면 오버레이가
+             * 헤더 기준으로 잘려 버립니다.
+             */}
             <MobileDrawer id={DRAWER_ID} isOpen={isDrawerOpen} onClose={closeDrawer} />
             <SearchPanel
                 id={SEARCH_PANEL_ID}
@@ -144,7 +161,7 @@ function GlobalNavigationBar() {
                 onClose={closeSearch}
                 isModal={isSearchModal}
             />
-        </header>
+        </>
     );
 }
 
