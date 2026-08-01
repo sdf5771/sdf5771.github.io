@@ -2,7 +2,29 @@
  * 서체 선언.
  * font-family 토큰(--font-display / --font-mono / --font-body)은 tokens.css 에 있습니다.
  * Pretendard 의 @font-face 는 global.css 에 있습니다(기존 자산 위치 유지).
+ *
+ * Galmuri 는 CDN 을 쓰지 않고 서브셋 후 자체 호스팅합니다.
+ * 원본 971 KB 중 대부분이 이 사이트가 쓰지 않는 한자·카나이고,
+ * 배포용 galmuri.css 에는 unicode-range 가 없어 분할 로딩도 되지 않습니다.
+ * 서브셋 재생성: scripts/subset-galmuri.py
+ * 라이선스: SIL Open Font License 1.1 — src/assets/fonts/Galmuri-OFL.txt
  */
+
+@font-face {
+    font-family: 'Galmuri11';
+    src: url('../assets/fonts/Galmuri11-subset.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GalmuriMono11';
+    src: url('../assets/fonts/GalmuriMono11-subset.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 
 /* ------------------------------------------------------------
  * 픽셀 렌더링 규칙 (§4-5)
