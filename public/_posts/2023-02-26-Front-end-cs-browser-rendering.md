@@ -3,7 +3,7 @@ layout: post
 title: "[Front-end CS] 브라우저 렌더링 프로세스"
 date: "2023-02-26"
 author: Seobisback
-tags: [Front-end, Computer Science, Browser]
+tags: [Frontend, Computer Science, Browser]
 categories: Study
 ---
 # Browser Rendering Process
