@@ -558,6 +558,73 @@ requestAnimationFrame(() =>
 
 ---
 
+## 5-6. 🔴 전역 저감 모션 규칙 (2026-08-01 판정)
+
+### 확정안 — `transition-duration` 한 줄을 삭제합니다
+
+```css
+/* src/global.css */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+**변경은 `transition-duration: .01ms !important;` 삭제 하나뿐입니다.**
+
+### 왜 `transition`을 빼는가
+
+**① `prefers-reduced-motion`은 색 전환을 대상으로 하지 않습니다.**
+이 설정은 **전정기관 자극**(vestibular) — 움직임이 유발하는 어지럼·구역 — 을 막기 위한 것입니다. WCAG 2.3.3도 *motion animation*이 대상입니다. **배경색·글자색·테두리색 전환은 아무것도 움직이지 않으므로 억제할 이유가 없습니다.** 오히려 호버 피드백을 즉시 전환으로 만들어 인터페이스를 딱딱하게 만듭니다.
+
+**② `transition-duration: 0`은 `transform`에 대해 애초에 효과가 없습니다.**
+`translateY(-3px)` 호버에 지속시간을 0으로 줘도 **요소는 여전히 3px 점프합니다.** 즉시 움직이는 것도 움직이는 것입니다. 이 규칙은 **막아야 할 것은 못 막고**(transform), **막지 말아야 할 것만 막고 있었습니다**(색). 방향이 양쪽 다 틀렸습니다.
+
+**③ 컴포넌트 규칙을 전부 이깁니다.**
+`!important`가 붙어 있어 컴포넌트의 저감 사양이 무력화됩니다. QA가 실측한 피해 8건(행 호버 배경·제목색, 카테고리 칩, 정렬 세그먼트, 조건 해제 링크, 페이지네이션, 빈 상태 버튼, 검색 포커스 테두리)이 전부 이 한 줄 때문이며, `PostRow`의 120ms 페이드 저감 사양(`:311`)까지 함께 죽습니다.
+
+### 왜 나머지 셋은 남기는가
+
+| 선언 | 판정 |
+|---|---|
+| `animation-duration` / `-iteration-count` | ✅ **유지.** 키프레임 애니메이션은 대부분 실제 움직임이고, **무한 반복(커서 blink·bob)을 잊고 남겨두는 것이 최악의 실패**입니다. 그물이 필요한 자리입니다 |
+| `scroll-behavior: auto` | ✅ **유지, `!important` 필수.** 부드러운 스크롤은 **뷰포트 전체가 움직이는 전형적 전정 자극**입니다. STEP 3 지적대로 `scroll-behavior: smooth`는 `!important`로 덮지 않으면 앵커 이동이 계속 부드럽게 동작합니다. 전역이 실제로 필요한 유일한 케이스입니다 |
+
+> `animation: none`은 `animation-name`을 바꾸므로 이 규칙과 충돌하지 않습니다. 컴포넌트의 `animation: none` 저감 사양은 그대로 동작합니다.
+
+### 컴포넌트가 지켜야 할 일반 규칙 (STEP 2·3·6·7 전부 적용)
+
+> ## **저감 모션에서 `transform`은 값을 지우고, 색·투명도 전환은 그대로 둔다.**
+> ## **지속시간을 0으로 만드는 것은 해결이 아닙니다 — 즉시 이동도 이동입니다.**
+
+```css
+/* ✅ 올바른 컴포넌트 저감 사양 */
+@media (prefers-reduced-motion: reduce) {
+  .card:hover      { transform: none; }        /* 값을 제거 */
+  .row__bar        { transform: scaleY(1); }   /* 최종 상태로 고정 */
+  .row__arrow      { transition-duration: 0s; }/* opacity만 쓰는 경우엔 선택 */
+}
+/* ❌ 하지 말 것 */
+.card { transition-duration: .01ms; }          /* transform이 여전히 점프함 */
+```
+
+**적용 대상 판정표**
+
+| 전환 속성 | 저감 모션에서 | 이유 |
+|---|---|---|
+| `transform` (translate·scale·rotate) | **값 제거 또는 최종 상태 고정** | 실제 움직임 |
+| `background-color` · `color` · `border-color` | **그대로 유지** | 움직임 아님 |
+| `opacity` | **유지 가능.** 필요하면 지속시간만 단축 | 전정 자극 없음 — 오히려 모션의 권장 대체재 |
+| `width`/`height`/`top`/`left` 등 레이아웃 | **값 제거** | 주변까지 밀어내는 움직임 |
+| 스크롤 연동 진행바 | **유지** | 기능적 피드백이고 사용자 스크롤에 종속 |
+
+**그물이 사라지는 자리는 없습니다.** 전역이 덮던 것 중 실제로 위험한 것(키프레임 애니메이션·부드러운 스크롤)은 그대로 남고, 새로 컴포넌트 책임이 되는 것은 **`transform` 전환뿐**입니다. 그런데 `transform`은 애초에 전역 규칙으로 해결되지 않던 항목이라(이유 ②) **보호 범위가 줄지 않습니다 — 오히려 늘어납니다.**
+
+---
+
 ## 6. 전역 셸 컴포넌트
 
 ### 6-1. 헤더 — 데스크톱 (≥1024px)
