@@ -193,7 +193,7 @@
     --font-ui-label: var(--font-body);
     /* 메타·날짜·저작권 등 보조 정보 */
     --font-ui-meta: var(--font-body);
-    /* 경로 표시(➜ ~/...) — **--fs-2xs(11px) 에서만** 씁니다. 라틴 전용 */
+    /* 경로 표시(▸ ~/...) — **--fs-2xs(11px) 에서만** 씁니다. 라틴 전용 */
     --font-terminal-path: var(--font-mono);
     /* 그 밖의 모노 자리(⌘K 등) — **--fs-2xs(11px) 고정, 라틴·숫자·기호만** */
     --font-mono-11: var(--font-mono);

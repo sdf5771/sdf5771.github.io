@@ -7,6 +7,7 @@ import ThemeToggle from './ThemeToggle';
 import MobileDrawer from './MobileDrawer';
 import HeaderSearch from './HeaderSearch';
 import SearchPanel from './SearchPanel';
+import SearchIcon from './SearchIcon';
 import { NAV_ITEMS, WORDMARK_TEXT, isNavItemActive } from '../../constants/site';
 import { MEDIA_DESKTOP, MEDIA_MOBILE } from '../../styles/breakpoints';
 import { useHeaderScroll, useLeftTruncate, useMediaMatch, useTerminalPath } from '../../hooks';
@@ -121,8 +122,9 @@ function GlobalNavigationBar() {
                 </Link>
 
                 <p className={styles.path}>
+                    {/* `➜`(U+279C)는 Galmuri 에 없어 폴백 서체로 렌더됩니다. `▸`(U+25B8) 는 있습니다(§4-7) */}
                     <span className={styles.prompt} aria-hidden="true">
-                        ➜
+                        ▸
                     </span>
                     <span className={styles.path_text} ref={pathRef}>
                         {/* 자리가 부족하면 왼쪽부터 잘립니다 — 파일명이 정보량이 가장 큽니다.
@@ -169,7 +171,7 @@ function GlobalNavigationBar() {
                         aria-controls={SEARCH_PANEL_ID}
                         onClick={isSearchOpen ? closeSearch : openSearch}
                     >
-                        <span aria-hidden="true">⌕</span>
+                        <SearchIcon />
                     </button>
 
                     <ThemeToggle />

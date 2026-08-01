@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './SearchPanel.module.css';
+import SearchIcon from './SearchIcon';
 import {
     SEARCH_EMPTY_DESCRIPTION_MOBILE,
     SEARCH_EMPTY_TITLE,
@@ -48,9 +49,7 @@ function SearchPanel({ id, isOpen, onClose, isModal }: SearchPanelProps) {
             aria-label="검색"
         >
             <div className={styles.bar}>
-                <span className={styles.icon} aria-hidden="true">
-                    ⌕
-                </span>
+                <SearchIcon className={styles.icon} />
                 <input
                     className={styles.input}
                     type="search"
@@ -67,7 +66,8 @@ function SearchPanel({ id, isOpen, onClose, isModal }: SearchPanelProps) {
                     onClick={onClose}
                     aria-label="검색 닫기"
                 >
-                    <span aria-hidden="true">✕</span>
+                    {/* `✕`(U+2715)는 Galmuri 에 없습니다. `×`(U+00D7) 는 형태가 거의 같고 라틴-1 이라 안전합니다(§4-7) */}
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
 

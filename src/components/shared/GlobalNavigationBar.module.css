@@ -109,6 +109,11 @@
 
 .prompt {
     flex-shrink: 0;
+    /* 프롬프트도 경로와 같은 픽셀 격자 위에 있어야 한 줄로 읽힙니다. `▸` 는 라틴 전용
+       서브셋에도 들어 있습니다(§4-7) */
+    font-family: var(--font-terminal-path);
+    font-size: var(--fs-2xs);
+    line-height: var(--lh-snug);
     color: var(--color-accent-text);
 }
 

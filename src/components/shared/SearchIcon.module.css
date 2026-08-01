@@ -1,0 +1,28 @@
+/*
+ * 돋보기 아이콘. 폰트·SVG 없이 CSS 그리드 도트로 직접 그립니다 —
+ * 테마 토글(§5-5)과 같은 기법이고, 시스템의 픽셀 문법을 그대로 씁니다.
+ * 명세: docs/handoff-step1-shell.md §4-7
+ *
+ * 문자를 쓰지 않는 이유: Galmuri 에 `⌕`(U+2315)가 없고 대체할 문자도 없습니다.
+ * (Dingbats 블록 U+2700–27BF 가 통째로 빠져 있습니다)
+ * CSS 로 그리면 서브셋 범위가 어떻게 바뀌어도 다시 깨지지 않습니다.
+ *
+ * 셀 크기는 --search-icon-cell 로 조절합니다. 갭은 셀과 무관하게 1px 고정입니다 —
+ * 픽셀 격자는 정수 단위로만 늘려야 도트가 뭉개지지 않습니다.
+ */
+
+.icon {
+    display: grid;
+    grid-template-columns: repeat(7, var(--search-icon-cell, 2px));
+    grid-template-rows: repeat(7, var(--search-icon-cell, 2px));
+    flex-shrink: 0;
+    gap: 1px;
+}
+
+.dot {
+    background-color: currentColor;
+}
+
+.dot_off {
+    background-color: transparent;
+}

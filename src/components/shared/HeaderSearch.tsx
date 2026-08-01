@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import styles from './HeaderSearch.module.css';
+import SearchIcon from './SearchIcon';
 import {
     SEARCH_EMPTY_DESCRIPTION_DESKTOP,
     SEARCH_EMPTY_TITLE,
@@ -31,9 +32,7 @@ function HeaderSearch() {
             }}
         >
             <div className={styles.field}>
-                <span className={styles.icon} aria-hidden="true">
-                    ⌕
-                </span>
+                <SearchIcon className={styles.icon} />
                 <input
                     className={styles.input}
                     ref={inputRef}

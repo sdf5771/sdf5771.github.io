@@ -51,7 +51,8 @@ function MobileDrawer({ id, isOpen, onClose }: MobileDrawerProps) {
                     aria-label="메뉴 닫기"
                     data-autofocus
                 >
-                    <span aria-hidden="true">✕</span>
+                    {/* `✕`(U+2715)는 Galmuri 에 없습니다. `×`(U+00D7) 로 대체(§4-7) */}
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
 
