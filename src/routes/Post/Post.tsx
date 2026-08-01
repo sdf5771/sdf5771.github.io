@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Post.module.css';
-import { GlobalNavigationBar, Footer } from '../../components/shared';
 import MarkdownIt from 'markdown-it';
 import markdownItMath from 'markdown-it-katex';
 import markdownItTaskLists from 'markdown-it-task-lists';
@@ -69,8 +68,7 @@ const Post = () => {
     }, [location.search, navigate]);
 
     return (
-        <main className={styles.main}>
-            <GlobalNavigationBar />
+        <div className={styles.main}>
             <section className={styles.article_section}>
                 <header className={styles.article_header}>
                     <div className={styles.category}>
@@ -102,8 +100,7 @@ const Post = () => {
                     dangerouslySetInnerHTML={{ __html: htmlContent }} 
                 />
             </section>
-            <Footer />
-        </main>
+        </div>
     )
 };
 

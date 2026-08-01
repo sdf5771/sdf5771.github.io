@@ -1,5 +1,5 @@
 import styles from './Home.module.css';
-import { GlobalNavigationBar, PostList, PageTitle, Footer } from '../../components/shared';
+import { PostList, PageTitle } from '../../components/shared';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Profile } from '../../components/home';
@@ -19,8 +19,7 @@ function Home(){
     }, [location.search])
 
     return (
-        <main className={styles.main}>
-            <GlobalNavigationBar />
+        <div className={styles.main}>
             <section>
                 <header>
                     <PageTitle title="Hello World!" />
@@ -45,8 +44,7 @@ function Home(){
                     </div>
                 </div>
             </section>
-            <Footer />
-        </main>
+        </div>
     )
 }
 

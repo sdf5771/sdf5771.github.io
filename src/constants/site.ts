@@ -26,8 +26,8 @@ export const COPYRIGHT = '© 2026 Seobisback';
 export interface NavItem {
     label: string;
     path: string;
-    /** 경로 표시(➜ ~/...)에 쓰는 홈 디렉터리 표기 */
-    terminalPath: string;
+    /** 이 항목을 활성으로 볼 추가 경로. 예: 글 상세(/post)도 `글` 항목이 활성 */
+    activePaths?: string[];
 }
 
 /**
@@ -35,11 +35,23 @@ export interface NavItem {
  * ⚠️ 홈(/)을 제외한 3개 라우트는 아직 App.tsx 에 없습니다 — STEP 2~7 에서 추가됩니다.
  */
 export const NAV_ITEMS: NavItem[] = [
-    { label: '홈', path: '/', terminalPath: '~' },
-    { label: '글', path: '/posts', terminalPath: '~/posts' },
-    { label: '태그', path: '/tags', terminalPath: '~/tags' },
-    { label: '소개', path: '/about', terminalPath: '~/about.md' },
+    { label: '홈', path: '/' },
+    { label: '글', path: '/posts', activePaths: ['/post'] },
+    { label: '태그', path: '/tags' },
+    { label: '소개', path: '/about' },
 ];
+
+/** 현재 경로가 이 내비 항목에 속하는가 */
+export function isNavItemActive(item: NavItem, pathname: string): boolean {
+    if (item.path === '/') {
+        return pathname === '/';
+    }
+
+    const candidates = [item.path, ...(item.activePaths ?? [])];
+    return candidates.some(
+        candidate => pathname === candidate || pathname.startsWith(`${candidate}/`),
+    );
+}
 
 export interface ContactLink {
     label: string;

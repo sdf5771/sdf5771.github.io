@@ -1,255 +1,178 @@
-/* pc */
-@media screen and (min-width: 1024px) {
-  .nav {
-    z-index: 100;
-    position: fixed;
+/*
+ * 전역 헤더. 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ * 명세: docs/handoff-step1-shell.md §6-1 / §6-2
+ *
+ * ⚠️ 브레이크포인트 숫자를 고치면 src/styles/breakpoints.ts 도 함께 고쳐야 합니다.
+ */
+
+.header {
+    position: sticky;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    z-index: var(--z-header);
     width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #fff;
-    border-bottom: 1px solid var(--brand-gray-light);
-}
-.nav_container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1024px;
-    width: 100%;
-    height: 60px;
-}
-.left_container{
-    display: flex;
-    align-items: center;
-}
-.title_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-.logo{
-    width: 36px;
-    height: 36px;
-}
-.logo > img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.title_container > span{
-    font-family: Pretendard;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--brand-gray-black);
-}
-.menu_list{
-    padding: 0;
-    display: flex;
-    gap: 20px;
-}
-.menu_list > li{
-    list-style: none;
-    font-family: Pretendard;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--brand-gray-black);
-    cursor: pointer;
-}
+    background-color: var(--color-bg-raised);
+    border-bottom: 1px solid var(--color-border-strong);
 }
 
-/* pad */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .nav {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #fff;
-    border-bottom: 1px solid var(--brand-gray-light);
-}
-.nav_container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1024px;
-    width: 100%;
-    height: 60px;
-}
-.left_container{
-    display: flex;
-    align-items: center;
-}
-.title_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-.logo{
-    width: 36px;
-    height: 36px;
-}
-.logo > img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.title_container > span{
-    font-family: Pretendard;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--brand-gray-black);
-}
-.menu_list{
-    padding: 0;
-    display: flex;
-    gap: 20px;
-}
-.menu_list > li{
-    list-style: none;
-    font-family: Pretendard;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--brand-gray-black);
-    cursor: pointer;
-}
+/* 포커스를 받을 때만 나타납니다 */
+.skip_link {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: var(--z-modal);
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-accent-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transform: translateY(calc(-100% - var(--space-4)));
+    transition: transform var(--dur-base) var(--ease-emphasized);
 }
 
-/* mobile */
-@media screen and (max-width: 767px) {
-  .nav {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+.skip_link:focus-visible {
+    transform: translateY(0);
+}
+
+.inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
     width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #fff;
-    border-bottom: 1px solid var(--brand-gray-light);
-    transition: background-color 0.3s ease-in-out, height 0.3s ease-in-out;
-  }
-  .nav.active {
-    z-index: 100;
-    width: 100vw;
-    padding: 0 10px;
-    height: 100dvh;
-    display: flex;
-    justify-content: center;
-    background-color: var(--brand-gray-light);
-    /* border-bottom: 1px solid var(--brand-gray-light); */
-  }
-  .nav_container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1024px;
-      width: 100%;
-      height: 60px;
-  }
-  .left_container{
-      display: flex;
-      align-items: center;
-  }
-  .title_container{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-  }
-  .logo{
-      width: 36px;
-      height: 36px;
-  }
-  .logo > img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-  }
-  .title_container > span{
-      font-family: Pretendard;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--brand-gray-black);
-  }
-  .menu_list_mobile{
+    max-width: var(--container-max);
+    height: var(--header-h-mobile);
+    margin: 0 auto;
+    /* 390px 에서 워드마크(190px) + 아이콘 3개(132px)를 넣어야 해서 좌우 여백이 얇습니다 */
+    padding: 0 var(--space-3);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+}
+
+.wordmark {
+    /* 축 A 의 22px. 픽셀 서체는 11의 정수배에서만 선명하므로 임의 축소하지 않습니다. */
+    font-size: var(--fs-pixel-2);
+}
+
+/* ------------------------------------------------------------
+ * 경로 표시
+ * ------------------------------------------------------------
+ * 모바일에서는 헤더에서 뺍니다 — 390px 에 워드마크 + 경로 + 아이콘 3개는
+ * 물리적으로 들어가지 않습니다. 본문 최상단 브레드크럼으로 내리는 것은
+ * 화면(STEP 2~3) 소관입니다.
+ * ---------------------------------------------------------- */
+.path {
     display: none;
-  }
-  .menu_list_mobile.active{
-      z-index: 101;
-      position: absolute;
-      top: 60px;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--brand-gray-light);
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-  }
-  .menu_list_mobile.active > li{
-      list-style: none;
-      font-family: Pretendard;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--brand-gray-black);
-      cursor: pointer;
-  }
 }
 
-.menu_trigger,
-.menu_trigger > span {
-  display: inline-block;
-  transition: all 0.4s;
-  box-sizing: border-box;
-}
-.menu_trigger {
-  margin-right: 10px;
-  position: relative;
-  width: 35px;
-  height: 30px;
-}
-.menu_trigger > span {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: var(--brand-accent);
-  border-radius: 4px;
-}
-.menu_trigger > span:nth-of-type(1) {
-  top: 0;
+.prompt {
+    flex-shrink: 0;
+    color: var(--color-accent-text);
 }
 
-.menu_trigger > span:nth-of-type(2) {
-  top: 13px;
+.path_text {
+    min-width: 0;
+    font-family: var(--font-terminal-path);
+    font-size: var(--fs-xs);
+    line-height: var(--lh-snug);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*
+     * 왼쪽부터 잘라 파일명을 남기기 위한 장치입니다.
+     * <bdi> 가 unicode-bidi: isolate 를 갖고 있어 내용은 LTR 로 그려지고,
+     * 넘칠 때만 앞쪽이 잘립니다. CSS 만으로는 이 이상 정확한 `…/파일명` 형태를
+     * 만들기 어렵습니다(§12 5번).
+     */
+    direction: rtl;
+    text-align: left;
 }
 
-.menu_trigger > span:nth-of-type(3) {
-  bottom: 0;
-}
-.menu_trigger.active > span:nth-of-type(1) {
-  transform: translateY(13px) rotate(-45deg);
-}
-
-.menu_trigger.active > span:nth-of-type(2) {
-  opacity: 0;
+/* ------------------------------------------------------------
+ * 내비게이션
+ * ---------------------------------------------------------- */
+.nav {
+    display: none;
 }
 
-.menu_trigger.active > span:nth-of-type(3) {
-  transform: translateY(-13px) rotate(45deg);
+.nav_list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav_link {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-3);
+    /* 한글 라벨이라 픽셀 서체를 쓰지 않습니다 — tokens.css 의 서체 역할 레이어 참고 */
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    line-height: var(--lh-snug);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    border-bottom: 2px solid transparent;
+    transition:
+        color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
+}
+
+.nav_link:hover {
+    color: var(--color-text-primary);
+}
+
+/*
+ * 활성 표시는 배경만으로는 안 됩니다.
+ * --color-accent-subtle 을 합성하면 라이트 1.11:1 / 다크 1.15:1 로 사실상 안 보입니다.
+ * 배경 + 밑줄을 함께 써야 색을 구분하지 못하는 사용자에게도 위치가 남습니다(§6-1a).
+ */
+.nav_link_active {
+    color: var(--color-accent-text);
+    background-color: var(--color-accent-subtle);
+    border-bottom-color: var(--color-accent-text);
+}
+
+/* ------------------------------------------------------------
+ * md 이상 (≥768px) — 경로 표시 · 내비 노출, 헤더 높이 48px
+ * ---------------------------------------------------------- */
+@media screen and (min-width: 768px) {
+    .inner {
+        gap: var(--space-4);
+        height: var(--header-h-desktop);
+        padding: 0 var(--space-6);
+    }
+
+    .path {
+        display: flex;
+        align-items: center;
+        flex: 1 1 auto;
+        gap: var(--space-2);
+        min-width: 0;
+        margin: 0;
+    }
+
+    .nav {
+        display: block;
+        flex-shrink: 0;
+    }
+
+    .nav_link {
+        /* 헤더 높이 48px 안에서 밑줄이 바닥에 붙게 */
+        height: var(--header-h-desktop);
+        border-radius: 0;
+    }
 }
