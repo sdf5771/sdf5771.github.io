@@ -24,6 +24,21 @@
         }
       })();
     </script>
+    <!--
+      워드마크·히어로 이름이 이 서체로 그려지므로 LCP 요소가 여기에 걸립니다(§4-4).
+      CSS 를 파싱한 뒤에야 폰트 요청이 시작되면 그만큼 늦으므로 미리 받습니다.
+      경로에 /src/ 가 들어가는 이유: Vite 가 빌드 때 해시가 붙은 실제 자산 경로로
+      바꿔 줍니다. 손으로 /assets/... 를 적으면 해시가 바뀌는 순간 404 가 됩니다.
+      GalmuriMono11 은 preload 하지 않습니다 — 헤더 경로·⌘K 같은 작은 보조 텍스트라
+      LCP 에 걸리지 않고, 대역폭을 LCP 쪽에 몰아 주는 편이 낫습니다.
+    -->
+    <link
+      rel="preload"
+      href="/src/assets/fonts/Galmuri11-subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Seobisback Github Blog" />
