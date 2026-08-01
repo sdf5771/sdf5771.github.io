@@ -80,9 +80,13 @@
 .brand {
     display: inline-flex;
     align-items: center;
-    flex-shrink: 1;
-    min-width: 0;
-    overflow: hidden;
+    /*
+     * 절대 압축하지 않습니다.
+     * 워드마크는 사이트 정체성이고 픽셀 서체라 축소도 불가능합니다(§4-5 정수배 규칙) —
+     * 줄어들어야 하는 쪽은 언제나 경로 표시입니다. flex-shrink: 1 이면 1280px 에서도
+     * 긴 slug 를 만나는 순간 `Seobisback.log` 가 `Seobisbacl` 로 잘립니다.
+     */
+    flex-shrink: 0;
     text-decoration: none;
     border-radius: var(--radius-sm);
 }
@@ -109,6 +113,12 @@
 }
 
 .path_text {
+    /*
+     * 남는 폭을 그대로 채웁니다.
+     * 내용 길이가 자기 폭을 바꾸지 않아야 useLeftTruncate 의 ResizeObserver 가
+     * "재계산 → 폭 변화 → 재계산" 루프에 빠지지 않습니다.
+     */
+    flex: 1 1 0;
     min-width: 0;
     /* 모노는 11px 고정입니다. 12px 은 11px 그리드의 정수배가 아니라 도트가 뭉개집니다(§13 4번).
        라틴 전용 자리이며, `~/tags/<태그>` 처럼 한글이 들어오면 모노 서브셋에 한글이
@@ -119,15 +129,13 @@
     color: var(--color-text-muted);
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
     /*
-     * 왼쪽부터 잘라 파일명을 남기기 위한 장치입니다.
-     * <bdi> 가 unicode-bidi: isolate 를 갖고 있어 내용은 LTR 로 그려지고,
-     * 넘칠 때만 앞쪽이 잘립니다. CSS 만으로는 이 이상 정확한 `…/파일명` 형태를
-     * 만들기 어렵습니다(§12 5번).
+     * 앞부분 생략(`…뒷부분`)은 JS 가 글자 수를 재서 만듭니다 — useLeftTruncate.
+     * `direction: rtl` 은 쓰지 않습니다. bidi 중립 문자인 `~` 와 `/` 가 문자열
+     * 끝으로 재배치돼 `~/posts` 가 `posts/~` 로 뒤집혀 렌더됩니다(§12-5).
+     * CSS 말줄임을 겹쳐 쓰면 `……` 가 되므로 clip 으로 못 박아 둡니다.
      */
-    direction: rtl;
-    text-align: left;
+    text-overflow: clip;
 }
 
 /* ------------------------------------------------------------
@@ -230,7 +238,8 @@
     .path {
         display: flex;
         align-items: center;
-        flex: 1 1 auto;
+        /* 브랜드·내비·액션이 전부 flex-shrink: 0 이라, 부족한 폭은 여기서만 흡수합니다 */
+        flex: 1 1 0;
         gap: var(--space-2);
         min-width: 0;
         margin: 0;

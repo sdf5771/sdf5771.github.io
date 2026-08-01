@@ -9,7 +9,7 @@ import HeaderSearch from './HeaderSearch';
 import SearchPanel from './SearchPanel';
 import { NAV_ITEMS, WORDMARK_TEXT, isNavItemActive } from '../../constants/site';
 import { MEDIA_DESKTOP, MEDIA_MOBILE } from '../../styles/breakpoints';
-import { useHeaderScroll, useTerminalPath } from '../../hooks';
+import { useHeaderScroll, useLeftTruncate, useTerminalPath } from '../../hooks';
 
 const DRAWER_ID = 'mobile-drawer';
 const SEARCH_PANEL_ID = 'header-search-overlay';
@@ -24,6 +24,8 @@ const SEARCH_PANEL_ID = 'header-search-overlay';
 function GlobalNavigationBar() {
     const { pathname } = useLocation();
     const terminalPath = useTerminalPath();
+    /* 넘칠 때 앞을 잘라 `…뒷부분` 으로 만듭니다. CSS direction: rtl 은 경로를 뒤집습니다 */
+    const { ref: pathRef, display: pathDisplay } = useLeftTruncate<HTMLSpanElement>(terminalPath);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [isSearchModal, setIsSearchModal] = useState(false);
@@ -88,8 +90,12 @@ function GlobalNavigationBar() {
                     <span className={styles.prompt} aria-hidden="true">
                         ➜
                     </span>
-                    {/* 자리가 부족하면 왼쪽부터 잘립니다 — 파일명이 정보량이 가장 큽니다 */}
-                    <bdi className={styles.path_text}>{terminalPath}</bdi>
+                    <span className={styles.path_text} ref={pathRef}>
+                        {/* 자리가 부족하면 왼쪽부터 잘립니다 — 파일명이 정보량이 가장 큽니다.
+                            보이는 쪽은 잘린 형태라 낭독은 전체 경로로 따로 둡니다. */}
+                        <span aria-hidden="true">{pathDisplay}</span>
+                        <span className="sr-only">{terminalPath}</span>
+                    </span>
                 </p>
 
                 <nav className={styles.nav} aria-label="주요 메뉴">
