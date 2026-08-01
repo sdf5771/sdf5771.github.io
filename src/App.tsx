@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import styles from './App.module.css';
 import { Home, Post } from './routes';
 import { GlobalNavigationBar, Footer } from './components/shared';
+import { useDocumentTitle } from './hooks';
 
 /**
  * 전역 셸. 헤더·푸터는 화면마다 두지 않고 여기서 한 번만 렌더합니다.
@@ -12,6 +13,9 @@ import { GlobalNavigationBar, Footer } from './components/shared';
  *     position: sticky 가 동작하지 않습니다(스크롤 컨테이너가 되어 버림).
  */
 function App() {
+    /* SPA 는 문서를 다시 불러오지 않으므로 제목을 셸이 직접 갱신합니다(§10) */
+    useDocumentTitle();
+
     return (
         <div className={styles.shell}>
             <GlobalNavigationBar />

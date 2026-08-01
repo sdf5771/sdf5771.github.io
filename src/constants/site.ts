@@ -19,6 +19,30 @@ export const WORDMARK = {
 /** 스크린리더·aria-label·document.title 용 단일 문자열 */
 export const WORDMARK_TEXT = `${WORDMARK.base}${WORDMARK.accent}`;
 
+/** 홈 `<title>`. 홈만 사이트명이 앞에 옵니다 (WRITING_GUIDE §6.13) */
+export const HOME_TITLE = `${WORDMARK_TEXT} — 프론트엔드 개발자 김섭우`;
+
+/** 홈이 아닌 화면의 `<title>` 꼬리표. 구분자는 `·` 고정입니다 */
+const TITLE_SUFFIX = ` · ${WORDMARK_TEXT}`;
+
+/** 검색 결과에서 잘리지 않는 길이 (WRITING_GUIDE §5 표) */
+const TITLE_MAX_LENGTH = 60;
+
+/**
+ * `<글 제목> · Seobisback.log` 형태의 페이지 제목을 만듭니다.
+ * 60자를 넘으면 **사이트명은 두고 앞쪽 이름만** 줄입니다 — 어느 사이트의 글인지가
+ * 검색 결과에서 먼저 사라지면 안 됩니다(WRITING_GUIDE §6.13).
+ */
+export function buildPageTitle(name: string): string {
+    const room = TITLE_MAX_LENGTH - TITLE_SUFFIX.length;
+    const trimmed = name.length > room ? `${name.slice(0, room - 1)}…` : name;
+
+    return `${trimmed}${TITLE_SUFFIX}`;
+}
+
+/** 라우트가 없는 주소에서 쓰는 이름 */
+export const NOT_FOUND_TITLE_NAME = '찾을 수 없는 페이지';
+
 export const SITE_DESCRIPTION = '공부하거나 조사한 내용을 기록합니다.';
 
 export const COPYRIGHT = '© 2026 Seobisback';

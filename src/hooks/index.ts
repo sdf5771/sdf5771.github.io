@@ -4,8 +4,10 @@ import useOverlayBehavior from './useOverlayBehavior';
 import useHeaderScroll from './useHeaderScroll';
 import useLeftTruncate from './useLeftTruncate';
 import useMediaMatch from './useMediaMatch';
+import useDocumentTitle from './useDocumentTitle';
 
 export {
+    useDocumentTitle,
     usePosts,
     useTerminalPath,
     useOverlayBehavior,
