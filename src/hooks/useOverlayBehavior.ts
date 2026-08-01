@@ -25,6 +25,12 @@ interface UseOverlayBehaviorOptions {
      * (태블릿의 헤더 아래 전폭 검색 행처럼 모달이 아닌 패널용)
      */
     isModal: boolean;
+    /**
+     * 닫을 때 포커스를 돌려줄 요소.
+     * 생략하면 열기 직전에 포커스를 갖고 있던 요소(=트리거)로 돌아갑니다.
+     * 셸 밖에서 openSearch({ returnFocusTo }) 로 연 경우에 씁니다(§6-4a).
+     */
+    returnFocusTo?: HTMLElement | null;
 }
 
 /**
@@ -38,8 +44,23 @@ function useOverlayBehavior<T extends HTMLElement>({
     isOpen,
     onClose,
     isModal,
+    returnFocusTo,
 }: UseOverlayBehaviorOptions): RefObject<T | null> {
     const containerRef = useRef<T>(null);
+
+    /*
+     * 복귀 대상은 ref 로 들고 있습니다.
+     * 의존성 배열에 넣으면 값이 바뀔 때마다 정리 함수가 돌아 — 아직 열려 있는데 —
+     * 포커스를 밖으로 빼앗습니다.
+     *
+     * 값이 있을 때만 기록합니다. 닫히는 렌더에서는 prop 이 이미 비어 있는데,
+     * 그때 ref 를 같이 지우면 **정리 함수가 읽기 전에** 대상이 사라집니다.
+     * 지우는 것은 정리 함수가 다 쓴 뒤입니다(다음 열기로 새지 않도록).
+     */
+    const returnFocusRef = useRef<HTMLElement | null>(null);
+    if (returnFocusTo) {
+        returnFocusRef.current = returnFocusTo;
+    }
 
     useEffect(() => {
         const container = containerRef.current;
@@ -89,7 +110,24 @@ function useOverlayBehavior<T extends HTMLElement>({
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
-            trigger?.focus();
+
+            /*
+             * 포커스가 아직 오버레이 안에 있거나(ESC·닫기 버튼), 오버레이가 사라지면서
+             * 포커스를 잃은 경우에만 되돌립니다. 사용자가 이미 다른 곳을 눌러
+             * 옮겨 갔다면 포커스를 빼앗아 오면 안 됩니다.
+             */
+            const target = returnFocusRef.current ?? trigger;
+            returnFocusRef.current = null;
+
+            const active = document.activeElement;
+            const hasLostFocus = !active || active === document.body;
+            if (!hasLostFocus && !container.contains(active)) {
+                return;
+            }
+
+            if (target?.isConnected) {
+                target.focus();
+            }
         };
     }, [isOpen, onClose, isModal]);
 

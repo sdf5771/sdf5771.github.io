@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './SearchPanel.module.css';
 import SearchIcon from './SearchIcon';
+import type { SearchRequest } from '../shell';
 import {
     SEARCH_EMPTY_DESCRIPTION_MOBILE,
     SEARCH_EMPTY_TITLE,
@@ -14,7 +15,8 @@ import { useOverlayBehavior } from '../../hooks';
 
 interface SearchPanelProps {
     id: string;
-    isOpen: boolean;
+    /** 셸의 검색 열기 요청. null 이면 닫힌 상태입니다 */
+    request: SearchRequest | null;
     onClose: () => void;
     /**
      * 전체화면 모달로 열렸는가(≤767px).
@@ -31,9 +33,50 @@ interface SearchPanelProps {
  *
  * ⚠️ **UI 껍데기입니다.** 실제 필터는 STEP 4에서 글 목록과 함께 붙습니다.
  */
-function SearchPanel({ id, isOpen, onClose, isModal }: SearchPanelProps) {
+function SearchPanel({ id, request, onClose, isModal }: SearchPanelProps) {
     const [query, setQuery] = useState('');
-    const containerRef = useOverlayBehavior<HTMLDivElement>({ isOpen, onClose, isModal });
+    const inputRef = useRef<HTMLInputElement>(null);
+    const isOpen = request !== null;
+    const containerRef = useOverlayBehavior<HTMLDivElement>({
+        isOpen,
+        onClose,
+        isModal,
+        returnFocusTo: request?.returnFocusTo,
+    });
+
+    /*
+     * 요청이 새로 들어올 때마다(= id 가 바뀔 때마다) 입력을 맞춥니다.
+     * 이미 열려 있을 때 openSearch() 를 다시 부르면 새 오버레이를 만들지 않고
+     * 여기서 재포커스만 합니다. query 가 오면 채운 뒤 전체 선택해서 사용자가
+     * 바로 덮어쓸 수 있게 둡니다(§6-4a).
+     */
+    const requestId = request?.id;
+    const requestQuery = request?.query;
+    useEffect(() => {
+        if (requestId === undefined) {
+            return;
+        }
+
+        const input = inputRef.current;
+        if (!input) {
+            return;
+        }
+
+        if (requestQuery !== undefined) {
+            /*
+             * DOM 값을 먼저 맞추고 상태를 같은 값으로 올립니다.
+             * setQuery 만 하면 리렌더 전이라 select() 가 빈 문자열을 잡습니다.
+             * 두 값이 같으므로 다음 렌더에서 어긋나지 않습니다.
+             */
+            input.value = requestQuery;
+            setQuery(requestQuery);
+        }
+
+        input.focus();
+        if (requestQuery) {
+            input.select();
+        }
+    }, [requestId, requestQuery]);
 
     if (!isOpen) {
         return null;
@@ -52,6 +95,7 @@ function SearchPanel({ id, isOpen, onClose, isModal }: SearchPanelProps) {
                 <SearchIcon className={styles.icon} />
                 <input
                     className={styles.input}
+                    ref={inputRef}
                     type="search"
                     value={query}
                     aria-label={SEARCH_PLACEHOLDER}

@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import styles from './App.module.css';
 import { Home, Post } from './routes';
 import { GlobalNavigationBar, Footer } from './components/shared';
+import { ShellProvider } from './components/shell';
 import { useDocumentTitle } from './hooks';
 
 /**
@@ -17,16 +18,19 @@ function App() {
     useDocumentTitle();
 
     return (
-        <div className={styles.shell}>
-            <GlobalNavigationBar />
-            <main className={styles.main} id="main">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/post" element={<Post />} />
-                </Routes>
-            </main>
-            <Footer />
-        </div>
+        /* 화면이 openSearch() 로 헤더의 검색 UI 를 열 수 있게 합니다(§6-4a) */
+        <ShellProvider>
+            <div className={styles.shell}>
+                <GlobalNavigationBar />
+                <main className={styles.main} id="main">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/post" element={<Post />} />
+                    </Routes>
+                </main>
+                <Footer />
+            </div>
+        </ShellProvider>
     );
 }
 

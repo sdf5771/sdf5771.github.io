@@ -8,6 +8,7 @@ import MobileDrawer from './MobileDrawer';
 import HeaderSearch from './HeaderSearch';
 import SearchPanel from './SearchPanel';
 import SearchIcon from './SearchIcon';
+import { useShellContext } from '../shell';
 import { NAV_ITEMS, WORDMARK_TEXT, isNavItemActive } from '../../constants/site';
 import { MEDIA_DESKTOP, MEDIA_MOBILE } from '../../styles/breakpoints';
 import { useHeaderScroll, useLeftTruncate, useMediaMatch, useTerminalPath } from '../../hooks';
@@ -45,7 +46,11 @@ function GlobalNavigationBar() {
     /* 넘칠 때 앞을 잘라 `…뒷부분` 으로 만듭니다. CSS direction: rtl 은 경로를 뒤집습니다 */
     const { ref: pathRef, display: pathDisplay } = useLeftTruncate<HTMLSpanElement>(terminalPath);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    /*
+     * 검색 상태는 셸 Context 가 들고 있습니다 — 404 처럼 셸 밖의 화면도
+     * openSearch() 로 이 UI 를 열 수 있어야 하기 때문입니다(§6-4a).
+     */
+    const { searchRequest, isSearchOpen, openSearch, closeSearch } = useShellContext();
 
     /*
      * 검색 UI 의 형태는 뷰포트에 따라 셋으로 갈립니다.
@@ -62,20 +67,14 @@ function GlobalNavigationBar() {
     const scroll = useHeaderScroll({ isTransparentAtTop: pathname === '/' });
 
     const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
-    const closeSearch = useCallback(() => setIsSearchOpen(false), []);
-
-    const openSearch = useCallback(() => setIsSearchOpen(true), []);
 
     /*
-     * 데스크톱으로 넘어가면 오버레이를 닫습니다.
-     * 인라인 입력이 이미 헤더에 있어서, 그대로 두면 검색 UI 가 화면에 둘이 되고
-     * role="dialog" 가 남은 채로 페이지가 잠깁니다(QA A-3).
+     * 검색 UI 를 어느 쪽이 그릴지 — 하나만 켜집니다.
+     * 창을 넓혀 데스크톱 구간으로 들어가면 오버레이가 사라지고(스크롤 락 해제)
+     * 같은 열림 상태를 인라인 입력이 이어받습니다(QA A-3).
      */
-    useEffect(() => {
-        if (isSearchOpen && isDesktopViewport) {
-            setIsSearchOpen(false);
-        }
-    }, [isSearchOpen, isDesktopViewport]);
+    const overlayRequest = isDesktopViewport ? null : searchRequest;
+    const inlineRequest = isDesktopViewport ? searchRequest : null;
 
     /* ⌘K / Ctrl+K — 헤더에 노출된 힌트가 실제로 동작하게 합니다 */
     useEffect(() => {
@@ -90,18 +89,13 @@ function GlobalNavigationBar() {
             }
 
             event.preventDefault();
-
-            if (isDesktopViewport) {
-                document.querySelector<HTMLInputElement>('[data-header-search-input]')?.focus();
-                return;
-            }
-
-            setIsSearchOpen(true);
+            /* 데스크톱은 인라인 입력 포커스, 그 아래는 오버레이 — 분기는 셸이 알아서 합니다 */
+            openSearch();
         };
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [isDesktopViewport]);
+    }, [openSearch]);
 
     return (
         <>
@@ -160,7 +154,7 @@ function GlobalNavigationBar() {
 
                 <div className={styles.actions}>
                     <div className={styles.search_inline}>
-                        <HeaderSearch />
+                        <HeaderSearch request={inlineRequest} onClose={closeSearch} />
                     </div>
 
                     <button
@@ -169,7 +163,7 @@ function GlobalNavigationBar() {
                         aria-label={isSearchOpen ? '검색 닫기' : '검색 열기'}
                         aria-expanded={isSearchOpen}
                         aria-controls={SEARCH_PANEL_ID}
-                        onClick={isSearchOpen ? closeSearch : openSearch}
+                        onClick={isSearchOpen ? () => closeSearch() : () => openSearch()}
                     >
                         <SearchIcon />
                     </button>
@@ -199,7 +193,7 @@ function GlobalNavigationBar() {
             <MobileDrawer id={DRAWER_ID} isOpen={isDrawerOpen} onClose={closeDrawer} />
             <SearchPanel
                 id={SEARCH_PANEL_ID}
-                isOpen={isSearchOpen}
+                request={overlayRequest}
                 onClose={closeSearch}
                 isModal={isMobileViewport}
             />
