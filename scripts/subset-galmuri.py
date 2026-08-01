@@ -7,6 +7,20 @@ jsDelivr 원본은 Galmuri11 492.9 KB + GalmuriMono11 478.0 KB = 971 KB 이고,
 게다가 배포용 galmuri.css 에는 unicode-range 가 없어 분할 로딩도 안 됩니다.
 근거: docs/handoff-step1-shell.md §4-1
 
+🔴 화이트리스트 방식 (2026-08-01 전환, §4-3a)
+--------------------------------------------
+예전에는 "뺄 것"을 나열하는 블랙리스트였습니다. 화이트리스트로 바꾼 이유는
+**용량이 아니라 결정성**입니다.
+
+  블랙리스트  "아는 나쁜 것만 뺀다" → 상류 Galmuri 가 다음 버전에서 글리프를
+              추가하면 **우리 번들이 조용히 커집니다.**
+  화이트리스트 "쓸 것만 남긴다"     → 상류가 무엇을 추가하든 결과가 변하지 않습니다.
+
+⚠️ 화이트리스트의 위험은 정반대입니다 — **유지 목록에서 빠뜨린 기호가 조용히
+   사라져 폴백 서체로 렌더됩니다.** `➜`·`⌕` 사고와 증상이 같고, 원인이 우리
+   쪽이라 더 나쁩니다. 그래서 아래 REQUIRED 단언이 **선택이 아니라 안전망**입니다.
+   서브셋 직후 두 파일의 cmap 을 검사해 하나라도 없으면 빌드를 실패시킵니다.
+
 채택한 범위 — 두 폰트가 다릅니다
 --------------------------------
 **Galmuri11 (display, `display` 모드)** — 한글 전체(11,172자) + 라틴 + 부호.
@@ -16,7 +30,7 @@ jsDelivr 원본은 Galmuri11 492.9 KB + GalmuriMono11 478.0 KB = 971 KB 이고,
 **GalmuriMono11 (mono, `mono` 모드)** — **한글을 뺍니다.** 라틴·숫자·기호만.
   모노는 11px 고정이고 11px 한글 픽셀은 금지이므로(§3-3a) 한글 글리프가 필요 없습니다.
   덤으로 규칙이 **기술적으로 강제**됩니다 — 모노 자리에 실수로 한글을 넣으면
-  Pretendard 로 자동 폴백돼 눈에 띕니다. 152.7 KB → 10 KB대. 근거: §13 6번
+  Pretendard 로 자동 폴백돼 눈에 띕니다. 근거: §13 6번
 
 Galmuri11-Bold 는 의도적으로 받지 않습니다. 비트맵 서체는 굵기 변형 시
 도트 격자가 무너지므로 픽셀 텍스트에는 font-weight 를 주지 않습니다. (§4-2)
@@ -28,6 +42,14 @@ Galmuri11-Bold 는 의도적으로 받지 않습니다. 비트맵 서체는 굵�
     curl -O https://cdn.jsdelivr.net/npm/galmuri/dist/GalmuriMono11.woff2
     python3 scripts/subset-galmuri.py display Galmuri11.woff2     src/assets/fonts/Galmuri11-subset.woff2
     python3 scripts/subset-galmuri.py mono    GalmuriMono11.woff2 src/assets/fonts/GalmuriMono11-subset.woff2
+
+    # 생성 없이 커밋된 서브셋만 검사 (fontTools 가 있는 환경에서)
+    python3 scripts/subset-galmuri.py verify
+
+> 빌드(`npm run build`)가 돌리는 단언은 이 스크립트가 아니라
+> `scripts/verify-font-glyphs.mjs` 입니다 — CI 에는 Python·fontTools 가 없고
+> Node 만 있기 때문입니다. 두 구현은 **같은 REQUIRED 인벤토리**를 검사합니다.
+> 문자를 추가할 때 이 파일과 그 파일을 함께 고치세요.
 
 라이선스
 --------
@@ -41,82 +63,82 @@ import sys
 
 from fontTools.ttLib import TTFont
 
-# pyftsubset 에는 '제외' 옵션이 없어서, 원본이 실제로 가진 코드포인트에서
-# 아래 범위를 빼 '유지할 목록'을 만들어 넘깁니다.
-EXCLUDE_RANGES = [
-    (0x3040, 0x30FF),  # 히라가나 + 가타카나
-    (0x31F0, 0x31FF),  # 가타카나 음성 확장
-    (0x3400, 0x4DBF),  # CJK 통합 한자 확장 A
-    (0x4E00, 0x9FFF),  # CJK 통합 한자
-    (0xF900, 0xFAFF),  # CJK 호환 한자
-    (0xFF66, 0xFF9F),  # 반각 가타카나
-    # ↓ 2026-08-01 추가 6종 (§4-2a). 한자·카나만 빼면 226.2 KB 가 남습니다.
-    (0x1E00, 0x1EFF),  # 라틴 확장 추가 — 베트남어·발음기호. 한국어+영어 사이트에 불필요
-    (0x2400, 0x243F),  # 제어 그림 — `␣` `␤`. 사용처 없음
-    (0x2500, 0x257F),  # 괘선 — 아래 설명 참고
-    (0x2800, 0x28FF),  # 점자 — 사용처 없음
-    (0x3200, 0x33FF),  # 원문자·단위 — `㈜` `㎡`. 본문은 Pretendard 라 픽셀 서체에 불필요
-    (0xE000, 0xF8FF),  # 사용자 영역(PUA) — 비표준 사설 글리프. 참조하면 안 되는 영역
+# ------------------------------------------------------------------
+# 유지 목록 (화이트리스트) — §4-3a 전수
+# ------------------------------------------------------------------
+# 두 파일 공통. 여기 없는 코드포인트는 서브셋에 **들어가지 않습니다.**
+KEEP_COMMON = [
+    (0x0020, 0x024F),  # 기본 라틴 + 라틴-1 + 라틴 확장 A/B — `×` `·` `°`
+    (0x2000, 0x206F),  # 일반 구두점 — `…` `–` `—` `•`
+    (0x2190, 0x21FF),  # 화살표 — `→` `←` `↑` `↓` `↗`
+    (0x25A0, 0x25FF),  # 기하 도형 — `▸` `▶` `●` `○` `■` `□`
+    (0x2318, 0x2318),  # `⌘` Command
+    (0x2605, 0x2606),  # `★` `☆` 별
+    (0x2630, 0x2630),  # `☰` 삼선
 ]
 
-# 괘선(`─ │ ┌ ┐`)을 빼는 이유 — 디자인에서 쓸 계획이 없습니다(§4-2a).
-#   1. 테두리·구분선은 CSS 보더로 그립니다. --color-border-* 4단계가 대비 실측을
-#      거친 값이고, 문자 그래픽으로 그린 선은 토큰화도 대비 검증도 불가능합니다.
-#   2. 터미널 창 크롬(신호등·창 테두리)은 이미 반려됐습니다. 괘선 테두리는 그
-#      결정을 뒷문으로 되돌리는 셈입니다.
-#   3. 크기가 맞지 않습니다 — 모노는 11px 고정이라 너무 작고 디스플레이는 22px
-#      이상이라 너무 큽니다. 중간이 없습니다.
-#   4. 문자 괘선은 정확한 line-height 에서만 이어지는데, 우리 모노는 짧은 인라인
-#      문자열용이지 여러 줄 아트용이 아닙니다.
-#   5. 스크린리더가 의미 없는 문자열로 읽어 어차피 aria-hidden 이 필요합니다.
-# → 규칙: 테두리·구분선·박스는 CSS 보더 토큰으로 그립니다. 나중에 정말 필요해지면
-#   이 목록에서 해당 줄만 지우면 되돌아옵니다.
-#
-# ⚠️ 장식 기호는 이 범위를 피해서 골라야 합니다. 현재 쓰는 `▸`(U+25B8)
-#    `×`(U+00D7) `●`(U+25CF) `○`(U+25CB) `→` `↗` `☰` `⌘` `·` `…` `–` 는
-#    모두 제외 범위 밖입니다. 새 기호를 쓸 때는 §4-7 의 검증 명령으로
-#    **서브셋 파일**의 cmap 을 직접 확인하세요(원본이 아니라).
+# ⚠️ `★`(U+2605) `☆`(U+2606) `☰`(U+2630) 은 전부 U+2600–26FF(기타 기호) 블록인데
+#    그 블록은 유지 목록에 없습니다. **블록 전체 256자를 넣지 말고 쓰는 것만
+#    개별 지정**합니다. 블랙리스트 시절 이 셋이 우연히 살아남아 있었을 뿐이고,
+#    화이트리스트로 바꾸는 순간 조용히 사라질 뻔한 자리였습니다.
+#    화살표·기하 도형은 몇 KB 안 되고 앞으로 쓸 여지가 있어 블록째 유지합니다.
 
-# mono 모드에서 추가로 제외 — 모노는 라틴·숫자·기호 전용입니다
-HANGUL_RANGES = [
+# Galmuri11(디스플레이)만 추가 — 모노는 라틴·숫자·기호 전용입니다
+KEEP_DISPLAY_EXTRA = [
     (0x1100, 0x11FF),  # 한글 자모
+    (0x3000, 0x303F),  # CJK 구두점
     (0x3130, 0x318F),  # 한글 호환 자모
-    (0xA960, 0xA97F),  # 한글 자모 확장 A
-    (0xAC00, 0xD7A3),  # 한글 음절
-    (0xD7B0, 0xD7FF),  # 한글 자모 확장 B
+    (0xAC00, 0xD7A3),  # 한글 음절 11,172자
 ]
 
+# ------------------------------------------------------------------
+# 🔴 빌드타임 단언 — 화이트리스트의 안전망 (§4-3a · §4-7 인벤토리와 동기화)
+# ------------------------------------------------------------------
+# 이 문자들은 화면에서 실제로 쓰고 있습니다. 하나라도 서브셋에서 빠지면
+# 폴백 서체로 렌더돼 베이스라인·굵기·픽셀 격자가 어긋납니다.
+# 새 장식 기호를 쓰려면 ① 위 유지 목록 ② 이 문자열 ③ verify-font-glyphs.mjs
+# ④ §4-7 검증 — 네 곳을 함께 고치세요.
+REQUIRED = "▸×●○→←↑↗★·…–☰⌘"
 
-def build_excludes(mode: str) -> list[tuple[int, int]]:
+
+def keep_ranges(mode: str) -> list[tuple[int, int]]:
     if mode == "mono":
-        return EXCLUDE_RANGES + HANGUL_RANGES
+        return KEEP_COMMON
 
     if mode == "display":
-        return EXCLUDE_RANGES
+        return sorted(KEEP_COMMON + KEEP_DISPLAY_EXTRA)
 
     raise SystemExit("mode 는 'display' 또는 'mono' 여야 합니다")
 
 
+def assert_required(path: str) -> None:
+    """서브셋 cmap 에 REQUIRED 가 전부 있는지 검사합니다. 없으면 종료 코드 1."""
+    cmap = TTFont(path).getBestCmap()
+    missing = [f"{ch} U+{ord(ch):04X}" for ch in REQUIRED if ord(ch) not in cmap]
+
+    if missing:
+        raise SystemExit(
+            f"❌ 서브셋 누락: {path}\n"
+            f"   {', '.join(missing)}\n"
+            f"   → scripts/subset-galmuri.py 의 유지 목록에 해당 코드포인트를 추가하세요."
+        )
+
+    print(f"✅ 장식 기호 {len(REQUIRED)}자 전부 존재: {path}")
+
+
 def subset(mode: str, src: str, dst: str) -> None:
-    exclude_ranges = build_excludes(mode)
-
-    def is_excluded(codepoint: int) -> bool:
-        return any(low <= codepoint <= high for low, high in exclude_ranges)
-
-    font = TTFont(src)
-    codepoints: set[int] = set()
-    for table in font["cmap"].tables:
-        codepoints.update(table.cmap.keys())
-    font.close()
-
-    keep = sorted(cp for cp in codepoints if not is_excluded(cp))
+    ranges = keep_ranges(mode)
+    unicodes = ",".join(
+        f"U+{low:04X}" if low == high else f"U+{low:04X}-{high:04X}"
+        for low, high in ranges
+    )
 
     subprocess.run(
         [
             "pyftsubset",
             src,
             f"--output-file={dst}",
-            "--unicodes=" + ",".join(f"U+{cp:04X}" for cp in keep),
+            f"--unicodes={unicodes}",
             "--flavor=woff2",
             "--layout-features=*",
             "--no-hinting",
@@ -124,8 +146,24 @@ def subset(mode: str, src: str, dst: str) -> None:
         ],
         check=True,
     )
-    print(f"[{mode}] {dst}: {len(keep)}자 / {os.path.getsize(dst) / 1024:.1f} KB")
+
+    count = len(TTFont(dst).getBestCmap())
+    print(f"[{mode}] {dst}: {count}자 / {os.path.getsize(dst) / 1024:.1f} KiB")
+
+    # 🔴 생성 직후 단언. 화이트리스트에서 빠뜨린 기호를 여기서 잡습니다.
+    assert_required(dst)
+
+
+FONT_DIR = "src/assets/fonts"
+SUBSET_FILES = [
+    f"{FONT_DIR}/Galmuri11-subset.woff2",
+    f"{FONT_DIR}/GalmuriMono11-subset.woff2",
+]
 
 
 if __name__ == "__main__":
-    subset(sys.argv[1], sys.argv[2], sys.argv[3])
+    if len(sys.argv) == 2 and sys.argv[1] == "verify":
+        for font_path in SUBSET_FILES:
+            assert_required(font_path)
+    else:
+        subset(sys.argv[1], sys.argv[2], sys.argv[3])
