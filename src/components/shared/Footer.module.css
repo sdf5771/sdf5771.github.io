@@ -32,7 +32,7 @@
 
 .description {
     margin: 0;
-    font-family: var(--font-body);
+    font-family: var(--font-ui-label);
     font-size: var(--fs-base);
     line-height: var(--lh-snug);
     color: var(--color-text-secondary);
@@ -51,7 +51,8 @@
     display: inline-flex;
     align-items: center;
     min-height: var(--tap-min);
-    font-family: var(--font-mono);
+    /* GitHub · Notion · Email — 라틴 전용이라 픽셀 모노를 유지합니다 */
+    font-family: var(--font-numeric);
     font-size: var(--fs-sm);
     color: var(--color-text-secondary);
     text-decoration: none;
@@ -68,7 +69,8 @@
     margin: 0;
     padding-top: var(--space-5);
     border-top: 1px solid var(--color-border-subtle);
-    font-family: var(--font-mono);
+    /* `© 2026 Seobisback` — 라틴·숫자 전용 */
+    font-family: var(--font-numeric);
     font-size: var(--fs-xs);
     color: var(--color-text-muted);
 }

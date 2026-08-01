@@ -144,11 +144,33 @@
  * 3. 타이포 · 스페이싱 · 모션 · 치수 (테마 무관)
  * ---------------------------------------------------------- */
 :root {
-    /* 서체. @font-face 선언은 src/styles/fonts.css 에 있습니다.
+    /* 서체 원본. @font-face 선언은 src/styles/fonts.css 에 있습니다.
        Galmuri 가 아직 안 받아졌어도 Pretendard 로 폴백되므로 안전합니다. */
     --font-display: 'Galmuri11', 'Pretendard', sans-serif;
     --font-mono: 'GalmuriMono11', 'IBM Plex Mono', ui-monospace, monospace;
     --font-body: 'Pretendard', -apple-system, system-ui, sans-serif;
+
+    /* ------------------------------------------------------------
+     * 서체 역할 — 자리별 지정을 여기 한 곳에 모읍니다.
+     * ------------------------------------------------------------
+     * 🟡 판정 대기 중인 규칙이 걸려 있어 반드시 이 레이어를 거쳐 소비하세요.
+     *    컴포넌트에서 --font-mono / --font-display 를 직접 쓰지 마세요.
+     *
+     * 배경: `한글 12px 이상` × `12px 미만 픽셀 금지` × `픽셀은 11의 정수배에서만
+     * 선명` 세 규칙이 충돌합니다. 11 < 12 이므로 **한글에 픽셀 서체를 쓰려면
+     * 최소 22px**입니다. 그래서 11~13px 자리 중 한글이 섞일 수 있는 곳은
+     * 전부 Pretendard 로 내렸습니다. web-design 의 STEP 1 최종 판정이 오면
+     * 아래 네 줄만 고치면 됩니다.
+     * ---------------------------------------------------------- */
+
+    /* 내비 라벨·드로어 항목·검색 플레이스홀더·안내문 — 한글 */
+    --font-ui-label: var(--font-body);
+    /* 경로 표시(➜ ~/...) — `~/tags/<태그>` 처럼 한글이 들어올 수 있습니다 */
+    --font-terminal-path: var(--font-body);
+    /* 메타·날짜 등 한글이 섞이는 보조 정보 */
+    --font-ui-meta: var(--font-body);
+    /* 라틴·숫자 전용 자리(연락처 라벨·저작권·카운트) — 픽셀 모노 유지 */
+    --font-numeric: var(--font-mono);
 
     /* 축 A — 픽셀(Galmuri11). 11의 배수만 사용. transform: scale() 금지 */
     --fs-pixel-1: 11px;
@@ -243,23 +265,34 @@
  * 5. 🟡 전환기 별칭 레이어 — --brand-* 9종
  * ------------------------------------------------------------
  * 기존 화면(Home / Post / PostCard / PageTitle / Pagination / Profile)이
- * 아직 --brand-* 를 쓰고 있습니다. 새 토큰에 의미 단위로 연결해 두면
- * 기존 화면도 테마 전환을 따라갑니다.
+ * 아직 --brand-* 를 쓰고 있습니다.
+ *
+ * 🔴 값을 새 토큰에 연결하지 않고 **원래 리터럴 값 그대로 유지**합니다.
+ *    한 번 새 토큰으로 매핑해 봤는데, 아직 전환되지 않은 화면이 깨집니다:
+ *    Post.module.css 는 본문 타이포를 원시 hex(#00243A 등)로 갖고 있고
+ *    페이지 배경도 #ffffff 로 박혀 있습니다. 여기서 --brand-accent 만
+ *    --color-text-primary(다크에서 크림색)로 바꾸면 흰 배경 위에 크림색 제목이
+ *    올라가 글 제목을 읽을 수 없게 됩니다.
+ *    별칭 레이어의 목적은 "기존 화면이 그대로 동작"하는 것이므로(§11 1번),
+ *    전환 완료 전까지는 리터럴 값이 정답입니다.
+ *
+ *    → 결과적으로 다크 테마에서 지금은 "다크 셸 + 라이트 본문"이 됩니다.
+ *      STEP 2(홈)·STEP 3(글 상세)가 각 화면을 토큰으로 옮기면 해소됩니다.
  *
  * 🔴 삭제 시점: STEP 2~7 로 전 화면이 새 토큰으로 전환된 뒤.
  *    지금 지우면 위 6개 파일의 색이 전부 무효값이 됩니다.
  * ---------------------------------------------------------- */
 :root {
-    --brand-primary: var(--color-accent-text);
-    --brand-secondary: var(--color-accent-deep);
-    --brand-accent: var(--color-text-primary);
-    --brand-neutral: var(--color-bg-surface);
-    --brand-gray-black: var(--color-text-body);
-    --brand-black: var(--color-text-primary);
-    --brand-gray-light: var(--color-border-default);
-    --brand-gray-dark: var(--color-text-muted);
-    --brand-gray-medium: var(--color-bg-surface);
+    --brand-primary: #7886c7;
+    --brand-secondary: #a9b5df;
+    --brand-accent: #2d336b;
+    --brand-neutral: #fff2f2;
+    --brand-gray-black: #333333;
+    --brand-black: #1e293b;
+    --brand-gray-light: #eaeaea;
+    --brand-gray-dark: #9ba3af;
+    --brand-gray-medium: #f1f5f9;
     /* Pagination.module.css 가 참조하지만 어디에도 정의된 적 없던 변수입니다.
        (지금까지 무효값이라 배경이 투명하게 렌더됐습니다) */
-    --brand-white: var(--color-bg-raised);
+    --brand-white: #ffffff;
 }
