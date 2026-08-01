@@ -1,0 +1,45 @@
+/*
+ * 워드마크 조형. 헤더·푸터가 같은 것을 씁니다.
+ * 크기는 부모가 font-size 로 정합니다(축 A 의 11의 배수만 사용 — 임의 축소 금지).
+ */
+.wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+}
+
+.label {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: inherit;
+    line-height: 1;
+
+    /* 안티에일리어싱 제거 — 도트 선명도의 핵심.
+       Firefox 에는 동등한 표준 속성이 없어 약간 뭉개집니다(알려진 한계). */
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+
+    /* em·소수는 서브픽셀 위치를 만들어 도트를 흐립니다. 정수 px 만. */
+    letter-spacing: 1px;
+
+    color: var(--color-text-primary);
+    white-space: nowrap;
+}
+
+.accent {
+    color: var(--color-accent-text);
+}
+
+/*
+ * 메모지는 워드마크를 앞서지 않아야 하므로 24px 로 고정합니다.
+ * 22px 픽셀 워드마크는 가로 190px 를 차지하므로 면적 대비로 종속됩니다.
+ * 자산은 72px(3x) webp — 원본 421px PNG 75.6 KB → 1.7 KB.
+ */
+.memoji {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-pill);
+    object-fit: cover;
+}
