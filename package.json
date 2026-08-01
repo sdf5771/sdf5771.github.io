@@ -18,7 +18,6 @@
     "markdown-it": "^14.1.0",
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-katex": "^2.0.3",
-    "markdown-it-math": "^5.2.1",
     "markdown-it-task-lists": "^2.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

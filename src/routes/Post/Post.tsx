@@ -1,23 +1,59 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import styles from './Post.module.css';
 import NotFound from '../NotFound/NotFound';
-import MarkdownIt from 'markdown-it';
-import markdownItMath from 'markdown-it-katex';
-import markdownItTaskLists from 'markdown-it-task-lists';
-import markdownItFootnote from 'markdown-it-footnote';
-import hljs from 'highlight.js';
+import {
+    PostHeader,
+    PostLoadError,
+    PostNeighbors,
+    PostSkeleton,
+    PostTocMobile,
+    PostTocSidebar,
+    ReadingProgress,
+} from '../../components/post';
 import { POSTS } from '../../data/posts';
 import type { PostMetadata } from '../../types';
 import { toPostSlug } from '../../utils/postSlug';
+import { renderPostMarkdown } from '../../utils/postMarkdown';
+import {
+    COPY_BUTTON_ATTRIBUTE,
+    CONTENT_CLASS,
+    transformPostContent,
+} from '../../utils/postContent';
+import type { PostHeading } from '../../utils/postContent';
+import { copyText } from '../../utils/clipboard';
+import { useActiveHeading, useReadingProgress } from '../../hooks';
+
+/** 복사 완료 라벨이 원복되기까지(ms). WRITING_GUIDE §6.12 확정값입니다 */
+const COPY_FEEDBACK_MS = 1400;
+
+type LoadStatus = 'loading' | 'ready' | 'error';
+
+interface LoadedContent {
+    html: string;
+    headings: PostHeading[];
+}
+
+const EMPTY_CONTENT: LoadedContent = { html: '', headings: [] };
 
 const Post = () => {
     /*
-     * 경로가 `/post?id=<slug>` 에서 `/posts/<slug>` 로 바뀌었습니다(§4-8).
+     * 경로가 `/post?id=<slug>` 에서 `/posts/<slug>` 로 바뀌었습니다(§15-1).
      * 구 경로는 LegacyPostRedirect 와 dist/404.html 이 받아 넘겨 줍니다.
      */
     const { slug } = useParams<{ slug: string }>();
-    const [htmlContent, setHtmlContent] = useState('');
+
+    const [content, setContent] = useState<LoadedContent>(EMPTY_CONTENT);
+    const [status, setStatus] = useState<LoadStatus>('loading');
+    /** `다시 시도` 가 effect 를 다시 돌리기 위한 카운터입니다 */
+    const [retryCount, setRetryCount] = useState(0);
+    const [isLinkCopied, setIsLinkCopied] = useState(false);
+
+    const contentRef = useRef<HTMLDivElement>(null);
+
+    /* 두 번째 인자는 "본문이 실제로 마운트됐다" 를 알리는 트리거입니다 — 훅 주석 참고 */
+    const progress = useReadingProgress(contentRef, content.html);
+    const activeHeadingId = useActiveHeading(content.headings);
 
     /*
      * 정본 slug 는 **소문자**입니다(product.md §7-3 R3). 대문자가 섞인 주소로
@@ -32,6 +68,9 @@ const Post = () => {
         ? POSTS.find(item => item.slug === requestedSlug)
         : undefined;
 
+    /* ------------------------------------------------------------
+     * 본문 로드
+     * ---------------------------------------------------------- */
     useEffect(() => {
         if (!post) {
             return;
@@ -42,80 +81,164 @@ const Post = () => {
          *    resolve 될 수 있고, 그러면 **B 의 제목·태그 아래에 A 의 본문**이
          *    남습니다. 머리말은 동기 렌더라 이미 B 인데 본문만 A 인 상태이고,
          *    다시 이동하기 전까지 스스로 교정되지 않습니다.
-         *    늦게 도착한 응답은 버립니다 — 같은 패턴이 ContributionGraph 에도 있습니다.
+         *
+         *    ⚠️ 이 가드는 이제 **실효를 갖습니다.** STEP 4 에서 검색 결과와
+         *    목록이 생겨 글에서 글로 곧장 넘어가는 경로가 실제로 존재합니다.
+         *    늦게 도착한 응답은 버립니다.
          */
         let isActive = true;
 
+        setStatus('loading');
         /* 다른 글로 이동했을 때 이전 본문이 잠깐 남지 않게 비웁니다 */
-        setHtmlContent('');
+        setContent(EMPTY_CONTENT);
 
-        const getPost = async () => {
+        const loadPost = async () => {
             try {
                 /*
                  * 🔴 slug 가 아니라 **원본 파일명(post.file)** 으로 읽습니다.
                  * slug 는 소문자 정본이지만 디스크의 파일명에는 대문자가 남아
                  * 있고(41편 중 33편), GitHub Pages(Linux)는 대소문자를 구분합니다.
-                 *
-                 * ⚠️ 기록 정정: 이 줄이 고친 것은 "원래 깨져 있던 fetch" 가 아닙니다.
-                 *    구 코드는 `slug = 파일명(대문자 보존)` 이라 `/_posts/${slug}.md`
-                 *    가 41편 모두 200 이었습니다 — **구 fetch 는 정상이었습니다.**
-                 *    함정은 채택되지 않은 순진한 수정안 쪽에 있었습니다: `file` 필드
-                 *    없이 slug 만 소문자화했다면 그 순간 33편의 본문이 404 가 되고,
-                 *    macOS 로컬에서는 대소문자를 가리지 않아 끝까지 보이지 않았을
-                 *    것입니다. slug(URL)와 file(디스크)을 나눈 것이 그것을 피한
-                 *    이유입니다. 둘을 다시 하나로 합치지 마세요.
+                 * slug(URL)와 file(디스크)을 다시 하나로 합치지 마세요.
                  */
                 const response = await fetch(`/_posts/${encodeURIComponent(post.file)}`);
-                if(!response.ok) throw new Error('Failed to fetch post');
+                if (!response.ok) {
+                    throw new Error(`본문을 불러오지 못했습니다 (${response.status})`);
+                }
 
-                const md = new MarkdownIt({
-                    html: true,
-                    breaks: true,
-                    linkify: true,
-                    highlight: function (str, lang) {
-                        if (lang && hljs.getLanguage(lang)) {
-                            try {
-                                return hljs.highlight(str, { language: lang }).value;
-                            } catch {
-                                // 하이라이트에 실패하면 아래에서 원문 그대로 렌더합니다
-                            }
-                        }
-                        return ''; // 언어가 지정되지 않은 경우 기본값 사용
-                    }
-                })
-                .use(markdownItMath) // 수식 플러그인 추가
-                .use(markdownItTaskLists) // 체크리스트 플러그인 추가
-                .use(markdownItFootnote); // 각주 플러그인 추가
-                
-                const contentText = await response.text();
+                const markdown = await response.text();
+                /* 수식이 있는 글에서만 katex 플러그인이 여기서 동적 로드됩니다 */
+                const rendered = await renderPostMarkdown(markdown);
 
-                // Front Matter Content
-                const content = contentText.replace(/^---[\s\S]*?---\n/, '');
+                /*
+                 * 후처리는 **DOM 위에서** 합니다 — 원시 HTML `<h2>` 8개를 놓치지
+                 * 않으려면 마크다운 토큰이 아니라 렌더 결과를 봐야 합니다(§5-4).
+                 * 목차도 같은 순회에서 나옵니다.
+                 */
+                const transformed = transformPostContent(rendered, post.imageSizes);
 
-                const htmlContent = md.render(content);
+                /*
+                 * 🔴 KaTeX CSS 는 **수식이 실제로 렌더된 글에서만** 내려받습니다.
+                 *    41편 중 1편에서 3회 쓰이고 그중 2개는 지금도 파싱 실패로
+                 *    평문입니다. 전역 로드면 40편이 쓰지도 않는 21KB 를 물고
+                 *    다닙니다(§7-1). 폰트 2.1MB 는 실제 렌더될 때만 따라옵니다.
+                 */
+                if (transformed.hasMath) {
+                    await import('katex/dist/katex.min.css');
+                }
 
                 /* 그 사이 다른 글로 이동했으면 이 응답은 버립니다 */
-                if (isActive) {
-                    setHtmlContent(htmlContent);
+                if (!isActive) {
+                    return;
                 }
+
+                setContent({ html: transformed.html, headings: transformed.headings });
+                setStatus('ready');
             } catch (error) {
+                if (!isActive) {
+                    return;
+                }
+
                 /*
                  * 본문 로드 실패는 글이 없다는 뜻이 아닙니다(글 목록에는 있음).
                  * 404 로 보내면 거짓말이 되고, 홈으로 튕기면 주소가 사라집니다.
-                 * 머리말은 그대로 두고 본문만 비웁니다 — 전용 오류 화면은 STEP 3 소관.
+                 * 머리말은 그대로 두고 본문 자리에만 회복 경로를 그립니다(§12-2).
                  */
                 console.error('Failed to fetch post', error);
+                setStatus('error');
             }
         };
 
-        // async 함수를 즉시 호출하되, Promise를 반환하지 않도록 void 처리
-        void getPost();
-        scrollTo(0, 0);
+        void loadPost();
 
         return () => {
             isActive = false;
         };
-    }, [post]);
+    }, [post, retryCount]);
+
+    /* 글이 바뀌면 맨 위에서 시작합니다 */
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [post?.slug]);
+
+    /* ------------------------------------------------------------
+     * 코드 복사 — 위임 처리
+     * ------------------------------------------------------------
+     * 본문은 `dangerouslySetInnerHTML` 로 들어가므로 버튼마다 React 핸들러를
+     * 붙일 수 없습니다. 컨테이너 하나에서 위임합니다 — 코드 블록이 한 글에
+     * 최대 수십 개라 리스너를 그만큼 만들 이유도 없습니다.
+     * ---------------------------------------------------------- */
+    const handleContentClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+        const button = (event.target as HTMLElement).closest(`[${COPY_BUTTON_ATTRIBUTE}]`);
+        if (!(button instanceof HTMLButtonElement)) {
+            return;
+        }
+
+        const code = button.closest('figure')?.querySelector('pre')?.textContent ?? '';
+
+        void copyText(code).then(isCopied => {
+            /* 🔴 실패했으면 아무 말도 하지 않습니다 — 복사되지 않았는데
+               `복사됨` 을 띄우는 것이 침묵보다 나쁩니다(utils/clipboard.ts) */
+            if (!isCopied) {
+                return;
+            }
+
+            /* 확정 카피 — `복사` → `복사됨`(§6.1) */
+            button.textContent = '복사됨';
+            button.dataset.copied = 'true';
+
+            window.setTimeout(() => {
+                button.textContent = '복사';
+                delete button.dataset.copied;
+            }, COPY_FEEDBACK_MS);
+        });
+    }, []);
+
+    /*
+     * 이미지 로드 실패(§12-3). `error` 는 **버블링하지 않으므로** 캡처 단계에서
+     * 잡습니다. 깨진 이미지 아이콘을 그대로 노출하지 않고, 매트만 남긴 채
+     * 안내를 넣습니다. `alt` 원문이 있으면 함께 보여 정보를 보존합니다.
+     */
+    useEffect(() => {
+        const container = contentRef.current;
+        if (!container) {
+            return;
+        }
+
+        const handleError = (event: Event) => {
+            const image = event.target;
+            if (!(image instanceof HTMLImageElement)) {
+                return;
+            }
+
+            const matte = image.closest(`.${CONTENT_CLASS.matte}`);
+            if (!matte) {
+                return;
+            }
+
+            const alt = image.getAttribute('data-alt');
+            const notice = document.createElement('p');
+            notice.className = CONTENT_CLASS.imageError;
+            notice.textContent = alt
+                ? `이미지를 불러오지 못했어요 — ${alt}`
+                : '이미지를 불러오지 못했어요';
+
+            matte.replaceChildren(notice);
+        };
+
+        container.addEventListener('error', handleError, true);
+        return () => container.removeEventListener('error', handleError, true);
+    }, [content.html]);
+
+    const handleCopyLink = useCallback(() => {
+        void copyText(window.location.href).then(isCopied => {
+            if (!isCopied) {
+                return;
+            }
+
+            setIsLinkCopied(true);
+            window.setTimeout(() => setIsLinkCopied(false), COPY_FEEDBACK_MS);
+        });
+    }, []);
 
     /* 없는 slug 는 홈으로 튕기지 않고 404 를 보여 줍니다 — 주소가 그대로 남습니다 */
     if (!post) {
@@ -133,40 +256,73 @@ const Post = () => {
     }
 
     return (
-        <div className={styles.main}>
-            <section className={styles.article_section}>
-                <header className={styles.article_header}>
-                    <div className={styles.category}>
-                        <span>
-                            {post.category}
-                        </span>
-                    </div>
-                    <h1 className={styles.title}>{post.title}</h1>
-                    <div className={styles.info_container}>
-                        <span className={styles.date}>
-                            {post.date ? new Date(post.date).toLocaleDateString() : ''}
-                        </span>
-                        <div className={styles.dot}></div>
-                        <span className={styles.author}>{post.author}</span>
-                    </div>
-                    <div className={styles.group_wrapper}>
-                        <div className={styles.keywords}>
-                            {post.keywords.map((keyword: string) => (
-                                <div key={keyword} className={styles.tag}>
-                                    <span>
-                                        #{keyword}
-                                    </span>
+        <div className={styles.page}>
+            <ReadingProgress percent={progress} />
+
+            <article className={styles.article}>
+                <PostHeader post={post} />
+
+                <div className={styles.body}>
+                    <div className={styles.main_column}>
+                        {status === 'loading' && <PostSkeleton />}
+
+                        {status === 'error' && (
+                            <PostLoadError
+                                path={`/_posts/${post.file}`}
+                                onRetry={() => setRetryCount(count => count + 1)}
+                            />
+                        )}
+
+                        {status === 'ready' && (
+                            <>
+                                {/*
+                                 * 본문. 콘텐츠가 본인 소유라 XSS 위험이 없어
+                                 * `html: true` 를 유지합니다(§5-2). `<script>` 는
+                                 * 변환 단계에서 이미 제거했습니다(§5-6).
+                                 */}
+                                <div
+                                    ref={contentRef}
+                                    className={styles.content}
+                                    onClick={handleContentClick}
+                                    dangerouslySetInnerHTML={{ __html: content.html }}
+                                />
+
+                                <div className={styles.article_footer}>
+                                    <button
+                                        type="button"
+                                        className={styles.copy_link}
+                                        data-copied={isLinkCopied ? 'true' : undefined}
+                                        onClick={handleCopyLink}
+                                    >
+                                        {/* 확정 카피 — `링크 복사` → `복사됨`(§6.12) */}
+                                        {isLinkCopied ? '복사됨' : '링크 복사'}
+                                    </button>
                                 </div>
-                            ))}
-                        </div>
+                            </>
+                        )}
+
+                        {/*
+                         * 🔴 완료 알림은 별도 live 영역에 **텍스트만** 넣습니다.
+                         *    체크 기호를 aria-live 에 넣지 마세요(§7.4).
+                         */}
+                        <p className="sr-only" role="status" aria-live="polite">
+                            {isLinkCopied ? '복사됨' : ''}
+                        </p>
                     </div>
-                </header>
-                <div className={styles.content}
-                    dangerouslySetInnerHTML={{ __html: htmlContent }} 
-                />
-            </section>
+
+                    <PostTocSidebar headings={content.headings} activeId={activeHeadingId} />
+                </div>
+
+                <PostNeighbors slug={post.slug} />
+            </article>
+
+            <PostTocMobile
+                headings={content.headings}
+                activeId={activeHeadingId}
+                percent={progress}
+            />
         </div>
-    )
+    );
 };
 
 export default Post;

@@ -1,0 +1,237 @@
+/*
+ * 글 머리말 — docs/handoff-step3-post.md §4-2 ~ §4-5
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다. 원시 hex 금지.
+ */
+
+.header {
+    width: 100%;
+}
+
+/* ------------------------------------------------------------
+ * 브레드크럼 (§4-2)
+ * ---------------------------------------------------------- */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) 0;
+    /* GalmuriMono11 은 11px 에서만, 라틴·숫자·기호만입니다(tokens.css §3) */
+    font-family: var(--font-terminal-path);
+    font-size: var(--fs-2xs);
+    color: var(--color-text-muted);
+    /* 🔴 slug 최장 97자 — 감싸지 않고 흘립니다 */
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.breadcrumb::-webkit-scrollbar {
+    display: none;
+}
+
+.breadcrumb_link {
+    color: var(--color-status-info);
+    text-decoration: none;
+}
+
+.breadcrumb_link:hover {
+    text-decoration: underline;
+}
+
+/*
+ * 카테고리는 한글이 아니라 `Study`·`Survey`·`Activity` 라틴 원문이라
+ * 모노 서브셋 안에 있습니다.
+ */
+.breadcrumb_category[data-category='Study'] {
+    color: var(--color-cat-study);
+}
+
+.breadcrumb_category[data-category='Survey'] {
+    color: var(--color-cat-survey);
+}
+
+.breadcrumb_category[data-category='Activity'] {
+    color: var(--color-cat-activity);
+}
+
+.breadcrumb_slug {
+    color: var(--color-text-secondary);
+}
+
+/* ------------------------------------------------------------
+ * 히어로 (§4-3)
+ * ------------------------------------------------------------
+ * 🔴 높이를 CSS 로 **고정**합니다. 이미지 로드에 맡기면 제목이 뛰어오릅니다(CLS).
+ * ---------------------------------------------------------- */
+.hero {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    height: 220px;
+    margin-bottom: var(--space-8);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+.hero_image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero_badge {
+    position: relative;
+    margin: var(--space-3);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-overlay);
+    /* Galmuri11 11px — 라틴 전용 자리이고 카테고리는 전부 라틴입니다 */
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-1);
+    font-weight: 400;
+    color: var(--color-text-onOverlay);
+}
+
+/* ------------------------------------------------------------
+ * 제목 · 메타 (§4-4)
+ * ---------------------------------------------------------- */
+.title {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-article-h1);
+    font-weight: 800;
+    line-height: var(--lh-heading);
+    letter-spacing: -0.01em;
+    color: var(--color-text-primary);
+    /* 한글 단어 중간에서 잘리면 가독성이 급락합니다(§13-1) */
+    word-break: keep-all;
+    text-wrap: pretty;
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    /* 읽기 시간이 두 자리(`27분`)여도 390px 에서 깨지지 않게(§10-3) */
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+.meta > span {
+    white-space: nowrap;
+}
+
+.meta_category {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-secondary);
+}
+
+.meta_dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-accent-border);
+    flex-shrink: 0;
+}
+
+.meta_dot[data-category='Study'] {
+    background-color: var(--color-cat-study);
+}
+
+.meta_dot[data-category='Survey'] {
+    background-color: var(--color-cat-survey);
+}
+
+.meta_dot[data-category='Activity'] {
+    background-color: var(--color-cat-activity);
+}
+
+/* ------------------------------------------------------------
+ * 시리즈 (§4-5) — 실제 3건뿐입니다
+ * ---------------------------------------------------------- */
+.series {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border-default);
+    border-left: 3px solid var(--color-accent-border);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    background-color: var(--color-bg-surface);
+}
+
+.series_label {
+    margin: 0;
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-1);
+    font-weight: 400;
+    color: var(--color-accent-text);
+}
+
+.series_next {
+    /* 1행 말줄임 — 최장 96자 제목이 블록을 밀어내지 않게 */
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+.series_next:hover {
+    color: var(--color-accent-text);
+    text-decoration: underline;
+}
+
+/* 단독 1편(`Wanted-pre-onboarding-01`). 링크가 아니므로 회색 평문입니다 */
+.series_end {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+ * 태블릿
+ * ---------------------------------------------------------- */
+@media (max-width: 1023px) {
+    .hero {
+        height: 180px;
+    }
+}
+
+/* ------------------------------------------------------------
+ * 모바일
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .hero {
+        height: 150px;
+    }
+
+    .title {
+        font-size: 26px;
+    }
+
+    .series {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+    }
+
+    .series_next {
+        max-width: 100%;
+    }
+}

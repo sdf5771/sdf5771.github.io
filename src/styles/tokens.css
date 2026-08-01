@@ -89,8 +89,36 @@
     /* 그림자 */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 -8px 32px rgba(0, 0, 0, 0.55);
     --shadow-btn-inset: inset 0 1px 0 rgba(255, 235, 170, 0.5),
         inset 0 -2px 0 rgba(0, 0, 0, 0.28);
+
+    /* ------------------------------------------------------------
+     * STEP 3 추가 — 다크
+     * ------------------------------------------------------------
+     * 출처: docs/handoff-step3-post.md §14-2 (신규 토큰 **제안**).
+     * 🔴 승격 권한은 STEP 1(web-design)에 있습니다. 여기 있는 것은 STEP 3 이
+     *    화면을 그리기 위해 값이 필요해서 **제안값 그대로** 놓은 것입니다.
+     *    STEP 1 이 이름·값을 정하면 그쪽이 이깁니다.
+     * ---------------------------------------------------------- */
+
+    /* 코드 블록. 다크에서는 기존 표면 토큰과 같은 값이지만, 라이트에서 갈라지므로
+       이름을 따로 둡니다 — 컴포넌트가 분기를 갖지 않게 하는 것이 목적입니다 */
+    --color-code-bg: #0d1220;
+    --color-code-header-bg: #161d30;
+
+    /* 오버레이(히어로 배지 등) 위 전경. --color-text-primary 의 다크값이
+       테마와 무관하게 필요한 자리입니다 — 오버레이는 항상 어둡습니다(§14-3) */
+    --color-text-onOverlay: #f4ecd2;
+
+    /* 스켈레톤. 🔴 저감 모션에서는 sheen 을 쓰지 않고 base 단색으로 갑니다 */
+    --color-skeleton-base: #131a2c;
+    --color-skeleton-sheen: #1c2440;
+
+    /* 썸네일 없는 17편의 히어로. 카테고리별 3종 */
+    --gradient-hero-survey: linear-gradient(135deg, #7a5210, #e6a536);
+    --gradient-hero-study: linear-gradient(135deg, #3d2a52, #c39ad9);
+    --gradient-hero-activity: linear-gradient(135deg, #174420, #6fcf7c);
 }
 
 /* ------------------------------------------------------------
@@ -154,8 +182,29 @@
 
     --shadow-sm: 0 1px 3px rgba(23, 28, 43, 0.1);
     --shadow-md: 0 4px 12px rgba(23, 28, 43, 0.14);
+    --shadow-lg: 0 -8px 32px rgba(23, 28, 43, 0.18);
     --shadow-btn-inset: inset 0 1px 0 rgba(255, 255, 255, 0.5),
         inset 0 -2px 0 rgba(23, 28, 43, 0.16);
+
+    /* STEP 3 추가 — 라이트 (§14-2) */
+
+    /*
+     * 🔴 코드블록 배경(#f4f1e8)과 페이지 배경(#efece4)의 대비는 **1.045:1** 입니다.
+     *    사실상 구분이 없고, **보더가 유일하게 블록 경계를 만듭니다.**
+     *    라이트에서 코드블록 보더를 빼지 마세요(§6-1).
+     */
+    --color-code-bg: #f4f1e8;
+    --color-code-header-bg: #eae6d9;
+
+    /* 오버레이는 라이트에서도 어둡습니다(rgba(23,28,43,.72)) — 값이 같습니다 */
+    --color-text-onOverlay: #f4ecd2;
+
+    --color-skeleton-base: #e8e4da;
+    --color-skeleton-sheen: #f3f0e8;
+
+    --gradient-hero-survey: linear-gradient(135deg, #e0b768, #f2d79a);
+    --gradient-hero-study: linear-gradient(135deg, #b9a2cc, #ded0ea);
+    --gradient-hero-activity: linear-gradient(135deg, #8cc79a, #cfe8d5);
 }
 
 /* ------------------------------------------------------------
@@ -219,6 +268,26 @@
     --fs-lg: 16px;
     --fs-xl: 18px;
     --fs-2xl: 21px;
+
+    /*
+     * 축 C — 글 본문 헤딩 (STEP 3 §14-2 제안)
+     * 축 B(11~21px)는 **UI 용**이라 본문 헤딩을 담지 못합니다. 34px 제목이
+     * 축 B 에 없어서 만든 별도 축이고, 글 상세·작업 상세 전용입니다.
+     * 🔴 픽셀 서체(Galmuri11)를 여기에 쓰지 마세요 — 최장 96자 한글 제목을
+     *    11px 그리드 비트맵으로 조판하면 읽히지 않습니다(§3-4). 전부 Pretendard.
+     * 모바일 값은 Post.module.css 의 미디어쿼리가 덮어씁니다.
+     */
+    --fs-article-h1: 34px;
+    --fs-article-h2: 25px;
+    --fs-article-h3: 20px;
+    --fs-article-h4: 17px;
+
+    /*
+     * 목차 점프 시 헤딩이 sticky 헤더 뒤로 숨는 것을 막는 유일한 장치입니다.
+     * 헤더(48) + 진행바(3) + 여유. 🔴 빠뜨리면 목차가 "눌리는데 안 보이는" 상태가
+     * 됩니다(§5-3). 모바일은 헤더가 52px 이라 90px 로 줄입니다.
+     */
+    --scroll-offset: 120px;
 
     /* 행간 */
     --lh-tight: 1.05;

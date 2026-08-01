@@ -5,6 +5,9 @@ import useLeftTruncate from './useLeftTruncate';
 import useMediaMatch from './useMediaMatch';
 import useDocumentTitle from './useDocumentTitle';
 import useSearchMatchCount from './useSearchMatchCount';
+import { useScrollBehavior, MEDIA_REDUCED_MOTION } from './useReducedMotion';
+import { useReadingProgress } from './useReadingProgress';
+import { useActiveHeading } from './useActiveHeading';
 
 export {
     useDocumentTitle,
@@ -14,4 +17,8 @@ export {
     useLeftTruncate,
     useMediaMatch,
     useSearchMatchCount,
+    useScrollBehavior,
+    useReadingProgress,
+    useActiveHeading,
+    MEDIA_REDUCED_MOTION,
 }

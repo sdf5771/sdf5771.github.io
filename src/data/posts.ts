@@ -85,3 +85,45 @@ export const CATEGORY_SUMMARIES: readonly CategorySummary[] = (() => {
 })();
 
 export const CATEGORY_NAMES: readonly string[] = CATEGORY_SUMMARIES.map(item => item.name);
+
+export interface PostNeighbors {
+    /** 더 **오래된** 글. 최고(最古) 글에서는 `null` */
+    previous: PostMetadata | null;
+    /** 더 **최신** 글. 최신 글에서는 `null` */
+    next: PostMetadata | null;
+}
+
+/** slug → POSTS 배열 인덱스. 41건이라 모듈 로드 시 한 번 만들어 둡니다 */
+const SLUG_INDEX = new Map(POSTS.map((post, index) => [post.slug, index]));
+
+/**
+ * 이전 / 다음 글 — docs/handoff-step3-post.md §10-2.
+ *
+ * ```
+ * 정렬:  date DESC, 동률이면 slug ASC   ← 빌드(generatePostsData)가 이 순서로 씁니다
+ * 이전 글 = 배열에서 바로 다음 항목 (더 오래된 글)
+ * 다음 글 = 배열에서 바로 앞 항목   (더 최신 글)
+ * ```
+ *
+ * 🔴 **같은 카테고리 안에서 잇지 않습니다.** `Activity` 는 2편뿐이라 그 둘이
+ *    서로의 유일한 이웃이 되고 나머지 39편과의 연결이 끊깁니다.
+ *
+ * 🔴 정렬 순서의 정의처는 **빌드**입니다. 동일 날짜가 8개 날짜에 걸쳐 있어
+ *    (`2023-04-13` 만 5편) 타이브레이커 없이는 배열 순서가 파일시스템 순서에
+ *    의존합니다. 여기서 다시 정렬하면 규칙이 두 곳이 되므로 하지 않습니다.
+ *
+ * `이전 글` 이 더 오래된 글인 것은 블로그 관례이고, 목록 정렬(최신순)·
+ * 브레드크럼과 방향이 일관됩니다.
+ */
+export function getPostNeighbors(slug: string): PostNeighbors {
+    const index = SLUG_INDEX.get(slug);
+
+    if (index === undefined) {
+        return { previous: null, next: null };
+    }
+
+    return {
+        previous: POSTS[index + 1] ?? null,
+        next: index > 0 ? POSTS[index - 1] : null,
+    };
+}

@@ -1,0 +1,170 @@
+/*
+ * 로딩 · 에러 — docs/handoff-step3-post.md §12
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ */
+
+/* ------------------------------------------------------------
+ * 스켈레톤
+ * ---------------------------------------------------------- */
+.skeleton {
+    display: flex;
+    gap: var(--space-8);
+    align-items: flex-start;
+    width: 100%;
+}
+
+.skeleton_body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+    min-width: 0;
+}
+
+/* 목차 자리 예약 — 없으면 로드 완료 시 본문이 좌측으로 밀립니다 */
+.skeleton_toc {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    width: var(--toc-w);
+    flex-shrink: 0;
+}
+
+.line {
+    display: block;
+    height: 14px;
+    border-radius: var(--radius-xs);
+    background: linear-gradient(
+        90deg,
+        var(--color-skeleton-base) 25%,
+        var(--color-skeleton-sheen) 37%,
+        var(--color-skeleton-base) 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.4s linear infinite;
+}
+
+.line[data-short='true'] {
+    width: 60%;
+}
+
+@keyframes shimmer {
+    from {
+        background-position: 100% 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+
+@media (max-width: 1023px) {
+    .skeleton_toc {
+        display: none;
+    }
+}
+
+/*
+ * 🔴 저감 모션 — `animation: none` **만으로는 부족합니다.**
+ *    그라데이션이 임의의 위치에서 멈춰 얼룩진 회색 덩어리가 됩니다.
+ *    **배경 자체를 단색으로 교체**해야 합니다(§9-3-③).
+ */
+@media (prefers-reduced-motion: reduce) {
+    .line {
+        background: var(--color-skeleton-base);
+        animation: none;
+    }
+}
+
+/* ------------------------------------------------------------
+ * 에러
+ * ---------------------------------------------------------- */
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-16) var(--space-4);
+}
+
+.error_glyph {
+    margin: 0 0 var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-6);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--color-border-strong);
+}
+
+.error_title {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-body);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.error_description {
+    margin: 0 0 var(--space-6);
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    color: var(--color-text-secondary);
+}
+
+.error_actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+}
+
+.error_primary,
+.error_secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap-min);
+    padding: 0 var(--space-5);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.error_primary {
+    border: 1px solid var(--color-accent-border);
+    background-color: var(--color-accent-fill);
+    color: var(--color-accent-onFill);
+    box-shadow: var(--shadow-btn-inset);
+}
+
+.error_primary:hover {
+    background-color: var(--color-accent-light);
+}
+
+/* 골드 채움 위에서는 포커스 링을 반전해야 보입니다(global.css 주석) */
+.error_primary:focus-visible {
+    outline-color: var(--color-focus-onFill);
+}
+
+.error_secondary {
+    border: 1px solid var(--color-border-default);
+    background-color: transparent;
+    color: var(--color-text-secondary);
+}
+
+.error_secondary:hover {
+    background-color: var(--color-bg-raised);
+}
+
+.error_path {
+    margin: var(--space-6) 0 0;
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    color: var(--color-text-muted);
+    /* 최장 97자 slug — 흘려보냅니다 */
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}

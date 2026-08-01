@@ -1,0 +1,79 @@
+/*
+ * 이전 / 다음 글 — docs/handoff-step3-post.md §4-6
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ */
+
+.neighbors {
+    display: grid;
+    /*
+     * 칸이 하나뿐이면 전체 폭을 씁니다 — `1fr 1fr` 로 고정하면 첫 글·마지막 글에서
+     * 빈 칸이 생기고, 빈 칸은 로딩 실패로 오인됩니다.
+     */
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: var(--space-14);
+    /* gap 을 배경으로 비쳐 보이게 해 구분선을 만듭니다 */
+    background-color: var(--color-border-default);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--color-bg-surface);
+    text-decoration: none;
+    transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.card:hover {
+    background-color: var(--color-accent-subtle);
+}
+
+/* 다음 글 칸은 우측 정렬 — 방향을 레이아웃으로도 말합니다 */
+.card_next {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.label {
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+.title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-text-primary);
+    word-break: keep-all;
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+.card:hover .title {
+    color: var(--color-accent-text);
+}
+
+/* ------------------------------------------------------------
+ * 모바일 — 세로 2행, 둘 다 좌측 정렬 (§4-6)
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .neighbors {
+        grid-template-columns: 1fr;
+    }
+
+    .card_next {
+        align-items: flex-start;
+        text-align: left;
+    }
+}

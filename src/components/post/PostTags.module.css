@@ -1,0 +1,67 @@
+/*
+ * 글 태그 — docs/handoff-step3-post.md §4-4
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ */
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+/*
+ * 링크되지 않는 태그 = **평문**입니다. 배경도 테두리도 없습니다.
+ * 눌리는 것처럼 보이면 안 됩니다.
+ */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-px);
+    height: 24px;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    line-height: 1;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+
+/*
+ * 링크되는 태그 = **칩**(배경 + 테두리).
+ * 🔴 호버 커서에만 의존하면 터치 기기에서 구분할 수 없습니다. 모양으로 나눕니다.
+ */
+.tag[data-linkable='true'] {
+    padding: 0 var(--space-2);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-raised);
+    color: var(--color-text-secondary);
+}
+
+.hash {
+    opacity: 0.6;
+}
+
+.more {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 var(--space-2);
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background-color: transparent;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.more:hover {
+    border-color: var(--color-border-interactive);
+    color: var(--color-text-secondary);
+}
