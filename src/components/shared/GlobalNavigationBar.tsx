@@ -1,13 +1,17 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './GlobalNavigationBar.module.css';
 import Wordmark from './Wordmark';
 import ThemeToggle from './ThemeToggle';
 import MobileDrawer from './MobileDrawer';
+import HeaderSearch from './HeaderSearch';
+import SearchPanel from './SearchPanel';
 import { NAV_ITEMS, WORDMARK_TEXT, isNavItemActive } from '../../constants/site';
+import { MEDIA_DESKTOP, MEDIA_MOBILE } from '../../styles/breakpoints';
 import { useTerminalPath } from '../../hooks';
 
 const DRAWER_ID = 'mobile-drawer';
+const SEARCH_PANEL_ID = 'header-search-overlay';
 
 /**
  * 전역 헤더.
@@ -20,8 +24,43 @@ function GlobalNavigationBar() {
     const { pathname } = useLocation();
     const terminalPath = useTerminalPath();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [isSearchModal, setIsSearchModal] = useState(false);
 
     const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
+    const closeSearch = useCallback(() => setIsSearchOpen(false), []);
+
+    /*
+     * 검색 패널이 전체화면 모달인지(≤767px)는 여는 시점에 결정합니다.
+     * 768~1023px 의 전폭 행은 모달이 아니라서 포커스 트랩·스크롤 락을 걸면 안 됩니다.
+     * 레이아웃이 아니라 "JS 가 뷰포트를 알아야 하는" 경우라 matchMedia 를 직접 씁니다(§7).
+     */
+    const openSearch = useCallback(() => {
+        setIsSearchModal(window.matchMedia(MEDIA_MOBILE).matches);
+        setIsSearchOpen(true);
+    }, []);
+
+    /* ⌘K / Ctrl+K — 헤더에 노출된 힌트가 실제로 동작하게 합니다 */
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key.toLowerCase() !== 'k' || !(event.metaKey || event.ctrlKey)) {
+                return;
+            }
+
+            event.preventDefault();
+
+            if (window.matchMedia(MEDIA_DESKTOP).matches) {
+                document.querySelector<HTMLInputElement>('[data-header-search-input]')?.focus();
+                return;
+            }
+
+            setIsSearchModal(window.matchMedia(MEDIA_MOBILE).matches);
+            setIsSearchOpen(true);
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     return (
         <header className={styles.header}>
@@ -68,10 +107,25 @@ function GlobalNavigationBar() {
                 </nav>
 
                 <div className={styles.actions}>
+                    <div className={styles.search_inline}>
+                        <HeaderSearch />
+                    </div>
+
+                    <button
+                        className={styles.icon_button}
+                        type="button"
+                        aria-label="검색 열기"
+                        aria-expanded={isSearchOpen}
+                        aria-controls={SEARCH_PANEL_ID}
+                        onClick={openSearch}
+                    >
+                        <span aria-hidden="true">⌕</span>
+                    </button>
+
                     <ThemeToggle />
 
                     <button
-                        className={styles.menu_trigger}
+                        className={`${styles.icon_button} ${styles.menu_trigger}`}
                         type="button"
                         aria-label={isDrawerOpen ? '메뉴 닫기' : '메뉴 열기'}
                         aria-expanded={isDrawerOpen}
@@ -84,6 +138,12 @@ function GlobalNavigationBar() {
             </div>
 
             <MobileDrawer id={DRAWER_ID} isOpen={isDrawerOpen} onClose={closeDrawer} />
+            <SearchPanel
+                id={SEARCH_PANEL_ID}
+                isOpen={isSearchOpen}
+                onClose={closeSearch}
+                isModal={isSearchModal}
+            />
         </header>
     );
 }

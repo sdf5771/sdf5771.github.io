@@ -157,7 +157,7 @@
     margin-left: auto;
 }
 
-.menu_trigger {
+.icon_button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -176,8 +176,13 @@
     transition: background-color var(--dur-base) var(--ease-out);
 }
 
-.menu_trigger:hover {
+.icon_button:hover {
     background-color: var(--color-accent-subtle);
+}
+
+/* 인라인 검색은 데스크톱(≥1024px) 전용 */
+.search_inline {
+    display: none;
 }
 
 /* ------------------------------------------------------------
@@ -217,5 +222,18 @@
         /* 헤더 높이 48px 안에서 밑줄이 바닥에 붙게 */
         height: var(--header-h-desktop);
         border-radius: 0;
+    }
+}
+
+/* ------------------------------------------------------------
+ * lg 이상 (≥1024px) — 검색이 아이콘에서 인라인 입력으로 바뀝니다
+ * ---------------------------------------------------------- */
+@media screen and (min-width: 1024px) {
+    .search_inline {
+        display: block;
+    }
+
+    .icon_button {
+        display: none;
     }
 }

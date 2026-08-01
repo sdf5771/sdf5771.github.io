@@ -1,0 +1,184 @@
+/*
+ * 1024px 미만 검색 UI. 명세: docs/handoff-step1-shell.md §6-4
+ * ≤767px 전체화면 오버레이 / 768~1023px 헤더 아래 전폭 행.
+ */
+
+/* ≤767px — 전체화면. 모바일 키보드가 화면 절반을 먹으므로 전용 화면이 유리합니다. */
+.panel {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background-color: var(--color-bg-surface);
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--color-bg-raised);
+    border-bottom: 1px solid var(--color-border-strong);
+}
+
+.icon {
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+}
+
+.input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: var(--tap-min);
+    padding: 0 var(--space-2);
+    background: none;
+    border: 0;
+    /* 폼 입력값에는 픽셀 서체를 쓰지 않습니다 */
+    font-family: var(--font-ui-label);
+    /* iOS 는 16px 미만 입력에 자동 확대를 겁니다 */
+    font-size: var(--fs-lg);
+    color: var(--color-text-body);
+}
+
+.input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--tap-min);
+    height: var(--tap-min);
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    font-size: var(--fs-xl);
+    line-height: 1;
+    color: var(--color-accent-text);
+    cursor: pointer;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    padding: var(--space-5);
+}
+
+.scope,
+.empty_description {
+    margin: 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    line-height: var(--lh-snug);
+    color: var(--color-text-muted);
+}
+
+.tags {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.tags_title {
+    margin: 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.tag_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--color-bg-raised);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-pill);
+    /* 태그 이름은 라틴(Python·React·CodingTest) */
+    font-family: var(--font-numeric);
+    font-size: var(--fs-sm);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+/* 아직 필터가 없어 눌러도 결과가 바뀌지 않습니다 — STEP 4에서 살립니다 */
+.tag:disabled {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.tag_count {
+    color: var(--color-text-muted);
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.empty_title {
+    margin: 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+/* ------------------------------------------------------------
+ * 768~1023px — 헤더 아래 전폭 행. 모달이 아닙니다.
+ * ---------------------------------------------------------- */
+@media screen and (min-width: 768px) {
+    .panel {
+        position: fixed;
+        top: var(--header-h-desktop);
+        bottom: auto;
+        max-height: calc(100dvh - var(--header-h-desktop));
+        border-bottom: 1px solid var(--color-border-strong);
+        box-shadow: var(--shadow-md);
+        animation: slide_down var(--dur-slow) var(--ease-emphasized);
+    }
+
+    .bar {
+        justify-content: center;
+        padding-inline: var(--space-6);
+    }
+
+    .body {
+        padding-inline: var(--space-6);
+    }
+}
+
+@keyframes slide_down {
+    from {
+        opacity: 0;
+        transform: translateY(calc(-1 * var(--space-4)));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .panel {
+        animation: none;
+    }
+}
