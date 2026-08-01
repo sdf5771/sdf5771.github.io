@@ -21,6 +21,14 @@ const WEEKS_MOBILE = 16;
 
 const LEVELS = [0, 1, 2, 3, 4];
 
+/**
+ * 레벨 0~4 를 말로 옮긴 것. `days[i]` 는 **레벨이지 횟수가 아니라서** `N회` 는
+ * 거짓입니다(§5-2 데이터 계약 · step1 §14-1a D).
+ * 이 문구가 **색 외의 두 번째 전달 채널**이라, 색만으로 정보를 전하지 말라는
+ * WRITING_GUIDE §7.5 도 여기서 함께 충족됩니다.
+ */
+const LEVEL_LABELS = ['활동 없음', '조금', '보통', '많음', '아주 많음'];
+
 /** 14일 넘게 갱신되지 않으면 개발자에게만 알립니다 */
 const STALE_THRESHOLD_MS = 14 * 864e5;
 
@@ -113,8 +121,13 @@ function ContributionGraph({ showPrompt = false }: ContributionGraphProps) {
         return (
             <section className={styles.section}>
                 {heading}
-                <p className={styles.caption}>🌱 자라나라 잔디 잔디</p>
 
+                {/*
+                 * 🔴 실패 분기에는 캡션(`🌱 자라나라 잔디 잔디`)을 두지 않습니다.
+                 * 농담이 `기여 활동을 불러오지 못했어요` 바로 위에 남으면 실패를
+                 * 놀리는 말이 됩니다 — S1(실패 상황 농담 금지) · §2.3(에러는 평문만)
+                 * · §3.6(에러에 이모지 금지). 로딩·정상 분기에는 그대로 둡니다.
+                 */}
                 <div className={styles.panel}>
                     <p className={styles.error_title}>기여 활동을 불러오지 못했어요</p>
                     <p className={styles.error_description}>잠시 후 다시 시도해 주세요.</p>
@@ -182,11 +195,11 @@ function ContributionGraph({ showPrompt = false }: ContributionGraphProps) {
                                         key={`${week.start}-${dayIndex}`}
                                         data-level={level}
                                         /*
-                                         * 날짜만 씁니다. days[i] 는 레벨 0~4 이지
-                                         * 횟수가 아니라서 `N회` 라고 쓰면 거짓이
-                                         * 됩니다(§5-2 데이터 계약).
+                                         * `<날짜> · <레벨 표현>`. 횟수(`N회`)는 데이터에
+                                         * 없어 쓸 수 없고, 레벨을 말로 옮기면 색을
+                                         * 구분하지 못해도 셀의 세기를 알 수 있습니다.
                                          */
-                                        title={formatDisplayDate(shiftDate(week.start, dayIndex))}
+                                        title={`${formatDisplayDate(shiftDate(week.start, dayIndex))} · ${LEVEL_LABELS[level] ?? LEVEL_LABELS[0]}`}
                                     />
                                 ))}
                             </div>

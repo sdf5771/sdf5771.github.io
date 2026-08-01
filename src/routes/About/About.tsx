@@ -88,13 +88,16 @@ function About() {
                     </h2>
 
                     {/*
-                     * 이 문장이 **필수**입니다. 없으면 `Python 16` 의 16 이 실력
+                     * 이 문장이 **필수**입니다. 없으면 `Python 16개` 의 16 이 실력
                      * 점수로 오독되어 WRITING_GUIDE §5.3(자기 신고 수치 금지) 위반과
-                     * 구별되지 않습니다. 41 도 하드코딩하지 않습니다 — 글이 늘면
-                     * 이 문장 자체가 거짓이 됩니다.
+                     * 구별되지 않습니다. 수치가 무엇인지 밝히는 문장을 칩과 **같은
+                     * 블록**에 두라는 §5.3 신설 조항도 여기서 충족합니다.
+                     * 41 도 하드코딩하지 않습니다 — 글이 늘면 이 문장 자체가 거짓이
+                     * 됩니다. 글을 세는 단위는 `개` 입니다(§3.4, `편`은 내부 문서 전용).
                      */}
                     <p className={styles.section_note}>
-                        {postsData.length}편의 글에 가장 많이 붙은 태그입니다.
+                        글 {postsData.length}개에 가장 많이 붙은 태그입니다. 이 블로그에 쓴
+                        글에서 각 태그가 등장한 횟수입니다.
                     </p>
 
                     <ul className={styles.chips}>
@@ -107,10 +110,17 @@ function About() {
                              * 둘 중 하나가 나오면 여기만 <Link> 로 바꾸세요.
                              */
                             <li className={styles.chip} key={tag.label}>
+                                {/*
+                                 * 단위 `개` 를 붙입니다(§3.4). 맨숫자 `Python 16` 은
+                                 * §5.3 의 ❌ 예시(`React Lv.9`)와 형태가 같아, 개수가
+                                 * 아니라 자기 신고 등급으로 읽힙니다.
+                                 * §5.3 의 ✅ 대체안인 「해당 태그 글로 연결」은 목적지
+                                 * (`/tags/<태그>`)가 아직 없어 STEP 6 소관입니다.
+                                 */}
                                 <span aria-hidden="true">
-                                    {tag.label} {tag.count}
+                                    {tag.label} {tag.count}개
                                 </span>
-                                {/* 화면 표기(`Python 16`)만으로는 16 이 무엇인지 음성에서 알 수 없습니다 */}
+                                {/* 화면 표기(`Python 16개`)만으로는 16 이 무엇인지 음성에서 알 수 없습니다 */}
                                 <span className="sr-only">
                                     {tag.label} 태그 글 {tag.count}개
                                 </span>
@@ -144,9 +154,13 @@ function About() {
                                             ? {
                                                   target: '_blank',
                                                   rel: 'noopener noreferrer',
-                                                  'aria-label': `${link.label} 프로필 보기 (새 창)`,
+                                                  /* 🔴 보이는 텍스트로 시작해야 음성
+                                                     제어에서 이름이 맞습니다(§7.3-1).
+                                                     라벨 자체가 이미 동사로 끝나므로
+                                                     여기서는 `(새 창)` 만 덧붙입니다 */
+                                                  'aria-label': `${link.label} (새 창)`,
                                               }
-                                            : { 'aria-label': '이메일 보내기' })}
+                                            : {})}
                                     >
                                         {link.label}
                                         {isExternal && <span aria-hidden="true"> ↗</span>}
