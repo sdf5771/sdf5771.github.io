@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './HeaderSearch.module.css';
 import SearchIcon from './SearchIcon';
 import type { SearchRequest } from '../shell';
@@ -8,6 +9,9 @@ import {
     SEARCH_INITIAL_HINT,
     SEARCH_PLACEHOLDER,
 } from '../../constants/search';
+import { TOTAL_POST_COUNT } from '../../data/posts';
+import { buildSearchResultPath } from '../../utils/postListQuery';
+import { useSearchMatchCount } from '../../hooks';
 
 interface HeaderSearchProps {
     /** 셸의 검색 열기 요청. 데스크톱 구간에서만 전달됩니다 */
@@ -20,10 +24,14 @@ interface HeaderSearchProps {
  * 데스크톱(≥1024px) 인라인 검색.
  * 250px → 포커스 시 320px 로 확장되고, 결과는 입력 아래 드롭다운으로 나옵니다.
  *
- * ⚠️ **UI 껍데기입니다.** 실제 필터는 STEP 4에서 글 목록과 함께 붙습니다.
- *    지금은 도달 가능한 두 상태(빈 입력 = 초기 안내 / 입력 있음 = 0건)만 그립니다.
+ * **입력 지점 2개 / 결과 화면 1개** (§2-3). 여기는 다른 화면에서의 **진입로**라
+ * 결과를 나열하지 않고 개수만 말한 뒤, 확정되면 `/posts?q=<검색어>` 로 넘깁니다.
+ * 결과를 보며 조건을 조금씩 고치는 작업은 목록 화면의 인라인 입력이 맡습니다 —
+ * 헤더에도 결과 목록을 그리면 같은 화면이 두 벌이 되고, 어느 쪽이 정본인지
+ * 갈립니다.
  */
 function HeaderSearch({ request, onClose }: HeaderSearchProps) {
+    const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -31,6 +39,8 @@ function HeaderSearch({ request, onClose }: HeaderSearchProps) {
     const previousRequestRef = useRef<SearchRequest | null>(null);
 
     const panelId = 'header-search-panel';
+    /* 결과를 나열하지 않고 개수만 씁니다 — 실제 검색 로직과 같은 규칙입니다 */
+    const matchCount = useSearchMatchCount(query);
 
     /*
      * 데스크톱에서 openSearch() 는 "인라인 입력을 펴고 포커스" 를 뜻합니다(§6-4a).
@@ -76,8 +86,20 @@ function HeaderSearch({ request, onClose }: HeaderSearchProps) {
     }, [request]);
 
     return (
-        <div
+        <form
             className={styles.search}
+            role="search"
+            onSubmit={event => {
+                event.preventDefault();
+
+                if (!query.trim()) {
+                    return;
+                }
+
+                /* 결과 화면은 하나입니다. 값을 들고 목록으로 넘깁니다(§2-3) */
+                navigate(buildSearchResultPath(query));
+                onClose();
+            }}
             onBlur={event => {
                 if (!event.currentTarget.contains(event.relatedTarget)) {
                     setIsFocused(false);
@@ -126,21 +148,31 @@ function HeaderSearch({ request, onClose }: HeaderSearchProps) {
                 </kbd>
             </div>
 
+            {/*
+              * `role="status"` 를 걷어냈습니다. 이제 내용이 **타이핑마다** 바뀌는데
+              * 라이브 영역이면 글자를 칠 때마다 낭독이 끊깁니다. 결과 수 알림은
+              * 목록 화면의 디바운스된 aria-live 영역이 담당합니다(§9-4).
+              */}
             {isFocused && (
-                <div className={styles.panel} id={panelId} role="status">
-                    {query ? (
+                <div className={styles.panel} id={panelId}>
+                    {!query.trim() ? (
+                        <p className={styles.hint}>{SEARCH_INITIAL_HINT}</p>
+                    ) : matchCount > 0 ? (
+                        /* STEP 1 §9 확정 카피 — 분모가 있어야 얼마나 좁혀졌는지 보입니다 */
+                        <p className={styles.hint}>
+                            {`${matchCount}개 일치 · 전체 ${TOTAL_POST_COUNT}개 중`}
+                        </p>
+                    ) : (
                         <>
                             <p className={styles.empty_title}>{SEARCH_EMPTY_TITLE}</p>
                             <p className={styles.empty_description}>
                                 {SEARCH_EMPTY_DESCRIPTION_DESKTOP}
                             </p>
                         </>
-                    ) : (
-                        <p className={styles.hint}>{SEARCH_INITIAL_HINT}</p>
                     )}
                 </div>
             )}
-        </div>
+        </form>
     );
 }
 

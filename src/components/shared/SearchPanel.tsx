@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './SearchPanel.module.css';
 import SearchIcon from './SearchIcon';
 import type { SearchRequest } from '../shell';
@@ -11,7 +12,9 @@ import {
     SEARCH_POPULAR_TAGS_TITLE,
     SEARCH_SCOPE_HINT,
 } from '../../constants/search';
-import { useOverlayBehavior } from '../../hooks';
+import { useOverlayBehavior, useSearchMatchCount } from '../../hooks';
+import { TOTAL_POST_COUNT } from '../../data/posts';
+import { buildSearchResultPath } from '../../utils/postListQuery';
 
 interface SearchPanelProps {
     id: string;
@@ -31,11 +34,15 @@ interface SearchPanelProps {
  * 768~1023px: 헤더 아래 전폭 행 / ≤767px: 전체화면 오버레이.
  * 두 형태를 한 컴포넌트로 두고 CSS 미디어쿼리로만 바꿉니다.
  *
- * ⚠️ **UI 껍데기입니다.** 실제 필터는 STEP 4에서 글 목록과 함께 붙습니다.
+ * 여기는 다른 화면에서의 **진입로**입니다(§2-3). 결과를 나열하지 않고 개수만
+ * 말한 뒤, 확정되면 `/posts?q=<검색어>` 로 넘깁니다 — 결과 화면은 하나입니다.
+ * 이동하면 라우트가 바뀌므로 ShellProvider 가 이 오버레이를 자동으로 닫습니다.
  */
 function SearchPanel({ id, request, onClose, isModal }: SearchPanelProps) {
+    const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
+    const matchCount = useSearchMatchCount(query);
     const isOpen = request !== null;
     const containerRef = useOverlayBehavior<HTMLDivElement>({
         isOpen,
@@ -91,7 +98,19 @@ function SearchPanel({ id, request, onClose, isModal }: SearchPanelProps) {
             aria-modal={isModal ? true : undefined}
             aria-label="검색"
         >
-            <div className={styles.bar}>
+            <form
+                className={styles.bar}
+                role="search"
+                onSubmit={event => {
+                    event.preventDefault();
+
+                    if (!query.trim()) {
+                        return;
+                    }
+
+                    navigate(buildSearchResultPath(query));
+                }}
+            >
                 <SearchIcon className={styles.icon} />
                 <input
                     className={styles.input}
@@ -113,7 +132,7 @@ function SearchPanel({ id, request, onClose, isModal }: SearchPanelProps) {
                     {/* `✕`(U+2715)는 Galmuri 에 없습니다. `×`(U+00D7) 는 형태가 거의 같고 라틴-1 이라 안전합니다(§4-7) */}
                     <span aria-hidden="true">×</span>
                 </button>
-            </div>
+            </form>
 
             <div className={styles.body}>
                 <p className={styles.scope}>{SEARCH_SCOPE_HINT}</p>
@@ -124,11 +143,19 @@ function SearchPanel({ id, request, onClose, isModal }: SearchPanelProps) {
                         {SEARCH_POPULAR_TAGS.map(tag => (
                             <li key={tag.label}>
                                 {/*
-                                 * 아직 필터가 없어 눌러도 결과가 바뀌지 않습니다.
-                                 * 동작하지 않는 컨트롤을 활성처럼 보이면 안 되므로
-                                 * disabled 로 두고, STEP 4에서 필터와 함께 살립니다.
+                                 * 누르면 그 태그를 **검색어로 채웁니다**(§5-3).
+                                 * 바로 이동시키지 않는 이유: 태그는 출발점이지
+                                 * 목적지가 아니라, 사용자가 거기서 단어를 더 붙이거나
+                                 * 지우는 일이 흔합니다. 확정은 제출(Enter)이 합니다.
                                  */}
-                                <button className={styles.tag} type="button" disabled>
+                                <button
+                                    className={styles.tag}
+                                    type="button"
+                                    onClick={() => {
+                                        setQuery(tag.label);
+                                        inputRef.current?.focus();
+                                    }}
+                                >
                                     {tag.label}
                                     <span className={styles.tag_count}>{tag.count}</span>
                                 </button>
@@ -137,16 +164,25 @@ function SearchPanel({ id, request, onClose, isModal }: SearchPanelProps) {
                     </ul>
                 </section>
 
-                <div className={styles.result} role="status">
-                    {query ? (
+                {/*
+                  * `role="status"` 를 걷어냈습니다 — 내용이 타이핑마다 바뀌는데
+                  * 라이브 영역이면 글자를 칠 때마다 낭독이 끊깁니다. 결과 수 알림은
+                  * 목록 화면의 디바운스된 aria-live 영역이 담당합니다(§9-4).
+                  */}
+                <div className={styles.result}>
+                    {!query.trim() ? (
+                        <p className={styles.empty_description}>{SEARCH_INITIAL_HINT}</p>
+                    ) : matchCount > 0 ? (
+                        <p className={styles.empty_description}>
+                            {`${matchCount}개 일치 · 전체 ${TOTAL_POST_COUNT}개 중`}
+                        </p>
+                    ) : (
                         <>
                             <p className={styles.empty_title}>{SEARCH_EMPTY_TITLE}</p>
                             <p className={styles.empty_description}>
                                 {SEARCH_EMPTY_DESCRIPTION_MOBILE}
                             </p>
                         </>
-                    ) : (
-                        <p className={styles.empty_description}>{SEARCH_INITIAL_HINT}</p>
                     )}
                 </div>
             </div>

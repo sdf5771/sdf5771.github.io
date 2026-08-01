@@ -118,9 +118,10 @@
 }
 
 /* 아직 필터가 없어 눌러도 결과가 바뀌지 않습니다 — STEP 4에서 살립니다 */
-.tag:disabled {
-    opacity: 0.45;
-    pointer-events: none;
+/* STEP 4에서 살아났습니다 — 누르면 그 태그가 검색어로 채워집니다 */
+.tag:hover {
+    border-color: var(--color-accent-border);
+    color: var(--color-accent-text);
 }
 
 .tag_count {
