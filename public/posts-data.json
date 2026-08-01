@@ -23,7 +23,8 @@
     "category": "Survey",
     "slug": "2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer",
     "file": "2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer.md",
-    "thumbnail": "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/thumbnail.png"
+    "thumbnail": "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/thumbnail.png",
+    "readingMinutes": 17
   },
   {
     "title": "2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임 시프트 - WebXR: 공간적 웹 경험과 2025 미래 기술 전망 (2부)",
@@ -50,7 +51,8 @@
     "category": "Survey",
     "slug": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2",
     "file": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2.md",
-    "thumbnail": "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/15.png"
+    "thumbnail": "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/15.png",
+    "readingMinutes": 10
   },
   {
     "title": "2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임 시프트 - UX/UI의 진화와 Spatial UX/UI (1부)",
@@ -77,7 +79,8 @@
     "category": "Survey",
     "slug": "2025-03-13-ux-trends-and-spatial-computing-paradigm-1",
     "file": "2025-03-13-ux-trends-and-spatial-computing-paradigm-1.md",
-    "thumbnail": "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1/01.jpg"
+    "thumbnail": "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1/01.jpg",
+    "readingMinutes": 20
   },
   {
     "title": "MongoDB.local Seoul 2024 - 컨퍼런스 참여 후기",
@@ -92,7 +95,8 @@
     "category": "Activity",
     "slug": "2024-09-04-mongodb-local",
     "file": "2024-09-04-mongodb-local.md",
-    "thumbnail": "/images/posts/2024-09-04-mongodb-local/01.png"
+    "thumbnail": "/images/posts/2024-09-04-mongodb-local/01.png",
+    "readingMinutes": 10
   },
   {
     "title": "[인증과 인가] - 토큰 기반 인증을 풀스택으로 구현해보자 (Next js, Typescript)",
@@ -110,7 +114,8 @@
     "category": "Survey",
     "slug": "2024-03-06-jwttoken",
     "file": "2024-03-06-jwttoken.md",
-    "thumbnail": "/images/posts/2024-03-06-jwttoken/jwttoken01.png"
+    "thumbnail": "/images/posts/2024-03-06-jwttoken/jwttoken01.png",
+    "readingMinutes": 7
   },
   {
     "title": "(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민",
@@ -125,7 +130,8 @@
     "category": "Survey",
     "slug": "2023-09-17-browser-rendering",
     "file": "2023-09-17-Browser-rendering.md",
-    "thumbnail": "/images/posts/2023-09-17-Browser-rendering/browser01.png"
+    "thumbnail": "/images/posts/2023-09-17-Browser-rendering/browser01.png",
+    "readingMinutes": 8
   },
   {
     "title": "Javascript Test - Jest",
@@ -142,7 +148,8 @@
     "category": "Study",
     "slug": "2023-09-13-test-jest-learn",
     "file": "2023-09-13-Test-jest-learn.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 1
   },
   {
     "title": "React에서 Skeleton Loading 만들기",
@@ -156,7 +163,8 @@
     "category": "Survey",
     "slug": "2023-07-19-skeleton-loading",
     "file": "2023-07-19-Skeleton-loading.md",
-    "thumbnail": "/images/posts/2023-07-19-Skeleton-loading/folder_image01.png"
+    "thumbnail": "/images/posts/2023-07-19-Skeleton-loading/folder_image01.png",
+    "readingMinutes": 1
   },
   {
     "title": "아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1",
@@ -171,7 +179,8 @@
     "category": "Study",
     "slug": "2023-05-01-atomicdesignpattern01",
     "file": "2023-05-01-AtomicDesignPattern01.md",
-    "thumbnail": "/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png"
+    "thumbnail": "/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png",
+    "readingMinutes": 4
   },
   {
     "title": "[Next JS] 학습 01 - 프로젝트 생성 및 개념 공부",
@@ -186,7 +195,8 @@
     "category": "Study",
     "slug": "2023-04-25-next-js-practice",
     "file": "2023-04-25-Next-js-practice.md",
-    "thumbnail": "/images/posts/2023-04-25-Next-js-practice/next-js-01.png"
+    "thumbnail": "/images/posts/2023-04-25-Next-js-practice/next-js-01.png",
+    "readingMinutes": 3
   },
   {
     "title": "Technical SEO를 위한 동적 메타태그 작성 feat.React Project",
@@ -201,7 +211,8 @@
     "category": "Survey",
     "slug": "2023-04-15-technical-seo-meta-tag",
     "file": "2023-04-15-Technical-SEO-meta-tag.md",
-    "thumbnail": "/images/posts/2023-04-15-Technical-SEO-meta-tag/seo01.png"
+    "thumbnail": "/images/posts/2023-04-15-Technical-SEO-meta-tag/seo01.png",
+    "readingMinutes": 3
   },
   {
     "title": "API (API, Application Programming Interface)",
@@ -214,7 +225,8 @@
     "category": "Study",
     "slug": "2023-04-13-api",
     "file": "2023-04-13-API.md",
-    "thumbnail": "/images/posts/2023-04-13-API/api01.png"
+    "thumbnail": "/images/posts/2023-04-13-API/api01.png",
+    "readingMinutes": 2
   },
   {
     "title": "클라우드, SaaS, IaaS, PasS",
@@ -230,7 +242,8 @@
     "category": "Study",
     "slug": "2023-04-13-cloud-saas-iaas-paas",
     "file": "2023-04-13-Cloud-SaaS-IaaS-PaaS.md",
-    "thumbnail": "/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png"
+    "thumbnail": "/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png",
+    "readingMinutes": 1
   },
   {
     "title": "[데이터 포맷]  JSON & XML",
@@ -244,7 +257,8 @@
     "category": "Study",
     "slug": "2023-04-13-json-xml",
     "file": "2023-04-13-JSON-XML.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 3
   },
   {
     "title": "[Python]백준 : 11660 구간 합 구하기 5",
@@ -258,7 +272,8 @@
     "category": "Study",
     "slug": "2023-04-13-python-prefix-sum-5",
     "file": "2023-04-13-Python-Prefix-sum-5.md",
-    "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum01.jpg"
+    "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum01.jpg",
+    "readingMinutes": 1
   },
   {
     "title": "[Python]백준 : 10986 나머지 합",
@@ -272,7 +287,8 @@
     "category": "Study",
     "slug": "2023-04-13-python-prefix-sum-reminder",
     "file": "2023-04-13-Python-Prefix-sum-reminder.md",
-    "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg"
+    "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg",
+    "readingMinutes": 1
   },
   {
     "title": "[Front-end CS] 브라우저 렌더링 프로세스",
@@ -287,7 +303,8 @@
     "category": "Study",
     "slug": "2023-02-26-front-end-cs-browser-rendering",
     "file": "2023-02-26-Front-end-cs-browser-rendering.md",
-    "thumbnail": "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering01.png"
+    "thumbnail": "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering01.png",
+    "readingMinutes": 7
   },
   {
     "title": "코드 업 : 1920 : (재귀함수) 2진수 변환",
@@ -301,7 +318,8 @@
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-binaryparse",
     "file": "2023-02-26-codeup-codetest-binaryparse.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 1
   },
   {
     "title": "코드 업 : 1928 : (재귀함수) 우박수 (3n + 1) (basic)",
@@ -315,7 +333,8 @@
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-collatz-basic",
     "file": "2023-02-26-codeup-codetest-collatz-basic.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 1
   },
   {
     "title": "1929 : (재귀함수) 우박수 (3n+1) (reverse)",
@@ -329,7 +348,8 @@
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-collatz-reverse",
     "file": "2023-02-26-codeup-codetest-collatz-reverse.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 1
   },
   {
     "title": "[Python] - 구현: 시뮬레이션과 완전 탐색",
@@ -343,7 +363,8 @@
     "category": "Study",
     "slug": "2023-02-02-python-implementation-bruteforce",
     "file": "2023-02-02-Python-implementation-bruteforce.md",
-    "thumbnail": "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png"
+    "thumbnail": "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png",
+    "readingMinutes": 5
   },
   {
     "title": "[Python] - 그리디 알고리즘",
@@ -357,7 +378,8 @@
     "category": "Study",
     "slug": "2023-02-01-python-greedy-algorithm",
     "file": "2023-02-01-Python-greedy-algorithm.md",
-    "thumbnail": "/images/posts/2023-02-01-Python-greedy-algorithm/greedy_01.png"
+    "thumbnail": "/images/posts/2023-02-01-Python-greedy-algorithm/greedy_01.png",
+    "readingMinutes": 3
   },
   {
     "title": "[Python] - 그래프 탐색 알고리즘 : DFS/BFS",
@@ -371,7 +393,8 @@
     "category": "Study",
     "slug": "2023-01-30-python-dfs-bfs",
     "file": "2023-01-30-Python-dfs-bfs.md",
-    "thumbnail": "/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_01.png"
+    "thumbnail": "/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_01.png",
+    "readingMinutes": 6
   },
   {
     "title": "[Python] - 동적 프로그래밍 : 피보나치 수",
@@ -385,7 +408,8 @@
     "category": "Study",
     "slug": "2023-01-30-python-pibonacci",
     "file": "2023-01-30-Python-pibonacci.md",
-    "thumbnail": "/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png"
+    "thumbnail": "/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png",
+    "readingMinutes": 2
   },
   {
     "title": "React Query + 상태 + 상태 관리 [1편]",
@@ -401,7 +425,8 @@
     "category": "Study",
     "slug": "2023-01-13-reactquery-state-statemanagement-01",
     "file": "2023-01-13-ReactQuery-State-StateManagement-01.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 3
   },
   {
     "title": "React Query + 상태 + 상태 관리 [2편]",
@@ -417,7 +442,8 @@
     "category": "Study",
     "slug": "2023-01-13-reactquery-state-statemanagement-02",
     "file": "2023-01-13-ReactQuery-State-StateManagement-02.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 3
   },
   {
     "title": "[Code refactoring] - 원티드 프리온보딩 프론트엔드 챌린지 - 사전과제 리팩토링",
@@ -432,7 +458,8 @@
     "category": "Activity",
     "slug": "2023-01-11-wanted-pre-onboarding-01",
     "file": "2023-01-11-Wanted-pre-onboarding-01.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 2
   },
   {
     "title": "[Python] - 기본 입출력",
@@ -445,7 +472,8 @@
     "category": "Study",
     "slug": "2023-01-10-python-default-input-output",
     "file": "2023-01-10-Python-default-input-output.md",
-    "thumbnail": "/images/posts/2023-01-10-Python-default-input-output/input_output.png"
+    "thumbnail": "/images/posts/2023-01-10-Python-default-input-output/input_output.png",
+    "readingMinutes": 1
   },
   {
     "title": "[Python] - 함수, 람다 표현식",
@@ -458,7 +486,8 @@
     "category": "Study",
     "slug": "2023-01-10-python-function-lambda",
     "file": "2023-01-10-Python-function-lambda.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 1
   },
   {
     "title": "[Python] - 조건문, 반복문",
@@ -471,7 +500,8 @@
     "category": "Study",
     "slug": "2023-01-10-python-if-for-while",
     "file": "2023-01-10-Python-if-for-while.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 4
   },
   {
     "title": "[Python] - 문자열 자료형, 튜플 자료형",
@@ -484,7 +514,8 @@
     "category": "Study",
     "slug": "2023-01-10-python-string-tuple",
     "file": "2023-01-10-Python-string-tuple.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 1
   },
   {
     "title": "[Python] - 집합 자료형, 사전 자료",
@@ -497,7 +528,8 @@
     "category": "Study",
     "slug": "2023-01-09-python-dictionary-data-type",
     "file": "2023-01-09-Python-dictionary-data-type.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 2
   },
   {
     "title": "[Python] - 리스트 자료형",
@@ -510,7 +542,8 @@
     "category": "Study",
     "slug": "2023-01-08-python-data-type-list",
     "file": "2023-01-08-Python-data-type-list.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 3
   },
   {
     "title": "[Python] - 언더바는 언제 사용하는가?",
@@ -523,7 +556,8 @@
     "category": "Study",
     "slug": "2023-01-08-python-under-bar",
     "file": "2023-01-08-Python-under-bar.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 1
   },
   {
     "title": "Typescript를 사용하는 이유",
@@ -537,7 +571,8 @@
     "category": "Study",
     "slug": "2022-12-31-typescript",
     "file": "2022-12-31-Typescript.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 4
   },
   {
     "title": "Javascript Types",
@@ -550,7 +585,8 @@
     "category": "Study",
     "slug": "2022-12-27-javascript-type",
     "file": "2022-12-27-Javascript-type.md",
-    "thumbnail": "/images/posts/2022-12-27-Javascript-type/javascript1.png"
+    "thumbnail": "/images/posts/2022-12-27-Javascript-type/javascript1.png",
+    "readingMinutes": 1
   },
   {
     "title": "ReactHook_useContext + Context API",
@@ -565,7 +601,8 @@
     "category": "Study",
     "slug": "2022-12-27-react-usecontext-contextapi",
     "file": "2022-12-27-React-useContext-ContextAPI.md",
-    "thumbnail": "/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png"
+    "thumbnail": "/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png",
+    "readingMinutes": 1
   },
   {
     "title": "ReactHook_useMemo",
@@ -580,7 +617,8 @@
     "category": "Study",
     "slug": "2022-12-27-react-usememo",
     "file": "2022-12-27-React-useMemo.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 1
   },
   {
     "title": "ReactHook_useRef",
@@ -595,7 +633,8 @@
     "category": "Study",
     "slug": "2022-12-27-react-useref",
     "file": "2022-12-27-React-useRef.md",
-    "thumbnail": ""
+    "thumbnail": "",
+    "readingMinutes": 1
   },
   {
     "title": "React Navigation",
@@ -609,7 +648,8 @@
     "category": "Survey",
     "slug": "2022-12-26-react-navigation",
     "file": "2022-12-26-React-Navigation.md",
-    "thumbnail": "/images/posts/2022-12-26-React-Navigation/ReactNavigation1.png"
+    "thumbnail": "/images/posts/2022-12-26-React-Navigation/ReactNavigation1.png",
+    "readingMinutes": 3
   },
   {
     "title": "상태 관리 라이브러리 Redux VS MobX",
@@ -625,6 +665,7 @@
     "category": "Survey",
     "slug": "2022-12-26-react-redux",
     "file": "2022-12-26-React-Redux.md",
-    "thumbnail": "/images/posts/2022-12-26-React-Redux/reactredux1.png"
+    "thumbnail": "/images/posts/2022-12-26-React-Redux/reactredux1.png",
+    "readingMinutes": 4
   }
 ]

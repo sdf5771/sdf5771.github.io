@@ -7,7 +7,7 @@ import markdownItMath from 'markdown-it-katex';
 import markdownItTaskLists from 'markdown-it-task-lists';
 import markdownItFootnote from 'markdown-it-footnote';
 import hljs from 'highlight.js';
-import postsData from '../../../public/posts-data.json';
+import { POSTS } from '../../data/posts';
 import type { PostMetadata } from '../../types';
 import { toPostSlug } from '../../utils/postSlug';
 
@@ -29,7 +29,7 @@ const Post = () => {
 
     /* 글 목록은 빌드 타임 JSON 이라 동기적으로 찾습니다 */
     const post: PostMetadata | undefined = requestedSlug
-        ? postsData.find(item => item.slug === requestedSlug)
+        ? POSTS.find(item => item.slug === requestedSlug)
         : undefined;
 
     useEffect(() => {

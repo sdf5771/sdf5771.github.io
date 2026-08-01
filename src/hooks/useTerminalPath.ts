@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import postsData from '../../public/posts-data.json';
+import { POSTS } from '../data/posts';
 import { safeDecodeURIComponent } from '../utils/url';
 import { toPostSlug } from '../utils/postSlug';
 
@@ -27,7 +27,7 @@ function useTerminalPath(): string {
          *    404 라우트가 생기면서 임의 경로가 여기까지 도달할 수 있게 됐습니다.
          */
         const post = slug
-            ? postsData.find(item => item.slug === toPostSlug(safeDecodeURIComponent(slug)))
+            ? POSTS.find(item => item.slug === toPostSlug(safeDecodeURIComponent(slug)))
             : undefined;
 
         /* 표시도 정본 slug 로 통일합니다 — 대문자 주소로 들어와도 한 형태로 보입니다 */
@@ -44,13 +44,18 @@ function useTerminalPath(): string {
         return postPath(new URLSearchParams(search).get('id')) ?? '~';
     }
 
+    /* 글 목록(STEP 4). `/posts/<slug>` 검사 뒤라 글 상세를 가로채지 않습니다 */
+    if (pathname === '/posts') {
+        return '~/posts';
+    }
+
     if (pathname === '/about') {
         return '~/about.md';
     }
 
     /*
-     * 홈(`/`)과 그 밖의 모든 경로. `/posts`·`/tags` 는 STEP 4·6 에서 라우트가
-     * 생길 때 여기에 분기를 추가하세요 — 지금은 404 라 `~` 가 맞습니다.
+     * 홈(`/`)과 그 밖의 모든 경로. `/tags` 는 STEP 6 에서 라우트가 생길 때
+     * 여기에 분기를 추가하세요 — 지금은 404 라 `~` 가 맞습니다.
      */
     return '~';
 }

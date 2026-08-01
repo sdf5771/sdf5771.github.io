@@ -17,4 +17,13 @@ export interface PostMetadata {
      */
     file: string;
     thumbnail: string;
+    /**
+     * 읽기 시간(분). **빌드 시 본문에서 계산합니다** — `generatePostsData.ts` 가
+     * 이미 파일 전문을 읽고 있어 추가 비용이 없고, 런타임에는 본문이 없습니다.
+     * 산출 규칙은 `generatePostsData.ts` 의 `calculateReadingMinutes` 가 정의처입니다.
+     *
+     * ⚠️ 41편 중 17편이 `1` 입니다. 정보량이 낮으므로 메타 줄에서 3순위로 두고
+     *    배지·색으로 강조하지 마세요(handoff-step4-list.md §5-1).
+     */
+    readingMinutes: number;
 }

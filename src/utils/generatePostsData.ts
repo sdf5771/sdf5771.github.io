@@ -15,6 +15,26 @@ const imageDirectory = path.join(process.cwd(), IMAGE_DIRECTORY_PATH);
 // Create posts data path
 const jsonOutputPath = path.join(process.cwd(), 'public/posts-data.json');
 
+/** 분당 읽는 글자 수(공백 제외). 한국어 기술 문서 기준값입니다 */
+const CHARACTERS_PER_MINUTE = 500;
+
+/**
+ * 읽기 시간(분) — docs/handoff-step4-list.md §5-1.
+ *
+ * 코드블록과 이미지를 먼저 걷어냅니다. 둘 다 "읽는" 대상이 아니라서 그대로
+ * 세면 코드가 긴 글의 읽기 시간이 실제보다 몇 배로 부풀려집니다.
+ * 최소값은 1 분입니다 — `0분` 은 표시할 수 없는 값입니다.
+ */
+function calculateReadingMinutes(content: string): number {
+    const characters = content
+        /* 펜스 코드블록. 닫히지 않은 블록이 뒤를 통째로 먹지 않게 비탐욕 매칭 */
+        .replace(/```[\s\S]*?```/g, ' ')
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+        .replace(/\s/g, '').length;
+
+    return Math.max(1, Math.round(characters / CHARACTERS_PER_MINUTE));
+}
+
 function generatePostsData() {
     try {
         /* `.DS_Store` 같은 부산물이 글로 둔갑하지 않게 마크다운만 봅니다 */
@@ -49,9 +69,8 @@ function generatePostsData() {
             const filePath = path.join(postsDirectory, filename);
             const fileContents = fs.readFileSync(filePath, 'utf8');
 
-            const { data } = matter(fileContents);
+            const { data, content } = matter(fileContents);
             const thumbnailImage = bringThumbnailImage(filename);
-            console.log('thumbnailImage ', thumbnailImage);
 
             /*
              * 🔴 slug(URL)와 file(디스크)을 **분리**합니다 — product.md §7-3 R2.
@@ -70,6 +89,7 @@ function generatePostsData() {
                 slug: toPostSlug(typeof data.slug === 'string' && data.slug ? data.slug : filename),
                 file: filename,
                 thumbnail: thumbnailImage,
+                readingMinutes: calculateReadingMinutes(content),
             } as PostMetadata;
         });
 

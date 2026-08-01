@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import styles from './About.module.css';
 import memoji from '../../assets/images/memoji.png';
-import postsData from '../../../public/posts-data.json';
+import { POSTS } from '../../data/posts';
 import { ContributionGraph } from '../../components/shared';
 import { ABOUT_CONTACT_LINKS, EMAIL_URL, RESUME_URL } from '../../constants/site';
 import { useMediaMatch } from '../../hooks';
@@ -38,7 +38,7 @@ const AVATAR_SIZE_MOBILE = 80;
 
 function About() {
     const isMobileViewport = useMediaMatch(MEDIA_MOBILE);
-    const topTags = useMemo(() => rankTags(postsData).slice(0, TOP_TAG_COUNT), []);
+    const topTags = useMemo(() => rankTags(POSTS).slice(0, TOP_TAG_COUNT), []);
 
     const avatarSize = isMobileViewport ? AVATAR_SIZE_MOBILE : AVATAR_SIZE_DESKTOP;
 
@@ -96,7 +96,7 @@ function About() {
                      * 됩니다. 글을 세는 단위는 `개` 입니다(§3.4, `편`은 내부 문서 전용).
                      */}
                     <p className={styles.section_note}>
-                        글 {postsData.length}개에 가장 많이 붙은 태그입니다. 이 블로그에 쓴
+                        글 {POSTS.length}개에 가장 많이 붙은 태그입니다. 이 블로그에 쓴
                         글에서 각 태그가 등장한 횟수입니다.
                     </p>
 
