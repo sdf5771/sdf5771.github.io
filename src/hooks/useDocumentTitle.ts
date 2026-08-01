@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import postsData from '../../public/posts-data.json';
 import { HOME_TITLE, NOT_FOUND_TITLE_NAME, buildPageTitle } from '../constants/site';
 import { safeDecodeURIComponent } from '../utils/url';
+import { toPostSlug } from '../utils/postSlug';
 
 /**
  * 현재 라우트에 해당하는 `<title>` 문자열.
@@ -16,7 +17,10 @@ function resolveDocumentTitle(pathname: string, search: string): string {
     // 글 데이터는 빌드 타임 JSON 이라 동기적으로 찾을 수 있습니다 — 본문 fetch 를
     // 기다리지 않으므로 제목이 뒤늦게 바뀌는 깜빡임이 없습니다.
     const findTitle = (slug: string | null | undefined): string => {
-        const post = slug ? postsData.find(item => item.slug === slug) : undefined;
+        /* 정본 slug 는 소문자입니다 — 대문자 주소로 들어와도 같은 글을 찾습니다 */
+        const post = slug
+            ? postsData.find(item => item.slug === toPostSlug(slug))
+            : undefined;
 
         // 없는 slug 는 이제 404 화면으로 갑니다. 제목도 거기에 맞춥니다.
         return buildPageTitle(post ? post.title : NOT_FOUND_TITLE_NAME);
@@ -32,23 +36,17 @@ function resolveDocumentTitle(pathname: string, search: string): string {
         return findTitle(new URLSearchParams(search).get('id'));
     }
 
-    if (pathname === '/posts') {
-        return buildPageTitle('글 목록');
-    }
-
     if (pathname === '/about') {
         return buildPageTitle('소개');
     }
 
-    if (pathname === '/tags') {
-        return buildPageTitle('태그');
-    }
-
-    const tagMatch = /^\/tags\/(.+)$/.exec(pathname);
-    if (tagMatch) {
-        return buildPageTitle(`#${safeDecodeURIComponent(tagMatch[1])}`);
-    }
-
+    /*
+     * 🔴 **아직 없는 라우트의 제목을 미리 쓰지 않습니다.**
+     * `/posts`·`/tags`·`/tags/<태그>` 는 STEP 4·6 이고 지금은 전부 404 화면입니다.
+     * 여기에 `글 목록 · …` 을 넣어 두면 화면은 404 인데 탭 제목만 정상이라,
+     * **페이지 전환을 제목으로 안내받는 스크린리더 사용자에게 거짓말**이 됩니다.
+     * 라우트가 생기는 STEP 에서 그 라우트와 **함께** 제목을 되살리세요.
+     */
     return buildPageTitle(NOT_FOUND_TITLE_NAME);
 }
 
