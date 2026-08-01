@@ -58,8 +58,8 @@
 
 .shortcut {
     flex-shrink: 0;
-    /* ⌘K — 라틴·기호 전용 */
-    font-family: var(--font-numeric);
+    /* ⌘K — 라틴·기호 전용이고 11px 이라 모노를 쓸 수 있는 몇 안 되는 자리입니다 */
+    font-family: var(--font-mono-11);
     font-size: var(--fs-2xs);
     color: var(--color-text-muted);
     transition: opacity var(--dur-base) var(--ease-out);

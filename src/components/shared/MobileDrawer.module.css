@@ -143,8 +143,7 @@
     display: flex;
     align-items: center;
     min-height: var(--tap-min);
-    /* GitHub · Notion · Email — 라틴 전용이라 픽셀 모노 유지 */
-    font-family: var(--font-numeric);
+    font-family: var(--font-ui-label);
     font-size: var(--fs-lg);
     color: var(--color-text-secondary);
     text-decoration: none;

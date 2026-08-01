@@ -51,8 +51,8 @@
     display: inline-flex;
     align-items: center;
     min-height: var(--tap-min);
-    /* GitHub · Notion · Email — 라틴 전용이라 픽셀 모노를 유지합니다 */
-    font-family: var(--font-numeric);
+    /* 13px 은 11px 그리드의 정수배가 아니라 모노를 쓸 수 없습니다(§13 2번) */
+    font-family: var(--font-ui-label);
     font-size: var(--fs-sm);
     color: var(--color-text-secondary);
     text-decoration: none;
@@ -69,8 +69,8 @@
     margin: 0;
     padding-top: var(--space-5);
     border-top: 1px solid var(--color-border-subtle);
-    /* `© 2026 Seobisback` — 라틴·숫자 전용 */
-    font-family: var(--font-numeric);
+    /* 12px 은 11px 그리드의 정수배가 아니라 모노를 쓸 수 없습니다(§13 1번) */
+    font-family: var(--font-ui-meta);
     font-size: var(--fs-xs);
     color: var(--color-text-muted);
 }

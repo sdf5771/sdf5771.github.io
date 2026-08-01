@@ -7,11 +7,16 @@ jsDelivr 원본은 Galmuri11 492.9 KB + GalmuriMono11 478.0 KB = 971 KB 이고,
 게다가 배포용 galmuri.css 에는 unicode-range 가 없어 분할 로딩도 안 됩니다.
 근거: docs/handoff-step1-shell.md §4-1
 
-채택한 시나리오
----------------
-A — 한글 전체(11,172자) + 라틴 + 부호 유지, 한자·카나 제거.
-상용 2,350자만 남기는 B(87 KB)가 더 싸지만, 상용에 없는 음절이 제목에 하나라도
-들어가면 한 단어 안에서 픽셀 → Pretendard 로 서체가 갈립니다. 근거: §4-2
+채택한 범위 — 두 폰트가 다릅니다
+--------------------------------
+**Galmuri11 (display, `display` 모드)** — 한글 전체(11,172자) + 라틴 + 부호.
+  상용 2,350자만 남기면 더 싸지만, 상용에 없는 음절이 제목에 하나라도 들어가면
+  한 단어 안에서 픽셀 → Pretendard 로 서체가 갈립니다. 근거: §4-2
+
+**GalmuriMono11 (mono, `mono` 모드)** — **한글을 뺍니다.** 라틴·숫자·기호만.
+  모노는 11px 고정이고 11px 한글 픽셀은 금지이므로(§3-3a) 한글 글리프가 필요 없습니다.
+  덤으로 규칙이 **기술적으로 강제**됩니다 — 모노 자리에 실수로 한글을 넣으면
+  Pretendard 로 자동 폴백돼 눈에 띕니다. 152.7 KB → 10 KB대. 근거: §13 6번
 
 Galmuri11-Bold 는 의도적으로 받지 않습니다. 비트맵 서체는 굵기 변형 시
 도트 격자가 무너지므로 픽셀 텍스트에는 font-weight 를 주지 않습니다. (§4-2)
@@ -21,8 +26,8 @@ Galmuri11-Bold 는 의도적으로 받지 않습니다. 비트맵 서체는 굵�
     pip install "fonttools[woff]" brotli
     curl -O https://cdn.jsdelivr.net/npm/galmuri/dist/Galmuri11.woff2
     curl -O https://cdn.jsdelivr.net/npm/galmuri/dist/GalmuriMono11.woff2
-    python3 scripts/subset-galmuri.py Galmuri11.woff2     src/assets/fonts/Galmuri11-subset.woff2
-    python3 scripts/subset-galmuri.py GalmuriMono11.woff2 src/assets/fonts/GalmuriMono11-subset.woff2
+    python3 scripts/subset-galmuri.py display Galmuri11.woff2     src/assets/fonts/Galmuri11-subset.woff2
+    python3 scripts/subset-galmuri.py mono    GalmuriMono11.woff2 src/assets/fonts/GalmuriMono11-subset.woff2
 
 라이선스
 --------
@@ -47,12 +52,32 @@ EXCLUDE_RANGES = [
     (0xFF66, 0xFF9F),  # 반각 가타카나
 ]
 
+# mono 모드에서 추가로 제외 — 모노는 라틴·숫자·기호 전용입니다
+HANGUL_RANGES = [
+    (0x1100, 0x11FF),  # 한글 자모
+    (0x3130, 0x318F),  # 한글 호환 자모
+    (0xA960, 0xA97F),  # 한글 자모 확장 A
+    (0xAC00, 0xD7A3),  # 한글 음절
+    (0xD7B0, 0xD7FF),  # 한글 자모 확장 B
+]
 
-def is_excluded(codepoint: int) -> bool:
-    return any(low <= codepoint <= high for low, high in EXCLUDE_RANGES)
+
+def build_excludes(mode: str) -> list[tuple[int, int]]:
+    if mode == "mono":
+        return EXCLUDE_RANGES + HANGUL_RANGES
+
+    if mode == "display":
+        return EXCLUDE_RANGES
+
+    raise SystemExit("mode 는 'display' 또는 'mono' 여야 합니다")
 
 
-def subset(src: str, dst: str) -> None:
+def subset(mode: str, src: str, dst: str) -> None:
+    exclude_ranges = build_excludes(mode)
+
+    def is_excluded(codepoint: int) -> bool:
+        return any(low <= codepoint <= high for low, high in exclude_ranges)
+
     font = TTFont(src)
     codepoints: set[int] = set()
     for table in font["cmap"].tables:
@@ -74,8 +99,8 @@ def subset(src: str, dst: str) -> None:
         ],
         check=True,
     )
-    print(f"{dst}: {len(keep)}자 / {os.path.getsize(dst) / 1024:.1f} KB")
+    print(f"[{mode}] {dst}: {len(keep)}자 / {os.path.getsize(dst) / 1024:.1f} KB")
 
 
 if __name__ == "__main__":
-    subset(sys.argv[1], sys.argv[2])
+    subset(sys.argv[1], sys.argv[2], sys.argv[3])

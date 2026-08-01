@@ -75,6 +75,17 @@
     --color-focus-onFill: #1a1206;
     --color-focus-glow: rgba(230, 165, 54, 0.28);
 
+    /* 히어로(별자리) 전용 — STEP 2 에서 소비합니다.
+       ⚠️ canvas 는 CSS 변수를 자동으로 읽지 못합니다. 마운트 시·테마 전환 시
+       getComputedStyle(document.documentElement).getPropertyValue(...) 로 읽어
+       캐시하세요. 색을 JS 에 하드코딩하면 테마 전환이 깨집니다. */
+    --color-hero-rule: transparent;
+    --color-hero-orbit: transparent;
+    --color-hero-link-strong: rgba(230, 165, 54, 0.18);
+    --color-hero-link-weak: rgba(230, 165, 54, 0.11);
+    /* 색이 아니라 숫자입니다 */
+    --hero-bloom-alpha: 0.67;
+
     /* 그림자 */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -134,6 +145,13 @@
     --color-focus-onFill: #171c2b;
     --color-focus-glow: rgba(125, 92, 14, 0.26);
 
+    /* 히어로 — 괘선·궤도는 라이트에만 있습니다 */
+    --color-hero-rule: rgba(23, 28, 43, 0.055);
+    --color-hero-orbit: rgba(23, 28, 43, 0.1);
+    --color-hero-link-strong: rgba(23, 28, 43, 0.3);
+    --color-hero-link-weak: rgba(23, 28, 43, 0.2);
+    --hero-bloom-alpha: 0.3;
+
     --shadow-sm: 0 1px 3px rgba(23, 28, 43, 0.1);
     --shadow-md: 0 4px 12px rgba(23, 28, 43, 0.14);
     --shadow-btn-inset: inset 0 1px 0 rgba(255, 255, 255, 0.5),
@@ -145,32 +163,40 @@
  * ---------------------------------------------------------- */
 :root {
     /* 서체 원본. @font-face 선언은 src/styles/fonts.css 에 있습니다.
-       Galmuri 가 아직 안 받아졌어도 Pretendard 로 폴백되므로 안전합니다. */
+       모노의 폴백이 Pretendard 인 것이 핵심입니다 — 모노 서브셋에 한글이 없어서
+       모노 자리에 한글을 넣으면 Pretendard 로 자동 폴백됩니다(§13 7번). */
     --font-display: 'Galmuri11', 'Pretendard', sans-serif;
-    --font-mono: 'GalmuriMono11', 'IBM Plex Mono', ui-monospace, monospace;
+    --font-mono: 'GalmuriMono11', 'Pretendard', ui-monospace, monospace;
     --font-body: 'Pretendard', -apple-system, system-ui, sans-serif;
 
     /* ------------------------------------------------------------
      * 서체 역할 — 자리별 지정을 여기 한 곳에 모읍니다.
      * ------------------------------------------------------------
-     * 🟡 판정 대기 중인 규칙이 걸려 있어 반드시 이 레이어를 거쳐 소비하세요.
-     *    컴포넌트에서 --font-mono / --font-display 를 직접 쓰지 마세요.
+     * 🔴 컴포넌트에서 --font-mono / --font-display 를 직접 쓰지 말고
+     *    반드시 이 레이어를 거치세요.
      *
-     * 배경: `한글 12px 이상` × `12px 미만 픽셀 금지` × `픽셀은 11의 정수배에서만
-     * 선명` 세 규칙이 충돌합니다. 11 < 12 이므로 **한글에 픽셀 서체를 쓰려면
-     * 최소 22px**입니다. 그래서 11~13px 자리 중 한글이 섞일 수 있는 곳은
-     * 전부 Pretendard 로 내렸습니다. web-design 의 STEP 1 최종 판정이 오면
-     * 아래 네 줄만 고치면 됩니다.
+     * 픽셀 서체 사용 규칙 (§3-3a — 전 화면 공통, 예외 없음)
+     *
+     * | 서체          | 허용 크기              | 허용 문자        |
+     * |---------------|------------------------|------------------|
+     * | Galmuri11     | 22/33/44/55/66px       | 한글 포함 전부    |
+     * | Galmuri11     | 11px                   | 라틴·숫자·기호만  |
+     * | GalmuriMono11 | **11px 고정**          | 라틴·숫자·기호만  |
+     * | Pretendard    | 12px 이상 자유         | 전부             |
+     *
+     * 12px·13px 은 11px 그리드의 정수배가 아니라 도트가 뭉개집니다.
+     * 22px 미만에서 픽셀 느낌이 필요하면 크기를 22px 로 올리거나 픽셀을 포기하는
+     * 두 선택지뿐입니다. 중간은 없습니다.
      * ---------------------------------------------------------- */
 
-    /* 내비 라벨·드로어 항목·검색 플레이스홀더·안내문 — 한글 */
+    /* 내비 라벨·드로어 항목·검색 플레이스홀더·안내문·연락처 라벨 */
     --font-ui-label: var(--font-body);
-    /* 경로 표시(➜ ~/...) — `~/tags/<태그>` 처럼 한글이 들어올 수 있습니다 */
-    --font-terminal-path: var(--font-body);
-    /* 메타·날짜 등 한글이 섞이는 보조 정보 */
+    /* 메타·날짜·저작권 등 보조 정보 */
     --font-ui-meta: var(--font-body);
-    /* 라틴·숫자 전용 자리(연락처 라벨·저작권·카운트) — 픽셀 모노 유지 */
-    --font-numeric: var(--font-mono);
+    /* 경로 표시(➜ ~/...) — **--fs-2xs(11px) 에서만** 씁니다. 라틴 전용 */
+    --font-terminal-path: var(--font-mono);
+    /* 그 밖의 모노 자리(⌘K 등) — **--fs-2xs(11px) 고정, 라틴·숫자·기호만** */
+    --font-mono-11: var(--font-mono);
 
     /* 축 A — 픽셀(Galmuri11). 11의 배수만 사용. transform: scale() 금지 */
     --fs-pixel-1: 11px;
@@ -180,7 +206,11 @@
     --fs-pixel-5: 55px;
     --fs-pixel-6: 66px;
 
-    /* 축 B — 본문/UI */
+    /*
+     * 축 B — 본문/UI
+     * --fs-2xs(11px) 만 GalmuriMono11 을 쓸 수 있습니다.
+     * --fs-xs(12px)·--fs-sm(13px) 은 11px 그리드의 정수배가 아니므로 **Pretendard** 입니다(§13 1·2번).
+     */
     --fs-2xs: 11px;
     --fs-xs: 12px;
     --fs-sm: 13px;

@@ -110,8 +110,11 @@
 
 .path_text {
     min-width: 0;
+    /* 모노는 11px 고정입니다. 12px 은 11px 그리드의 정수배가 아니라 도트가 뭉개집니다(§13 4번).
+       라틴 전용 자리이며, `~/tags/<태그>` 처럼 한글이 들어오면 모노 서브셋에 한글이
+       없어 Pretendard 로 자동 폴백됩니다. */
     font-family: var(--font-terminal-path);
-    font-size: var(--fs-xs);
+    font-size: var(--fs-2xs);
     line-height: var(--lh-snug);
     color: var(--color-text-muted);
     white-space: nowrap;

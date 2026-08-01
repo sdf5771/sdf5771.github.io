@@ -110,8 +110,8 @@
     background-color: var(--color-bg-raised);
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-pill);
-    /* 태그 이름은 라틴(Python·React·CodingTest) */
-    font-family: var(--font-numeric);
+    /* 13px 이라 모노를 쓸 수 없습니다(§13 2번) */
+    font-family: var(--font-ui-label);
     font-size: var(--fs-sm);
     color: var(--color-text-secondary);
     cursor: pointer;
