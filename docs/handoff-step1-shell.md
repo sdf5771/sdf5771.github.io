@@ -95,6 +95,15 @@
 | `--color-focus-ring` | `#7d5c0e` | `#ffd770` | 배경 위 포커스 링 |
 | `--color-focus-onFill` | `#171c2b` | `#1a1206` | **골드 채움 위 포커스 링** |
 | `--color-focus-glow` | `rgba(125,92,14,.26)` | `rgba(230,165,54,.28)` | 포커스 글로우 |
+| `--color-hero-rule` | `rgba(23,28,43,.055)` | `transparent` | 별자리 히어로 괘선 (라이트만) |
+| `--color-hero-orbit` | `rgba(23,28,43,.10)` | `transparent` | 히어로 궤도 타원 (라이트만) |
+| `--color-hero-link-strong` | `rgba(23,28,43,.30)` | `rgba(230,165,54,.18)` | 성좌 연결선 (공유 태그 ≥2) |
+| `--color-hero-link-weak` | `rgba(23,28,43,.20)` | `rgba(230,165,54,.11)` | 성좌 연결선 (공유 태그 1) |
+| `--hero-bloom-alpha` | `.30` | `.67` | 별 블룸 알파 (색 아님 — 숫자) |
+
+> **하단 5개는 STEP 2 제안을 채택**한 것입니다(2026-08-01). 전부 장식이라 대비비 요건 대상이 아닙니다. 이름만 정정했습니다 — 제안된 `--color-chart-*`는 이 사이트에 차트가 없어 오해 소지가 있고, `--color-…-alpha`는 색이 아니므로 `--color-` 접두를 뗐습니다.
+>
+> ⚠️ **canvas는 CSS 변수를 자동으로 읽지 못합니다.** 마운트 시·테마 전환 시 `getComputedStyle(document.documentElement).getPropertyValue('--color-hero-link-strong')`로 읽어 캐시하세요. **색을 JS에 하드코딩하면 테마 전환이 깨집니다.**
 
 > ⚠️ **`accent-fill`과 `accent-text`를 혼용하지 마세요.** 다크에서는 값이 같아 실수해도 티가 안 나지만, 라이트로 전환하는 순간 골드 텍스트가 **2.14:1**로 무너집니다. "배경 위에 글자·아이콘으로 놓는 골드"는 **항상 `--color-accent-text`** 입니다.
 
@@ -392,15 +401,15 @@ requestAnimationFrame(() =>
 높이 48px · position: sticky; top:0 · z-index: var(--z-header)
 컨테이너 max-width 1180px, 가운데 정렬
 
-[섭우.log]  [➜ ~/posts/client-side-ai.md]        [홈 글 태그 소개] [⌕____] [◫]
- 픽셀 22px      모노 12px, text-muted                모노 13px      250px  토글
+[Seobisback.log]  [➜ ~/posts/client-side-ai.md]   [홈 글 태그 소개] [⌕____] [◫]
+  픽셀 22px          모노 11px, text-muted          Pretendard 14px  250px  토글
 ```
 
 | 슬롯 | 명세 |
 |---|---|
-| 워드마크 | `--font-display` 22px. `섭우` = `--color-text-primary`, `.log` = `--color-accent-text`. `<a href="/">` + `aria-label="섭우.log 홈"` |
-| 경로 표시 | `➜` 는 `--color-accent-text` + `aria-hidden`. 경로 본문은 `--font-mono` 12px `--color-text-muted`. **길면 왼쪽부터 잘라** `…/client-side-ai.md` (파일명이 정보량이 가장 큼) |
-| 내비 | 홈 / 글 / 태그 / 소개. `<a>` 요소. 비활성 `--color-text-secondary`, 호버 `--color-text-primary` |
+| 워드마크 | `--font-display` 22px. `Seobisback` = `--color-text-primary`, `.log` = `--color-accent-text`. `<a href="/">` + `aria-label="Seobisback.log 홈"`. **전부 라틴이라 픽셀 유지 가능** |
+| 경로 표시 | `➜` 는 `--color-accent-text` + `aria-hidden`. 경로 본문은 `--font-mono` **11px** `--color-text-muted`. **길면 왼쪽부터 잘라** `…/client-side-ai.md` (파일명이 정보량이 가장 큼) |
+| 내비 | 홈 / 글 / 태그 / 소개. **`--font-body` `--fs-base` 14px** (한글이라 픽셀 불가 — §3-3a). `<a>` 요소. 비활성 `--color-text-secondary`, 호버 `--color-text-primary` |
 | **활성 내비** | **배경(`--color-accent-subtle`) + 밑줄(2px `--color-accent-text`) 병용** ← §6-1a |
 | 검색 | 인라인 입력 250px → 포커스 시 **320px** + 보더 `--color-accent-border` + `box-shadow: 0 0 0 2px var(--color-focus-glow)`. 전환 `--dur-slow --ease-emphasized`. `⌘K` 힌트는 포커스 시 opacity 0 |
 | 테마 토글 | 우측 끝 |
@@ -431,7 +440,7 @@ alpha = min(1, scrollY / 60);  bg = rgba(<raised RGB>, 0.35 + alpha * 0.65)
 ```
 높이 52px (44px 터치 타깃 확보)
 
-[섭우.log]                              [⌕]  [◫]  [☰]
+[Seobisback.log]                        [⌕]  [◫]  [☰]
                                         각 44×44 터치, 시각 20px
 ─────────────────────────────────────────────────────
 [➜ ~/posts/client-side-ai.md]   ← 본문 최상단 브레드크럼 행 (sticky 아님)
@@ -491,6 +500,53 @@ GitHub   Notion   Email
 | 비활성 | `opacity: .45; pointer-events: none` |
 
 ⚠️ `src/initialize.css`의 `a:active, a:hover { outline: 0 }`을 **제거**하세요. 포커스 표시를 지웁니다.
+
+### 6-7. 버튼 타이포 규격 (신규 · 전 화면 공통)
+
+버튼은 공용 컴포넌트이므로 여기서 확정합니다. §3-3a 규칙과 정합합니다.
+
+| 종류 | 서체 | 크기 | 근거 |
+|---|---|---|---|
+| **히어로 주 CTA** (`최신 글 읽기`) | `--font-display` **Galmuri11** | **22px** | 히어로는 "보는 것". 한글 22px = 2× 정수배 + 12px 이상 → **규칙 통과** |
+| 그 외 모든 버튼 (주/보조/텍스트) | `--font-body` Pretendard 600 | `--fs-md` **15px** | UI는 "읽는 것". 15px은 픽셀 불가 구간 |
+| 아이콘 전용 버튼 | — | 아이콘 20px, 터치 44×44 | |
+
+- 히어로 주 CTA는 **홈에 1개만** 존재합니다. 다른 화면의 주 버튼도 Pretendard 15px입니다
+- 22px 픽셀 라벨은 세로 여백이 커 보이므로 버튼 패딩은 `--space-3 --space-6`(12/24) 기준으로 잡고 시각 보정하세요
+- 버튼 라벨에 `font-weight`를 픽셀 서체에 주지 마세요 (§4-2)
+
+### 6-8. 헤더 ↔ 히어로 겹침 규칙 (STEP 2 정합 · 신규)
+
+STEP 2가 히어로 높이를 `svh` 기반 `clamp()`로 확정했고(§6-8a), 그 높이가 **헤더를 포함한 첫 화면 점유율**이어야 합니다. 그러려면 **헤더가 히어로 위에 겹쳐야** 합니다.
+
+현재 §6-1은 헤더를 `position: sticky; top: 0`으로 두는데, sticky는 **문서 흐름에서 자리를 차지**합니다. 그대로 두면 히어로가 헤더 아래에서 시작해 §6-1b의 "투명하게 시작해 그래픽이 화면 끝까지 이어져 보이게"가 성립하지 않습니다.
+
+**해법 — 헤더는 sticky 유지, 히어로만 끌어올림 (홈 전용)**
+
+```css
+/* 홈의 히어로에만 적용 */
+.hero {
+  margin-top: calc(-1 * var(--header-h-desktop));  /* sm에서는 -mobile */
+  padding-top: var(--header-h-desktop);            /* 텍스트가 헤더 밑에 깔리지 않게 */
+}
+```
+
+- `position: fixed`로 바꾸지 마세요. 그러면 **모든 다른 페이지**에 `padding-top` 보정이 필요해집니다. 음수 마진은 홈 한 곳만 건드립니다
+- 헤더 `z-index: var(--z-header)`가 히어로 캔버스보다 위 (§3-4)
+- 겹침 결과: 첫 화면에서 **히어로 높이 = 헤더 + 그래픽**. STEP 2의 `56svh`가 곧 헤더 포함 점유율이 됩니다
+
+#### 6-8a. 히어로 높이 — STEP 2 값 채택
+
+| bp | 높이 |
+|---|---|
+| xl (≥1280) | `clamp(440px, 56svh, 560px)` |
+| lg (1024~1279) | `clamp(400px, 54svh, 500px)` |
+| md (768~1023) | `clamp(380px, 52svh, 460px)` |
+| sm (≤767) | STEP 2 §7.2 2존 구조 |
+
+- `agent-log/design.md` Part II-D의 `xl 70vh`는 **폐기**합니다. 1440×900에서 70vh = 630px로, 첫 화면이 그래픽으로만 차 "30초 안에 읽을 글 파악"이라는 주 과업을 방해합니다
+- **`vh`가 아니라 `svh`를 씁니다.** 모바일 브라우저에서 `100vh`는 주소창이 **숨겨진** 상태 기준이라 주소창이 보일 때 히어로가 화면을 넘칩니다. `svh`는 주소창이 보이는 상태 기준이라 최악의 경우에도 의도한 비율이 지켜집니다
+- 폴백: `height: 56vh; height: 56svh;` 두 줄을 순서대로 쓰면 구형 브라우저는 앞줄을 씁니다
 
 ---
 
@@ -563,7 +619,7 @@ GitHub   Notion   Email
 
 | 위치 | 확정 문구 |
 |---|---|
-| 워드마크 | `섭우.log` |
+| 워드마크 | **`Seobisback.log`** (2026-08-01 사용자 확정) |
 | 내비 | `홈` / `글` / `태그` / `소개` |
 | 경로 | `~` · `~/posts` · `~/posts/<slug>.md` · `~/tags/<태그>` · `~/about.md` |
 | 검색 플레이스홀더 | `제목, 태그로 검색` |

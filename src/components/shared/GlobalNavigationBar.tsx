@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import styles from './GlobalNavigationBar.module.css';
 import Wordmark from './Wordmark';
+import ThemeToggle from './ThemeToggle';
 import { NAV_ITEMS, WORDMARK_TEXT, isNavItemActive } from '../../constants/site';
 import { useTerminalPath } from '../../hooks';
 
@@ -58,6 +59,10 @@ function GlobalNavigationBar() {
                         })}
                     </ul>
                 </nav>
+
+                <div className={styles.actions}>
+                    <ThemeToggle />
+                </div>
             </div>
         </header>
     );
