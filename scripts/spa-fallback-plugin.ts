@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import type { Plugin, ResolvedConfig } from 'vite';
+import { toPostSlug } from '../src/utils/postSlug';
 
 /**
  * 🔴 딥링크 복구 — `dist/404.html` 생성 플러그인.
@@ -30,6 +31,32 @@ import type { Plugin, ResolvedConfig } from 'vite';
  */
 
 /**
+ * 🔴 브라우저에서 도는 slug 정규화 — **`src/utils/postSlug.ts` 의 사본입니다.**
+ *
+ * 왜 사본일 수밖에 없는가
+ * -----------------------
+ * 이 스크립트는 번들 밖에서, React 마운트 **전에**, 인라인으로 돌아야 합니다.
+ * 그래서 `toPostSlug` 를 import 해 쓸 수가 없고 규칙을 문자열로 다시 적습니다.
+ *
+ * 🔴 사본은 조용히 어긋납니다. `toPostSlug` 가 규칙을 하나라도 더 얻는데 여기가
+ *    그대로면, 대문자가 섞인 33편의 딥링크가 정본과 다른 주소로 착지합니다 —
+ *    에러 없이, 배포된 뒤에야.
+ *    그래서 `closeBundle` 이 **이 소스 자체를 Node 에서 실행해** 41편 전부와
+ *    대문자 변형에 대해 `toPostSlug` 와 결과가 같은지 검사하고, 어긋나면
+ *    빌드를 세웁니다(아래 assertNormalizerParity). 재타이핑한 복사본이 아니라
+ *    **실제로 배포될 소스**를 검사한다는 점이 핵심입니다 —
+ *    verify-font-glyphs.mjs 가 실제 배포될 폰트를 여는 것과 같은 이유입니다.
+ *
+ * 규칙을 고칠 때는 `toPostSlug` 와 이 문자열을 **함께** 고치세요.
+ */
+const BROWSER_SLUG_NORMALIZER = `function (value) {
+          return value
+            .replace(/\\.md$/i, '')
+            .toLowerCase()
+            .replace(/-{2,}/g, '-');
+        }`;
+
+/**
  * `<head>` 최상단에 들어가는 인라인 리다이렉트.
  *
  * 🔴 **React 마운트 전에** 끝내야 합니다. 부팅한 뒤 리다이렉트하면 사용자가
@@ -48,7 +75,12 @@ const REDIRECT_SCRIPT = `
     <script>
       (function () {
         var p = location.pathname,
-          q = location.search;
+          q = location.search,
+          h = location.hash;
+
+        // 🔴 src/utils/postSlug.ts 의 toPostSlug 와 같은 규칙이어야 합니다.
+        //    빌드가 이 함수와 toPostSlug 의 결과를 대조합니다(spa-fallback-plugin.ts).
+        var normalize = ${BROWSER_SLUG_NORMALIZER};
 
         // 구 경로 /post?id=<slug> → 신 경로 /posts/<slug>
         // 단수 'post' + id 쿼리일 때만. 신 경로 '/posts/'는 이 패턴에 걸리지
@@ -56,22 +88,99 @@ const REDIRECT_SCRIPT = `
         if (/^\\/post\\/?$/.test(p)) {
           var m = /[?&]id=([^&]+)/.exec(q);
           if (m) {
-            location.replace('/posts/' + m[1].toLowerCase());
+            // h 를 붙이지 않으면 /post?id=Foo#결론 의 앵커가 사라집니다.
+            location.replace('/posts/' + normalize(m[1]) + h);
             return;
           }
         }
 
-        // 대문자 slug → 소문자 (소문자 slug 가 정본).
-        // 이미 소문자면 아무것도 하지 않습니다 — 이 가드가 무한 루프를 막습니다.
-        if (p.indexOf('/posts/') === 0 && p !== p.toLowerCase()) {
-          location.replace(p.toLowerCase() + q);
-          return;
+        // 비정본 slug → 정본 slug (소문자 + 연속 하이픈 정리).
+        // 이미 정본이면 아무것도 하지 않습니다 — 이 가드가 무한 루프를 막습니다.
+        // toPostSlug 는 멱등이라(normalize(normalize(x)) === normalize(x))
+        // 착지한 주소는 이 분기에 다시 걸리지 않습니다.
+        if (p.indexOf('/posts/') === 0) {
+          var canonical = '/posts/' + normalize(p.slice(7));
+          if (canonical !== p) {
+            location.replace(canonical + q + h);
+            return;
+          }
         }
 
         // 그 외에는 손대지 않고 SPA 부팅에 맡깁니다. 없는 경로면 404 화면이 뜹니다.
       })();
     </script>
 `;
+
+interface PostsDataEntry {
+    slug: string;
+    file: string;
+}
+
+/**
+ * 🔴 빌드타임 단언 — 인라인 사본이 `toPostSlug` 와 같은 규칙인지 검사합니다.
+ *
+ * 리포에 테스트가 하나도 없고, 파일명 41개 중 33개에 대문자가 있습니다.
+ * 규칙이 하나만 어긋나도 그 33편의 딥링크가 정본과 다른 주소로 갑니다.
+ * 지금까지 이것을 막던 것은 주석뿐이었습니다 — 이 함수가 그 자리를 대신합니다.
+ */
+function assertNormalizerParity(outDir: string): void {
+    const dataPath = path.join(outDir, 'posts-data.json');
+    const posts = JSON.parse(readFileSync(dataPath, 'utf8')) as PostsDataEntry[];
+
+    /* 배포될 소스 문자열을 그대로 함수로 만듭니다 — 재타이핑한 사본이 아닙니다 */
+    const normalizeInBrowser = new Function(
+        `return (${BROWSER_SLUG_NORMALIZER});`,
+    )() as (value: string) => string;
+
+    /* 실제 slug·파일명과, 사용자가 실제로 쳐 넣는 대문자 변형까지 */
+    const samples = posts.flatMap(post => [
+        post.slug,
+        post.file,
+        post.slug.toUpperCase(),
+        post.slug.replace(/-/g, '--'),
+    ]);
+
+    const mismatches = samples.filter(
+        sample => normalizeInBrowser(sample) !== toPostSlug(sample),
+    );
+
+    if (mismatches.length > 0) {
+        const listed = [...new Set(mismatches)]
+            .slice(0, 5)
+            .map(
+                sample =>
+                    `      "${sample}"\n` +
+                    `        인라인   → "${normalizeInBrowser(sample)}"\n` +
+                    `        toPostSlug → "${toPostSlug(sample)}"`,
+            )
+            .join('\n');
+
+        throw new Error(
+            `[spa-fallback-404] 인라인 slug 규칙이 toPostSlug 와 어긋납니다 ` +
+                `(${mismatches.length}/${samples.length}건).\n${listed}\n` +
+                '   → scripts/spa-fallback-plugin.ts 의 BROWSER_SLUG_NORMALIZER 를\n' +
+                '     src/utils/postSlug.ts 의 toPostSlug 와 같은 규칙으로 맞추세요.',
+        );
+    }
+
+    /* 멱등성 — 정본에 다시 규칙을 걸어도 그대로여야 리다이렉트가 되돌아오지 않습니다 */
+    const notIdempotent = posts.filter(post => toPostSlug(post.slug) !== post.slug);
+
+    if (notIdempotent.length > 0) {
+        throw new Error(
+            `[spa-fallback-404] posts-data.json 의 slug 가 정본이 아닙니다 ` +
+                `(${notIdempotent.length}건): ${notIdempotent
+                    .slice(0, 5)
+                    .map(post => `"${post.slug}" → "${toPostSlug(post.slug)}"`)
+                    .join(', ')}\n` +
+                '   → 인라인 리다이렉트가 무한 루프에 빠집니다. generatePostsData 를 확인하세요.',
+        );
+    }
+
+    console.log(
+        `  ✅ slug 규칙 일치 — 인라인 사본 ≡ toPostSlug (${samples.length}개 표본, ${posts.length}편)`,
+    );
+}
 
 export default function spaFallbackPlugin(): Plugin {
     let config: ResolvedConfig;
@@ -88,6 +197,10 @@ export default function spaFallbackPlugin(): Plugin {
 
         closeBundle() {
             const outDir = path.resolve(config.root, config.build.outDir);
+
+            /* 규칙이 어긋난 채로 404.html 을 쓰느니 빌드를 세웁니다 */
+            assertNormalizerParity(outDir);
+
             const indexHtml = readFileSync(path.join(outDir, 'index.html'), 'utf8');
 
             /*

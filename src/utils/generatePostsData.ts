@@ -74,6 +74,25 @@ function generatePostsData() {
         });
 
         /*
+         * 🔴 멱등성 단언 — 기록된 slug 에 규칙을 한 번 더 걸어도 그대로여야 합니다.
+         *
+         * 이게 깨지면 런타임에서 `toPostSlug(요청)` 이 어떤 글의 slug 와도 맞지
+         * 않아 그 글이 404 가 되고, 404.html 의 인라인 리다이렉트는 정본에
+         * 도달하지 못해 되돌아옵니다. 프론트매터 `slug:` 오버라이드(R5)가
+         * 정규화를 우회하는 경로라 실제로 일어날 수 있습니다.
+         * 한 줄이지만 "slug 만 소문자화" 류의 사고를 **빌드 에러로** 잡습니다.
+         */
+        const notCanonical = postMetadatas.filter(post => toPostSlug(post.slug) !== post.slug);
+
+        if (notCanonical.length > 0) {
+            throw new Error(
+                `slug 가 정본 형태가 아닙니다: ${notCanonical
+                    .map(post => `"${post.slug}" → "${toPostSlug(post.slug)}"`)
+                    .join(', ')}`,
+            );
+        }
+
+        /*
          * 소문자화로 두 파일이 같은 slug 가 되면 한쪽 글이 영영 열리지 않습니다.
          * 조용히 넘어가면 배포된 뒤에야 드러나므로 빌드를 세웁니다.
          */
