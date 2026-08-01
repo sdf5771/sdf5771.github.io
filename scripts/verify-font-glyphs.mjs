@@ -26,9 +26,26 @@ import { brotliDecompressSync } from 'node:zlib';
 /** §4-7 인벤토리. subset-galmuri.py 의 REQUIRED 와 같은 값이어야 합니다 */
 const REQUIRED = '▸×●○→←↑↗★·…–☰⌘';
 
+/** 현대 한글 음절 U+AC00–U+D7A3 = 11,172자 */
+const HANGUL_START = 0xac00;
+const HANGUL_END = 0xd7a3;
+const HANGUL_TOTAL = HANGUL_END - HANGUL_START + 1;
+
+/**
+ * 폰트별 한글 수록 계약 (handoff-step1-shell.md §4-2 · E-2 판정).
+ *
+ * - 디스플레이 **11,172자**: 범위를 좁히면 한글 제목이 폴백 서체로 렌더됩니다.
+ *   장식 기호와 달리 눈에 잘 띄지만, 특정 글자에서만 터져 놓치기 쉽습니다.
+ * - 모노 **0자**: 결함이 아니라 **설계**입니다. "한글은 22px 이상 디스플레이만"
+ *   이라는 규칙을 강제하는 장치라, 누군가 "한글이 없네" 하고 채워 넣으면
+ *   규칙이 조용히 죽습니다. 이 단언이 그것을 막습니다.
+ *
+ * ⚠️ 이 단언이 검사하는 것은 **서브셋이 계약대로인가**뿐입니다. 화면에서 한글에
+ *    어느 서체를 쓰는지(사용처)는 폰트로 잡을 수 없습니다 — 그쪽은 CSS 리뷰 소관.
+ */
 const FONTS = [
-    'src/assets/fonts/Galmuri11-subset.woff2',
-    'src/assets/fonts/GalmuriMono11-subset.woff2',
+    { path: 'src/assets/fonts/Galmuri11-subset.woff2', role: '디스플레이', hangul: HANGUL_TOTAL },
+    { path: 'src/assets/fonts/GalmuriMono11-subset.woff2', role: '모노', hangul: 0 },
 ];
 
 /* WOFF2 가 인덱스로 줄여 쓰는 표준 테이블 태그 63종 (WOFF2 명세 표 1) */
@@ -216,9 +233,22 @@ function readCodepoints(path) {
     return codepoints;
 }
 
+/** 수록된 현대 한글 음절 수 */
+function countHangul(codepoints) {
+    let count = 0;
+
+    for (let code = HANGUL_START; code <= HANGUL_END; code += 1) {
+        if (codepoints.has(code)) {
+            count += 1;
+        }
+    }
+
+    return count;
+}
+
 const failures = [];
 
-for (const path of FONTS) {
+for (const { path, role, hangul: expectedHangul } of FONTS) {
     let codepoints;
 
     try {
@@ -228,26 +258,40 @@ for (const path of FONTS) {
         continue;
     }
 
+    /* 단언 1 — 장식 기호 인벤토리 */
     const missing = [...REQUIRED].filter(char => !codepoints.has(char.codePointAt(0)));
 
     if (missing.length > 0) {
         const listed = missing
             .map(char => `${char} U+${char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`)
             .join(', ');
-        failures.push(`${path} — 누락: ${listed}`);
+        failures.push(`${path} — 장식 기호 누락: ${listed}`);
     } else {
         console.log(`✅ 장식 기호 ${[...REQUIRED].length}자 전부 존재 (${codepoints.size}자 수록): ${path}`);
+    }
+
+    /* 단언 2·3 — 한글 수록 계약 */
+    const hangulCount = countHangul(codepoints);
+
+    if (hangulCount !== expectedHangul) {
+        failures.push(
+            `${path} — ${role} 한글 수록 ${hangulCount.toLocaleString()}자 ` +
+                `(계약: ${expectedHangul.toLocaleString()}자)`,
+        );
+    } else {
+        console.log(`✅ ${role} 한글 ${hangulCount.toLocaleString()}자 — 계약대로: ${path}`);
     }
 }
 
 if (failures.length > 0) {
-    console.error('\n❌ 서브셋 폰트 검증 실패 — 장식 기호가 폴백 서체로 렌더됩니다.');
+    console.error('\n❌ 서브셋 폰트 검증 실패 — 폰트가 계약과 다릅니다.');
     for (const failure of failures) {
         console.error(`   ${failure}`);
     }
     console.error(
-        '\n   → scripts/subset-galmuri.py 의 유지 목록에 코드포인트를 추가하고 서브셋을 다시 만드세요.\n' +
-            '     docs/handoff-step1-shell.md §4-3a · §4-7\n',
+        '\n   → scripts/subset-galmuri.py 의 유지 목록·한글 범위를 고치고 서브셋을 다시 만드세요.\n' +
+            '     장식 기호: §4-3a · §4-7 / 한글 수록 계약: §4-2\n' +
+            '     ⚠️ 모노에 한글이 없는 것은 설계입니다 — 채우지 말고 사용처를 고치세요.\n',
     );
     process.exit(1);
 }
