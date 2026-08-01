@@ -1,0 +1,170 @@
+/*
+ * 404 화면.
+ * 명세: docs/handoff-step5-404-about.md §4-1 · §3-2
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ */
+
+.root {
+    /*
+     * .main 이 flex 컬럼이라 여기서 남은 세로 공간을 그대로 받습니다.
+     * 100svh 에서 헤더·푸터 높이를 빼는 계산을 손으로 하지 않아도 되고,
+     * 푸터 높이가 바뀌어도 따라옵니다.
+     */
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-16) var(--space-5);
+}
+
+.inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 텍스트가 적어 넓으면 흩어집니다. --container-narrow 보다 좁게 */
+    width: 100%;
+    max-width: var(--measure-reading);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.title {
+    /* 44px = 11의 정수배 + 22 이상이라 한글 픽셀 서체가 허용됩니다(§3-3a) */
+    margin: var(--space-8) 0 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-4);
+    font-weight: 400;
+    line-height: var(--lh-heading);
+    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: none;
+}
+
+.description {
+    margin: var(--space-4) 0 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-normal);
+    color: var(--color-text-body);
+}
+
+.path_line {
+    display: block;
+    max-width: 100%;
+    margin: var(--space-6) 0 0;
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    line-height: var(--lh-mono);
+    color: var(--color-text-muted);
+    /* 72자 상한이 있어도 긴 무공백 문자열은 가로 스크롤을 만듭니다 */
+    word-break: break-all;
+    overflow-wrap: anywhere;
+}
+
+.prompt {
+    color: var(--color-accent-text);
+}
+
+.path {
+    color: var(--color-text-muted);
+}
+
+.actions {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+}
+
+/*
+ * 히어로 주 CTA(홈에 1개)만 Galmuri11 22px 이고, 그 외 모든 버튼은
+ * Pretendard 600 15px 입니다(STEP 1 §6-7). 404 버튼은 그 예외가 아닙니다.
+ * 한글 11px 픽셀 서체는 규칙상 불가능하기도 합니다(§3-3a).
+ */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap-min);
+    padding: 0 var(--space-5);
+    border: 1px solid var(--color-border-interactive);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-raised);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
+}
+
+.button:hover {
+    border-color: var(--color-accent-border);
+    background-color: var(--color-accent-subtle);
+}
+
+.button_primary {
+    border-color: transparent;
+    background-color: var(--color-accent-fill);
+    /* 채워진 골드 위 글자는 onFill 입니다. text 를 쓰면 라이트에서 무너집니다 */
+    color: var(--color-accent-onFill);
+    box-shadow: var(--shadow-btn-inset);
+}
+
+.button_primary:hover {
+    border-color: transparent;
+    background-color: var(--color-accent-light);
+}
+
+.button:focus-visible,
+.search_link:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.search_link {
+    min-height: var(--tap-min);
+    margin-top: var(--space-4);
+    padding: 0 var(--space-2);
+    border: 0;
+    background: none;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.search_link:hover {
+    color: var(--color-text-primary);
+}
+
+/* ------------------------------------------------------------
+ * sm (≤767px)
+ * ------------------------------------------------------------
+ * 버튼을 세로로 쌓지 않습니다. `홈으로`(3자) + `글 목록 보기`(6자)는 15px
+ * Pretendard 로 gap·패딩을 더해도 358px 안에 들어갑니다. 세로 스택은
+ * 세로 예산만 먹습니다.
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .root {
+        padding: var(--space-12) var(--space-4);
+    }
+
+    .title {
+        /* 33px — 여전히 11의 정수배 + 22 이상 */
+        font-size: var(--fs-pixel-3);
+    }
+
+    .actions {
+        align-self: stretch;
+    }
+
+    .button {
+        flex: 1 1 0;
+        padding: 0 var(--space-3);
+    }
+}
