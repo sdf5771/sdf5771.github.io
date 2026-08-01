@@ -1,0 +1,19 @@
+/*
+ * 검색어 하이라이트.
+ * 명세: docs/handoff-step4-list.md §3-6 · §10-1
+ */
+
+.mark {
+    /*
+     * 🔴 브라우저 기본 `mark` 는 노랑 배경 + 검정 글자입니다. 덮어쓰지 않으면
+     *    다크 모드에서 형광 노랑 블록이 제목을 뚫고 나옵니다.
+     *
+     * 배경만으로 구분하지 않습니다 — accent-subtle 단독 대비는 라이트 1.09:1 /
+     * 다크 1.15:1 로 배경 경계가 보이지 않습니다. **글자색이 실제 구분 채널**이고
+     * 대비는 라이트 4.81:1 / 다크 7.74:1 입니다(§10-1).
+     */
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent-text);
+    border-radius: var(--radius-xs);
+    padding: 0 1px;
+}

@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import postsData from '../../public/posts-data.json';
-import { HOME_TITLE, NOT_FOUND_TITLE_NAME, buildPageTitle } from '../constants/site';
+import { POSTS } from '../data/posts';
+import {
+    HOME_TITLE,
+    NOT_FOUND_TITLE_NAME,
+    POST_LIST_PATH,
+    buildPageTitle,
+} from '../constants/site';
 import { safeDecodeURIComponent } from '../utils/url';
 import { toPostSlug } from '../utils/postSlug';
 
@@ -18,9 +23,7 @@ function resolveDocumentTitle(pathname: string, search: string): string {
     // 기다리지 않으므로 제목이 뒤늦게 바뀌는 깜빡임이 없습니다.
     const findTitle = (slug: string | null | undefined): string => {
         /* 정본 slug 는 소문자입니다 — 대문자 주소로 들어와도 같은 글을 찾습니다 */
-        const post = slug
-            ? postsData.find(item => item.slug === toPostSlug(slug))
-            : undefined;
+        const post = slug ? POSTS.find(item => item.slug === toPostSlug(slug)) : undefined;
 
         // 없는 slug 는 이제 404 화면으로 갑니다. 제목도 거기에 맞춥니다.
         return buildPageTitle(post ? post.title : NOT_FOUND_TITLE_NAME);
@@ -29,6 +32,16 @@ function resolveDocumentTitle(pathname: string, search: string): string {
     const slugMatch = /^\/posts\/(.+)$/.exec(pathname);
     if (slugMatch) {
         return findTitle(safeDecodeURIComponent(slugMatch[1]));
+    }
+
+    /*
+     * 글 목록(STEP 4). `/posts/<slug>` 검사 **뒤**에 와야 합니다.
+     *
+     * 🔴 필터·검색 상태를 제목에 반영하지 않습니다(§10-2). 타이핑마다 탭 제목이
+     *    바뀌면 산만하고, 스크린리더가 페이지 전환으로 오해합니다.
+     */
+    if (pathname === POST_LIST_PATH) {
+        return buildPageTitle('글 목록');
     }
 
     /* 구 경로. 리다이렉트 전 한 프레임 동안만 쓰이므로 깜빡임을 줄여 둡니다 */
@@ -42,8 +55,8 @@ function resolveDocumentTitle(pathname: string, search: string): string {
 
     /*
      * 🔴 **아직 없는 라우트의 제목을 미리 쓰지 않습니다.**
-     * `/posts`·`/tags`·`/tags/<태그>` 는 STEP 4·6 이고 지금은 전부 404 화면입니다.
-     * 여기에 `글 목록 · …` 을 넣어 두면 화면은 404 인데 탭 제목만 정상이라,
+     * `/tags`·`/tags/<태그>` 는 STEP 6 이고 지금은 404 화면입니다.
+     * 여기에 제목을 넣어 두면 화면은 404 인데 탭 제목만 정상이라,
      * **페이지 전환을 제목으로 안내받는 스크린리더 사용자에게 거짓말**이 됩니다.
      * 라우트가 생기는 STEP 에서 그 라우트와 **함께** 제목을 되살리세요.
      */

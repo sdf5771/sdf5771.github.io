@@ -1,0 +1,110 @@
+/*
+ * 결과 0건.
+ * 명세: docs/handoff-step4-list.md §8-4 · §9-1
+ */
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-16) var(--space-5);
+    /*
+     * 목록이 바뀌었다는 시각 신호. 저감 모드에서는 아래에서 제거하고, 그 자리는
+     * 목록 헤더의 aria-live 영역이 메웁니다(§9-4).
+     */
+    animation: emptyFadeUp var(--dur-base) var(--ease-out) both;
+}
+
+@keyframes emptyFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.icon {
+    --search-icon-cell: 4px;
+    color: var(--color-border-strong);
+}
+
+.glyph {
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-3);
+    line-height: 1;
+    color: var(--color-border-strong);
+}
+
+.title {
+    margin: var(--space-5) 0 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.description {
+    margin: var(--space-3) 0 0;
+    max-width: 420px;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-normal);
+    color: var(--color-text-secondary);
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+}
+
+.action {
+    display: inline-flex;
+    align-items: center;
+    height: var(--tap-min);
+    padding: 0 var(--space-5);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-surface);
+    /* 버튼 타이포는 전 화면 공통 규격입니다 — Pretendard 600 / 15px (STEP 1 §6-7) */
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out);
+}
+
+.action:hover {
+    border-color: var(--color-border-interactive);
+}
+
+.action_primary {
+    border-color: var(--color-accent-border);
+    background-color: var(--color-accent-fill);
+    color: var(--color-accent-onFill);
+}
+
+.action_primary:hover {
+    background-color: var(--color-accent-hover);
+}
+
+/* 골드 채움 위에서는 골드 링이 1.55:1 로 보이지 않아 반전합니다 (STEP 1 §6-6) */
+.action_primary:focus-visible {
+    outline-color: var(--color-focus-onFill);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .empty {
+        animation: none;
+    }
+}

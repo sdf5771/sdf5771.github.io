@@ -70,7 +70,7 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
     { label: '홈', path: '/', isRouteReady: true },
     /* STEP 4 */
-    { label: '글', path: '/posts', activePaths: ['/post'], isRouteReady: false },
+    { label: '글', path: '/posts', activePaths: ['/post'], isRouteReady: true },
     /* STEP 6 */
     { label: '태그', path: '/tags', isRouteReady: false },
     { label: '소개', path: '/about', isRouteReady: true },

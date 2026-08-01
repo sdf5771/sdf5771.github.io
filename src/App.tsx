@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import styles from './App.module.css';
-import { About, Home, LegacyPostRedirect, NotFound, Post } from './routes';
+import { About, Home, LegacyPostRedirect, NotFound, Post, Posts } from './routes';
 import { GlobalNavigationBar, Footer } from './components/shared';
 import { ShellProvider } from './components/shell';
 import { useDocumentTitle } from './hooks';
@@ -25,6 +25,7 @@ function App() {
                 <main className={styles.main} id="main">
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/posts" element={<Posts />} />
                         <Route path="/posts/:slug" element={<Post />} />
                         {/* 구 경로. 프로덕션에서는 dist/404.html 이 먼저 잡아 넘깁니다 */}
                         <Route path="/post" element={<LegacyPostRedirect />} />
