@@ -7,9 +7,11 @@ import Footer from './Footer';
 import Wordmark from './Wordmark';
 import ThemeToggle from './ThemeToggle';
 import ContributionGraph from './ContributionGraph';
+import ErrorBoundary from './ErrorBoundary';
 
 export {
     ContributionGraph,
+    ErrorBoundary,
     GlobalNavigationBar,
     PostList,
     PageTitle,

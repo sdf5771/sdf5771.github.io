@@ -34,26 +34,65 @@ export interface Contributions {
 
 /**
  * 모듈 레벨 Promise 캐시. 홈 → 소개로 이동해도 fetch 는 세션당 1회입니다.
+ *
+ * 🔴 **성공한 Promise 만** 남습니다. 거부된 Promise 가 캐시에 남으면 이후 모든
+ *    마운트가 같은 거부를 즉시 돌려받아, 홈↔소개를 아무리 오가도 재시도가
+ *    되지 않습니다. 그런데 실패 화면은 `잠시 후 다시 시도해 주세요` 라고
+ *    말합니다 — 새로고침 말고는 방법이 없으니 그 문장이 거짓말이 됩니다.
+ *    아래 `cache = null` 이 카피를 사실로 만듭니다.
  */
 let cache: Promise<Contributions> | null = null;
 
+/**
+ * 최소 형태 가드.
+ *
+ * `response.json()` 은 무엇이든 돌려줄 수 있는데(워크플로 산출물이 바뀌거나
+ * 404 HTML 이 JSON 으로 파싱되는 등) 타입 단언은 그것을 검사하지 않습니다.
+ * 검증 없이 통과시키면 `data.weeks.slice()` 가 **렌더 도중** 터지고,
+ * 그 자리에서 React 트리가 죽습니다 — url.ts 가 경고하는 바로 그 실패 양식입니다.
+ * 여기서 던지면 호출부의 `.catch` 가 받아 정상적인 실패 화면이 됩니다.
+ */
+function assertContributions(data: unknown): asserts data is Contributions {
+    const candidate = data as Partial<Contributions> | null;
+
+    if (!candidate || !Array.isArray(candidate.weeks)) {
+        throw new Error('contributions.json 의 형태가 계약과 다릅니다');
+    }
+}
+
 export function loadContributions(): Promise<Contributions> {
     if (!cache) {
-        cache = fetch('/contributions.json').then(response => {
-            if (!response.ok) {
-                throw new Error(String(response.status));
-            }
+        const request = fetch('/contributions.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(String(response.status));
+                }
 
-            return response.json() as Promise<Contributions>;
-        });
+                return response.json() as Promise<unknown>;
+            })
+            .then(data => {
+                assertContributions(data);
+
+                return data;
+            });
 
         /*
-         * 캐시된 Promise 에 핸들러를 한 번 붙여 둡니다.
-         * 컴포넌트가 결과를 받기 전에 언마운트되면 아무도 이 거부를 처리하지
-         * 않아 unhandledrejection 이 콘솔에 뜹니다. 호출부는 각자 체인을 따로
-         * 만들므로 이 no-op 이 호출부의 에러 처리를 가리지 않습니다.
+         * 실패는 캐시하지 않습니다. `request` 를 비우는 것이 아니라 `cache` 가
+         * 아직 이 요청일 때만 비웁니다 — 그 사이 누군가 재시도를 시작했다면
+         * 그쪽 Promise 를 지워 버리면 안 됩니다.
+         *
+         * 이 `catch` 는 unhandledrejection 방지도 겸합니다. 컴포넌트가 결과를
+         * 받기 전에 언마운트되면 아무도 거부를 처리하지 않아 콘솔에 뜹니다.
+         * 호출부는 각자 체인을 따로 만들므로 이것이 호출부의 에러 처리를
+         * 가리지 않습니다.
          */
-        cache.catch(() => {});
+        request.catch(() => {
+            if (cache === request) {
+                cache = null;
+            }
+        });
+
+        cache = request;
     }
 
     return cache;

@@ -1,0 +1,57 @@
+/* 렌더 중 예외가 났을 때의 최후 화면. 셸(헤더·푸터)조차 없는 상태를 전제합니다 */
+.boundary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: var(--space-6, 24px);
+    background: var(--color-bg-base);
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3, 12px);
+    max-width: 420px;
+}
+
+.title {
+    margin: 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-lg);
+    color: var(--color-text-primary);
+}
+
+.description {
+    margin: 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    color: var(--color-text-secondary);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4, 16px);
+}
+
+/* ContributionGraph 의 error_action 과 같은 형태 — 실패 화면의 액션은 한 가지 모양입니다 */
+.action {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: 0;
+    border: 0;
+    background: none;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    color: var(--color-accent-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.action:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
