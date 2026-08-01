@@ -103,14 +103,12 @@
    * Remove the gray background color from active links in IE 10.
    */
   /*
-   * Improve readability of focused elements when they are also in an
-   * active/hover state.
+   * NOTE: `a:active, a:hover { outline: 0 }` 는 제거했습니다.
+   * 포커스 표시를 지워 키보드 사용자가 현재 위치를 잃습니다.
+   * 포커스 링은 global.css 의 :focus-visible 규칙이 담당합니다.
+   * 근거: docs/handoff-step1-shell.md §6-6
    */
-  a:active,
-  a:hover {
-    outline: 0;
-  }
-  
+
   /* ==========================================================================
      Text-level semantics
      ========================================================================== */

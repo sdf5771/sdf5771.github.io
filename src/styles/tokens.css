@@ -1,0 +1,265 @@
+/*
+ * ============================================================
+ * 디자인 토큰 — 섭우.log
+ * ------------------------------------------------------------
+ * 출처: docs/handoff-step1-shell.md §3 (web-design 확정 명세)
+ *
+ * 소비 규칙
+ *  - 컴포넌트 *.module.css 는 var() 로만 값을 씁니다. 원시 hex 금지
+ *  - 다크가 :root 기본, 라이트는 [data-theme="light"] 에서 덮어씀
+ *  - 새 색·크기가 필요하면 여기서 지어내지 말고 web-design 에 요청
+ * ============================================================
+ */
+
+/* ------------------------------------------------------------
+ * 1. 색 — 다크 (기본)
+ * ---------------------------------------------------------- */
+:root {
+    color-scheme: dark;
+
+    /* 배경 */
+    --color-bg-base: #0a0f1c;
+    --color-bg-surface: #0d1220;
+    --color-bg-raised: #161d30;
+    --color-bg-elevated: #1f273e;
+    --color-bg-overlay: rgba(10, 15, 28, 0.78);
+
+    /* bg-raised 의 RGB 성분. 헤더 스크롤 배경 불투명도 전환(§6-1b) 전용.
+       색을 새로 만든 것이 아니라 --color-bg-raised 를 rgba() 에 쓰기 위한 분해값입니다. */
+    --color-bg-raised-rgb: 22, 29, 48;
+
+    /* 텍스트 */
+    --color-text-primary: #f4ecd2;
+    --color-text-body: #cfd5e4;
+    --color-text-secondary: #b8c0d8;
+    --color-text-muted: #7f8aa8;
+
+    /* 액센트 — 4역할 분리(fill / onFill / text / border)를 반드시 지킬 것.
+       "배경 위에 글자·아이콘으로 놓는 골드"는 항상 --color-accent-text 입니다.
+       fill 을 텍스트에 쓰면 라이트 전환 순간 대비 2.14:1 로 무너집니다. */
+    --color-accent-fill: #e6a536;
+    --color-accent-onFill: #1a1206;
+    --color-accent-text: #e6a536;
+    --color-accent-border: #e6a536;
+    --color-accent-hover: #ffd770;
+    --color-accent-light: #f5b94a;
+    --color-accent-deep: #c98a22;
+    --color-accent-subtle: rgba(230, 165, 54, 0.1);
+
+    /* 보더 */
+    --color-border-subtle: #1a2033;
+    --color-border-default: #232a44;
+    --color-border-strong: #2d3551;
+    --color-border-interactive: #6d7798;
+
+    /* 상태 */
+    --color-status-success: #6fcf7c;
+    --color-status-info: #5fb8e6;
+    --color-status-accent: #c39ad9;
+    --color-status-danger: #ff6b6b;
+
+    /* 카테고리 */
+    --color-cat-survey: #ffd770;
+    --color-cat-study: #c39ad9;
+    --color-cat-activity: #6fcf7c;
+
+    /* 기여 활동(잔디) */
+    --color-grass-0: #232a44;
+    --color-grass-1: #5c4a18;
+    --color-grass-2: #8f6212;
+    --color-grass-3: #c98a22;
+    --color-grass-4: #ffd770;
+
+    /* 포커스 */
+    --color-focus-ring: #ffd770;
+    --color-focus-onFill: #1a1206;
+    --color-focus-glow: rgba(230, 165, 54, 0.28);
+
+    /* 그림자 */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --shadow-btn-inset: inset 0 1px 0 rgba(255, 235, 170, 0.5),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.28);
+}
+
+/* ------------------------------------------------------------
+ * 2. 색 — 라이트
+ * ---------------------------------------------------------- */
+[data-theme='light'] {
+    color-scheme: light;
+
+    --color-bg-base: #efece4;
+    --color-bg-surface: #f7f5ef;
+    --color-bg-raised: #ffffff;
+    --color-bg-elevated: #ffffff;
+    --color-bg-overlay: rgba(23, 28, 43, 0.72);
+
+    --color-bg-raised-rgb: 255, 255, 255;
+
+    --color-text-primary: #171c2b;
+    --color-text-body: #2b3145;
+    --color-text-secondary: #4a5163;
+    --color-text-muted: #5a6072;
+
+    --color-accent-fill: #e6a536;
+    --color-accent-onFill: #1a1206;
+    --color-accent-text: #7d5c0e;
+    --color-accent-border: #a97213;
+    --color-accent-hover: #6b4e0b;
+    --color-accent-light: #f5b94a;
+    --color-accent-deep: #c98a22;
+    --color-accent-subtle: rgba(230, 165, 54, 0.14);
+
+    --color-border-subtle: #e4e0d5;
+    --color-border-default: #ddd8cc;
+    --color-border-strong: #cfc9ba;
+    --color-border-interactive: #7d7768;
+
+    --color-status-success: #1f7a3a;
+    --color-status-info: #1a6d99;
+    --color-status-accent: #6b4a86;
+    --color-status-danger: #c0392b;
+
+    --color-cat-survey: #7d5c0e;
+    --color-cat-study: #6b4a86;
+    --color-cat-activity: #1b6b33;
+
+    --color-grass-0: #e4dfd2;
+    --color-grass-1: #f0c060;
+    --color-grass-2: #dd9a24;
+    --color-grass-3: #b07713;
+    --color-grass-4: #7d5c0e;
+
+    --color-focus-ring: #7d5c0e;
+    --color-focus-onFill: #171c2b;
+    --color-focus-glow: rgba(125, 92, 14, 0.26);
+
+    --shadow-sm: 0 1px 3px rgba(23, 28, 43, 0.1);
+    --shadow-md: 0 4px 12px rgba(23, 28, 43, 0.14);
+    --shadow-btn-inset: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        inset 0 -2px 0 rgba(23, 28, 43, 0.16);
+}
+
+/* ------------------------------------------------------------
+ * 3. 타이포 · 스페이싱 · 모션 · 치수 (테마 무관)
+ * ---------------------------------------------------------- */
+:root {
+    /* 서체. @font-face 선언은 src/styles/fonts.css 에 있습니다.
+       Galmuri 가 아직 안 받아졌어도 Pretendard 로 폴백되므로 안전합니다. */
+    --font-display: 'Galmuri11', 'Pretendard', sans-serif;
+    --font-mono: 'GalmuriMono11', 'IBM Plex Mono', ui-monospace, monospace;
+    --font-body: 'Pretendard', -apple-system, system-ui, sans-serif;
+
+    /* 축 A — 픽셀(Galmuri11). 11의 배수만 사용. transform: scale() 금지 */
+    --fs-pixel-1: 11px;
+    --fs-pixel-2: 22px;
+    --fs-pixel-3: 33px;
+    --fs-pixel-4: 44px;
+    --fs-pixel-5: 55px;
+    --fs-pixel-6: 66px;
+
+    /* 축 B — 본문/UI */
+    --fs-2xs: 11px;
+    --fs-xs: 12px;
+    --fs-sm: 13px;
+    --fs-base: 14px;
+    --fs-md: 15px;
+    --fs-lg: 16px;
+    --fs-xl: 18px;
+    --fs-2xl: 21px;
+
+    /* 행간 */
+    --lh-tight: 1.05;
+    --lh-heading: 1.2;
+    --lh-snug: 1.45;
+    --lh-normal: 1.6;
+    --lh-relaxed: 1.8;
+    --lh-mono: 2;
+
+    /* 스페이싱 */
+    --space-px: 2px;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-7: 28px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-14: 56px;
+    --space-16: 64px;
+
+    /* 라운드 */
+    --radius-xs: 2px;
+    --radius-sm: 3px;
+    --radius-md: 4px;
+    --radius-lg: 6px;
+    --radius-xl: 8px;
+    --radius-pill: 999px;
+
+    /* 모션 */
+    --dur-instant: 80ms;
+    --dur-fast: 120ms;
+    --dur-base: 160ms;
+    --dur-slow: 240ms;
+    --dur-slower: 340ms;
+    --ease-emphasized: cubic-bezier(0.2, 0.7, 0.3, 1);
+    --ease-out: ease-out;
+
+    /* 치수 */
+    --container-max: 1180px;
+    --container-narrow: 920px;
+    --measure-reading: 640px;
+    --sidebar-w: 312px;
+    --toc-w: 176px;
+    --tap-min: 44px;
+    --header-h-desktop: 48px;
+    --header-h-mobile: 52px;
+
+    /* z-index */
+    --z-base: 0;
+    --z-sticky: 10;
+    --z-header: 100;
+    --z-dropdown: 200;
+    --z-overlay: 300;
+    --z-modal: 400;
+    --z-toast: 500;
+    --z-tooltip: 600;
+}
+
+/* ------------------------------------------------------------
+ * 4. 테마 전환 순간 트랜지션 차단 (§5-4)
+ *    토글 시 화면 전체가 훑히듯 바뀌는 것을 막습니다.
+ * ---------------------------------------------------------- */
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+    transition: none !important;
+}
+
+/* ------------------------------------------------------------
+ * 5. 🟡 전환기 별칭 레이어 — --brand-* 9종
+ * ------------------------------------------------------------
+ * 기존 화면(Home / Post / PostCard / PageTitle / Pagination / Profile)이
+ * 아직 --brand-* 를 쓰고 있습니다. 새 토큰에 의미 단위로 연결해 두면
+ * 기존 화면도 테마 전환을 따라갑니다.
+ *
+ * 🔴 삭제 시점: STEP 2~7 로 전 화면이 새 토큰으로 전환된 뒤.
+ *    지금 지우면 위 6개 파일의 색이 전부 무효값이 됩니다.
+ * ---------------------------------------------------------- */
+:root {
+    --brand-primary: var(--color-accent-text);
+    --brand-secondary: var(--color-accent-deep);
+    --brand-accent: var(--color-text-primary);
+    --brand-neutral: var(--color-bg-surface);
+    --brand-gray-black: var(--color-text-body);
+    --brand-black: var(--color-text-primary);
+    --brand-gray-light: var(--color-border-default);
+    --brand-gray-dark: var(--color-text-muted);
+    --brand-gray-medium: var(--color-bg-surface);
+    /* Pagination.module.css 가 참조하지만 어디에도 정의된 적 없던 변수입니다.
+       (지금까지 무효값이라 배경이 투명하게 렌더됐습니다) */
+    --brand-white: var(--color-bg-raised);
+}
