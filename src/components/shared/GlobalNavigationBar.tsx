@@ -15,6 +15,23 @@ const DRAWER_ID = 'mobile-drawer';
 const SEARCH_PANEL_ID = 'header-search-overlay';
 
 /**
+ * 지금 글자를 입력하고 있는 자리인가.
+ * 여기서는 ⌘K 를 가로채면 안 됩니다 — 검색창 안에서 ⌘K 를 누르거나 한글 입력 중
+ * 조합 상태에서 눌렀을 때 키 입력이 그대로 삼켜집니다(QA A-5).
+ */
+function isTextEntryTarget(target: EventTarget | null): boolean {
+    if (!(target instanceof HTMLElement)) {
+        return false;
+    }
+
+    return (
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target.isContentEditable
+    );
+}
+
+/**
  * 전역 헤더.
  * 반응형은 CSS 미디어쿼리 하나로 처리합니다 — 내비 <ul> 은 DOM 에 하나뿐이고,
  * 뷰포트에 따라 배치·표시 여부만 바뀝니다. (데스크톱용·모바일용 메뉴가 DOM 에
@@ -63,6 +80,11 @@ function GlobalNavigationBar() {
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key.toLowerCase() !== 'k' || !(event.metaKey || event.ctrlKey)) {
+                return;
+            }
+
+            /* 입력 중이면 브라우저·페이지의 원래 동작에 맡깁니다. preventDefault 도 하지 않습니다 */
+            if (isTextEntryTarget(event.target)) {
                 return;
             }
 
@@ -142,10 +164,10 @@ function GlobalNavigationBar() {
                     <button
                         className={styles.icon_button}
                         type="button"
-                        aria-label="검색 열기"
+                        aria-label={isSearchOpen ? '검색 닫기' : '검색 열기'}
                         aria-expanded={isSearchOpen}
                         aria-controls={SEARCH_PANEL_ID}
-                        onClick={openSearch}
+                        onClick={isSearchOpen ? closeSearch : openSearch}
                     >
                         <span aria-hidden="true">⌕</span>
                     </button>
