@@ -185,6 +185,29 @@ function Posts() {
         [sorted, currentPage],
     );
 
+    /*
+     * 🔴 **「목록이 갈렸다」의 단일 정의** — 아래 두 곳이 **반드시 같은 값**을 봅니다.
+     *
+     *  1. 커밋 스크롤 효과의 변경 감지 키(§4-6-3)
+     *  2. `<ul>` 의 `key` — 재진입 `fadeUp` 을 다시 태우는 값(§9-1 1번)
+     *
+     * 둘을 각자 손으로 적으면 한쪽만 고쳐졌을 때 조용히 갈라지고, 그때 깨지는
+     * 모습은 **스크롤과 유일한 시각 신호가 서로 다른 시점에 발동**하는 형태라
+     * 재현이 어렵습니다. 같은 사실을 두 소스에서 읽지 않습니다 — 이 화면 전체가
+     * 그 원칙 위에 서 있습니다(§4-1).
+     *
+     * 🔴 페이지는 `params.page` 가 아니라 **`currentPage`** 입니다. 화면에 보이는
+     *    것은 클램프된 페이지이고(`?page=99` → 3), 목록이 안 바뀌었는데 스크롤만
+     *    움직이면 그 이동은 피드백이 아니라 잡음입니다. 이미 3쪽을 보는 중에
+     *    `?page=99` 로 들어오는 경우가 정확히 그것입니다.
+     *
+     * 🔴 `inputValue` 를 넣지 마세요. 직전 구현이 그랬고, 결과가 하나도 안 바뀌어도
+     *    글자마다 `<ul>` 이 재마운트돼 6px 깜빡임이 재생됐습니다. 신호가 아무 때나
+     *    켜지면 신호가 아닙니다. `q` 는 커밋에서만 바뀌므로 자연히 **실행당 1회**가
+     *    됩니다.
+     */
+    const listKey = `${params.q}|${params.category}|${params.sort}|${currentPage}`;
+
     /* ---------------------------------------------------------------
      * URL 정규화 — 한 곳에서만 주소를 씁니다
      * ------------------------------------------------------------- */
@@ -324,19 +347,16 @@ function Posts() {
     const scrollKeyRef = useRef<string | null>(null);
 
     /*
-     * 🔴 페이지는 `params.page` 가 아니라 **`currentPage`** 입니다 — 아래
-     *    `<ul>` key 와 같은 값이어야 합니다. 화면에 보이는 것은 클램프된
-     *    페이지이고(`?page=99` → 3), 목록이 안 바뀌었는데 스크롤만 움직이면
-     *    그 이동은 피드백이 아니라 잡음입니다. 이미 3쪽을 보는 중에 `?page=99`
-     *    로 들어오는 경우가 정확히 그것입니다.
+     * 감지 키는 위 `listKey` 를 그대로 씁니다 — `<ul>` key 와 **같은 값이어야
+     * 한다**는 불변식을 산문이 아니라 공유 상수가 지킵니다. 여기서 다시 조립하지
+     * 마세요.
      */
     useLayoutEffect(() => {
-        const key = `${params.q}|${params.category}|${params.sort}|${currentPage}`;
         const previous = scrollKeyRef.current;
-        scrollKeyRef.current = key;
+        scrollKeyRef.current = listKey;
 
         /* 최초 마운트에서는 스크롤하지 않습니다 */
-        if (previous === null || previous === key) {
+        if (previous === null || previous === listKey) {
             return;
         }
 
@@ -371,7 +391,7 @@ function Posts() {
             behavior: 'auto',
             block: 'start',
         });
-    }, [params.q, params.category, params.sort, currentPage, navigationType]);
+    }, [listKey, navigationType]);
 
     const searchHintId = 'post-search-scope';
     /*
@@ -416,6 +436,24 @@ function Posts() {
                          * 🔴 `select()` 를 부르지 마세요 — 한 글자 고치려는 사람이
                          *    다음 타건에 전부 날립니다(§3-8-6). `focus()` 는 캐럿만
                          *    되돌리고 선택은 만들지 않습니다.
+                         *
+                         * 🔴 **위 `commitSearch` 와 이 `focus()` 는 순서에 의존합니다
+                         *    — 겉보기에 독립적인 두 줄이지만 바꿔 쓰면 안 됩니다.**
+                         *    입력창은 문서 최상단이라 `focus()` 가 캐럿 복귀 스크롤을
+                         *    일으킵니다(§6-4 V1-주). 지금 화면이 목록 헤더에 멎는 것은
+                         *    `navigate` 가 배치되어 **캐럿 복귀가 먼저 끝나고 그 뒤
+                         *    `useLayoutEffect` 의 `auto` 스크롤이 이기기** 때문입니다.
+                         *    두 줄을 뒤집거나 `commitSearch` 안에 `flushSync` 를 넣으면
+                         *    순서가 뒤집혀 **화면이 입력창(최상단)으로 끌려갑니다.**
+                         *    🔴 `flushSync` 금지.
+                         *
+                         * 🔴 `focus({ preventScroll: true })` 도 검토했으나 **채택하지
+                         *    않습니다 — 별건입니다.** 위 순서가 성립하는 한 지금 동작에
+                         *    결함이 없고, 붙이는 순간 QA 가 실측해 통과시킨 스크롤
+                         *    거동이 바뀌어 재검증 대상이 됩니다. (§6-4 V1-주가 반려한
+                         *    `preventScroll` 은 **타이핑 경로**의 캐럿 복귀를 없애려던
+                         *    것으로, 여기 커밋 경로와 사안이 다릅니다. 두 건을 같은
+                         *    판정으로 묶지 마십시오.)
                          */
                         searchInputRef.current?.focus();
                     }}
@@ -595,13 +633,11 @@ function Posts() {
                              * 재진입 애니메이션은 "목록이 바뀌었다"의 **유일한 시각
                              * 신호**라 목록이 바뀐 경우에만 재생돼야 합니다(§9-1 1번).
                              *
-                             * 🔴 `inputValue` 를 넣지 마세요. 직전 구현이 그랬고,
-                             *    결과가 하나도 안 바뀌어도 글자마다 `<ul>` 이
-                             *    재마운트돼 6px 깜빡임이 재생됐습니다. 신호가 아무
-                             *    때나 켜지면 신호가 아닙니다. `q` 는 커밋에서만
-                             *    바뀌므로 자연히 **실행당 1회**가 됩니다.
+                             * 🔴 키를 여기서 조립하지 마세요 — 커밋 스크롤 효과
+                             *    (§4-6-3)와 **같은 값**이어야 합니다. 정의와 이유는
+                             *    위 `listKey` 선언부에 한 번만 적혀 있습니다.
                              */
-                            key={`${params.q}|${params.category}|${params.sort}|${currentPage}`}
+                            key={listKey}
                         >
                             {visiblePosts.map(post => (
                                 <PostRow key={post.slug} post={post} tokens={tokens} />
