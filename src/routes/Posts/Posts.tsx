@@ -68,10 +68,6 @@ function buildResultSummary(
     return `${scope} · ${count}편 일치 · 전체 ${TOTAL_POST_COUNT}편 중`;
 }
 
-function prefersReducedMotion(): boolean {
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
-
 /**
  * 글 목록 `/posts`.
  * 명세: docs/handoff-step4-list.md (토큰·셸은 docs/handoff-step1-shell.md 가 최종 권위)
@@ -348,8 +344,31 @@ function Posts() {
             return;
         }
 
+        /*
+         * 🔴 **`behavior` 는 `'auto'` 고정입니다 — `smooth` 로 "개선"하지
+         *    마십시오**(§4-6-3a). 저감 설정과 무관하게 항상 즉시 이동입니다.
+         *    접근성 양보가 아니라 위 장치가 성립하기 위한 조건이라,
+         *    `useScrollBehavior()`·`prefers-reduced-motion` 분기를 두지 않습니다.
+         *
+         *  1. 🔴 **위 「순서가 전부」 논리 자신이 `auto` 를 요구합니다.** 클램프와
+         *     하나의 이동으로 보이려면 둘이 **같은 프레임**이어야 하는데, 클램프는
+         *     1프레임 즉시이고 smooth 는 수백 ms 애니메이션입니다. 방향·목적지가
+         *     같아도 **시간 특성이 달라 합성되지 않습니다** — 문서가 짧아지는
+         *     프레임에 클램프가 먼저 튀고 그 위를 우리 애니메이션이 뒤늦게
+         *     지나가, 위에서 경고한 「두 번 움직임」이 순서가 아니라 `behavior`
+         *     때문에 되살아납니다.
+         *  2. **1,073~1,224px 는 애니메이션으로 흘릴 거리가 아닙니다.** 지나가는
+         *     픽셀에 있던 것은 **이미 존재하지 않는 이전 결과**이고 도착지의 것은
+         *     **아직 본 적 없는 새 결과**라, 보여줄 연속성이 없습니다. smooth 가
+         *     맞는 곳은 목차 점프처럼 콘텐츠가 그대로 남는 문서 내 이동입니다
+         *     (`PostToc` 의 `useScrollBehavior()` 는 그래서 그대로 둡니다).
+         *  3. §9-4 가 **"목록이 바뀌었다는 유일한 시각 신호"**로 못 박은 재진입
+         *     `fadeUp`(6px · 160ms)이 1,200px 짜리 뷰포트 패닝 한가운데서는
+         *     지각되지 않습니다. `auto` 면 이동이 0프레임에 끝나고 그 160ms 가
+         *     **정지된 화면 위에서** 온전히 보입니다.
+         */
         listHeaderRef.current?.scrollIntoView({
-            behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+            behavior: 'auto',
             block: 'start',
         });
     }, [params.q, params.category, params.sort, currentPage, navigationType]);
