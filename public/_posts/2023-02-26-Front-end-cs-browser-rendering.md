@@ -102,7 +102,7 @@ HTML5에서 추가된 기능이 있다.
 - render object는 render tree의 구성요소로써, 자신과 자식 요소를 어떻게 배치하고 그려야할지 안다.
 - node의 css box를 표시할 정보를 가지고 있다.
 - 모든 DOM node가 전부 render obejct로 생성되는 것은 아니다.(ex head tag, display none tag 등)
-- `<htmll>`과 `<body>` DOM node 또한 render object로 구성되는데 이들은 render tree root 로써 render view 라고 부른다.
+- `<html>`과 `<body>` DOM node 또한 render object로 구성되는데 이들은 render tree root 로써 render view 라고 부른다.
 - 나머지 DOM node 들은 render object로 생성되어 이 render tree root에 추가된다.
 
 3. 구축한 render tree를 배치(layout)한다.

@@ -252,14 +252,20 @@ function applyImageAttributes(image: HTMLImageElement, sizes: ImageSizeMap): voi
  * `[![alt](img)](link)` 처럼 링크로 감싼 이미지면 `<a>` 가 넘어옵니다 —
  * 이미지만 꺼내면 링크가 조용히 사라집니다.
  *
- * `captionNodes` 는 마크다운에서 **이미지 다음 줄**에 적힌 캡션입니다.
- * 없으면 `alt` 를 캡션으로 씁니다.
+ * `captionNodes` 는 마크다운에서 이미지 **다음 줄** 또는 **같은 줄 앞쪽**에 적힌
+ * 캡션입니다. 없으면 `alt` 를 캡션으로 씁니다.
+ *
+ * `captionFirst` 는 캡션을 `<figure>` 의 **첫 자식**으로 놓을지입니다.
+ * 원문이 `( PC 버전의 네이버) ![img]` 처럼 라벨을 앞에 적은 경우, 캡션을 뒤로
+ * 옮기면 읽는 순서가 원문과 달라집니다. `<figcaption>` 은 사양상 `<figure>` 의
+ * 첫 자식 또는 마지막 자식 어느 쪽이든 유효합니다.
  */
 function buildFigure(
     image: HTMLImageElement,
     sizes: ImageSizeMap,
     carrier: Node,
     captionNodes: Node[] | null,
+    captionFirst = false,
 ): HTMLElement {
     const document = image.ownerDocument;
     const figure = document.createElement('figure');
@@ -289,10 +295,21 @@ function buildFigure(
         }
     } else if (alt) {
         caption.textContent = alt;
+        /*
+         * 🔴 이 캡션은 저자가 쓴 것이 아니라 `alt` 를 옮겨 온 것입니다.
+         *    바로 뒤에 같은 문장이 본문으로 또 오면 지워야 하는데, 그 판정은
+         *    다음 형제 블록을 볼 수 있는 호출부에서만 가능합니다(§F-2).
+         *    표시는 임시이고 promoteImageLines 가 반드시 걷어냅니다.
+         */
+        figure.setAttribute(CAPTION_FROM_ALT_ATTRIBUTE, 'true');
     }
 
     if (caption.childNodes.length > 0) {
-        figure.appendChild(caption);
+        if (captionFirst) {
+            figure.insertBefore(caption, figure.firstChild);
+        } else {
+            figure.appendChild(caption);
+        }
 
         /*
          * 🔴 캡션을 렌더하면 `alt` 를 **비웁니다.** 둘 다 두면 스크린리더가 같은
@@ -344,6 +361,37 @@ function isBlankNode(node: Node): boolean {
 /** 줄에 글자가 있는가. `<img>` 는 `textContent` 가 비어 있어 세지 않습니다 */
 function hasLineText(line: ChildNode[]): boolean {
     return line.some(node => (node.textContent ?? '').trim() !== '');
+}
+
+/** `buildFigure` → `promoteImageLines` 전용 임시 표시. DOM 에 남기지 않습니다 */
+const CAPTION_FROM_ALT_ATTRIBUTE = 'data-caption-from-alt';
+
+/**
+ * 캡션 중복 판정용 키.
+ *
+ * 캡션은 흔히 `(…)` 로 감싸고 공백도 제각각이라, 괄호·공백·제어문자를 벗겨야
+ * *같은 문장인지*를 사실로 비교할 수 있습니다. 실제로 `2025-03-13` 의
+ * `alt="1999년 당시의 네이버"` 와 본문 `(1999년 당시의 네이버)` 가 이 관계입니다.
+ * (원문에는 눈에 보이지 않는 제어문자도 섞여 있습니다.)
+ *
+ * 🔴 **내용을 추정하지 않습니다.** 두 문자열이 같은지만 봅니다 — §2-3 이 금지한
+ *    "이미지 종류 판별" 류의 휴리스틱이 아닙니다.
+ */
+function captionKey(value: string): string {
+    return value
+        .normalize('NFC')
+        .replace(/[\p{C}\s()[\]（）]/gu, '')
+        .toLowerCase();
+}
+
+/** 이 노드가 이미지를 품고 있는가 */
+function nodeHasImage(node: ChildNode): boolean {
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+        return false;
+    }
+
+    const element = node as Element;
+    return element.tagName === 'IMG' || element.querySelector('img') !== null;
 }
 
 interface FigureUnit {
@@ -403,6 +451,17 @@ function collectFigureUnits(line: ChildNode[]): FigureUnit[] {
  * | `텍스트<br><img>` | `텍스트` + `<figure><img></figure>` |
  * | `<img><br><img><br>캡션` | 각각 `<figure>`, 캡션은 **직전** 이미지에 |
  * | `텍스트<img>텍스트` | 승격 안 함 — 인라인 이미지 |
+ * | **`라벨) <img>`** | **`<figure><figcaption>라벨</figcaption><img></figure>`** |
+ *
+ * 🔴 **한쪽에만 텍스트가 있으면 그 텍스트가 캡션입니다**(2026-08-02 web-design 판정).
+ * ------------------------------------------------------------
+ * 확정 규칙은 *"앞뒤가 **모두** 텍스트인 경우**에만** 승격하지 않는다"* 였는데,
+ * 구현이 "같은 줄에 텍스트가 있으면 인라인" 이라는 **더 좁은 해석**을 적용해
+ * `- ( PC 버전의 네이버) ![img]` 두 줄이 승격에서 빠져 있었습니다. 규칙이 그것을
+ * 배제한 적은 없습니다 — 규칙 확장이 아니라 해석 정정입니다.
+ *
+ * 앞에 오는 라벨은 `<figcaption>` 을 `<figure>` 의 **첫 자식**으로 둡니다.
+ * 뒤로 옮기면 원문의 읽는 순서가 바뀝니다.
  *
  * 🔴 **부모 태그를 열거하지 않습니다**(2026-08-02 판정).
  * ------------------------------------------------------------
@@ -449,15 +508,82 @@ function findLineOwner(image: Element, root: HTMLElement): HTMLElement | null {
  *    를 그대로 품을 수 있으므로 **자식만 갈아 끼웁니다** — 목록 구조를 유지해야
  *    마커 정렬이 흔들리지 않습니다.
  */
+interface LineAnalysis {
+    units: FigureUnit[];
+    /** 이 줄을 `<figure>` 로 바꿀 수 있는가 */
+    isPromotable: boolean;
+    /** 같은 줄에서 캡션이 되는 텍스트 노드들. 없으면 `null` */
+    inlineCaption: ChildNode[] | null;
+    /** 그 캡션이 이미지 **앞**에 있었는가 */
+    isCaptionLeading: boolean;
+}
+
+/**
+ * 한 줄에서 이미지와 텍스트의 배치를 봅니다.
+ *
+ * ```
+ * 텍스트 <img> 텍스트   → 인라인. 승격하지 않음
+ * 텍스트 <img>          → 승격. 앞 텍스트가 캡션(첫 자식)
+ * <img> 텍스트          → 승격. 뒤 텍스트가 캡션
+ * <img>                 → 승격. 캡션은 다음 줄에서 찾음
+ * ```
+ *
+ * 이미지가 여럿이고 그 **사이**에 글자가 있으면 인라인으로 봅니다 — 어느 이미지의
+ * 캡션인지 정할 근거가 없고, 잘못 붙이면 엉뚱한 그림에 설명이 달립니다.
+ */
+function analyzeLine(line: ChildNode[]): LineAnalysis {
+    const units = collectFigureUnits(line);
+    const empty: LineAnalysis = {
+        units,
+        isPromotable: false,
+        inlineCaption: null,
+        isCaptionLeading: false,
+    };
+
+    if (units.length === 0) {
+        return empty;
+    }
+
+    const imageIndexes = line.reduce<number[]>((indexes, node, index) => {
+        if (nodeHasImage(node)) {
+            indexes.push(index);
+        }
+        return indexes;
+    }, []);
+
+    const first = imageIndexes[0];
+    const last = imageIndexes[imageIndexes.length - 1];
+
+    const before = line.slice(0, first);
+    const after = line.slice(last + 1);
+    const between = line.slice(first, last + 1).filter(node => !nodeHasImage(node));
+
+    const hasBefore = hasLineText(before);
+    const hasAfter = hasLineText(after);
+
+    /* 양옆이 모두 텍스트이거나 이미지 사이에 글자가 있으면 인라인입니다 */
+    if ((hasBefore && hasAfter) || hasLineText(between)) {
+        return empty;
+    }
+
+    if (hasBefore) {
+        return { units, isPromotable: true, inlineCaption: before, isCaptionLeading: true };
+    }
+
+    if (hasAfter) {
+        return { units, isPromotable: true, inlineCaption: after, isCaptionLeading: false };
+    }
+
+    return { units, isPromotable: true, inlineCaption: null, isCaptionLeading: false };
+}
+
 function promoteImageLines(container: HTMLElement, sizes: ImageSizeMap): void {
     const document = container.ownerDocument;
     const isParagraph = container.tagName === 'P';
     const lines = splitParagraphLines(container);
 
     /* 승격할 줄이 하나도 없으면 건드리지 않습니다(속성 보강은 호출부에서) */
-    const hasFigureLine = lines.some(
-        line => collectFigureUnits(line).length > 0 && !hasLineText(line),
-    );
+    const hasFigureLine = lines.some(line => analyzeLine(line).isPromotable);
     if (!hasFigureLine) {
         return;
     }
@@ -505,10 +631,10 @@ function promoteImageLines(container: HTMLElement, sizes: ImageSizeMap): void {
 
     for (let index = 0; index < lines.length; index += 1) {
         const line = lines[index];
-        const units = collectFigureUnits(line);
+        const analysis = analyzeLine(line);
 
-        /* 글이 섞인 줄은 승격 대상이 아닙니다(인라인 배지 등) */
-        if (units.length === 0 || hasLineText(line)) {
+        /* 양옆이 모두 텍스트인 줄은 승격 대상이 아닙니다(인라인 배지 등) */
+        if (!analysis.isPromotable) {
             if (line.some(node => !isBlankNode(node))) {
                 pending.push(line);
             }
@@ -518,20 +644,33 @@ function promoteImageLines(container: HTMLElement, sizes: ImageSizeMap): void {
         flushText();
 
         /*
-         * 바로 다음 줄이 글뿐이면 그 줄이 캡션입니다. **한 줄만** 가져갑니다 —
-         * 두 줄 이상을 삼키면 본문 문단이 캡션으로 흡수됩니다.
+         * 같은 줄의 한쪽 텍스트가 이미 캡션이면 그것을 씁니다. 없을 때만
+         * 다음 줄을 봅니다. **한 줄만** 가져갑니다 — 두 줄 이상을 삼키면 본문
+         * 문단이 캡션으로 흡수됩니다.
          */
-        const next = lines[index + 1];
-        const captionLine =
-            next && collectFigureUnits(next).length === 0 && hasLineText(next) ? next : null;
-        if (captionLine) {
-            index += 1;
+        let captionNodes = analysis.inlineCaption;
+
+        if (!captionNodes) {
+            const next = lines[index + 1];
+
+            if (next && collectFigureUnits(next).length === 0 && hasLineText(next)) {
+                captionNodes = next;
+                index += 1;
+            }
         }
 
-        units.forEach((unit, unitIndex) => {
+        analysis.units.forEach((unit, unitIndex) => {
             /* 캡션은 **직전** 이미지의 것입니다 — 한 줄에 이미지가 여럿이면 마지막 */
-            const isLast = unitIndex === units.length - 1;
-            output.push(buildFigure(unit.image, sizes, unit.carrier, isLast ? captionLine : null));
+            const isLast = unitIndex === analysis.units.length - 1;
+            output.push(
+                buildFigure(
+                    unit.image,
+                    sizes,
+                    unit.carrier,
+                    isLast ? captionNodes : null,
+                    isLast && analysis.isCaptionLeading,
+                ),
+            );
         });
     }
 
@@ -541,10 +680,76 @@ function promoteImageLines(container: HTMLElement, sizes: ImageSizeMap): void {
         return;
     }
 
+    resolveAltCaptions(container, output);
+
     if (isParagraph) {
         container.replaceWith(...output);
     } else {
         container.replaceChildren(...output);
+    }
+}
+
+/**
+ * `alt` 에서 만들어진 캡션을 확정하거나 걷어냅니다 (F-2).
+ *
+ * 🔴 **좁히는 조건: 바로 다음 블록이 같은 문장을 다시 말하면 캡션을 버립니다.**
+ *
+ * 원문에서 이미지와 캡션 사이에 **빈 줄**이 있으면 둘은 별개 블록이 되어
+ * `captionNodes` 로 이어지지 못하고, `buildFigure` 가 `alt` 로 폴백합니다.
+ * 그러면 `<figcaption>1999년 당시의 네이버</figcaption>` 바로 아래에 본문
+ * `(1999년 당시의 네이버)` 가 또 나와 **같은 문장이 두 번** 보입니다.
+ *
+ * 판정은 추정이 아니라 **문자열 비교**입니다(괄호·공백·제어문자 제외). 다른 문장이
+ * 뒤따르는 경우에는 아무것도 바꾸지 않으므로, 캡션이 없어야 할 그림에서 캡션이
+ * 사라지는 부작용이 없습니다.
+ *
+ * 캡션을 버릴 때는 `alt` 를 **되돌려 놓습니다** — `buildFigure` 가 캡션을 렌더한다는
+ * 전제로 비워 두었기 때문입니다. 비운 채로 두면 그림에 대체 텍스트가 사라집니다.
+ */
+function resolveAltCaptions(container: HTMLElement, output: readonly Node[]): void {
+    const last = output[output.length - 1];
+
+    const figures = output.filter(
+        (node): node is HTMLElement =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            (node as HTMLElement).hasAttribute(CAPTION_FROM_ALT_ATTRIBUTE),
+    );
+
+    if (figures.length === 0) {
+        return;
+    }
+
+    /*
+     * 뒤따르는 문단은 **마지막 그림** 다음에만 옵니다. 다음 형제가 `<p>` 일
+     * 때만 봅니다 — 다음 `<li>` 는 캡션이 아니라 다음 항목입니다.
+     */
+    const sibling = container.nextElementSibling;
+    const followingKey =
+        sibling && sibling.tagName === 'P' && sibling.querySelector('img') === null
+            ? captionKey(sibling.textContent ?? '')
+            : '';
+
+    for (const figure of figures) {
+        figure.removeAttribute(CAPTION_FROM_ALT_ATTRIBUTE);
+
+        const image = figure.querySelector('img');
+        const caption = figure.querySelector('figcaption');
+
+        if (!image || !caption) {
+            continue;
+        }
+
+        const alt = image.getAttribute('data-alt') ?? '';
+        const isDuplicated =
+            figure === last && followingKey !== '' && captionKey(alt) === followingKey;
+
+        if (!isDuplicated) {
+            continue;
+        }
+
+        caption.remove();
+        image.removeAttribute('data-alt');
+        image.setAttribute('alt', alt);
     }
 }
 

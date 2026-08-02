@@ -180,6 +180,17 @@ function ConstellationHero() {
     const [size, setSize] = useState<CanvasSize | null>(null);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+    /*
+     * 🔴 커서 전용 상태입니다. `activeIndex` 로 커서를 정하면 안 됩니다 —
+     *    그 값은 **대체 목록의 `onFocus`** 도 설정하기 때문에, 마우스를 빈 하늘에
+     *    둔 채 키보드로 대체 링크에 Tab 하면 **빈 하늘에서 손가락 커서**가 됩니다.
+     *    그건 이 화면이 막으려던 바로 그 상태("빈 하늘도 눌린다고 말하는 것")입니다.
+     *
+     *    강조(미리보기 카드·별 하이라이트)는 포인터든 키보드든 일어나야 하지만,
+     *    커서는 **포인터의 사실**만 말해야 합니다. 그래서 두 상태를 분리합니다.
+     */
+    const [isPointerOnStar, setIsPointerOnStar] = useState(false);
+
     /* 뷰포트와 무관한 계산은 한 번만. 리사이즈해도 다시 하지 않습니다 */
     const model = useMemo(() => buildConstellationModel(POSTS), []);
 
@@ -463,6 +474,8 @@ function ConstellationHero() {
 
             const nearest = findNearestStar(layout.stars, x, y, HIT_RADIUS);
             setActive(nearest ? nearest.index : null);
+            /* 커서는 **포인터가 실제로 별 위에 있을 때만** 바뀝니다 — 아래 주석 참고 */
+            setIsPointerOnStar(nearest !== null);
         },
         [layout, prefersReducedMotion, setActive, theme],
     );
@@ -470,6 +483,7 @@ function ConstellationHero() {
     const handlePointerLeave = useCallback(() => {
         parallaxTargetRef.current = { x: 0, y: 0 };
         setActive(null);
+        setIsPointerOnStar(false);
     }, [setActive]);
 
     /*
@@ -578,8 +592,12 @@ function ConstellationHero() {
                 <canvas
                     ref={canvasRef}
                     className={styles.canvas}
-                    /* 별 위에서만 커서가 pointer 가 됩니다(§3-5). 빈 하늘은 기본 커서입니다 */
-                    data-hit={activeIndex !== null ? 'true' : undefined}
+                    /*
+                     * 별 위에서만 커서가 pointer 가 됩니다(§3-5). 빈 하늘은 기본 커서입니다.
+                     * 🔴 `activeIndex` 가 아니라 `isPointerOnStar` 입니다 — 앞의
+                     *    상태 선언 주석 참고(키보드 포커스로는 커서가 바뀌면 안 됩니다).
+                     */
+                    data-hit={isPointerOnStar ? 'true' : undefined}
                     onPointerDown={isDesktopViewport ? handleCanvasPointerDown : undefined}
                     onClick={isDesktopViewport ? handleCanvasClick : undefined}
                     /* sm·md 에서는 접근성 경로를 캡션 링크와 아래 목록이 담당합니다 */
