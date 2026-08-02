@@ -34,7 +34,7 @@ function CategoryChips({ selected, buildHref }: CategoryChipsProps) {
                     className={styles.chip}
                     to={buildHref(null)}
                     aria-current={selected === null ? 'true' : undefined}
-                    aria-label={`전체 카테고리로 거르기, 글 ${TOTAL_POST_COUNT}개`}
+                    aria-label={`전체 카테고리로 거르기, 글 ${TOTAL_POST_COUNT}편`}
                 >
                     <span aria-hidden="true">전체</span>
                     <span className={styles.chip_count} aria-hidden="true">
@@ -49,7 +49,7 @@ function CategoryChips({ selected, buildHref }: CategoryChipsProps) {
                         className={styles.chip}
                         to={buildHref(category.name)}
                         aria-current={selected === category.name ? 'true' : undefined}
-                        aria-label={`${category.name} 카테고리로 거르기, 글 ${category.count}개`}
+                        aria-label={`${category.name} 카테고리로 거르기, 글 ${category.count}편`}
                     >
                         <span aria-hidden="true">{category.name}</span>
                         <span className={styles.chip_count} aria-hidden="true">

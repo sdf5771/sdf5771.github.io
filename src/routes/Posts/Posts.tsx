@@ -42,13 +42,16 @@ const SORT_LABEL: Record<PostSortOrder, string> = {
  *
  * | 조건 | 문구 |
  * |---|---|
- * | 없음 | `최신순 · 전체 41개` |
- * | 카테고리만 | `최신순 · Study 30개` |
- * | 검색만 | `"react" · 14개 일치 · 전체 41개 중` |
- * | 검색 + 카테고리 | `"react" · Study · 9개 일치 · 전체 41개 중` |
+ * | 없음 | `최신순 · 전체 41편` |
+ * | 카테고리만 | `최신순 · Study 30편` |
+ * | 검색만 | `"react" · 14편 일치 · 전체 41편 중` |
+ * | 검색 + 카테고리 | `"react" · Study · 9편 일치 · 전체 41편 중` |
  *
- * 검색 시 분모(`전체 41개 중`)를 보여 주는 편이 "얼마나 좁혀졌는가"를 알려 줍니다.
+ * 검색 시 분모(`전체 41편 중`)를 보여 주는 편이 "얼마나 좁혀졌는가"를 알려 줍니다.
  * 따옴표는 곧은 따옴표입니다 (WRITING_GUIDE §3.2).
+ *
+ * 🔴 단위는 `개` 가 아니라 `편` 입니다 — WRITING_GUIDE §3.4 가 2026-08-02 에
+ *    뒤집혔습니다. 수량사는 세는 대상을 따르고, 여기서 세는 것은 **글**입니다.
  */
 function buildResultSummary(
     query: string,
@@ -59,11 +62,11 @@ function buildResultSummary(
     const trimmed = query.trim();
 
     if (!trimmed) {
-        return `${SORT_LABEL[sort]} · ${category ?? '전체'} ${count}개`;
+        return `${SORT_LABEL[sort]} · ${category ?? '전체'} ${count}편`;
     }
 
     const scope = category ? `"${trimmed}" · ${category}` : `"${trimmed}"`;
-    return `${scope} · ${count}개 일치 · 전체 ${TOTAL_POST_COUNT}개 중`;
+    return `${scope} · ${count}편 일치 · 전체 ${TOTAL_POST_COUNT}편 중`;
 }
 
 function prefersReducedMotion(): boolean {

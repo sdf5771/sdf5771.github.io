@@ -32,7 +32,7 @@ function RecentPosts({ posts, total }: RecentPostsProps) {
                 <h2 className={styles.heading} id="recent-heading">
                     최근 글
                 </h2>
-                <p className={styles.header_meta}>최신순 · 전체 {total}개</p>
+                <p className={styles.header_meta}>최신순 · 전체 {total}편</p>
             </div>
 
             <ul className={styles.rows}>

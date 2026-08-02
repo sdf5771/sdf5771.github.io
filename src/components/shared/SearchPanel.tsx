@@ -174,7 +174,7 @@ function SearchPanel({ id, request, onClose, isModal }: SearchPanelProps) {
                         <p className={styles.empty_description}>{SEARCH_INITIAL_HINT}</p>
                     ) : matchCount > 0 ? (
                         <p className={styles.empty_description}>
-                            {`${matchCount}개 일치 · 전체 ${TOTAL_POST_COUNT}개 중`}
+                            {`${matchCount}편 일치 · 전체 ${TOTAL_POST_COUNT}편 중`}
                         </p>
                     ) : (
                         <>

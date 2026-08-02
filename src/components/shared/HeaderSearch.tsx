@@ -160,7 +160,7 @@ function HeaderSearch({ request, onClose }: HeaderSearchProps) {
                     ) : matchCount > 0 ? (
                         /* STEP 1 §9 확정 카피 — 분모가 있어야 얼마나 좁혀졌는지 보입니다 */
                         <p className={styles.hint}>
-                            {`${matchCount}개 일치 · 전체 ${TOTAL_POST_COUNT}개 중`}
+                            {`${matchCount}편 일치 · 전체 ${TOTAL_POST_COUNT}편 중`}
                         </p>
                     ) : (
                         <>
