@@ -216,7 +216,7 @@ UI 디자인은 스큐어모피즘에서 시작하여 플랫 디자인의 미니
 }
 ```
 
-(미디어 쿼리의 Breakpoint )
+(미디어 쿼리의 Breakpoint )
 
 특징으로는 **기기나 특정 브라우저를 감지하는 것이 아닌** 사용자에게 보여지는 영역(viewport)을 감지하기 때문에 브라우저 창 크기를 늘리거나 줄이는 행위를 통해 레이아웃이나 DOM(Document Object Model)요소의 크기가 변경되는 것을 확인할 수 있습니다.
 
@@ -230,9 +230,9 @@ UI 디자인은 스큐어모피즘에서 시작하여 플랫 디자인의 미니
 또한 서브 도메인을 통해 URL을 변경해서 Desktop 버전의 웹 페이지와 Mobile 버전의 웹 페이지에 분기를 두고 있습니다.
 
 - PC 버전 : https://www.naver.com/
-  - ( PC 버전의 네이버) ![PC_size_Naver](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//08.png)
+  - ( PC 버전의 네이버) ![PC_size_Naver](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//08.png)
 - Mobile 버전 : https://m.naver.com/
-  - ( Mobile 버전의 네이버)  ![Mobile_size_Naver](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//09.png)
+  - ( Mobile 버전의 네이버)  ![Mobile_size_Naver](/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//09.png)
 
 이 기술이 더 좋다 저 기술이 더 좋다 라고 나눌 수도 없고, 결국에는 사용자 경험적인 측면에서는 큰 차이를 보이지 않습니다. 어떠한 기술이 현재 내가 구현하고자 하는 서비스에 가장 적합한지를 다음과 같은 특징들을 통해 가장 최적의 경험을 사용자에게 제공하는 것이 필요한 판단 근거가 아닐까 싶습니다.
 

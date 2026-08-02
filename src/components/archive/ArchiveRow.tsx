@@ -35,10 +35,16 @@ function ArchiveRow({ post }: { post: PostMetadata }) {
 
     return (
         <li className={styles.row} data-category={post.category}>
-            {/* `04.13` 은 숫자·기호뿐이라 GalmuriMono11 11px 이 규칙을 통과합니다 */}
-            <span className={styles.date} aria-hidden="true">
-                {formatArchiveDate(post.date)}
-            </span>
+            {/*
+             * `04.13` 은 숫자·기호뿐이라 GalmuriMono11 11px 이 규칙을 통과합니다.
+             *
+             * 🔴 **`aria-hidden` 을 걸지 마세요.** 이 화면의 주 과업이 "언제 무엇을
+             *    썼는가" 인데, 감추면 보조기술 사용자가 듣는 것은 `제목 · 카테고리 ·
+             *    읽기 시간` 뿐이고 월·일이 통째로 사라집니다(연도는 섹션 헤딩에만
+             *    있습니다). §10-2 의 aria-hidden 목록은 장식 기호 `▸ ▾ # ● →` 뿐이고
+             *    날짜는 거기 없습니다. 비교 대상인 `PostRow` 도 날짜를 노출합니다.
+             */}
+            <span className={styles.date}>{formatArchiveDate(post.date)}</span>
 
             {/*
              * 링크는 **제목만** 감쌉니다. 행 전체를 <a> 로 감싸면 접근 가능한
