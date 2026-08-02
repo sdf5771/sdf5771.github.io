@@ -2,12 +2,17 @@
  * 기여 활동(잔디) 데이터 계약.
  * 명세: docs/handoff-step5-404-about.md §5-2
  *
- * `public/contributions.json` 은 GitHub Actions 가 **주 1회** 갱신·커밋합니다.
- * 매일 커밋하면 리포 히스토리가 1년에 365커밋 늘어나는데, 잔디는 주 단위
- * 그래픽이라 손실이 없습니다.
+ * `public/contributions.json` 은 **커밋되지 않습니다**(.gitignore).
+ * `.github/workflows/deploy.yml` 이 배포할 때마다 `src/utils/generateContributionsData.ts`
+ * 로 새로 만들어 `dist/` 에 실어 보내고, 같은 워크플로의 `schedule:` 이 **주 1회**
+ * 재배포해 잔디를 갱신합니다. 명세의 "주 1회 갱신·커밋" 에서 커밋을 뺀 것은
+ * `GITHUB_TOKEN` 이 만든 커밋이 `deploy.yml` 을 트리거하지 못해 커밋만 쌓이고
+ * 배포에는 반영되지 않기 때문입니다(자세한 이유는 생성 스크립트 상단 주석).
  *
- * ⚠️ 워크플로(`.github/workflows/contributions.yml`)는 **아직 없습니다**(별도 태스크).
- *    그때까지 이 파일은 404 를 받고 컴포넌트가 로드 실패 상태를 그립니다.
+ * ⚠️ 그래서 **로컬에는 이 파일이 없는 것이 정상입니다.** 생성 스크립트는
+ *    `npm run build` 에 묶여 있지 않습니다(로컬 빌드마다 GitHub 을 때리지 않도록).
+ *    없으면 fetch 가 404 를 받고 컴포넌트가 로드 실패 상태를 그립니다 —
+ *    잔디를 로컬에서 보려면 `npm run generate-contributions-data` 를 한 번 돌리세요.
  */
 
 export interface ContributionWeek {

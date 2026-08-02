@@ -7,6 +7,7 @@
     "dev": "vite",
     "generate-posts-data": "tsx src/utils/generatePostsData.ts",
     "generate-works-data": "tsx src/utils/generateWorksData.ts",
+    "generate-contributions-data": "tsx src/utils/generateContributionsData.ts",
     "verify-fonts": "node scripts/verify-font-glyphs.mjs",
     "build": "npm run verify-fonts && npm run generate-posts-data && npm run generate-works-data && tsc -b && vite build",
     "lint": "eslint .",
