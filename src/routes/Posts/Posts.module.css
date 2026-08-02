@@ -35,11 +35,22 @@
     margin-top: var(--space-6);
 }
 
+/*
+ * 입력 + 검색 버튼. 🔴 입력 폭 520px 은 **그대로 두고 버튼을 바깥에 붙입니다**
+ * (§3-8-3) — 입력을 줄이면 긴 검색어가 잘려 보입니다.
+ */
+.search_row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
 .search_field {
     display: flex;
     align-items: center;
     gap: var(--space-3);
     width: 520px;
+    min-width: 0;
     max-width: 100%;
     height: 44px;
     padding: 0 var(--space-4);
@@ -80,6 +91,39 @@
 .search_input:focus {
     /* 링은 필드 테두리가 대신합니다 — 입력 안쪽에 또 그리면 이중 테두리가 됩니다 */
     outline: none;
+}
+
+/*
+ * 검색 실행 버튼 (§3-8-3).
+ *
+ * 🔴 주 액션(`--color-accent-fill`)이 **아닙니다.** 이 화면의 주 과업은 "글로
+ *    들어가는 것"이지 "검색 버튼을 누르는 것"이 아니고, 골드 채움은 빈 상태의
+ *    `검색어 지우기` 가 이미 씁니다 — 둘이 같은 화면에 있으면 위계가 흐려집니다.
+ * 타이포는 전 화면 공통 버튼 규격입니다 — Pretendard 600 / 15px (STEP 1 §6-7).
+ */
+.search_submit {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 var(--space-5);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-surface);
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out);
+}
+
+.search_submit:hover {
+    border-color: var(--color-border-interactive);
 }
 
 .search_scope {
@@ -177,6 +221,35 @@
  *    --color-bg-raised 위에 올리면 호버 시 메타 텍스트 대비가 다크에서
  *    4.09:1 로 떨어집니다(§5-1 · §10-1).
  * ---------------------------------------------------------- */
+/*
+ * 🔴 결과 슬롯 — 하한 상시 예약 (§4-6-4)
+ * ------------------------------------------------------------
+ * `<ul>`·빈 상태·페이지네이션을 **함께** 감쌉니다. 셋이 형제면 각자 높이를 갖고,
+ * 교체할 때 그 차이가 그대로 문서 높이 변화가 되어 스크롤이 강제 클램프됩니다.
+ *
+ * 🔴 **고정 px 입니다.** `100vh`·`100dvh`·`innerHeight` 기반 값은 iOS Safari 의
+ *    동적 툴바가 오르내릴 때마다 슬롯 높이가 변해 **스크롤만 해도 레이아웃이
+ *    흔들립니다.** 480px 인 이유: 빈 상태 블록의 자연 높이가 약 320px 이라
+ *    하한이 그보다 작으면 예약이 아무 일도 하지 않고, 데스크톱 4행·모바일 5행
+ *    상당이라 **결과 5편 이상에서는 발동하지 않습니다**(평소 화면에 빈 공간이
+ *    생기지 않습니다). 0건에서 남는 160px 은 빈 상태 아래 한 뼘 여백으로
+ *    읽힙니다. 클램프 제거의 본체는 커밋 시 명시 스크롤(§4-6-3)이라 예약이
+ *    1,073px 전량을 떠맡을 이유가 없습니다.
+ *
+ * 🔴 하한을 **스크롤 위치에 따라 키우지 마세요** — 아래로 스크롤할수록 문서가
+ *    따라 늘어나 문서 끝에 영영 도달하지 못합니다(§4-6-5).
+ * 🔴 전역 `overflow-anchor: none` 금지 — 브라우저 기본 스크롤 앵커링이 「적용된
+ *    조건」 바처럼 뷰포트 위쪽에 삽입되는 요소를 보정합니다.
+ *
+ * 정렬은 **상단**입니다(일반 블록 흐름). 남는 예약분은 콘텐츠 아래로 흘립니다 —
+ * 세로 중앙 정렬하면 같은 조건인데 결과 수에 따라 빈 상태 메시지가 다른 자리에
+ * 뜹니다. 가로 중앙은 `PostListEmpty` 가 그대로 유지합니다.
+ */
+.results {
+    --list-floor: 480px;
+    min-height: var(--list-floor);
+}
+
 .list {
     margin: 0;
     padding: 0;
@@ -232,6 +305,11 @@
 
     .search_field {
         height: 48px;
+    }
+
+    .search_submit {
+        height: 48px;
+        padding: 0 var(--space-4);
     }
 
     .controls {

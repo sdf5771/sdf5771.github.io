@@ -11,9 +11,12 @@
      * 배경만으로 구분하지 않습니다 — accent-subtle 단독 대비는 라이트 1.09:1 /
      * 다크 1.15:1 로 배경 경계가 보이지 않습니다. **글자색이 실제 구분 채널**이고
      * 대비는 라이트 4.81:1 / 다크 7.74:1 입니다(§10-1).
+     *
+     * 🔴 `padding: 0 1px` 를 **뺐습니다.** 강조 구간마다 가로 2px 이 붙어 모바일
+     *    390px 에서 제목의 줄바꿈 지점이 달라지고, 그것만으로 목록이 +51px
+     *    밀렸습니다. 대비는 위 글자색이 확보하고 있어 접근성 손실이 없습니다.
      */
     background-color: var(--color-accent-subtle);
     color: var(--color-accent-text);
     border-radius: var(--radius-xs);
-    padding: 0 1px;
 }
