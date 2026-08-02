@@ -114,6 +114,19 @@ function Posts() {
      */
     const [inputValue, setInputValue] = useState(params.q);
     /*
+     * 🔴 커밋 후 포커스를 되돌릴 대상(§3-8-6). Enter 는 포커스가 원래 입력창에
+     *    있어 자연히 남지만, **검색 버튼 경로는 포커스가 버튼에 남습니다** —
+     *    그리고 ⌘K 가 없는 모바일에서는 그 버튼이 유일한 실행 경로입니다.
+     */
+    const searchInputRef = useRef<HTMLInputElement>(null);
+    /*
+     * 🔴 IME 조합 중인가. `type="search"` 의 **네이티브 Escape 클리어**를 막는
+     *    데 씁니다(§3-8-4 회귀 방지) — 그건 우리 `onKeyDown` 을 거치지 않고
+     *    곧장 빈 값 `onChange` 로 들어와 조합 중이던 입력을 통째로 날립니다.
+     *    그래서 가드는 키 이벤트가 아니라 **커밋 지점**에 있어야 합니다.
+     */
+    const isComposingRef = useRef(false);
+    /*
      * 🔴 우리가 마지막으로 URL 에 쓴 검색어. 없으면 아래 효과가 커밋을 덮습니다.
      *    - 우리가 쓴 값이 URL 에서 되돌아왔을 때(에코) 입력을 다시 세팅하면,
      *      커밋 직후 사용자가 이어서 친 글자가 지워집니다.
@@ -258,8 +271,33 @@ function Posts() {
      * 남아 있지 않습니다. 빈 상태의 `검색어 지우기` 액션이 이미 Enter 없이 즉시
      * 전체로 돌아가는데, 같은 결과에 두 가지 조작 규칙을 둘 수는 없습니다.
      * 공백만 남은 경우도 빈 것으로 취급합니다(§3-2 트림 규칙과 동일).
+     *
+     * 🔴 **조합 중에 들어온 빈 값은 사용자의 「지우기」가 아닙니다.**
+     *    `type="search"` 의 네이티브 Escape 클리어가 조합 취소와 겹쳐 들어오는
+     *    경로이고, 그대로 태우면 조합만 물리려던 사용자의 입력이 통째로 날아가고
+     *    `q` 제거 + 히스토리까지 쌓입니다. 값 변경도 커밋도 하지 않습니다.
+     *    조합 중 실제로 글자를 지우면 값이 빈 문자열이 되기 전에 조합이 끝나므로
+     *    정상 입력을 막지 않습니다.
      */
-    const handleInputChange = (value: string) => {
+    const handleInputChange = (value: string, isComposing = isComposingRef.current) => {
+        if (isComposing && !value) {
+            /*
+             * 🔴 state 를 안 바꾸면 React 는 리렌더하지 않고, **DOM 은 이미
+             *    네이티브 클리어로 비워져 있어** 화면만 빈 채로 남습니다
+             *    (React 는 여기서 controlled value 를 되돌려주지 않습니다 —
+             *    실측). 그래서 직접 되돌립니다. 조합이 취소된 뒤이므로 캐럿은
+             *    끝입니다.
+             */
+            const input = searchInputRef.current;
+
+            if (input && input.value !== inputValue) {
+                input.value = inputValue;
+                input.setSelectionRange(inputValue.length, inputValue.length);
+            }
+
+            return;
+        }
+
         setInputValue(value);
 
         if (!value.trim() && params.q) {
@@ -289,8 +327,15 @@ function Posts() {
     const listHeaderRef = useRef<HTMLDivElement>(null);
     const scrollKeyRef = useRef<string | null>(null);
 
+    /*
+     * 🔴 페이지는 `params.page` 가 아니라 **`currentPage`** 입니다 — 아래
+     *    `<ul>` key 와 같은 값이어야 합니다. 화면에 보이는 것은 클램프된
+     *    페이지이고(`?page=99` → 3), 목록이 안 바뀌었는데 스크롤만 움직이면
+     *    그 이동은 피드백이 아니라 잡음입니다. 이미 3쪽을 보는 중에 `?page=99`
+     *    로 들어오는 경우가 정확히 그것입니다.
+     */
     useLayoutEffect(() => {
-        const key = `${params.q}|${params.category}|${params.sort}|${params.page}`;
+        const key = `${params.q}|${params.category}|${params.sort}|${currentPage}`;
         const previous = scrollKeyRef.current;
         scrollKeyRef.current = key;
 
@@ -307,7 +352,7 @@ function Posts() {
             behavior: prefersReducedMotion() ? 'auto' : 'smooth',
             block: 'start',
         });
-    }, [params.q, params.category, params.sort, params.page, navigationType]);
+    }, [params.q, params.category, params.sort, currentPage, navigationType]);
 
     const searchHintId = 'post-search-scope';
     /*
@@ -339,12 +384,28 @@ function Posts() {
                         /* 막지 않으면 폼이 페이지를 다시 불러 SPA 상태가 날아갑니다 */
                         event.preventDefault();
                         commitSearch(inputValue);
+
+                        /*
+                         * 🔴 커밋 후 포커스는 **입력창**입니다(§3-8-6).
+                         *
+                         * Enter 경로는 이미 입력창에 있어 아무 일도 일어나지 않고,
+                         * 문제는 **검색 버튼** 경로입니다 — 그대로 두면 포커스가
+                         * 버튼에 남아 0건에서 고쳐 치려면 Tab 왕복이 붙습니다.
+                         * ⌘K 가 없는 모바일에서는 이 버튼이 유일한 실행 경로라
+                         * 손해가 가장 큽니다.
+                         *
+                         * 🔴 `select()` 를 부르지 마세요 — 한 글자 고치려는 사람이
+                         *    다음 타건에 전부 날립니다(§3-8-6). `focus()` 는 캐럿만
+                         *    되돌리고 선택은 만들지 않습니다.
+                         */
+                        searchInputRef.current?.focus();
                     }}
                 >
                     <div className={styles.search_row}>
                         <div className={styles.search_field}>
                             <SearchIcon className={styles.search_icon} />
                             <input
+                                ref={searchInputRef}
                                 className={styles.search_input}
                                 type="search"
                                 /*
@@ -357,7 +418,25 @@ function Posts() {
                                 aria-describedby={searchHintId}
                                 placeholder={SEARCH_PLACEHOLDER}
                                 autoComplete="off"
-                                onChange={event => handleInputChange(event.target.value)}
+                                /*
+                                 * 조합 상태는 **브라우저가 알려 주는 대로** 들고
+                                 * 있습니다. 네이티브 Escape 클리어가 만드는 빈 값
+                                 * `onChange` 에는 조합 정보가 실려 오지 않을 수 있어
+                                 * 이벤트만으로는 판별이 안 됩니다.
+                                 */
+                                onCompositionStart={() => {
+                                    isComposingRef.current = true;
+                                }}
+                                onCompositionEnd={() => {
+                                    isComposingRef.current = false;
+                                }}
+                                onChange={event =>
+                                    handleInputChange(
+                                        event.target.value,
+                                        isComposingRef.current ||
+                                            (event.nativeEvent as InputEvent).isComposing === true,
+                                    )
+                                }
                                 onKeyDown={event => {
                                     /*
                                      * 🔴 Enter 는 **잡지 않습니다.** 폼 제출에 맡깁니다 —
@@ -365,18 +444,23 @@ function Posts() {
                                      *    삼켜 한국어 검색이 깨집니다(§3-8-2).
                                      *
                                      * Escape 만 처리합니다. `type="search"` 의 기본 동작과
-                                     * 같지만 제어 입력이라 직접 해야 합니다. 단 **조합 중
-                                     * Escape 는 IME 취소**라 여기서 가로채면 조합만 물리려던
-                                     * 사용자의 입력이 통째로 날아갑니다.
+                                     * 같지만 제어 입력이라 직접 해야 합니다.
+                                     *
+                                     * 🔴 조합 중 가드를 여기에 두지 않습니다. 여기서 early
+                                     *    return 해 봐야 `type="search"` 의 **네이티브**
+                                     *    Escape 클리어가 우리를 우회해 빈 값 `onChange` 로
+                                     *    들어옵니다 — 실제로 값이 날아간 경로가 그것이었고,
+                                     *    이 가드는 아무 일도 하지 않았습니다. 판단은
+                                     *    `handleInputChange` 한 곳에서 합니다.
                                      */
-                                    if (event.nativeEvent.isComposing) {
-                                        return;
-                                    }
-
                                     if (event.key === 'Escape' && inputValue) {
                                         event.preventDefault();
                                         /* 🔴 지워지는 즉시 전체 목록으로 갑니다(§3-8-4) */
-                                        handleInputChange('');
+                                        handleInputChange(
+                                            '',
+                                            isComposingRef.current ||
+                                                event.nativeEvent.isComposing,
+                                        );
                                     }
                                 }}
                             />

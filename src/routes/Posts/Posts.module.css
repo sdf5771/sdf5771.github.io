@@ -158,8 +158,17 @@
     margin-top: var(--space-6);
     padding-bottom: var(--space-3);
     border-bottom: 1px solid var(--color-border-strong);
-    /* 스크롤 목적지. sticky 헤더에 가려지지 않게 여백을 미리 잡아 둡니다(§4-5) */
-    scroll-margin-top: calc(var(--header-h-desktop) + var(--space-6));
+    /*
+     * 스크롤 목적지. sticky 헤더에 가려지지 않게 여백을 미리 잡아 둡니다(§4-5).
+     *
+     * 🔴 더하는 값은 **`--space-4` 고정**입니다(§4-6-3, web-design 판정
+     *    2026-08-02). 공식이 하려던 일은 "헤더 아래 보이는 여백을 폭과 무관하게
+     *    같게" 두는 것인데, 데스크톱만 `--space-6` 이면 24 / 16 으로 갈려
+     *    공식이 스스로를 깹니다. 헤더 높이(48/52)만 폭에서 파생시키고 여백은
+     *    상수여야 둘이 같아 보입니다. handoff-step6 의 연도 섹션과 step7 의
+     *    sticky 도 전부 `헤더 높이 + --space-4` 라 사이트 전체가 한 값이 됩니다.
+     */
+    scroll-margin-top: calc(var(--header-h-desktop) + var(--space-4));
 }
 
 .summary {
