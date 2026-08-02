@@ -135,12 +135,39 @@
     flex-shrink: 0;
 }
 
+/* 헤더 우측 — 페이지 진행 + `연도별 보기` (STEP 6 §1-1) */
+.list_header_end {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    flex-shrink: 0;
+}
+
 .progress {
     margin: 0;
     font-family: var(--font-ui-meta);
     font-size: var(--fs-xs);
     color: var(--color-text-muted);
     white-space: nowrap;
+}
+
+/*
+ * 텍스트 링크입니다 — 버튼이 아닙니다. `/posts` 의 조건 컨트롤(칩·세그먼트)과
+ * 같은 위계로 보이면 "이것도 이 목록을 거르는 장치"로 읽힙니다. 실제로는
+ * **다른 화면으로 나가는 문**이라 형태를 달리 둡니다.
+ */
+.archive_link {
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+.archive_link:hover {
+    color: var(--color-accent-text);
 }
 
 /* ------------------------------------------------------------

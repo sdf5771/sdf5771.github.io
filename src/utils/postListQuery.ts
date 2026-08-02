@@ -21,6 +21,18 @@ export type PostSortOrder = 'latest' | 'oldest';
 
 export const DEFAULT_SORT: PostSortOrder = 'latest';
 
+/**
+ * 정렬 세그먼트의 확정 라벨과 순서.
+ *
+ * URL 값(`latest`/`oldest`)과 UI 라벨이 **한 곳에서** 짝지어져 있어야 `/posts` 와
+ * `/tags/:tag` 가 갈리지 않습니다. 두 화면이 같은 컴포넌트·같은 상수를 씁니다
+ * (docs/handoff-step6-tags-archive.md §7-6).
+ */
+export const POST_SORT_OPTIONS: ReadonlyArray<{ value: PostSortOrder; label: string }> = [
+    { value: 'latest', label: '최신순' },
+    { value: 'oldest', label: '오래된순' },
+];
+
 export interface PostListQuery {
     /** 검색어 원문. 빈 문자열이 기본값 */
     q: string;

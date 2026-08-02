@@ -1,7 +1,10 @@
 import { useLocation } from 'react-router-dom';
 import { POSTS } from '../data/posts';
+import { findTag } from '../data/tags';
+import { ARCHIVE_PATH, TAG_INDEX_PATH } from '../constants/site';
 import { safeDecodeURIComponent } from '../utils/url';
 import { toPostSlug } from '../utils/postSlug';
+import { toTagSlug } from '../utils/tags';
 
 /**
  * 현재 라우트를 헤더의 경로 표시 문자열로 옮깁니다.
@@ -54,9 +57,26 @@ function useTerminalPath(): string {
     }
 
     /*
-     * 홈(`/`)과 그 밖의 모든 경로. `/tags` 는 STEP 6 에서 라우트가 생길 때
-     * 여기에 분기를 추가하세요 — 지금은 404 라 `~` 가 맞습니다.
+     * 태그별 목록(STEP 6). 표기는 **slug** 입니다(§12) — 원문 표기를 쓰면
+     * `~/tags/Android XR` 처럼 공백이 들어가 경로로 보이지 않습니다.
+     * 실재하는 태그일 때만 돌려줍니다 — 없는 태그는 404 라 `~` 가 맞습니다.
      */
+    const tagMatch = /^\/tags\/(.+)$/.exec(pathname);
+    if (tagMatch) {
+        const slug = toTagSlug(safeDecodeURIComponent(tagMatch[1]));
+        return findTag(slug) ? `~/tags/${slug}` : '~';
+    }
+
+    /* 태그 인덱스. `/tags/<slug>` 검사 뒤라 태그별 목록을 가로채지 않습니다 */
+    if (pathname === TAG_INDEX_PATH) {
+        return '~/tags';
+    }
+
+    if (pathname === ARCHIVE_PATH) {
+        return '~/archive';
+    }
+
+    /* 홈(`/`)과 그 밖의 모든 경로 */
     return '~';
 }
 

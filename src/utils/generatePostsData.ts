@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import type { PostMetadata, PostSeries } from '../types';
 import { toPostSlug } from './postSlug';
 import { readImageSize } from './imageSize';
+import { normalizeTag, summarizeTags, toTagSlug } from './tags';
 
 // Markdown File Path
 const MARKDOWN_DIRECTORY_PATH = 'public/_posts';
@@ -15,6 +16,12 @@ const imageDirectory = path.join(process.cwd(), IMAGE_DIRECTORY_PATH);
 
 // Create posts data path
 const jsonOutputPath = path.join(process.cwd(), 'public/posts-data.json');
+
+/**
+ * 태그 인덱스 산출물(§3-6②). `slug`·`name`·`count` 셋뿐입니다 —
+ * 글 목록은 `posts-data.json` 의 `tagSlugs` 가 이미 갖고 있어 넣으면 중복입니다.
+ */
+const tagsOutputPath = path.join(process.cwd(), 'public/tags-data.json');
 
 /**
  * 시리즈 정의 파일(§10-1). **41편 md 를 한 글자도 고치지 않기 위해** 별도 파일입니다.
@@ -280,6 +287,69 @@ function buildSeriesMap(knownSlugs: Map<string, string>): Map<string, PostSeries
 }
 
 /* ------------------------------------------------------------
+ * 태그 — §3-6
+ * ---------------------------------------------------------- */
+
+/**
+ * `public/tags-data.json` 의 내용을 만들고 **검증 3종**을 겁니다.
+ *
+ * | 조건 | 처리 |
+ * |---|---|
+ * | 서로 다른 정규화 키가 같은 slug 를 만듦 | 🔴 빌드 실패 — 조용히 병합되면 두 태그의 글이 섞입니다 |
+ * | slug 가 빈 문자열 (태그가 공백·기호뿐) | 🔴 빌드 실패 — `/tags/` 로 착지합니다 |
+ * | `tagSlugs.length !== keywords.length` | 🔴 빌드 실패 — 현재 태그 강조가 엉뚱한 칩에 걸립니다 |
+ *
+ * 산출물에는 **63종 전부**가 들어갑니다. 인덱스 노출(2회 이상)을 거르는 것은
+ * 소비처의 일이고, 이 파일은 "데이터에 존재하는가"의 정의처입니다(§4-1).
+ */
+function buildTagSummaries(posts: readonly PostMetadata[]) {
+    const lengthMismatch = posts.filter(post => post.tagSlugs.length !== post.keywords.length);
+
+    if (lengthMismatch.length > 0) {
+        throw new Error(
+            `tagSlugs 와 keywords 의 길이가 다릅니다: ${lengthMismatch
+                .map(post => `"${post.slug}"(${post.keywords.length} vs ${post.tagSlugs.length})`)
+                .join(', ')}`,
+        );
+    }
+
+    const emptySlugs = posts.flatMap(post =>
+        post.keywords.filter((_, index) => !post.tagSlugs[index]),
+    );
+
+    if (emptySlugs.length > 0) {
+        throw new Error(
+            `slug 가 빈 문자열이 되는 태그가 있습니다: ${[...new Set(emptySlugs)]
+                .map(tag => `"${tag}"`)
+                .join(', ')}`,
+        );
+    }
+
+    const summaries = summarizeTags(posts);
+
+    /* 정규화 키 → slug 가 1:1 인지. 다대일이면 두 태그의 글이 한 페이지에 섞입니다 */
+    const owner = new Map<string, string>();
+
+    for (const post of posts) {
+        post.keywords.forEach((keyword, index) => {
+            const slug = post.tagSlugs[index];
+            const key = normalizeTag(keyword);
+            const existing = owner.get(slug);
+
+            if (existing !== undefined && existing !== key) {
+                throw new Error(
+                    `서로 다른 태그가 같은 slug 를 만듭니다: "${existing}" · "${key}" → "/tags/${slug}"`,
+                );
+            }
+
+            owner.set(slug, key);
+        });
+    }
+
+    return summaries;
+}
+
+/* ------------------------------------------------------------
  * 생성
  * ---------------------------------------------------------- */
 
@@ -321,6 +391,14 @@ function generatePostsData() {
             const thumbnailImage = bringThumbnailImage(filename);
 
             /*
+             * 🔴 `keywords` 는 **원문 그대로** 둡니다 — 글 상세의 태그 줄이 이것을
+             *    쓰고, WRITING_GUIDE §6.8 이 대소문자 변경을 금지합니다.
+             *    `tagSlugs[i]` 가 `keywords[i]` 의 slug 이고, **순서·길이가 반드시
+             *    대응**해야 `/tags/:tag` 가 "현재 태그"를 찾아 강조할 수 있습니다(§3-6①).
+             */
+            const keywords: string[] = Array.isArray(data.tags) ? data.tags : [];
+
+            /*
              * 🔴 slug(URL)와 file(디스크)을 **분리**합니다 — product.md §7-3 R2.
              * 파일명에는 대문자가 섞여 있고(33/41) GitHub Pages 는 대소문자를
              * 구분하므로, 하나로 겸용하면 소문자 URL 로 들어온 요청이 파일을
@@ -331,7 +409,8 @@ function generatePostsData() {
                 title: data.title || '',
                 date: data.date || '',
                 author: data.author || '',
-                keywords: data.tags || [],
+                keywords,
+                tagSlugs: keywords.map(toTagSlug),
                 description: data.description || '',
                 category: data.categories || '',
                 slug: toPostSlug(typeof data.slug === 'string' && data.slug ? data.slug : filename),
@@ -405,17 +484,30 @@ function generatePostsData() {
                 a.slug.localeCompare(b.slug),
         );
 
+        /*
+         * 🔴 태그 검증 3종(§3-6③) — 전부 **빌드 실패**입니다.
+         *    조용히 넘어가면 태그 페이지가 배포된 뒤에야 어긋난 것이 드러납니다.
+         *    정렬 **뒤에** 도는 이유: 대표 표기의 동률 타이브레이커가
+         *    "더 최근 글의 표기"라 입력 배열이 최신순이어야 정의됩니다(§3-4).
+         */
+        const tags = buildTagSummaries(postMetadatas);
+
         // write to json file
         fs.writeFileSync(jsonOutputPath, JSON.stringify(postMetadatas, null, 2));
+        fs.writeFileSync(tagsOutputPath, JSON.stringify(tags, null, 2));
 
         const seriesCount = postMetadatas.filter(post => post.series).length;
         const imageCount = postMetadatas.reduce(
             (total, post) => total + Object.keys(post.imageSizes).length,
             0,
         );
+        const indexedTagCount = tags.filter(tag => tag.count >= 2).length;
+
         console.log(
             `✅ Posts data generated successfully: ${jsonOutputPath}\n` +
-                `   글 ${postMetadatas.length}편 · 시리즈 소속 ${seriesCount}편 · 이미지 크기 ${imageCount}장`,
+                `   글 ${postMetadatas.length}편 · 시리즈 소속 ${seriesCount}편 · 이미지 크기 ${imageCount}장\n` +
+                `✅ Tags data generated successfully: ${tagsOutputPath}\n` +
+                `   고유 태그 ${tags.length}종 · 인덱스 수록(2회 이상) ${indexedTagCount}종`,
         );
     } catch (error) {
         console.error('❌ Error generating posts data:', error);

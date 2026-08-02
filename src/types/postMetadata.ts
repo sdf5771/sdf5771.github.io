@@ -3,6 +3,14 @@ export interface PostMetadata {
     date: string;
     author: string;
     keywords: string[];
+    /**
+     * `keywords[i]` 의 URL slug — **순서와 길이가 `keywords` 와 대응**합니다
+     * (docs/handoff-step6-tags-archive.md §3-6①). 빌드가 채우고 검증합니다.
+     *
+     * 목록 필터는 `post.tagSlugs.includes(slug)` 하나로 끝납니다 — 런타임에서
+     * 태그를 다시 정규화할 일이 없어야 검색과 태그 페이지가 갈리지 않습니다.
+     */
+    tagSlugs: string[];
     description: string;
     category: string;
     /**

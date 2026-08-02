@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation, useNavigate, useNavigationType } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 import styles from './Posts.module.css';
 import {
     AppliedConditions,
@@ -10,7 +10,7 @@ import {
 } from '../../components/posts';
 import { Pagination, SearchIcon } from '../../components/shared';
 import { CATEGORY_NAMES, POST_SEARCH_INDEX, TOTAL_POST_COUNT } from '../../data/posts';
-import { POST_LIST_PATH } from '../../constants/site';
+import { ARCHIVE_LABEL, ARCHIVE_PATH, POST_LIST_PATH } from '../../constants/site';
 import { SEARCH_PLACEHOLDER, SEARCH_SCOPE_HINT } from '../../constants/search';
 import { matchesTokens, tokenizeQuery } from '../../utils/postSearch';
 import {
@@ -18,6 +18,7 @@ import {
     clampPage,
     parsePostListQuery,
     sortPosts,
+    POST_SORT_OPTIONS,
     POSTS_PER_PAGE,
 } from '../../utils/postListQuery';
 import type { PostListQuery, PostSortOrder } from '../../utils/postListQuery';
@@ -32,10 +33,14 @@ import type { PostListQuery, PostSortOrder } from '../../utils/postListQuery';
  */
 const SEARCH_URL_DEBOUNCE_MS = 250;
 
-const SORT_LABEL: Record<PostSortOrder, string> = {
-    latest: '최신순',
-    oldest: '오래된순',
-};
+/**
+ * 목록 헤더가 쓰는 정렬 라벨. 🔴 문자열을 여기 다시 적지 않습니다 —
+ * 세그먼트 컨트롤과 헤더 에코가 다른 말을 하면 안 되므로 정의처는
+ * `POST_SORT_OPTIONS` 하나입니다.
+ */
+const SORT_LABEL = Object.fromEntries(
+    POST_SORT_OPTIONS.map(option => [option.value, option.label]),
+) as Record<PostSortOrder, string>;
 
 /**
  * 목록 헤더 문구 (§8-3 · STEP 1 §9 확정 카피).
@@ -325,6 +330,7 @@ function Posts() {
                         buildHref={category => hrefFor({ category })}
                     />
                     <SortSegment
+                        options={POST_SORT_OPTIONS}
                         selected={params.sort}
                         buildHref={sort => hrefFor({ sort })}
                     />
@@ -346,9 +352,25 @@ function Posts() {
                         {summary}
                     </p>
 
-                    {totalPages > 1 && (
-                        <p className={styles.progress}>{`${currentPage} / ${totalPages}`}</p>
-                    )}
+                    <div className={styles.list_header_end}>
+                        {totalPages > 1 && (
+                            <p className={styles.progress}>{`${currentPage} / ${totalPages}`}</p>
+                        )}
+
+                        {/*
+                         * `/archive` 로 가는 **유일한 진입 경로**입니다.
+                         * GNB 4항목은 STEP 1 확정이라 늘리지 않습니다
+                         * (docs/handoff-step6-tags-archive.md §1-1).
+                         *
+                         * 🔴 이 링크가 두 화면의 역할 분담을 그대로 말합니다 —
+                         *    `/posts` 는 조건을 걸어 하나를 찾는 곳이고,
+                         *    `/archive` 는 조건 없이 전체를 시기 순서로 훑는 곳입니다.
+                         *    그래서 `/posts` 에 연도 필터를 넣지 않습니다(R-2).
+                         */}
+                        <Link className={styles.archive_link} to={ARCHIVE_PATH}>
+                            {ARCHIVE_LABEL}
+                        </Link>
+                    </div>
                 </div>
 
                 {/*

@@ -72,7 +72,7 @@ export const NAV_ITEMS: NavItem[] = [
     /* STEP 4 */
     { label: '글', path: '/posts', activePaths: ['/post'], isRouteReady: true },
     /* STEP 6 */
-    { label: '태그', path: '/tags', isRouteReady: false },
+    { label: '태그', path: '/tags', isRouteReady: true },
     { label: '소개', path: '/about', isRouteReady: true },
 ];
 
@@ -85,6 +85,40 @@ export const POST_LIST_PATH = '/posts';
 export const IS_POST_LIST_READY: boolean = NAV_ITEMS.some(
     item => item.path === POST_LIST_PATH && item.isRouteReady,
 );
+
+/** 태그 인덱스 경로 (STEP 6) */
+export const TAG_INDEX_PATH = '/tags';
+
+/**
+ * `/tags` 라우트가 실재하는가.
+ *
+ * 🔴 이 값이 **글 상세 태그의 모양까지** 정합니다. 확정 규칙이 「링크되는 태그는
+ *    칩(배경 + 테두리), 링크 안 되는 태그는 평문」이라(§5-2), 라우트가 없으면
+ *    칩이 하나도 없는 것이 맞습니다. 없는 곳으로 보내는 칩은 404 로 가는
+ *    함정이고, 404 화면이 회복 경로를 감추는 것과 같은 이유입니다.
+ */
+export const IS_TAG_ROUTE_READY: boolean = NAV_ITEMS.some(
+    item => item.path === TAG_INDEX_PATH && item.isRouteReady,
+);
+
+/** 태그별 목록 → 인덱스로 돌아가는 링크. 1회성 태그 페이지의 유일한 탈출로입니다 */
+export const TAG_INDEX_LINK_LABEL = '전체 태그 보기';
+
+/**
+ * 연도별 보기 경로 (STEP 6).
+ *
+ * 🔴 GNB 4항목에 **없습니다.** 진입 경로는 `/posts` 목록 헤더 우측의 텍스트 링크
+ *    하나입니다(§1-1). GNB 인벤토리는 STEP 1 확정이라 건드리지 않습니다.
+ */
+export const ARCHIVE_PATH = '/archive';
+
+/**
+ * 화면 이름은 **`연도별 보기`** 입니다.
+ * 🔴 WRITING_GUIDE §9 용어집이 `아카이브` 를 "쓰지 않는 표기"로 지정했습니다.
+ *    UI 라벨·aria-label·`<title>` 어디에도 쓰지 마세요. URL `/archive` 는 UI
+ *    라벨이 아니므로 그대로 둡니다.
+ */
+export const ARCHIVE_LABEL = '연도별 보기';
 
 /** 현재 경로가 이 내비 항목에 속하는가 */
 export function isNavItemActive(item: NavItem, pathname: string): boolean {

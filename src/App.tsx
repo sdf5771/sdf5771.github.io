@@ -1,6 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
 import styles from './App.module.css';
-import { About, Home, LegacyPostRedirect, NotFound, Post, Posts } from './routes';
+import {
+    About,
+    Archive,
+    Home,
+    LegacyPostRedirect,
+    NotFound,
+    Post,
+    Posts,
+    TagPosts,
+    Tags,
+} from './routes';
 import { GlobalNavigationBar, Footer } from './components/shared';
 import { ShellProvider } from './components/shell';
 import { useDocumentTitle } from './hooks';
@@ -30,6 +40,16 @@ function App() {
                         {/* 구 경로. 프로덕션에서는 dist/404.html 이 먼저 잡아 넘깁니다 */}
                         <Route path="/post" element={<LegacyPostRedirect />} />
                         <Route path="/about" element={<About />} />
+                        {/*
+                         * STEP 6. `/tags/` (빈 값)는 `/tags` 와 같은 화면입니다 —
+                         * React Router 가 후행 슬래시를 무시하므로 별도 분기가
+                         * 필요 없습니다. `/tags/<태그>` 의 정규화·404 판정은
+                         * TagPosts 가 렌더 전에 처리합니다(§4-2).
+                         */}
+                        <Route path="/tags" element={<Tags />} />
+                        <Route path="/tags/:tag" element={<TagPosts />} />
+                        {/* GNB 에 없는 화면입니다. 진입은 `/posts` 헤더의 텍스트 링크 하나 */}
+                        <Route path="/archive" element={<Archive />} />
                         {/*
                          * 반드시 **마지막**입니다. GitHub Pages 가 404.html 을 서빙할 때
                          * 주소창 URL 을 바꾸지 않으므로, 여기 들어오는 경로는 사용자가

@@ -1,14 +1,19 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { POSTS } from '../data/posts';
+import { findTag } from '../data/tags';
 import {
+    ARCHIVE_LABEL,
+    ARCHIVE_PATH,
     HOME_TITLE,
     NOT_FOUND_TITLE_NAME,
     POST_LIST_PATH,
+    TAG_INDEX_PATH,
     buildPageTitle,
 } from '../constants/site';
 import { safeDecodeURIComponent } from '../utils/url';
 import { toPostSlug } from '../utils/postSlug';
+import { toTagSlug } from '../utils/tags';
 
 /**
  * 현재 라우트에 해당하는 `<title>` 문자열.
@@ -54,11 +59,36 @@ function resolveDocumentTitle(pathname: string, search: string): string {
     }
 
     /*
-     * 🔴 **아직 없는 라우트의 제목을 미리 쓰지 않습니다.**
-     * `/tags`·`/tags/<태그>` 는 STEP 6 이고 지금은 404 화면입니다.
-     * 여기에 제목을 넣어 두면 화면은 404 인데 탭 제목만 정상이라,
-     * **페이지 전환을 제목으로 안내받는 스크린리더 사용자에게 거짓말**이 됩니다.
-     * 라우트가 생기는 STEP 에서 그 라우트와 **함께** 제목을 되살리세요.
+     * 태그별 목록 — `#React · Seobisback.log`. 표기는 **대표 표기**입니다(§3-4).
+     *
+     * 🔴 없는 태그는 화면이 404 이므로 제목도 404 여야 합니다. 라우트가 있다는
+     *    이유로 제목만 정상으로 두면, 페이지 전환을 제목으로 안내받는 스크린리더
+     *    사용자에게 거짓말이 됩니다.
+     *    반대로 **1회성 태그는 정상 화면**이라 정상 제목이 나갑니다(§4-2).
+     */
+    const tagMatch = /^\/tags\/(.+)$/.exec(pathname);
+    if (tagMatch) {
+        const tag = findTag(toTagSlug(safeDecodeURIComponent(tagMatch[1])));
+        return buildPageTitle(tag ? `#${tag.name}` : NOT_FOUND_TITLE_NAME);
+    }
+
+    /* 태그 인덱스. `/tags/<slug>` 검사 뒤에 와야 합니다 */
+    if (pathname === TAG_INDEX_PATH) {
+        return buildPageTitle('태그');
+    }
+
+    /*
+     * 🔴 화면 이름은 `연도별 보기` 입니다. WRITING_GUIDE §9 가 `아카이브` 를
+     *    "쓰지 않는 표기" 로 지정했습니다 — URL 만 `/archive` 입니다.
+     */
+    if (pathname === ARCHIVE_PATH) {
+        return buildPageTitle(ARCHIVE_LABEL);
+    }
+
+    /*
+     * 🔴 **아직 없는 라우트의 제목을 미리 쓰지 않습니다.** 화면은 404 인데 탭
+     *    제목만 정상이면 스크린리더 사용자에게 거짓말이 됩니다. 라우트가 생기는
+     *    STEP 에서 그 라우트와 **함께** 제목을 살리세요.
      */
     return buildPageTitle(NOT_FOUND_TITLE_NAME);
 }

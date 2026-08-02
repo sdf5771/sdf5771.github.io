@@ -19,6 +19,22 @@
       "Client",
       "Client Side AI"
     ],
+    "tagSlugs": [
+      "web",
+      "frontend",
+      "ai",
+      "ml",
+      "google",
+      "2025-google-io",
+      "translator",
+      "language-detector",
+      "summarizer",
+      "google-io",
+      "chrome",
+      "browser",
+      "client",
+      "client-side-ai"
+    ],
     "description": "Google I/O 2025 핵심 API 살펴보기",
     "category": "Survey",
     "slug": "2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer",
@@ -103,6 +119,23 @@
       "WebGL",
       "Naver"
     ],
+    "tagSlugs": [
+      "web",
+      "frontend",
+      "design",
+      "ux",
+      "ui",
+      "vr",
+      "ar",
+      "webxr",
+      "apple",
+      "google",
+      "vision-pro",
+      "android-xr",
+      "spatial",
+      "webgl",
+      "naver"
+    ],
     "description": "",
     "category": "Survey",
     "slug": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2",
@@ -164,6 +197,23 @@
       "Spatial",
       "WebGL",
       "Naver"
+    ],
+    "tagSlugs": [
+      "web",
+      "frontend",
+      "design",
+      "ux",
+      "ui",
+      "vr",
+      "ar",
+      "webxr",
+      "apple",
+      "google",
+      "vision-pro",
+      "android-xr",
+      "spatial",
+      "webgl",
+      "naver"
     ],
     "description": "",
     "category": "Survey",
@@ -270,6 +320,11 @@
       "Conference",
       "Event"
     ],
+    "tagSlugs": [
+      "mongodb",
+      "conference",
+      "event"
+    ],
     "description": "",
     "category": "Activity",
     "slug": "2024-09-04-mongodb-local",
@@ -341,6 +396,14 @@
       "JWT",
       "Login"
     ],
+    "tagSlugs": [
+      "javascript",
+      "typescript",
+      "react",
+      "nextjs",
+      "jwt",
+      "login"
+    ],
     "description": "",
     "category": "Survey",
     "slug": "2024-03-06-jwttoken",
@@ -376,6 +439,11 @@
       "Javascript",
       "Browser",
       "Rendering"
+    ],
+    "tagSlugs": [
+      "javascript",
+      "browser",
+      "rendering"
     ],
     "description": "",
     "category": "Survey",
@@ -431,6 +499,13 @@
       "Test",
       "Jest"
     ],
+    "tagSlugs": [
+      "react",
+      "javascript",
+      "typescript",
+      "test",
+      "jest"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-09-13-test-jest-learn",
@@ -448,6 +523,10 @@
     "keywords": [
       "React",
       "Typescript"
+    ],
+    "tagSlugs": [
+      "react",
+      "typescript"
     ],
     "description": "",
     "category": "Survey",
@@ -484,6 +563,11 @@
       "React",
       "DesignPattern",
       "Typescript"
+    ],
+    "tagSlugs": [
+      "react",
+      "designpattern",
+      "typescript"
     ],
     "description": "",
     "category": "Study",
@@ -529,6 +613,11 @@
       "SEO",
       "NextJS"
     ],
+    "tagSlugs": [
+      "react",
+      "seo",
+      "nextjs"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-04-25-next-js-practice",
@@ -573,6 +662,11 @@
       "SEO",
       "MetaTag"
     ],
+    "tagSlugs": [
+      "react",
+      "seo",
+      "metatag"
+    ],
     "description": "",
     "category": "Survey",
     "slug": "2023-04-15-technical-seo-meta-tag",
@@ -599,6 +693,9 @@
     "keywords": [
       "API"
     ],
+    "tagSlugs": [
+      "api"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-04-13-api",
@@ -624,6 +721,12 @@
       "IaaS",
       "PasS"
     ],
+    "tagSlugs": [
+      "cloud",
+      "saas",
+      "iaas",
+      "pass"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-04-13-cloud-saas-iaas-paas",
@@ -647,6 +750,10 @@
       "JSON",
       "XML"
     ],
+    "tagSlugs": [
+      "json",
+      "xml"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-04-13-json-xml",
@@ -664,6 +771,10 @@
     "keywords": [
       "Python",
       "CodingTest"
+    ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
     ],
     "description": "",
     "category": "Study",
@@ -692,6 +803,10 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-04-13-python-prefix-sum-reminder",
@@ -719,6 +834,10 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-binaryparse",
@@ -736,6 +855,10 @@
     "keywords": [
       "Python",
       "CodingTest"
+    ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
     ],
     "description": "",
     "category": "Study",
@@ -755,6 +878,10 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-collatz-reverse",
@@ -773,6 +900,11 @@
       "Frontend",
       "Computer Science",
       "Browser"
+    ],
+    "tagSlugs": [
+      "frontend",
+      "computer-science",
+      "browser"
     ],
     "description": "",
     "category": "Study",
@@ -812,6 +944,10 @@
     "keywords": [
       "Python",
       "CodingTest"
+    ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
     ],
     "description": "",
     "category": "Study",
@@ -860,6 +996,10 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-02-01-python-greedy-algorithm",
@@ -890,6 +1030,10 @@
     "keywords": [
       "Python",
       "CodingTest"
+    ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
     ],
     "description": "",
     "category": "Study",
@@ -922,6 +1066,10 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-01-30-python-pibonacci",
@@ -950,6 +1098,12 @@
       "ReactNative",
       "State",
       "StateManagement"
+    ],
+    "tagSlugs": [
+      "react",
+      "reactnative",
+      "state",
+      "statemanagement"
     ],
     "description": "",
     "category": "Study",
@@ -980,6 +1134,12 @@
       "State",
       "StateManagement"
     ],
+    "tagSlugs": [
+      "react",
+      "reactnative",
+      "state",
+      "statemanagement"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-01-13-reactquery-state-statemanagement-02",
@@ -1005,6 +1165,11 @@
       "Refactoring",
       "CodeReview"
     ],
+    "tagSlugs": [
+      "react",
+      "refactoring",
+      "codereview"
+    ],
     "description": "",
     "category": "Activity",
     "slug": "2023-01-11-wanted-pre-onboarding-01",
@@ -1028,6 +1193,9 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-01-10-python-default-input-output",
@@ -1050,6 +1218,9 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-01-10-python-function-lambda",
@@ -1066,6 +1237,9 @@
     "author": "Seobisback",
     "keywords": [
       "Python"
+    ],
+    "tagSlugs": [
+      "python"
     ],
     "description": "",
     "category": "Study",
@@ -1084,6 +1258,9 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-01-10-python-string-tuple",
@@ -1100,6 +1277,9 @@
     "author": "Seobisback",
     "keywords": [
       "Python"
+    ],
+    "tagSlugs": [
+      "python"
     ],
     "description": "",
     "category": "Study",
@@ -1118,6 +1298,9 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-01-08-python-data-type-list",
@@ -1134,6 +1317,9 @@
     "author": "Seobisback",
     "keywords": [
       "Python"
+    ],
+    "tagSlugs": [
+      "python"
     ],
     "description": "",
     "category": "Study",
@@ -1153,6 +1339,10 @@
       "Typescript",
       "Javascript"
     ],
+    "tagSlugs": [
+      "typescript",
+      "javascript"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2022-12-31-typescript",
@@ -1169,6 +1359,9 @@
     "author": "Seobisback",
     "keywords": [
       "Javascript"
+    ],
+    "tagSlugs": [
+      "javascript"
     ],
     "description": "",
     "category": "Study",
@@ -1198,6 +1391,11 @@
       "Hooks",
       "Context"
     ],
+    "tagSlugs": [
+      "react",
+      "hooks",
+      "context"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2022-12-27-react-usecontext-contextapi",
@@ -1222,6 +1420,11 @@
       "Hooks",
       "useMemo"
     ],
+    "tagSlugs": [
+      "react",
+      "hooks",
+      "usememo"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2022-12-27-react-usememo",
@@ -1241,6 +1444,11 @@
       "Hooks",
       "useRef"
     ],
+    "tagSlugs": [
+      "react",
+      "hooks",
+      "useref"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2022-12-27-react-useref",
@@ -1258,6 +1466,10 @@
     "keywords": [
       "React",
       "ReactNative"
+    ],
+    "tagSlugs": [
+      "react",
+      "reactnative"
     ],
     "description": "",
     "category": "Survey",
@@ -1283,6 +1495,12 @@
       "StateManagement",
       "Redux",
       "MobX"
+    ],
+    "tagSlugs": [
+      "react",
+      "statemanagement",
+      "redux",
+      "mobx"
     ],
     "description": "",
     "category": "Survey",

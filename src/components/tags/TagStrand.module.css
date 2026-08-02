@@ -1,0 +1,73 @@
+/*
+ * 가닥(strand).
+ * 명세: docs/handoff-step6-tags-archive.md §2-1
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ *
+ * 마디 4px / gap 3px 은 **컴포넌트 내부 상수**입니다. 토큰으로 승격하지 않습니다
+ * (§13-2 9번) — 이 조형 하나에만 쓰이는 값이라 토큰이 되면 의미가 흐려집니다.
+ */
+
+.strand {
+    position: relative;
+    display: flex;
+    /*
+     * 🔴 `wrap` 이면 좁은 카드에서 마디가 2줄이 되며 고정 높이 14px 를 넘겨
+     *    카드 정렬이 어긋납니다. 넘칠 일은 없습니다 — n=16 이 109px 이고
+     *    가장 좁은 카드(모바일 span1)의 콘텐츠 폭이 141px 입니다.
+     */
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 3px;
+    /*
+     * 🔴 `max-content` 가 §2-1 수정 1번의 실행부입니다. 컨테이너가 마디 폭에
+     *    맞으므로 아래 `::before` 의 `left:0; right:0` 이 **결과적으로 마디
+     *    클러스터와 같은 폭**이 됩니다. `width: 100%` 로 바꾸면 n=2 태그에서
+     *    선이 카드 폭 전체로 늘어나 끊긴 줄로 보입니다.
+     */
+    width: max-content;
+    height: 14px;
+}
+
+/*
+ * 선. **순수 장식이라 대비 요건 대상이 아닙니다** — 정보는 마디와 옆의 숫자가
+ * 나릅니다. 홈 히어로의 연결선과 같은 토큰을 씁니다(§2-2 S1).
+ */
+.strand::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background-color: var(--color-hero-link-strong);
+}
+
+/*
+ * 마디. 🔴 **전 마디가 같은 색입니다.** 시안의 `i < 3` 밝기 분기는 삭제됐고,
+ * 그와 함께 다크에서 2.18:1 이던 `nodeDim` 토큰도 소멸했습니다.
+ * `--color-accent-text` 는 `bg-surface` 위에서 라이트 5.65:1 / 다크 8.71:1 입니다.
+ */
+.node {
+    position: relative;
+    width: 4px;
+    height: 4px;
+    flex-shrink: 0;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-accent-text);
+}
+
+.node[data-offset='up'] {
+    transform: translateY(-3px);
+}
+
+.node[data-offset='down'] {
+    transform: translateY(3px);
+}
+
+/*
+ * 🔴 저감 모션 분기가 없습니다 — **애니메이션이 없기 때문입니다.**
+ *    27개 가닥이 동시에 움직이면 훑기를 방해합니다(STEP 4 §6-3 R8 과 같은 원칙).
+ *    지그재그 `translateY` 는 전환이 아니라 정적인 최종 위치라 저감 대상이
+ *    아닙니다. 호버해도 가닥은 변하지 않습니다 — 카드 배경·테두리·글자색이
+ *    이미 상태를 말합니다.
+ */

@@ -1,0 +1,151 @@
+/*
+ * 태그 인덱스 카드.
+ * 명세: docs/handoff-step6-tags-archive.md §6-1 · §6-2 · §10-1
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ */
+
+.cell {
+    display: flex;
+    min-width: 0;
+}
+
+/* 티어별 폭·높이. 116/100/92 는 전부 4의 배수라 하드코딩을 허용합니다(§13-2 8번) */
+.cell[data-tier='large'] {
+    grid-column: span 2;
+    --tag-card-min-height: 116px;
+    --tag-card-name-size: var(--fs-pixel-3);
+}
+
+.cell[data-tier='medium'] {
+    grid-column: span 2;
+    --tag-card-min-height: 100px;
+    --tag-card-name-size: var(--fs-pixel-2);
+}
+
+.cell[data-tier='small'] {
+    grid-column: span 1;
+    --tag-card-min-height: 92px;
+    --tag-card-name-size: var(--fs-pixel-2);
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-3);
+    width: 100%;
+    min-width: 0;
+    /*
+     * `min-height` 입니다 — `height` 가 아닙니다. `StateManagement`(15자)가
+     * Galmuri11 22px 에서 약 165px 이라 모바일 span1 콘텐츠 141px 을 넘겨
+     * 2행이 되는데, 그때 카드가 자동으로 늘어나야 합니다(§10-5).
+     */
+    min-height: var(--tag-card-min-height);
+    /* 시안 14px 은 스페이싱 스케일 밖입니다 */
+    padding: var(--space-4);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-surface);
+    /*
+     * 🔴 라이트에서 카드와 페이지의 분리는 --shadow-sm 과 1.30:1 테두리에
+     *    전적으로 의존합니다. 라이트 배경 3단계의 상호 대비가 1.08~1.09 라
+     *    그림자를 빼면 카드 경계가 사라집니다(§10-1c).
+     */
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out),
+        box-shadow var(--dur-slow) var(--ease-emphasized),
+        transform var(--dur-slow) var(--ease-emphasized);
+}
+
+/*
+ * 🔴 시안은 onMouseEnter/onMouseLeave 로만 상태를 만들어 **키보드 사용자가
+ *    아무 피드백도 받지 못했습니다.** CSS 로 두 상태를 같이 겁니다.
+ *
+ * 🔴 배경만으로 표시하지 않습니다 — accent-subtle 단독 대비가 라이트 1.09 /
+ *    다크 1.17 이라 배경 경계가 보이지 않습니다. 테두리(라이트 3.77:1)와
+ *    글자색 전환이 실제 구분 채널입니다(§10-1b).
+ */
+.card:hover,
+.card:focus-visible {
+    border-color: var(--color-accent-border);
+    background-color: var(--color-accent-subtle);
+    /* 시안의 shLg 는 STEP 1 에 없는 값이고 STEP 4 §11-2 #4 가 이미 반려했습니다 */
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+.card:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-width: 0;
+}
+
+.name {
+    min-width: 0;
+    font-family: var(--font-display);
+    font-size: var(--tag-card-name-size);
+    font-weight: 400;
+    line-height: var(--lh-heading);
+    color: var(--color-text-primary);
+    /* 공백 없는 긴 라틴(`StateManagement`)이 카드를 밀어내지 않게(§10-5) */
+    overflow-wrap: anywhere;
+    -webkit-font-smoothing: none;
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+.card:hover .name,
+.card:focus-visible .name {
+    color: var(--color-accent-text);
+}
+
+.hash {
+    color: var(--color-text-muted);
+}
+
+/* GalmuriMono11 은 11px 고정입니다. 숫자뿐이라 규칙 통과(§9-2 그룹 3) */
+.count {
+    flex-shrink: 0;
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    color: var(--color-text-muted);
+}
+
+.card:hover .count,
+.card:focus-visible .count {
+    color: var(--color-accent-text);
+}
+
+/* ------------------------------------------------------------
+ * 저감 모션 (§11-1 1·2·3번)
+ * ------------------------------------------------------------
+ * 🔴 transform 만 걷어냅니다. 색·테두리·그림자 전환은 **남깁니다** —
+ *    prefers-reduced-motion 은 전정 자극(위치·크기·회전)을 겨냥하고(WCAG 2.3.3),
+ *    색 전환까지 죽이면 호버 피드백이 끊겨 오히려 상태 파악이 어려워집니다.
+ *    지속시간을 0 으로 만드는 것은 해결이 아닙니다 — translateY(-3px) 는
+ *    지속시간이 0 이어도 여전히 3px 점프합니다.
+ * ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .card {
+        transition:
+            background-color var(--dur-base) var(--ease-out),
+            border-color var(--dur-base) var(--ease-out),
+            color var(--dur-base) var(--ease-out),
+            box-shadow var(--dur-slow) var(--ease-emphasized);
+    }
+
+    .card:hover,
+    .card:focus-visible {
+        transform: none;
+    }
+}
