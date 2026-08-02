@@ -14,7 +14,7 @@ stack:
   - 'TypeScript'
   - 'React Query'
   - 'Recoil'
-  - 'React Router DOM'
+  - 'react-router-dom'
   - 'Axios'
   - 'WebSocket'
   - 'Firebase'

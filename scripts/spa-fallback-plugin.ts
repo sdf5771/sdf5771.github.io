@@ -98,11 +98,24 @@ const REDIRECT_SCRIPT = `
         // 이미 정본이면 아무것도 하지 않습니다 — 이 가드가 무한 루프를 막습니다.
         // toPostSlug 는 멱등이라(normalize(normalize(x)) === normalize(x))
         // 착지한 주소는 이 분기에 다시 걸리지 않습니다.
-        if (p.indexOf('/posts/') === 0) {
-          var canonical = '/posts/' + normalize(p.slice(7));
-          if (canonical !== p) {
-            location.replace(canonical + q + h);
-            return;
+        //
+        // 글과 작업이 **같은 규칙**을 씁니다(§6-5 ⑤). 작업 slug 는 처음부터
+        // 소문자라(규칙 W1) 이 분기가 실제로 하는 일은 사용자가 대문자로 친
+        // 주소를 정본으로 되돌리는 것뿐이며, 빌드가 works slug 전부에 대해
+        // 멱등성을 단언합니다(assertNormalizerParity).
+        //
+        // 접두가 소문자일 때만 걸립니다 — '/Posts/x' 는 글 쪽도 마찬가지이고,
+        // 명세가 정규화 대상으로 삼은 것은 slug 세그먼트입니다.
+        var prefixes = ['/posts/', '/works/'];
+
+        for (var i = 0; i < prefixes.length; i++) {
+          if (p.indexOf(prefixes[i]) === 0) {
+            var canonical = prefixes[i] + normalize(p.slice(prefixes[i].length));
+            if (canonical !== p) {
+              location.replace(canonical + q + h);
+              return;
+            }
+            break;
           }
         }
 
@@ -116,16 +129,29 @@ interface PostsDataEntry {
     file: string;
 }
 
+interface WorksDataEntry {
+    slug: string;
+}
+
 /**
  * 🔴 빌드타임 단언 — 인라인 사본이 `toPostSlug` 와 같은 규칙인지 검사합니다.
  *
  * 리포에 테스트가 하나도 없고, 파일명 41개 중 33개에 대문자가 있습니다.
  * 규칙이 하나만 어긋나도 그 33편의 딥링크가 정본과 다른 주소로 갑니다.
  * 지금까지 이것을 막던 것은 주석뿐이었습니다 — 이 함수가 그 자리를 대신합니다.
+ *
+ * 🔴 **작업(works) slug 도 같은 단언에 겁니다.** 인라인 스크립트가 `/posts/` 와
+ *    `/works/` 에 같은 `normalize` 를 쓰므로(§6-5 ⑤), works slug 가 이미 정본이
+ *    아니면 — 예컨대 누군가 `a--b.md` 를 넣으면 — 그 작업의 딥링크가 존재하지
+ *    않는 주소로 replace 됩니다. W1 검증(generateWorksData)은 연속 하이픈을
+ *    막지 않으므로 여기서 잡아야 합니다.
  */
 function assertNormalizerParity(outDir: string): void {
     const dataPath = path.join(outDir, 'posts-data.json');
     const posts = JSON.parse(readFileSync(dataPath, 'utf8')) as PostsDataEntry[];
+    const works = JSON.parse(
+        readFileSync(path.join(outDir, 'works-data.json'), 'utf8'),
+    ) as WorksDataEntry[];
 
     /* 배포될 소스 문자열을 그대로 함수로 만듭니다 — 재타이핑한 사본이 아닙니다 */
     const normalizeInBrowser = new Function(
@@ -133,12 +159,15 @@ function assertNormalizerParity(outDir: string): void {
     )() as (value: string) => string;
 
     /* 실제 slug·파일명과, 사용자가 실제로 쳐 넣는 대문자 변형까지 */
-    const samples = posts.flatMap(post => [
-        post.slug,
-        post.file,
-        post.slug.toUpperCase(),
-        post.slug.replace(/-/g, '--'),
-    ]);
+    const samples = [
+        ...posts.flatMap(post => [
+            post.slug,
+            post.file,
+            post.slug.toUpperCase(),
+            post.slug.replace(/-/g, '--'),
+        ]),
+        ...works.flatMap(work => [work.slug, work.slug.toUpperCase()]),
+    ];
 
     const mismatches = samples.filter(
         sample => normalizeInBrowser(sample) !== toPostSlug(sample),
@@ -164,21 +193,29 @@ function assertNormalizerParity(outDir: string): void {
     }
 
     /* 멱등성 — 정본에 다시 규칙을 걸어도 그대로여야 리다이렉트가 되돌아오지 않습니다 */
-    const notIdempotent = posts.filter(post => toPostSlug(post.slug) !== post.slug);
+    const notIdempotent = [
+        ...posts.map(post => ({ source: 'posts-data.json', slug: post.slug })),
+        ...works.map(work => ({ source: 'works-data.json', slug: work.slug })),
+    ].filter(entry => toPostSlug(entry.slug) !== entry.slug);
 
     if (notIdempotent.length > 0) {
         throw new Error(
-            `[spa-fallback-404] posts-data.json 의 slug 가 정본이 아닙니다 ` +
+            `[spa-fallback-404] slug 가 정본이 아닙니다 ` +
                 `(${notIdempotent.length}건): ${notIdempotent
                     .slice(0, 5)
-                    .map(post => `"${post.slug}" → "${toPostSlug(post.slug)}"`)
+                    .map(
+                        entry =>
+                            `${entry.source} "${entry.slug}" → "${toPostSlug(entry.slug)}"`,
+                    )
                     .join(', ')}\n` +
-                '   → 인라인 리다이렉트가 무한 루프에 빠집니다. generatePostsData 를 확인하세요.',
+                '   → 인라인 리다이렉트가 그 항목을 존재하지 않는 주소로 보냅니다.\n' +
+                '     generatePostsData / generateWorksData 를 확인하세요.',
         );
     }
 
     console.log(
-        `  ✅ slug 규칙 일치 — 인라인 사본 ≡ toPostSlug (${samples.length}개 표본, ${posts.length}편)`,
+        `  ✅ slug 규칙 일치 — 인라인 사본 ≡ toPostSlug ` +
+            `(${samples.length}개 표본, 글 ${posts.length}편 · 작업 ${works.length}건)`,
     );
 }
 

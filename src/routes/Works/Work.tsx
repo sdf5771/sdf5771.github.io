@@ -83,7 +83,9 @@ function Work() {
      * 🔴 slug 정규화를 하지 않습니다. 작업 slug 는 **처음부터 소문자로 만들었고**
      *    (규칙 W1) 파일명 = slug 라 대소문자 이형이 존재하지 않습니다. 글 쪽의
      *    `toPostSlug` 는 기존 41편의 대문자 파일명 때문에 필요한 장치입니다.
-     *    대문자 주소는 `public/404.html` 의 인라인 스크립트가 소문자로 넘깁니다.
+     *    대문자 주소는 `scripts/spa-fallback-plugin.ts` 가 만드는 `dist/404.html`
+     *    의 인라인 스크립트가 소문자로 넘깁니다(§6-5 ⑤). `public/404.html` 은
+     *    커밋 6a099511 에서 삭제됐고 지금은 빌드 산출물만 존재합니다.
      */
     const work = slug ? findWork(slug) : undefined;
 

@@ -15,7 +15,7 @@ stack:
   - 'PM2'
   - 'Nginx'
   - 'GitHub Actions'
-  - 'Semantic Release'
+  - 'semantic-release'
 # TODO(작성 필요): summary 는 **저자가 직접 쓰는 60~90자 한 문장**입니다.
 #   행에서 유일한 판단 재료라 비면 요약 줄이 렌더되지 않습니다(§15-2).
 #   성과 % 수치·고객사 실명은 쓰지 않습니다.

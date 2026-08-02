@@ -10,9 +10,13 @@ import type { FrontMatter } from './markdownCollection';
  *    (`markdownCollection.ts`), 매핑·검증만 따로 갖습니다. 스키마가 다르기 때문에
  *    매퍼까지 합치면 양쪽이 선택 필드투성이가 됩니다(product.md §13-3).
  *
- * 🔴 **이 산출물은 글 쪽 어디에도 흘러가지 않습니다.** 검색·태그·RSS·sitemap·
+ * 🔴 **이 산출물은 글 목록 계열 어디에도 흘러가지 않습니다.** 검색·태그·
  *    이전/다음은 `posts-data.json` 만 봅니다. 디렉터리가 갈려 있어 필터를 한
  *    군데 빠뜨려도 섞이지 않는 것이 이 구조의 목적입니다.
+ *
+ *    sitemap 은 예외입니다 — 생기면 `/works` 와 `hasBody === true` 인 작업
+ *    URL 을 **포함해야 합니다**(product.md §1-2 · 이 문서 §6-5, findability).
+ *    현재 리포에 sitemap·RSS·프리렌더는 존재하지 않으므로 그때 구현할 일입니다.
  */
 
 const MARKDOWN_DIRECTORY_PATH = 'public/_works';
