@@ -207,7 +207,7 @@ npx -y oxipng -o4 public/og/default.png   # 초과 시 무손실 압축
 
 | | |
 |---|---|
-| 기본 카드 | `title = '프론트엔드 개발자 김섭우'` → `public/og/default.png` |
+| 기본 카드 | ~~`title = '프론트엔드 개발자 김섭우'`~~ → **현재 정본 `title = 'Software Engineer'`** (2026-08-02 자기 표기 변경, §3-3) → `public/og/default.png` |
 | 글별 카드 | `title = <글 제목>` → `public/og/posts/<slug>.png` |
 | 슬롯 규격 | **1000 × 168px 고정**, Pretendard 700, **2행 클램프**, 3행째 말줄임 |
 | ⚠️ 정사각 크롭 여유 | **기본 카드 제목이 좌우 10px밖에 안 남습니다.** 글별 카드에서 1행짜리 짧은 제목이 조금만 길어져도 정사각 크롭에서 잘립니다(2행이면 오히려 안전). 이 태스크에서 함께 다룰 것 |
@@ -236,10 +236,15 @@ npx -y oxipng -o4 public/og/default.png   # 초과 시 무손실 압축
 
 | | 이전 | **확정** |
 |---|---|---|
-| 제목 슬롯 | `프론트엔드 개발자 김섭우` | **`Software Engineer`** |
-| `og:image:alt` | (동일) | **`Software Engineer`** |
+| 제목 슬롯 (구워지는 픽셀) | `프론트엔드 개발자 김섭우` | **`Software Engineer`** |
+| `og:image:alt` (대체 텍스트) | (제목 슬롯과 동일) | ~~`Software Engineer`~~ → **`Seobisback.log — Software Engineer`** |
 
-**이름을 빼는 이유**: 카드에 워드마크 `Seobisback.log`가 이미 있어 `Software Engineer Seobisback`으로 두면 **한 이미지에 이름이 두 번** 나옵니다.
+**슬롯에서 이름을 빼는 이유**: 카드에 워드마크 `Seobisback.log`가 이미 있어 `Software Engineer Seobisback`으로 두면 **한 이미지에 이름이 두 번** 나옵니다.
+
+**🔧 `og:image:alt`는 슬롯과 값이 다릅니다 (2026-08-02 정정 — frontend 이의 채택)**
+최초 확정에서 alt를 슬롯과 같은 값으로 적었으나, **위 근거는 구워진 픽셀에만 해당합니다.** 「한 이미지에 두 번」은 보이는 면적을 두고 다투는 문제이고 alt는 면적을 쓰지 않습니다. alt는 슬롯이 아니라 **이미지 전체**를 대신하므로, 카드에서 가장 크고 유일한 신원 표시인 워드마크가 빠지면 안 됩니다(WCAG 1.1.1 images of text). 전체 근거는 `WRITING_GUIDE` §3.3a 근거 4 · §7.1 소셜 카드 행.
+
+> 미적용 후속 — **`twitter:image:alt`가 없습니다.** X/트위터는 `og:image:alt`로 폴백하지 않습니다. 이번 스코프 밖이라 손대지 않았고, 다음 `index.html` 작업 때 `og:image:alt`와 같은 값으로 1줄 추가하세요.
 
 **부수 이점** — 슬롯이 **라틴 17자 1행**으로 짧아집니다. 이전 한글 12자보다 폭은 비슷하나 **2행 클램프가 필요 없어져** 축소 시 가독성이 오히려 좋아집니다. 슬롯 규격(1000×172px)·서체(Pretendard 700)·글별 카드 계약(§3-1)은 **전부 그대로**입니다.
 
