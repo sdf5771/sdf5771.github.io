@@ -13,6 +13,15 @@ interface PostRowProps {
     post: PostMetadata;
     /** 검색어 토큰. 제목·태그·카테고리 강조와 태그 승격에 씁니다 */
     tokens: readonly string[];
+    /**
+     * 제목 헤딩 레벨.
+     *
+     * 목록 화면(`/posts`)은 `h1 글` 아래 바로 행이 오므로 2 입니다.
+     * 홈은 `h1 김섭우 → h2 최근 글 → 행` 이라 3 이어야 합니다 — 2 로 두면
+     * 스크린리더의 헤딩 목록에서 「최근 글」 섹션 경계가 사라지고, 행 제목이
+     * 「읽어볼 만한 글」과 같은 층에 놓입니다.
+     */
+    headingLevel?: 2 | 3;
 }
 
 /**
@@ -31,7 +40,7 @@ interface PostRowProps {
  *    정보를 매 행에 노출하게 되고, 행 높이가 102 → 92px 로 내려갑니다.
  *    요약은 글 상세(STEP 3)와 홈 선별 카드(STEP 2)에서만 씁니다.
  */
-function PostRow({ post, tokens }: PostRowProps) {
+function PostRow({ post, tokens, headingLevel = 2 }: PostRowProps) {
     /*
      * 🔴 일치한 태그를 앞으로 끌어올립니다. `browser`·`hooks` 는 결과 3건 전부
      *    제목에 일치 문자열이 없어 **태그가 유일한 근거**인데, 그게 4번째 이후에
@@ -43,6 +52,7 @@ function PostRow({ post, tokens }: PostRowProps) {
 
     const isCategoryMatched = hasTokenMatch(post.category, tokens);
     const isNew = isNewPost(post.date);
+    const Heading = headingLevel === 3 ? 'h3' : 'h2';
 
     return (
         <li className={styles.row} data-category={post.category}>
@@ -50,7 +60,7 @@ function PostRow({ post, tokens }: PostRowProps) {
             <PostGlyph className={styles.glyph} slug={post.slug} category={post.category} />
 
             <div className={styles.body}>
-                <h2 className={styles.heading}>
+                <Heading className={styles.heading}>
                     {/*
                      * 🔴 링크는 **제목만** 감쌉니다. 행 전체를 <a> 로 감싸면
                      *    접근 가능한 이름에 카테고리·날짜·읽기 시간·태그가 전부
@@ -71,7 +81,7 @@ function PostRow({ post, tokens }: PostRowProps) {
                         {isNew && <span className={styles.badge}>NEW</span>}
                         <HighlightedText text={post.title} tokens={tokens} />
                     </Link>
-                </h2>
+                </Heading>
 
                 {orderedKeywords.length > 0 && (
                     <ul className={styles.tags}>

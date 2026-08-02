@@ -6,12 +6,11 @@ import { loadContributions } from '../../utils/contributions';
 import type { Contributions } from '../../utils/contributions';
 
 /**
- * 기여 활동(잔디) — **현재는 소개(About)에서만 씁니다. STEP 2 에서 홈에도 붙습니다.**
- * 명세: docs/handoff-step5-404-about.md §5
+ * 기여 활동(잔디) — **소개(About)와 홈(`/`) 두 곳에서 씁니다.**
+ * 명세: docs/handoff-step5-404-about.md §5 · docs/handoff-step2-home.md §6
  *
- * 즉 지금은 사용처가 하나뿐이지만 **공유 컴포넌트로 설계돼 있습니다.** 아래
- * props 금지 규칙은 그래서 미리 걸어 둔 것입니다 — 두 번째 사용처가 붙는
- * 시점에 두 화면이 갈리는 것을 막습니다.
+ * 두 번째 사용처가 실제로 붙었습니다(STEP 2). 아래 props 금지 규칙은 그
+ * 시점을 대비해 미리 걸어 둔 것이고, 이제 그 규칙이 실효를 갖습니다.
  *
  * 🔴 props 를 늘리지 마세요. 주 수·요약 문구·색·캡션·범례를 props 로 열면
  *    두 화면이 갈리는 문을 여는 것입니다. "소개와 홈에서 주 수·요약 표기가
@@ -39,7 +38,12 @@ const STALE_THRESHOLD_MS = 14 * 864e5;
 const GITHUB_URL = 'https://github.com/sdf5771';
 
 interface ContributionGraphProps {
-    /** 섹션 h2 에 `$` 터미널 프롬프트를 붙일지. 소개=true, 홈=false */
+    /**
+     * 섹션 h2 에 `$` 터미널 프롬프트를 붙일지. **소개=true, 홈=false.**
+     * 소개는 섹션 제목이 전부 터미널체(`$ 자주 쓴 태그`)라 결이 맞지만,
+     * 홈의 다른 섹션 제목(`최근 글`·`읽어볼 만한 글`)에는 프롬프트가 없어
+     * 여기만 붙이면 한 화면 안에서 규격이 갈립니다.
+     */
     showPrompt?: boolean;
 }
 

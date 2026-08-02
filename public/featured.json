@@ -1,0 +1,35 @@
+{
+  "_": [
+    "홈 「읽어볼 만한 글」 후보 — docs/handoff-step2-home.md §5-3.",
+    "slug 는 posts-data.json 의 정본 slug(소문자)와 정확히 일치해야 합니다. 없는 slug 는 조용히 건너뜁니다.",
+    "note 는 손으로 쓴 한 줄(40~70자, 합쇼체)입니다. 제목을 반복하지 않고 '왜 읽을 만한가'를 말합니다.",
+    "배열 순서가 곧 우선순위입니다. 위에서부터 채우되 「최근 글」에 이미 나온 글은 건너뜁니다.",
+    "41편의 프론트매터는 건드리지 않습니다(product.md §2-3)."
+  ],
+  "picks": [
+    {
+      "slug": "2023-07-19-skeleton-loading",
+      "note": "로딩 상태를 어떻게 보여줄지 고민한 기록입니다."
+    },
+    {
+      "slug": "2023-04-15-technical-seo-meta-tag",
+      "note": "React 프로젝트에서 메타태그를 동적으로 다루는 방법을 정리했습니다."
+    },
+    {
+      "slug": "2023-05-01-atomicdesignpattern01",
+      "note": "컴포넌트를 어떤 단위로 쪼갤지 실제 프로젝트에 적용해 봤습니다."
+    },
+    {
+      "slug": "2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer",
+      "note": "브라우저 안에서 번역·요약이 돌아가면 무엇이 달라지는지 살펴봤습니다."
+    },
+    {
+      "slug": "2025-03-13-ux-trends-and-spatial-computing-paradigm-1",
+      "note": "UX/UI가 어떻게 변해 왔는지 흐름부터 정리했습니다."
+    },
+    {
+      "slug": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2",
+      "note": "WebXR과 공간 웹이 프론트엔드에 던지는 질문을 다뤘습니다."
+    }
+  ]
+}

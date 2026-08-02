@@ -1,243 +1,61 @@
-.main {
+/*
+ * 홈.
+ * 명세: docs/handoff-step2-home.md §2-3 · §7
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다. 원시 hex 금지.
+ *
+ * ⚠️ 직전 파일은 배경을 `#ffffff` 로, 글자를 `--brand-*` 별칭으로 갖고 있어
+ *    다크 셸 안에 라이트 화면이 박혀 있었습니다. 전부 걷어냈습니다.
+ */
+
+.root {
     display: flex;
     flex-direction: column;
     width: 100%;
-    align-items: center;
-    background-color: #ffffff;
-    overflow-x: hidden;
+    /*
+     * 🔴 `overflow-x: hidden` 을 걸지 마세요. 그 순간 이 요소가 스크롤
+     *    컨테이너가 되어 헤더의 `position: sticky` 가 죽습니다(App.tsx 주석).
+     *    직전 파일이 갖고 있던 속성입니다.
+     */
 }
 
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--space-12) var(--space-16);
+}
 
-/* pc */
-@media screen and (min-width: 1024px) {
-    .main > section {
-        z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 1024px;
+.activity {
+    margin-top: var(--space-11);
+}
+
+@media (max-width: 1279px) {
+    .container {
+        padding: 0 var(--space-8) var(--space-14);
     }
-    .main > section > header {
-        /* margin-top: 208px; */
-        margin-top: 80px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 300px;
-        gap: 10px;
-    }
-    header > .description{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-    header > .description > p{
-        margin: 0;
-        font-family: Pretendard;
-        font-size: 1.6rem;
-        font-weight: 400;
-        color: var(--brand-black);
-    }
-    .profile_container{
-        margin-top: 20px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .profile_container > .profile_title{
-        width: 100%;
-        display: flex;
-    }
-    .profile_container > .profile_title > h2{
-        margin: 0;
-        font-family: Pretendard;
-        font-size: 2.4rem;
-        font-weight: 600;
-        color: var(--brand-accent);
-    }
-    .post_container{
-        margin-top: 20px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .post_container > .post_title{
-        width: 100%;
-        display: flex;
-    }
-    .post_container > .post_title > h2{
-        margin: 0;
-        font-family: Pretendard;
-        font-size: 2.4rem;
-        font-weight: 600;
-        color: var(--brand-accent);
-    }
-    .post_container > .post_list{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+
+    .activity {
+        margin-top: var(--space-10);
     }
 }
 
-/* pad */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    .main > section {
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        max-width: 1023px;
-        padding: 0 10px;
+@media (max-width: 1023px) {
+    .container {
+        padding: 0 var(--space-6) var(--space-12);
     }
-    .main > section > header {
-        margin-top: 153px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-    header > .description{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-    header > .description > p{
-        margin: 0;
-        font-family: Pretendard;
-        font-size: 1.6rem;
-        font-weight: 400;
-        color: var(--brand-black);
-    }
-    .profile_container{
-        margin-top: 20px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .profile_container > .profile_title{
-        width: 100%;
-        display: flex;
-    }
-    .profile_container > .profile_title > h2{
-        margin: 0;
-        font-family: Pretendard;
-        font-size: 2.4rem;
-        font-weight: 600;
-        color: var(--brand-accent);
-    }
-    .post_container{
-        margin-top: 20px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .post_container > .post_title{
-        width: 100%;
-        display: flex;
-    }
-    .post_container > .post_title > h2{
-        margin: 0;
-        font-family: Pretendard;
-        font-size: 2.4rem;
-        font-weight: 600;
-        color: var(--brand-accent);
-    }
-    .post_container > .post_list{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+
+    .activity {
+        margin-top: var(--space-8);
     }
 }
 
-/* mobile */
-@media screen and (max-width: 767px) {
-    .main > section {
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        padding: 0 10px;
-        max-width: 767px;
+@media (max-width: 767px) {
+    .container {
+        padding: 0 var(--space-4) var(--space-10);
     }
-    .main > section > header {
-        margin-top: 139px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-    header > .description{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-    header > .description > p{
-        margin: 0;
-        font-family: Pretendard;
-        font-size: 1.6rem;
-        font-weight: 400;
-        color: var(--brand-black);
-    }
-    .profile_container{
-        margin-top: 20px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .profile_container > .profile_title{
-        width: 100%;
-        display: flex;
-    }
-    .profile_container > .profile_title > h2{
-        margin: 0;
-        font-family: Pretendard;
-        font-size: 2.4rem;
-        font-weight: 600;
-        color: var(--brand-accent);
-    }
-    .post_container{
-        margin-top: 20px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .post_container > .post_title{
-        width: 100%;
-        display: flex;
-    }
-    .post_container > .post_title > h2{
-        margin: 0;
-        font-family: Pretendard;
-        font-size: 2.4rem;
-        font-weight: 600;
-        color: var(--brand-accent);
-    }
-    .post_container > .post_list{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+
+    .activity {
+        margin-top: var(--space-7);
     }
 }

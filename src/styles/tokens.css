@@ -312,6 +312,8 @@
     --space-7: 28px;
     --space-8: 32px;
     --space-10: 40px;
+    /* STEP 2 §2-3 이 섹션 상단 간격으로 이 이름을 참조합니다. 4px 스케일 위 값입니다 */
+    --space-11: 44px;
     --space-12: 48px;
     --space-14: 56px;
     --space-16: 64px;

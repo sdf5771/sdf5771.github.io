@@ -1,0 +1,555 @@
+/*
+ * 홈 히어로 — 별자리.
+ * 명세: docs/handoff-step2-home.md §3 · §7-1 · §7-2 · §9-3
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다. 원시 hex 금지.
+ */
+
+.hero {
+    /*
+     * 좌우 여백이 컨테이너(1180px)와 맞아떨어지게 계산합니다. 히어로는 배경이
+     * 화면 끝까지 이어져야 해서 컨테이너로 감쌀 수 없고, 그렇다고 패딩을
+     * 48px 로 고정하면 넓은 화면에서 텍스트만 왼쪽 끝에 붙습니다.
+     */
+    --hero-gutter: max(
+        var(--space-12),
+        calc((100% - var(--container-max)) / 2 + var(--space-12))
+    );
+
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /*
+     * 🔴 `vh` 가 아니라 **`svh`** 입니다. 모바일 브라우저 툴바 때문에 `vh` 는
+     *    첫 화면에서 과대 계산되어 히어로가 화면을 넘깁니다(§7-1).
+     * 🔴 `min-height` 가 아니라 명시적 height 입니다 — canvas 가 이 상자를
+     *    채우므로 데이터 로드·폰트 스왑이 레이아웃을 밀지 않습니다(CLS 0).
+     */
+    height: clamp(440px, 56svh, 560px);
+
+    /*
+     * 헤더와 겹칩니다. 헤더는 홈에서만 반투명하게 시작하고(useHeaderScroll),
+     * 그 뒤로 별자리가 이어져 보입니다.
+     * 🔴 헤더를 `fixed` 로 바꾸지 마세요 — 다른 전 페이지에 상단 보정이
+     *    필요해집니다. 음수 마진은 **홈 히어로에만** 겁니다.
+     */
+    margin-top: calc(-1 * var(--header-h-desktop));
+    padding: var(--header-h-desktop) var(--hero-gutter) var(--space-10);
+
+    background-color: var(--color-bg-base);
+}
+
+/* ------------------------------------------------------------
+ * canvas 슬롯
+ * ------------------------------------------------------------
+ * 🔴 `overflow: hidden` 은 히어로가 아니라 **여기**에 겁니다. 히어로에 걸면
+ *    포커스를 받아 펼쳐지는 대체 목록(§3-7)이 잘려서 "포커스는 갔는데 보이지
+ *    않는" 상태가 됩니다. 잘라야 하는 것은 canvas 뿐입니다.
+ * ---------------------------------------------------------- */
+.slot {
+    position: absolute;
+    /* inset 은 **패딩 상자** 기준이라 헤더와 겹치는 구간까지 덮습니다 */
+    inset: 0;
+    z-index: var(--z-base);
+    overflow: hidden;
+}
+
+.canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* ------------------------------------------------------------
+ * 텍스트 블록
+ * ---------------------------------------------------------- */
+.text {
+    position: relative;
+    /* canvas 위에 얹힙니다 */
+    z-index: var(--z-sticky);
+    width: 100%;
+    max-width: 660px;
+}
+
+.name {
+    /* 55px = 11 × 5. 한글이라 22px 이상이어야 픽셀 서체가 허용됩니다(§3-3a) */
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-5);
+    font-weight: 400;
+    line-height: var(--lh-tight);
+    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: none;
+}
+
+/*
+ * 🔴 메타·라벨에 픽셀 서체를 쓰지 않습니다. 한글이 섞이면 22px 이상이어야
+ *    하는데(§9-3 R4) 13px 라벨을 22px 로 키울 수는 없습니다. Pretendard 입니다.
+ */
+.role {
+    margin: var(--space-3) 0 0;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+}
+
+.intro {
+    margin: var(--space-4) 0 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-normal);
+    color: var(--color-text-body);
+    word-break: keep-all;
+}
+
+.stats {
+    margin: var(--space-3) 0 0;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+ * CTA
+ * ---------------------------------------------------------- */
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+}
+
+.cta_primary,
+.cta_secondary {
+    display: inline-flex;
+    align-items: center;
+    /* 시각 크기와 별개로 터치 타깃은 --tap-min 이상 */
+    min-height: var(--tap-min);
+    padding: 0 var(--space-6);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    /* 🔴 색·보더 전환은 저감 모션에서도 남깁니다. transform 만 쓰지 않습니다 */
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+/* 히어로는 "보는 것" 이라 주 CTA 만 픽셀 서체 22px 입니다(§9-3) */
+.cta_primary {
+    background-color: var(--color-accent-fill);
+    color: var(--color-accent-onFill);
+    border: 1px solid var(--color-accent-border);
+    box-shadow: var(--shadow-btn-inset);
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-2);
+    font-weight: 400;
+    letter-spacing: 1px;
+    -webkit-font-smoothing: none;
+}
+
+/* HTML 은 라벨 앞 공백을 접습니다. 간격은 CSS 로 줍니다 */
+.cta_prompt {
+    margin-right: var(--space-2);
+}
+
+.cta_primary:hover {
+    background-color: var(--color-accent-light);
+}
+
+.cta_primary:focus-visible {
+    /* 골드 채움 위에서는 링을 반전합니다(global.css 기본값이 골드입니다) */
+    outline-color: var(--color-focus-onFill);
+}
+
+/* `전체 글 보기`·`글 목록 더 보기` 는 "읽는 것" 이라 Pretendard 입니다 */
+.cta_secondary {
+    border: 1px solid var(--color-border-interactive);
+    background-color: transparent;
+    color: var(--color-text-primary);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-md);
+    font-weight: 600;
+}
+
+.cta_secondary:hover {
+    border-color: var(--color-accent-border);
+    color: var(--color-accent-text);
+}
+
+/* 그래픽이 실제로 그려질 때만 노출합니다 — 없으면 문장이 거짓이 됩니다 */
+.caption {
+    margin: var(--space-6) 0 0;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+    word-break: keep-all;
+}
+
+/* ------------------------------------------------------------
+ * 최신 별 라벨 — 색 외 단서 3번째 (§3-4)
+ * ------------------------------------------------------------
+ * 최신 별은 항상 가장 오른쪽(가장 최근)이므로 라벨을 **왼쪽**에 답니다.
+ * 오른쪽에 달면 플롯 끝에서 잘립니다.
+ * ---------------------------------------------------------- */
+.latest_label {
+    position: absolute;
+    z-index: var(--z-sticky);
+    transform: translateY(-50%);
+    padding-right: var(--space-3);
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* 4px 리더선 — 라벨이 어느 별을 가리키는지 말합니다 */
+.latest_label::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 4px;
+    height: 1px;
+    background-color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+ * 미리보기 카드 (§3-5)
+ * ------------------------------------------------------------
+ * 시안은 "툴팁" 이라 불렀지만 2행이라 WRITING_GUIDE §6.6 툴팁 규격에 맞지
+ * 않습니다. 카드로 확정됐고, 접근성 경로는 아래 대체 목록이 담당합니다.
+ * ---------------------------------------------------------- */
+.preview {
+    position: absolute;
+    z-index: var(--z-tooltip);
+    transform: translate(-50%, calc(-100% - 12px));
+    max-width: 320px;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-elevated);
+    box-shadow: var(--shadow-md);
+    pointer-events: none;
+}
+
+.preview_title {
+    margin: 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-text-primary);
+    /* 최장 96자 제목 대응 */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    word-break: keep-all;
+}
+
+.preview_meta {
+    margin: var(--space-1) 0 0;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+.preview_meta[data-category='Study'] {
+    color: var(--color-cat-study);
+}
+
+.preview_meta[data-category='Survey'] {
+    color: var(--color-cat-survey);
+}
+
+.preview_meta[data-category='Activity'] {
+    color: var(--color-cat-activity);
+}
+
+/* ------------------------------------------------------------
+ * 카테고리 범례 — 색 의존 제거 장치 (§7.5)
+ * ---------------------------------------------------------- */
+.legend {
+    position: absolute;
+    top: calc(var(--header-h-desktop) + var(--space-4));
+    right: var(--hero-gutter);
+    z-index: var(--z-sticky);
+    display: flex;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.legend_item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    /* `Study 30` 은 라틴·숫자뿐이라 GalmuriMono11 11px 이 허용됩니다(§3-3a) */
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    color: var(--color-text-secondary);
+}
+
+.legend_dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-accent-border);
+    flex-shrink: 0;
+}
+
+.legend_dot[data-category='Study'] {
+    background-color: var(--color-cat-study);
+}
+
+.legend_dot[data-category='Survey'] {
+    background-color: var(--color-cat-survey);
+}
+
+.legend_dot[data-category='Activity'] {
+    background-color: var(--color-cat-activity);
+}
+
+/* ------------------------------------------------------------
+ * 대체 목록 — 별의 키보드 등가 경로 (§3-7)
+ * ------------------------------------------------------------
+ * 🔴 `display: none`·`visibility: hidden` 금지입니다. 그 둘은 포커스를 받지
+ *    못해 경로 자체가 사라집니다. clip-path 로 숨기고 :focus-within 에서 풉니다.
+ * ---------------------------------------------------------- */
+.alternates {
+    position: absolute;
+    left: var(--hero-gutter);
+    bottom: var(--space-6);
+    z-index: var(--z-dropdown);
+}
+
+.skip,
+.alt_list {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.alternates:focus-within {
+    max-width: 520px;
+    max-height: 60svh;
+    padding: var(--space-3);
+    border: 1px solid var(--color-accent-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-elevated);
+    box-shadow: var(--shadow-md);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.alternates:focus-within .skip,
+.alternates:focus-within .alt_list {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+}
+
+.alternates:focus-within .skip {
+    display: inline-block;
+    margin-bottom: var(--space-2);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    color: var(--color-accent-text);
+}
+
+.alternates:focus-within .alt_list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    list-style: none;
+}
+
+.alt_list a {
+    display: block;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-xs);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    line-height: var(--lh-snug);
+    color: var(--color-text-body);
+    text-decoration: none;
+    word-break: keep-all;
+}
+
+.alt_list a:hover,
+.alt_list a:focus-visible {
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent-text);
+}
+
+/* ------------------------------------------------------------
+ * sm 캡션 링크 (§3-5 · §7-2)
+ * ---------------------------------------------------------- */
+.band_link {
+    position: relative;
+    z-index: var(--z-sticky);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-1);
+    /* 개별 별이 탭 대상이 아니므로 이 링크가 밴드의 유일한 조작 지점입니다 */
+    min-height: var(--tap-min);
+    margin-top: var(--space-3);
+    text-decoration: none;
+}
+
+.band_link_meta {
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+.band_link_title {
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-text-primary);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    word-break: keep-all;
+}
+
+/* ============================================================
+ * lg (1024~1279)
+ * ========================================================== */
+@media (max-width: 1279px) {
+    .hero {
+        --hero-gutter: var(--space-8);
+
+        height: clamp(400px, 54svh, 500px);
+    }
+
+    .text {
+        max-width: 520px;
+    }
+}
+
+/* ============================================================
+ * md (768~1023) — 텍스트가 위, 별이 아래인 단일 컬럼
+ * ========================================================== */
+@media (max-width: 1023px) {
+    .hero {
+        --hero-gutter: var(--space-6);
+
+        justify-content: flex-start;
+        height: clamp(380px, 52svh, 460px);
+    }
+
+    .text {
+        max-width: none;
+    }
+
+    /*
+     * 🔴 텍스트가 별 위에 얹히는 구간에 스크림을 깝니다. 없으면 라이트
+     *    ("페이퍼 위 도표")에서 잉크 점이 글자 뒤에 깔려 읽기가 어렵습니다(§3-2).
+     */
+    .text::before {
+        content: '';
+        position: absolute;
+        left: calc(-1 * var(--hero-gutter));
+        right: calc(-1 * var(--hero-gutter));
+        top: calc(-1 * var(--header-h-desktop));
+        bottom: calc(-1 * var(--space-6));
+        z-index: -1;
+        background-image: linear-gradient(to bottom, var(--color-bg-base) 0%, transparent 100%);
+        pointer-events: none;
+    }
+
+    .legend {
+        position: static;
+        margin-top: var(--space-5);
+    }
+}
+
+/* ============================================================
+ * sm (≤767) — 2존 구조 (§7-2)
+ * ============================================================
+ * 텍스트 존 약 235px + 별자리 밴드 130px = 365px.
+ * 헤더 52px 을 더해 첫 화면(745px)의 56.0% 입니다.
+ *
+ * 🔴 별은 **41편 전량**입니다. 시안의 `slice(0, 25)` 는 바로 위의
+ *    `글 41개` 와 서로를 반박합니다.
+ * ========================================================== */
+@media (max-width: 767px) {
+    .hero {
+        --hero-gutter: var(--space-4);
+
+        height: auto;
+        margin-top: calc(-1 * var(--header-h-mobile));
+        padding: calc(var(--header-h-mobile) + var(--space-6)) var(--hero-gutter) var(--space-6);
+    }
+
+    .name {
+        /* 33px = 11 × 3 */
+        font-size: var(--fs-pixel-3);
+    }
+
+    .intro {
+        font-size: var(--fs-base);
+    }
+
+    .text::before {
+        content: none;
+    }
+
+    /* 전용 밴드 — 전폭(full-bleed)입니다 */
+    .slot {
+        position: static;
+        height: 130px;
+        margin: var(--space-5) calc(-1 * var(--hero-gutter)) 0;
+        overflow: hidden;
+    }
+
+    .band_link {
+        display: flex;
+    }
+
+    .legend {
+        position: static;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        margin-top: var(--space-4);
+    }
+}
+
+/* ============================================================
+ * 저감 모션 (§4-4)
+ * ============================================================
+ * 🔴 canvas 는 여기서 멈지 않습니다 — rAF 는 CSS 와 무관합니다.
+ *    JS 의 matchMedia 가 담당하고(ConstellationHero.tsx), 이 블록은
+ *    DOM 요소의 전환만 다룹니다.
+ *
+ * 규칙: **transform 은 값을 지우고, 색·투명도 전환은 그대로 둡니다.**
+ *       피드백을 통째로 지우면 "눌리는지 알 수 없는" 인터페이스가 됩니다.
+ * ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .preview {
+        /* 위치 지정용 transform 이라 지울 수 없습니다. 등장 애니메이션만 없앱니다 */
+        animation: none;
+    }
+}

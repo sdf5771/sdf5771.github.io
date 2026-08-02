@@ -1,0 +1,124 @@
+/*
+ * 홈 섹션 공통 — 「최근 글」·「읽어볼 만한 글」.
+ * 명세: docs/handoff-step2-home.md §5-1 · §7-3 · §9-3
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다. 원시 hex 금지.
+ */
+
+.section {
+    margin-top: var(--space-11);
+}
+
+.header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border-default);
+}
+
+.heading {
+    /* 22px = 11 × 2 — 한글에 픽셀 서체를 쓸 수 있는 하한입니다(§3-3a) */
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-2);
+    font-weight: 400;
+    line-height: var(--lh-heading);
+    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: none;
+}
+
+/* 한글이 섞이므로 Pixel 이 아니라 Pretendard 입니다(§9-3 R4) */
+.header_meta {
+    margin: 0;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+
+.section_note {
+    margin: var(--space-4) 0 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    color: var(--color-text-secondary);
+}
+
+/* ------------------------------------------------------------
+ * 최근 글 — 전폭 행
+ * ---------------------------------------------------------- */
+.rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* ------------------------------------------------------------
+ * 읽어볼 만한 글 — 3열 카드
+ * ---------------------------------------------------------- */
+.cards {
+    display: grid;
+    /* 🔴 auto-fit 이라 2편이어도 무너지지 않습니다(§5-3) */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-5);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.more {
+    display: flex;
+    justify-content: center;
+    margin: var(--space-8) 0 0;
+}
+
+.more_link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: 0 var(--space-6);
+    border: 1px solid var(--color-border-interactive);
+    border-radius: var(--radius-md);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    /* 색·보더 전환만 — 저감 모션에서도 그대로 둡니다 */
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.more_link:hover {
+    border-color: var(--color-accent-border);
+    color: var(--color-accent-text);
+}
+
+/* ============================================================
+ * 태블릿 이하
+ * ========================================================== */
+@media (max-width: 1023px) {
+    .section {
+        margin-top: var(--space-8);
+    }
+
+    /* 헤더 우측 메타를 제목 아래로 내립니다(§7-3) */
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+    }
+}
+
+@media (max-width: 767px) {
+    .section {
+        margin-top: var(--space-7);
+    }
+
+    .cards {
+        /* 1열 세로 스택 */
+        grid-template-columns: 1fr;
+    }
+}
