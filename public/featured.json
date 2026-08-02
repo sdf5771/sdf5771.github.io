@@ -9,27 +9,27 @@
   "picks": [
     {
       "slug": "2023-07-19-skeleton-loading",
-      "note": "로딩 상태를 어떻게 보여줄지 고민한 기록입니다."
+      "note": "빈 화면을 스피너로 때우는 대신 무엇을 보여줄지 따져 보고 직접 만들어 본 기록입니다."
     },
     {
       "slug": "2023-04-15-technical-seo-meta-tag",
-      "note": "React 프로젝트에서 메타태그를 동적으로 다루는 방법을 정리했습니다."
+      "note": "SPA가 검색 결과에 제대로 걸리지 않는 이유를 짚고 실제 프로젝트에서 해결한 과정입니다."
     },
     {
       "slug": "2023-05-01-atomicdesignpattern01",
-      "note": "컴포넌트를 어떤 단위로 쪼갤지 실제 프로젝트에 적용해 봤습니다."
+      "note": "컴포넌트를 어느 단위로 쪼개야 하는지는 이론만 읽어서는 알기 어려워 실제 프로젝트에 적용해 봤습니다."
     },
     {
       "slug": "2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer",
-      "note": "브라우저 안에서 번역·요약이 돌아가면 무엇이 달라지는지 살펴봤습니다."
+      "note": "모델이 서버가 아니라 브라우저 안에서 돌아갈 때 프론트엔드의 일이 어떻게 달라지는지 짚었습니다."
     },
     {
       "slug": "2025-03-13-ux-trends-and-spatial-computing-paradigm-1",
-      "note": "UX/UI가 어떻게 변해 왔는지 흐름부터 정리했습니다."
+      "note": "지금의 인터페이스가 어떤 흐름을 거쳐 여기까지 왔는지 알아야 다음이 보인다는 이야기입니다."
     },
     {
       "slug": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2",
-      "note": "WebXR과 공간 웹이 프론트엔드에 던지는 질문을 다뤘습니다."
+      "note": "공간 웹이 정말 온다면 지금 화면을 만드는 방식에서 무엇을 준비해야 하는지 따져 봤습니다."
     }
   ]
 }
