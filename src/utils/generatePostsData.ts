@@ -1,27 +1,26 @@
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
 import type { PostMetadata, PostSeries } from '../types';
 import { toPostSlug } from './postSlug';
 import { readImageSize } from './imageSize';
 import { normalizeTag, summarizeTags, toTagSlug } from './tags';
+import { readMarkdownCollection, writeDataFile } from './markdownCollection';
 
 // Markdown File Path
 const MARKDOWN_DIRECTORY_PATH = 'public/_posts';
-const postsDirectory = path.join(process.cwd(), MARKDOWN_DIRECTORY_PATH);
 
 // image directory path
 const IMAGE_DIRECTORY_PATH = 'public/images/posts';
 const imageDirectory = path.join(process.cwd(), IMAGE_DIRECTORY_PATH);
 
 // Create posts data path
-const jsonOutputPath = path.join(process.cwd(), 'public/posts-data.json');
+const jsonOutputPath = 'public/posts-data.json';
 
 /**
  * 태그 인덱스 산출물(§3-6②). `slug`·`name`·`count` 셋뿐입니다 —
  * 글 목록은 `posts-data.json` 의 `tagSlugs` 가 이미 갖고 있어 넣으면 중복입니다.
  */
-const tagsOutputPath = path.join(process.cwd(), 'public/tags-data.json');
+const tagsOutputPath = 'public/tags-data.json';
 
 /**
  * 시리즈 정의 파일(§10-1). **41편 md 를 한 글자도 고치지 않기 위해** 별도 파일입니다.
@@ -355,8 +354,12 @@ function buildTagSummaries(posts: readonly PostMetadata[]) {
 
 function generatePostsData() {
     try {
-        /* `.DS_Store` 같은 부산물이 글로 둔갑하지 않게 마크다운만 봅니다 */
-        const files = fs.readdirSync(postsDirectory).filter(file => file.endsWith('.md'));
+        /*
+         * 디렉터리 읽기·프론트매터 분리는 `markdownCollection` 이 담당합니다 —
+         * `_works/` 와 **같은 층을 공유**합니다(product.md §13-3). 아래 매핑은
+         * 글 스키마 전용이라 공유하지 않습니다.
+         */
+        const files = readMarkdownCollection(MARKDOWN_DIRECTORY_PATH);
 
         const bringThumbnailImage = (filename: string) => {
             // 파일명에서 .md 확장자를 제거한 디렉토리 경로를 사용
@@ -383,11 +386,7 @@ function generatePostsData() {
             return `/images/posts/${filename.replace('.md', '')}/${imageFiles[0]}`;
         }
 
-        const postMetadatas: PostMetadata[] = files.map(filename => {
-            const filePath = path.join(postsDirectory, filename);
-            const fileContents = fs.readFileSync(filePath, 'utf8');
-
-            const { data, content } = matter(fileContents);
+        const postMetadatas: PostMetadata[] = files.map(({ filename, data, content }) => {
             const thumbnailImage = bringThumbnailImage(filename);
 
             /*
@@ -493,8 +492,8 @@ function generatePostsData() {
         const tags = buildTagSummaries(postMetadatas);
 
         // write to json file
-        fs.writeFileSync(jsonOutputPath, JSON.stringify(postMetadatas, null, 2));
-        fs.writeFileSync(tagsOutputPath, JSON.stringify(tags, null, 2));
+        writeDataFile(jsonOutputPath, postMetadatas);
+        writeDataFile(tagsOutputPath, tags);
 
         const seriesCount = postMetadatas.filter(post => post.series).length;
         const imageCount = postMetadatas.reduce(

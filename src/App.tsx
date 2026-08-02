@@ -10,6 +10,8 @@ import {
     Posts,
     TagPosts,
     Tags,
+    Work,
+    Works,
 } from './routes';
 import { GlobalNavigationBar, Footer } from './components/shared';
 import { ShellProvider } from './components/shell';
@@ -50,6 +52,15 @@ function App() {
                         <Route path="/tags/:tag" element={<TagPosts />} />
                         {/* GNB 에 없는 화면입니다. 진입은 `/posts` 헤더의 텍스트 링크 하나 */}
                         <Route path="/archive" element={<Archive />} />
+                        {/*
+                         * STEP 7. `/works/<slug>` 는 **본문이 있는 항목만** 실제
+                         * 화면이 됩니다 — 없는 slug 도, 본문 없는 slug 도 `Work` 가
+                         * 렌더 전에 404 로 떨어뜨립니다(§6-5). 라우트를 데이터에서
+                         * 생성하지 않고 하나로 두는 이유는, 상세가 생길 때마다
+                         * App.tsx 를 고치게 되면 그 동기화를 반드시 놓치기 때문입니다.
+                         */}
+                        <Route path="/works" element={<Works />} />
+                        <Route path="/works/:slug" element={<Work />} />
                         {/*
                          * 반드시 **마지막**입니다. GitHub Pages 가 404.html 을 서빙할 때
                          * 주소창 URL 을 바꾸지 않으므로, 여기 들어오는 경로는 사용자가

@@ -7,6 +7,8 @@ import About from './About/About';
 import NotFound from './NotFound/NotFound';
 import TagPosts from './Tags/TagPosts';
 import Tags from './Tags/Tags';
+import Work from './Works/Work';
+import Works from './Works/Works';
 
 export {
     Archive,
@@ -18,4 +20,6 @@ export {
     NotFound,
     TagPosts,
     Tags,
+    Work,
+    Works,
 }

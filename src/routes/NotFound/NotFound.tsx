@@ -2,7 +2,12 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from './NotFound.module.css';
 import DotConstellation from './DotConstellation';
 import { useShell } from '../../components/shell';
-import { IS_POST_LIST_READY, POST_LIST_PATH } from '../../constants/site';
+import {
+    IS_POST_LIST_READY,
+    IS_WORKS_ROUTE_READY,
+    POST_LIST_PATH,
+    WORKS_PATH,
+} from '../../constants/site';
 import { safeDisplayPath } from '../../utils/url';
 
 /**
@@ -29,6 +34,12 @@ function NotFound() {
      */
     const displayPath = safeDisplayPath(pathname, search);
 
+    /*
+     * 🔴 `/works` 와 `/works/...` 만 잡습니다. `startsWith('/works')` 만 쓰면
+     *    `/worksheet` 같은 무관한 경로까지 작업 문맥으로 오인합니다.
+     */
+    const isWorksContext = pathname === WORKS_PATH || pathname.startsWith(`${WORKS_PATH}/`);
+
     return (
         <div className={styles.root}>
             <div className={styles.inner}>
@@ -48,25 +59,52 @@ function NotFound() {
 
                 {/* 랜드마크 이름은 명사구 4~10자, 역할 단어 금지 (WRITING_GUIDE §7.3a) */}
                 <nav className={styles.actions} aria-label="돌아가기">
-                    {/* 이동이므로 <a>(Link) 입니다 */}
-                    <Link className={`${styles.button} ${styles.button_primary}`} to="/">
-                        홈으로
-                    </Link>
-
                     {/*
-                     * 🔴 **회복 경로는 회복시켜야 합니다.**
-                     * `/posts` 는 STEP 4 에서 구현되어 **지금은 살아 있습니다** —
-                     * site.ts 의 `isRouteReady` 가 true 라 이 버튼이 노출됩니다.
+                     * 🔴 **문맥 분기**(handoff-step7-works.md §6-5, STEP 5 소관).
+                     *    실패한 경로가 `/works` 로 시작하면 주 버튼이 `작업 목록으로`
+                     *    가 되고 `홈으로` 가 보조로 내려갑니다.
                      *
-                     * 가드를 남겨 두는 이유: 404 에서 404 로 보내는 버튼은 회복
-                     * 경로가 아니라 이탈 경로입니다. 라우트가 다시 내려가면
-                     * (`isRouteReady: false`) 버튼도 함께 사라져야 하고, 그때
-                     * 홈으로·검색으로 찾기 두 경로가 회복 수단으로 남습니다.
+                     *    이유: `/works/<본문 없는 slug>` 는 **정상적으로 존재하는
+                     *    작업물의 주소**입니다(목록에 항목은 있고 상세만 없습니다).
+                     *    그 사용자를 홈으로 보내면 원래 찾던 것에서 가장 멀어집니다.
+                     *    반면 오타·추측으로 들어온 경우에도 작업 목록이 홈보다
+                     *    가까운 회복 경로입니다.
                      */}
-                    {IS_POST_LIST_READY && (
-                        <Link className={styles.button} to={POST_LIST_PATH}>
-                            글 목록으로
-                        </Link>
+                    {isWorksContext && IS_WORKS_ROUTE_READY ? (
+                        <>
+                            <Link
+                                className={`${styles.button} ${styles.button_primary}`}
+                                to={WORKS_PATH}
+                            >
+                                작업 목록으로
+                            </Link>
+                            <Link className={styles.button} to="/">
+                                홈으로
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            {/* 이동이므로 <a>(Link) 입니다 */}
+                            <Link className={`${styles.button} ${styles.button_primary}`} to="/">
+                                홈으로
+                            </Link>
+
+                            {/*
+                             * 🔴 **회복 경로는 회복시켜야 합니다.**
+                             * `/posts` 는 STEP 4 에서 구현되어 **지금은 살아 있습니다** —
+                             * site.ts 의 `isRouteReady` 가 true 라 이 버튼이 노출됩니다.
+                             *
+                             * 가드를 남겨 두는 이유: 404 에서 404 로 보내는 버튼은 회복
+                             * 경로가 아니라 이탈 경로입니다. 라우트가 다시 내려가면
+                             * (`isRouteReady: false`) 버튼도 함께 사라져야 하고, 그때
+                             * 홈으로·검색으로 찾기 두 경로가 회복 수단으로 남습니다.
+                             */}
+                            {IS_POST_LIST_READY && (
+                                <Link className={styles.button} to={POST_LIST_PATH}>
+                                    글 목록으로
+                                </Link>
+                            )}
+                        </>
                     )}
                 </nav>
 

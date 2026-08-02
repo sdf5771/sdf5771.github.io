@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import styles from './PostGlyph.module.css';
+import { hashSeed } from '../../utils/glyphSeed';
 
 /**
  * 글 목록의 96×64 썸네일 슬롯 — **생성 그래픽**입니다.
@@ -57,22 +58,6 @@ const CATEGORY_COLOR: Record<string, string> = {
     Activity: 'var(--color-cat-activity)',
 };
 
-/**
- * FNV-1a 32비트. 암호 강도가 필요한 자리가 아니고, **같은 slug 가 언제나 같은
- * 수를 내는 것**만 필요합니다(R1). 짧고 의존성이 없습니다.
- */
-function hashString(value: string): number {
-    let hash = 0x811c9dc5;
-
-    for (let index = 0; index < value.length; index += 1) {
-        hash ^= value.charCodeAt(index);
-        /* imul 이 없으면 32비트를 넘어가며 정밀도가 깨져 결정론이 무너집니다 */
-        hash = Math.imul(hash, 0x01000193);
-    }
-
-    return hash >>> 0;
-}
-
 interface Point {
     x: number;
     y: number;
@@ -108,7 +93,12 @@ interface PostGlyphProps {
 }
 
 function PostGlyph({ slug, category, className }: PostGlyphProps) {
-    const points = useMemo(() => buildPoints(hashString(slug)), [slug]);
+    /*
+     * 씨앗 해시는 `utils/glyphSeed` 로 옮겼습니다 — 작업 목록의 `WorkGlyph` 가
+     * **같은 해시**를 써야 두 화면 56개 타일이 한 시스템으로 남습니다(STEP 7 §9-1).
+     * 동작은 이전과 한 비트도 다르지 않습니다.
+     */
+    const points = useMemo(() => buildPoints(hashSeed(slug)), [slug]);
 
     const dotColor = CATEGORY_COLOR[category] ?? 'var(--color-accent-text)';
     const polyline = points.map(point => `${point.x},${point.y}`).join(' ');

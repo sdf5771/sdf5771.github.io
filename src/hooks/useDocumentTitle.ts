@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { POSTS } from '../data/posts';
 import { findTag } from '../data/tags';
+import { findWork } from '../data/works';
 import {
     ARCHIVE_LABEL,
     ARCHIVE_PATH,
@@ -9,6 +10,8 @@ import {
     NOT_FOUND_TITLE_NAME,
     POST_LIST_PATH,
     TAG_INDEX_PATH,
+    WORKS_LABEL,
+    WORKS_PATH,
     buildPageTitle,
 } from '../constants/site';
 import { safeDecodeURIComponent } from '../utils/url';
@@ -83,6 +86,27 @@ function resolveDocumentTitle(pathname: string, search: string): string {
      */
     if (pathname === ARCHIVE_PATH) {
         return buildPageTitle(ARCHIVE_LABEL);
+    }
+
+    /*
+     * 작업 상세(STEP 7). `/works` 검사 **앞**에 와야 합니다.
+     *
+     * 🔴 **본문이 없는 slug 는 화면이 404 이므로 제목도 404 여야 합니다.**
+     *    라우트가 있다는 이유로 제목만 정상으로 두면, 페이지 전환을 제목으로
+     *    안내받는 스크린리더 사용자에게 거짓말이 됩니다 — 태그 쪽과 같은 판정입니다.
+     */
+    const workMatch = /^\/works\/(.+)$/.exec(pathname);
+    if (workMatch) {
+        const work = findWork(safeDecodeURIComponent(workMatch[1]));
+        return buildPageTitle(work?.hasBody ? work.title : NOT_FOUND_TITLE_NAME);
+    }
+
+    /*
+     * 🔴 필터 상태(`?type=`)를 제목에 반영하지 않습니다 — 글 목록과 같은 규칙입니다.
+     *    화면 이름은 `작업` 입니다(`Works`·`포트폴리오` 금지).
+     */
+    if (pathname === WORKS_PATH) {
+        return buildPageTitle(WORKS_LABEL);
     }
 
     /*

@@ -1,0 +1,147 @@
+/*
+ * 기술 스택 칩.
+ * 명세: docs/handoff-step7-works.md §5-4
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ */
+
+.wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    min-width: 0;
+}
+
+.list {
+    display: flex;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    /*
+     * 접힘 = **1행 고정**. 3개짜리와 13개짜리가 같은 행 높이를 갖게 하는 장치입니다.
+     * 노출 개수 자체는 아래 :nth-child 가 정하므로 여기서 넘칠 일은 없지만,
+     * 예상보다 긴 스택명이 들어와도 리듬이 깨지지 않게 nowrap 을 겁니다.
+     */
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+/* 🔴 펼치면 높이 고정을 **반드시 해제**합니다 — 시안이 놓친 지점입니다(§13 1번) */
+.list[data-expanded='true'] {
+    flex-wrap: wrap;
+    overflow: visible;
+}
+
+/* 접힘 상태에서 데스크톱은 6번째부터 숨깁니다 (노출 5개) */
+.list:not([data-expanded='true']) .chip:nth-child(n + 6) {
+    display: none;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 var(--space-2);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-raised);
+    color: var(--color-text-secondary);
+    /* 스택명은 전부 라틴 — GalmuriMono11 11px 규칙 통과(STEP 1 §3-3a) */
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* ------------------------------------------------------------
+ * `+N` / `접기`
+ * ---------------------------------------------------------- */
+.more {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: 22px;
+    padding: 0 var(--space-2);
+    border: 1px dashed var(--color-accent-border);
+    border-radius: var(--radius-sm);
+    background-color: transparent;
+    color: var(--color-accent-text);
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    line-height: 1;
+    cursor: pointer;
+    /* 색 전환은 저감 모드에서도 유지합니다(§8-3) */
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out);
+}
+
+.more:hover {
+    background-color: var(--color-accent-subtle);
+}
+
+/* 데스크톱에서 숨길 항목이 없으면(스택 ≤5) 버튼 자체가 없습니다 */
+.more[data-desktop-hidden='false'] {
+    display: none;
+}
+
+/* `접기` 는 한글이라 픽셀 서체를 쓸 수 없습니다(§10-1 15번) */
+.label {
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+}
+
+/*
+ * 데스크톱·모바일에서 숨는 개수가 달라 라벨이 둘입니다.
+ * `display: none` 인 쪽은 **접근 가능한 이름 계산에서도 빠집니다** — 그래서
+ * 스크린리더가 듣는 개수와 화면에 보이는 개수가 항상 일치합니다.
+ */
+.count_mobile,
+.name_mobile {
+    display: none;
+}
+
+/* ------------------------------------------------------------
+ * 모바일 (≤767px) — 노출 3개 · wrap 허용
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .list {
+        /* 좁은 폭에서는 3개도 넘칠 수 있어 2행까지 자연 발생시킵니다(§7-1) */
+        flex-wrap: wrap;
+        overflow: visible;
+    }
+
+    .list:not([data-expanded='true']) .chip:nth-child(n + 4) {
+        display: none;
+    }
+
+    /* 데스크톱 기준으로 숨길 게 없어도 모바일에서는 필요합니다(스택 4~5개) */
+    .more[data-desktop-hidden='false'] {
+        display: inline-flex;
+    }
+
+    .count_desktop,
+    .name_desktop {
+        display: none;
+    }
+
+    .count_mobile {
+        display: inline;
+    }
+
+    .name_mobile {
+        display: inline;
+    }
+}
+
+/* ------------------------------------------------------------
+ * 저감 모션 (§8-1 6번)
+ * ------------------------------------------------------------
+ * 펼침은 높이가 변하는 동작이라 트랜지션을 제거하고 즉시 최종 높이로 갑니다.
+ * 색 전환은 남깁니다 — transform 이 없어 전정 자극에 해당하지 않습니다(§8-3).
+ * ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .list {
+        transition: none;
+    }
+}

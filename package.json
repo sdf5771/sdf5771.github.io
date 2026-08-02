@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "generate-posts-data": "tsx src/utils/generatePostsData.ts",
+    "generate-works-data": "tsx src/utils/generateWorksData.ts",
     "verify-fonts": "node scripts/verify-font-glyphs.mjs",
-    "build": "npm run verify-fonts && npm run generate-posts-data && tsc -b && vite build",
+    "build": "npm run verify-fonts && npm run generate-posts-data && npm run generate-works-data && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist"

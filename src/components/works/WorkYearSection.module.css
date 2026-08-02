@@ -1,0 +1,111 @@
+/*
+ * 연도 그룹 — 연도 축 + 행 스트림.
+ * 명세: docs/handoff-step7-works.md §5-1 · §7-1
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ */
+
+.section {
+    display: grid;
+    /*
+     * 🔴 연도 축 **96px**. 시안의 104px 은 스페이싱 스케일 밖입니다 —
+     *    실측 `2024`(Galmuri11 33px) = 66px, `· 8건`(12px) ≈ 40px 이라 96px 이면
+     *    충분하고 `--space-6`(24)의 4배입니다(§11-2 8번).
+     */
+    grid-template-columns: 96px 1fr;
+    gap: var(--space-6);
+    /* 🔴 그룹 간 여백은 항목 수와 무관하게 **고정**입니다(규칙 3) */
+    margin-bottom: var(--space-7);
+}
+
+.axis {
+    grid-column: 1;
+}
+
+/*
+ * 🔴 **이 화면의 유일한 스크롤 피로 방지 장치**입니다(규칙 6).
+ *    시안의 `top: 16px` 은 전역 헤더(48px sticky) 아래로 파고들어 8건 그룹에서
+ *    연도가 헤더에 잘립니다 — 즉 장치가 아예 동작하지 않습니다.
+ *    헤더 높이 + 여백으로 계산합니다(48 + 16 = 64px).
+ */
+.axis_inner {
+    position: sticky;
+    top: calc(var(--header-h-desktop) + var(--space-4));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.year {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    /* 33px — 11의 정수배. 숫자라 픽셀 서체 규칙 통과(STEP 1 §3-3a) */
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-3);
+    font-weight: 400;
+    line-height: var(--lh-tight);
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: none;
+}
+
+/*
+ * 항목 수. `건` 이 한글이라 Pretendard 입니다(§10-1 8번).
+ * 🔴 앞의 ` · ` 를 지우지 마세요 — 헤딩 안에 있어 스크린리더가 `2024 8건` 이
+ *    아니라 `2024 · 8건` 으로 끊어 읽습니다.
+ */
+.count {
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--color-text-muted);
+    -webkit-font-smoothing: auto;
+}
+
+.stream {
+    grid-column: 2;
+    margin: 0;
+    padding: 0 0 0 var(--space-6);
+    list-style: none;
+    /*
+     * 스트림 경계선. 🔴 시안의 장식 세로선(`width:1px; height:40px`)은
+     *    제거했습니다 — 이 border-left 와 역할이 겹치고, sticky 상태에서
+     *    허공에 뜹니다(§5-1).
+     */
+    border-left: 1px solid var(--color-border-default);
+    min-width: 0;
+}
+
+/* ------------------------------------------------------------
+ * 모바일 (≤767px) — 연도가 가로 행으로 접힙니다 (§7-1)
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .section {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+
+    .axis,
+    .stream {
+        grid-column: 1;
+    }
+
+    .axis_inner {
+        /* 모바일 헤더는 스크롤하면 숨으므로 sticky 를 걸면 위치가 흔들립니다 */
+        position: static;
+    }
+
+    .year {
+        flex-direction: row;
+        align-items: baseline;
+        gap: var(--space-2);
+        /* 22px — 11의 정수배. 숫자라 규칙 통과 */
+        font-size: var(--fs-pixel-2);
+    }
+
+    .stream {
+        padding-left: 0;
+        border-left: 0;
+    }
+}

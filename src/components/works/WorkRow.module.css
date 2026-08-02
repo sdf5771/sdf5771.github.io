@@ -1,0 +1,300 @@
+/*
+ * 작업 목록의 행.
+ * 명세: docs/handoff-step7-works.md §5-2 · §5-3 · §7-1 · §8
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ */
+
+.row {
+    position: relative;
+    display: grid;
+    /* 96 그래픽 · 1fr 본문. 🔴 우측 메타 열이 없습니다 — 글 목록과 다릅니다(§5-0) */
+    grid-template-columns: 96px 1fr;
+    gap: var(--space-5);
+    /* 좌: 레일이 지나가는 자리. 우: 0 — 스트림 경계선이 이미 우측 끝입니다 */
+    padding: var(--space-4) 0 var(--space-4) var(--space-4);
+    border-bottom: 1px solid var(--color-border-subtle);
+    /* 색·배경 전환은 저감 모드에서도 유지합니다(§8-3) */
+    transition: background-color var(--dur-base) var(--ease-out);
+}
+
+/* 그룹의 마지막 행은 경계선을 지웁니다 — 연도 헤더 사이 여백이 경계를 대신합니다 */
+.row:last-child {
+    border-bottom: 0;
+}
+
+/*
+ * 좌측 2px 레일.
+ * 🔴 **상세가 있는 행만 골드**입니다. 상세 0건이면 전 항목이 회색이라 15행이
+ *    균질해지고, 그게 §4-2 ① 의 전부입니다.
+ * 대비 실측: 라이트 3.49:1 / 다크 8.99:1 (비텍스트 3:1 기준 통과 §12-1).
+ * 회색 레일은 의도적으로 낮습니다 — 정보는 `기록 준비 중` 텍스트가 담당합니다.
+ */
+.rail {
+    position: absolute;
+    left: 0;
+    top: var(--space-4);
+    bottom: var(--space-4);
+    width: 2px;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-border-subtle);
+}
+
+.row[data-has-detail='true'] .rail {
+    background-color: var(--color-accent-border);
+}
+
+/*
+ * 🔴 호버 반응은 **상세가 있는 행에만** 겁니다. 없는 행이 호버에 반응하면
+ *    "눌리는데 아무 일도 안 일어난다" 가 되어 §4-2 의 전제가 무너집니다.
+ */
+.row[data-has-detail='true']:hover {
+    background-color: var(--color-accent-subtle);
+}
+
+/* 상세 없는 행은 포커스 대상이 아니므로 이 규칙에 걸리지 않습니다 */
+.row:has(.link:focus-visible) {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+}
+
+/*
+ * 🔴 `align-self: start`. 세로 중앙 정렬하면 그래픽이 180px 넘는 행 높이
+ *    한가운데 떠서 부유물이 됩니다(§5-2).
+ */
+.graphic {
+    grid-column: 1;
+    align-self: start;
+}
+
+.body {
+    grid-column: 2;
+    /* grid 자식의 기본 min-width: auto 때문에 긴 제목이 열을 밀어냅니다 */
+    min-width: 0;
+}
+
+/* ------------------------------------------------------------
+ * 메타 줄 — 유형 · 기간 · 역할
+ * ---------------------------------------------------------- */
+.meta {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    color: var(--color-text-secondary);
+}
+
+/*
+ * 🔴 유형을 **색으로 말하지 않습니다**(§2-3). 시안의 라일락은
+ *    `--color-status-accent` = `--color-cat-study` 와 값이 같아, 글 목록에서
+ *    `Study` 를 뜻하는 색이 여기서는 `개인·팀` 을 뜻하게 됩니다.
+ */
+.type,
+.role {
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+}
+
+.type {
+    font-weight: 600;
+}
+
+/* 라틴·숫자·기호뿐이라 GalmuriMono11 11px 이 규칙을 통과합니다 */
+.period {
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+}
+
+.separator {
+    color: var(--color-text-muted);
+    font-size: var(--fs-xs);
+}
+
+/* `진행 중` 은 한글이라 Pretendard 입니다(§10-1 10번). 대비 4.56:1 / 9.99:1 */
+.ongoing {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-status-success);
+}
+
+.ongoing_dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-status-success);
+}
+
+/* ------------------------------------------------------------
+ * 제목
+ * ---------------------------------------------------------- */
+.heading {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-text-primary);
+    /* 실측 최장 37자. 데스크톱 콘텐츠 폭 840px 이면 1행에 들어갑니다 */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    /* `Semantic Release`·`ASP.NET` 같은 공백 없는 라틴 장문(§5-2) */
+    overflow-wrap: anywhere;
+}
+
+/*
+ * 🔴 `outline: none` 은 접근성 후퇴가 아니라 **중복 제거**입니다.
+ *    global.css 가 이 `<a>` 에 링을 주고 위 `.row:has(...)` 가 행에 또 줍니다.
+ *    실제 클릭 영역이 행 전체이므로 남기는 쪽은 행입니다(PostRow 와 같은 판정).
+ */
+.link {
+    outline: none;
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+/*
+ * 스트레치 링크 — 접근 가능한 이름은 **작업 제목 하나**이면서 클릭 영역은 행
+ * 전체가 됩니다(§4-3). 행 안의 다른 링크는 아래에서 z-index 로 올립니다.
+ */
+.link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.row[data-has-detail='true']:hover .link {
+    color: var(--color-accent-text);
+}
+
+/* 🔴 **상시 표시**입니다 — 호버로 등장하지 않습니다(§4-2 ②) */
+.arrow {
+    margin-left: var(--space-2);
+    color: var(--color-text-muted);
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+.row[data-has-detail='true']:hover .arrow {
+    color: var(--color-accent-text);
+}
+
+/* ------------------------------------------------------------
+ * 요약 — 🔴 유일한 판단 재료라 절대 빼지 않습니다(§3-3)
+ * ---------------------------------------------------------- */
+.summary {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+}
+
+/* ------------------------------------------------------------
+ * 칩 줄 + 상태 — 🔴 **한 줄에** 둡니다(§3-3, 액션 줄 병합으로 −44px)
+ * ---------------------------------------------------------- */
+.footer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+    /* 스트레치 링크 위로 올려 칩 펼치기·개별 링크가 눌리게 합니다(§4-3) */
+    position: relative;
+    z-index: 1;
+    /* 요약도 칩도 없는 행에서 빈 줄이 남지 않게 합니다 */
+    min-height: 0;
+}
+
+.footer:empty {
+    display: none;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: var(--space-3);
+    margin-left: auto;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+}
+
+.related {
+    color: var(--color-status-info);
+    text-decoration: underline;
+}
+
+.external {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+.external:hover {
+    color: var(--color-accent-text);
+}
+
+/* 🔴 혼재 상태에서만 나옵니다. 한글이라 Pretendard 12px(§10-1 19번) */
+.pending {
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+
+/* ------------------------------------------------------------
+ * 모바일 (≤767px) — 🔴 생성 그래픽 미표시 (§7-2)
+ * ------------------------------------------------------------
+ * 시안은 358×72 전폭으로 놓지만 세 문제가 동시에 납니다.
+ *   ① 가용 346px 을 12px 초과 → <body> 가로 스크롤
+ *   ② 72 × 15 ≈ 1,080px — 정보를 0 추가하면서 목록을 36% 길게 만듦
+ *   ③ 콘텐츠 폭이 290px 로 줄어 최장 제목(37자)이 3행으로 밀림
+ * 그래픽을 빼면 346px = 21자/행 → 2행 42자 ≥ 37자로 2행 클램프가 성립합니다.
+ * 좌측 레일이 앵커와 상태 표시를 그대로 담당합니다.
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .row {
+        grid-template-columns: 1fr;
+        padding-left: var(--space-3);
+    }
+
+    .graphic {
+        display: none;
+    }
+
+    .body {
+        grid-column: 1;
+    }
+
+    .heading {
+        font-size: var(--fs-lg);
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .status {
+        margin-left: 0;
+    }
+}
+
+/* ------------------------------------------------------------
+ * 저감 모션 (§8-1)
+ * ------------------------------------------------------------
+ * 이 행에는 transform 이 없습니다 — 호버는 배경·글자색뿐입니다.
+ * 색 전환 160ms 는 전정 자극(WCAG 2.3.3)에 해당하지 않아 **유지**합니다.
+ * 제거하면 호버 피드백이 끊겨 오히려 상태 파악이 어려워집니다(§8-3).
+ * ---------------------------------------------------------- */

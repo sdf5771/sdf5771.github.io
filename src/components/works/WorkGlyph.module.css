@@ -1,0 +1,22 @@
+/*
+ * 작업 생성 그래픽.
+ * 명세: docs/handoff-step7-works.md §9
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ */
+
+.glyph {
+    display: block;
+    /* 96×64 고정. 폭·높이가 속성에도 있어 로드 전에 자리가 잡힙니다 → CLS 0 (R9) */
+    width: 96px;
+    height: 64px;
+    border-radius: var(--radius-md);
+    /*
+     * 타일 배경.
+     * ⚠️ `--color-tile-bg` 는 아직 없습니다(§11-3 P1 — STEP 1/2 소관). 글 목록
+     *    타일과 **같은 값**을 써야 두 화면이 어긋나지 않으므로 `PostGlyph` 와
+     *    동일하게 `--color-bg-raised` 를 소비합니다. 토큰이 생기면 두 파일에서
+     *    이 한 줄씩만 바꾸면 됩니다.
+     */
+    background-color: var(--color-bg-raised);
+    /* R8 — 15개가 동시에 움직이면 훑기를 방해합니다. 애니메이션 없음 */
+}

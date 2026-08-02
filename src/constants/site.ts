@@ -60,17 +60,24 @@ export interface NavItem {
 }
 
 /**
- * 내비 4항목. `작업`은 작업 항목이 4건 이상 준비된 뒤 노출합니다(STEP 7).
+ * 내비 인벤토리.
  *
  * 이 배열은 **확정된 내비 인벤토리**이고, 실제로 그릴 항목은 아래
  * `AVAILABLE_NAV_ITEMS` 입니다. 아직 라우트가 없는 항목을 그대로 링크로 두면
  * 내비를 눌렀는데 404 가 뜹니다 — 내비는 화면을 여는 물건이라, 열 화면이 없으면
  * 보여 주지 않는 편이 정직합니다.
+ *
+ * 🔴 `작업` 의 노출 조건은 **항목 4건 이상**이었습니다(STEP 1 §12 미결 2번).
+ *    STEP 7 에서 15건이 생겨 조건을 충족했으므로 `isRouteReady: true` 입니다.
+ *    상세(`/works/<slug>`)가 0건인 것은 조건과 무관합니다 — 목록만으로 화면이
+ *    성립하는 것이 이 STEP 의 전제입니다(handoff-step7-works.md §4-2 ①).
  */
 export const NAV_ITEMS: NavItem[] = [
     { label: '홈', path: '/', isRouteReady: true },
     /* STEP 4 */
     { label: '글', path: '/posts', activePaths: ['/post'], isRouteReady: true },
+    /* STEP 7 */
+    { label: '작업', path: '/works', isRouteReady: true },
     /* STEP 6 */
     { label: '태그', path: '/tags', isRouteReady: true },
     { label: '소개', path: '/about', isRouteReady: true },
@@ -84,6 +91,26 @@ export const POST_LIST_PATH = '/posts';
 
 export const IS_POST_LIST_READY: boolean = NAV_ITEMS.some(
     item => item.path === POST_LIST_PATH && item.isRouteReady,
+);
+
+/**
+ * 작업 목록 경로 (STEP 7).
+ *
+ * 🔴 화면 이름은 **`작업`** 입니다. WRITING_GUIDE §9 용어집이 `Works`·`포트폴리오`
+ *    를 "쓰지 않는 표기" 로 지정했습니다 — URL `/works` 만 영문입니다.
+ */
+export const WORKS_PATH = '/works';
+
+export const WORKS_LABEL = '작업';
+
+/**
+ * `/works` 라우트가 실재하는가.
+ *
+ * 404 화면의 문맥 분기(§6-5)가 이 값을 봅니다 — 라우트가 없는데 `작업 목록으로`
+ * 버튼을 그리면 404 에서 404 로 보내는 이탈 경로가 됩니다.
+ */
+export const IS_WORKS_ROUTE_READY: boolean = NAV_ITEMS.some(
+    item => item.path === WORKS_PATH && item.isRouteReady,
 );
 
 /** 태그 인덱스 경로 (STEP 6) */

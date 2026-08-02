@@ -1,7 +1,9 @@
 import { useLocation } from 'react-router-dom';
 import { POSTS } from '../data/posts';
 import { findTag } from '../data/tags';
-import { ARCHIVE_PATH, TAG_INDEX_PATH } from '../constants/site';
+import { findWork } from '../data/works';
+import { ARCHIVE_PATH, TAG_INDEX_PATH, WORKS_PATH } from '../constants/site';
+import { workTerminalPath } from '../utils/workListQuery';
 import { safeDecodeURIComponent } from '../utils/url';
 import { toPostSlug } from '../utils/postSlug';
 import { toTagSlug } from '../utils/tags';
@@ -74,6 +76,22 @@ function useTerminalPath(): string {
 
     if (pathname === ARCHIVE_PATH) {
         return '~/archive';
+    }
+
+    /*
+     * 작업 상세(STEP 7). 🔴 **본문이 있는 항목일 때만** 경로를 돌려줍니다 —
+     * 본문 없는 slug 는 화면이 404 이고, 실재하지 않는 위치를 경로로 표시하면
+     * 사실과 다릅니다(§6-1c R-2).
+     */
+    const workMatch = /^\/works\/(.+)$/.exec(pathname);
+    if (workMatch) {
+        const work = findWork(safeDecodeURIComponent(workMatch[1]));
+        return work?.hasBody ? `~/works/${work.slug}` : '~';
+    }
+
+    /* 목록. 🔴 경로 에코가 **실제 필터 상태와 동기화**됩니다 — `~/works?type=work`(§5-7) */
+    if (pathname === WORKS_PATH) {
+        return workTerminalPath(search);
     }
 
     /* 홈(`/`)과 그 밖의 모든 경로 */
