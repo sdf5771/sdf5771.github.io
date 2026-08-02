@@ -213,8 +213,12 @@
 
 ```
 --space-1:4  --space-2:8  --space-3:12  --space-4:16  --space-5:20  --space-6:24
---space-7:28 --space-8:32 --space-10:40 --space-12:48 --space-14:56 --space-16:64
+--space-7:28 --space-8:32 --space-10:40 --space-11:44 --space-12:48
+--space-14:56 --space-16:64
 --space-px:2
+
+> **`--space-11`(44px) 사후 승인 (2026-08-02).** 4px 격자에 맞고(4×11), 이름 규칙(`--space-N` = 4N)에도 정확히 부합하며, 40→48의 큰 간격을 메웁니다. **정식 편입합니다.**
+> ⚠️ 단 **터치 타깃 용도라면 `--tap-min`(44px)을 쓰세요.** 값은 같지만 의미가 다르고, 접근성 하한이 바뀌면 따로 움직여야 합니다.
 
 --radius-xs:2  --radius-sm:3  --radius-md:4  --radius-lg:6  --radius-xl:8  --radius-pill:999px
 
