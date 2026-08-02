@@ -39,8 +39,8 @@ import { formatPostDate, formatReadingMinutes } from '../../utils/postMeta';
 /* ------------------------------------------------------------
  * 확정 카피 (§10) — 이 표의 문자열을 그대로 씁니다
  * ---------------------------------------------------------- */
-const NAME = '김섭우';
-const ROLE = '프론트엔드 개발자';
+const NAME = 'Seobisback';
+const ROLE = 'Software Engineer';
 const INTRO = '공부하거나 조사한 내용을 기록합니다.';
 const PRIMARY_CTA = '최신 글 읽기';
 const SECONDARY_CTA = '전체 글 보기';

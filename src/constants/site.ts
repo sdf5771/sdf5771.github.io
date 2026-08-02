@@ -19,8 +19,14 @@ export const WORDMARK = {
 /** 스크린리더·aria-label·document.title 용 단일 문자열 */
 export const WORDMARK_TEXT = `${WORDMARK.base}${WORDMARK.accent}`;
 
-/** 홈 `<title>`. 홈만 사이트명이 앞에 옵니다 (WRITING_GUIDE §6.13) */
-export const HOME_TITLE = `${WORDMARK_TEXT} — 프론트엔드 개발자 김섭우`;
+/**
+ * 홈 `<title>`. 홈만 사이트명이 앞에 옵니다 (WRITING_GUIDE §6.13)
+ *
+ * 🔴 부제에 이름을 넣지 않습니다. 워드마크가 이미 `Seobisback` 을 담고 있어
+ *    `… — Software Engineer Seobisback` 이면 한 제목에 같은 단어가 두 번 나옵니다.
+ *    부제는 직함만 맡습니다.
+ */
+export const HOME_TITLE = `${WORDMARK_TEXT} — Software Engineer`;
 
 /** 홈이 아닌 화면의 `<title>` 꼬리표. 구분자는 `·` 고정입니다 */
 const TITLE_SUFFIX = ` · ${WORDMARK_TEXT}`;

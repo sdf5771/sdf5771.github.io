@@ -37,7 +37,7 @@ function RecentPosts({ posts, total }: RecentPostsProps) {
 
             <ul className={styles.rows}>
                 {posts.map(post => (
-                    /* 홈은 `h1 김섭우 → h2 최근 글 → h3 글 제목` 입니다 */
+                    /* 홈은 `h1 Seobisback → h2 최근 글 → h3 글 제목` 입니다 */
                     <PostRow key={post.slug} post={post} tokens={NO_TOKENS} headingLevel={3} />
                 ))}
             </ul>

@@ -49,7 +49,7 @@ function About() {
 
                 <section className={styles.intro}>
                     {/*
-                     * 바로 옆에 `프론트엔드 개발자 김섭우입니다` 가 있으므로 alt 는
+                     * 바로 옆에 `Software Engineer로 일하는 Seobisback입니다` 가 있으므로 alt 는
                      * 비웁니다. memoji 일러스트의 외형 설명은 정보량이 0 입니다.
                      * width/height **속성**이 있어야 로드 전에 자리가 잡혀 CLS 가 0 입니다
                      * (CSS width 만으로는 예약 공간이 안 잡힙니다).
@@ -67,7 +67,7 @@ function About() {
 
                     {/* 의미 단위가 달라 <p> 3개로 둡니다. 한 덩어리로 합치지 않습니다 */}
                     <div className={styles.intro_text}>
-                        <p>프론트엔드 개발자 김섭우입니다.</p>
+                        <p>Software Engineer로 일하는 Seobisback입니다.</p>
                         <p>
                             더 나은 서비스를 만드는 방법을 고민하고, 공부하거나 조사한 내용을
                             여기에 남깁니다.

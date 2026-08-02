@@ -129,7 +129,7 @@ const starDots = () =>
   }).join('\n    ')
 
 /** 기본 카드의 제목. 글별 카드는 이 문자열만 교체합니다 (핸드오프 §3-1). */
-const TITLE = '프론트엔드 개발자 김섭우'
+const TITLE = 'Software Engineer'
 
 const html = `<meta charset="utf-8" />
 <title>Seobisback.log — OG Card 1200x630</title>
