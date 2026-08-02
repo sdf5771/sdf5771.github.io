@@ -178,6 +178,29 @@
     color: var(--color-text-muted);
 }
 
+/*
+ * 목차 아이콘 — 폰트·SVG 없이 CSS 그리드 도트로 그립니다.
+ * 명세: docs/handoff-step1-shell.md §4-7. 검색 아이콘(SearchIcon.module.css)과
+ * 같은 기법이고, 서브셋 범위가 바뀌어도 다시 깨지지 않습니다.
+ * 5×5 · 셀 2px · 갭 1px → 14×14. 갭은 정수 고정이어야 도트가 뭉개지지 않습니다.
+ */
+.icon {
+    display: grid;
+    grid-template-columns: repeat(5, 2px);
+    grid-template-rows: repeat(5, 2px);
+    flex-shrink: 0;
+    gap: 1px;
+    color: var(--color-text-secondary);
+}
+
+.icon_dot {
+    background-color: currentColor;
+}
+
+.icon_dot_off {
+    background-color: transparent;
+}
+
 /* 데스크톱·태블릿에서는 사이드바가 있거나(≥1024) 시트를 쓰므로 버튼만 남깁니다 */
 @media (min-width: 1024px) {
     .floating {

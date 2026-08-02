@@ -383,7 +383,7 @@
     margin: 0 0 var(--space-6);
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-lg);
-    background-color: var(--color-code-bg);
+    background-color: var(--color-bg-code);
     overflow: hidden;
 }
 
@@ -395,7 +395,7 @@
     /* 라벨이 없어도 헤더 높이가 유지되게 최소 높이를 둡니다 */
     min-height: 34px;
     padding: 0 var(--space-2) 0 var(--space-4);
-    background-color: var(--color-code-header-bg);
+    background-color: var(--color-bg-code-header);
     border-bottom: 1px solid var(--color-border-default);
 }
 
@@ -665,12 +665,12 @@
         font-size: var(--fs-lg);
     }
 
-    /* 헤더가 52px 이라 오프셋을 줄입니다(§5-3) */
-    .content h2,
-    .content h3,
-    .content h4 {
-        scroll-margin-top: 90px;
-    }
+    /*
+     * 헤더가 52px 이고 스크롤 시 숨으므로 오프셋이 줄어듭니다(§5-3).
+     * 값은 tokens.css 의 미디어쿼리가 --scroll-offset 을 90px 로 덮어써서
+     * 위 `.content h2/h3/h4` 규칙에 자동으로 반영됩니다 — 여기서 다시 적지
+     * 않습니다(정의처가 둘이 되면 한쪽만 고쳐집니다).
+     */
 
     /* 매트 패딩은 모바일에서 한 단계 줄입니다(§2-3) */
     .content :global(.post-matte) {

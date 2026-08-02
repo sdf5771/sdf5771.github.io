@@ -10,13 +10,6 @@ import { formatPostDate, formatReadingMinutes } from '../../utils/postMeta';
  * 명세: docs/handoff-step3-post.md §4-2 ~ §4-5 · §18(확정 카피)
  */
 
-/** 카테고리 → 히어로 그라데이션 토큰. 썸네일이 없는 17편이 씁니다(§4-3) */
-const HERO_GRADIENT: Record<string, string> = {
-    Survey: 'var(--gradient-hero-survey)',
-    Study: 'var(--gradient-hero-study)',
-    Activity: 'var(--gradient-hero-activity)',
-};
-
 function Breadcrumb({ post }: { post: PostMetadata }) {
     return (
         <nav className={styles.breadcrumb} aria-label="현재 위치">
@@ -42,19 +35,25 @@ function Breadcrumb({ post }: { post: PostMetadata }) {
 
 function Hero({ post }: { post: PostMetadata }) {
     const hasThumbnail = Boolean(post.thumbnail);
+    /*
+     * 🔴 `width`/`height` **속성**이 §4-3 의 요구입니다. 이 자리의 실제 CLS 는
+     *    0 입니다 — `.hero` 높이를 CSS 로 고정하고 이미지가 `inset: 0` 이라
+     *    로드 전후로 레이아웃이 움직이지 않기 때문입니다. 그래도 속성을 두는
+     *    이유는 ① 브라우저가 종횡비를 미리 알아 디코딩 경로가 짧아지고
+     *    ② 나중에 `.hero` 를 `aspect-ratio` 로 바꾸는 순간 보호막이 되기 때문입니다.
+     *    크기는 빌드가 넣어 준 실측값입니다(`generatePostsData` 의 imageSizes).
+     */
+    const thumbnailSize = post.imageSizes?.[post.thumbnail];
 
     return (
         <div
-            className={styles.hero}
             /*
-             * 썸네일이 없으면 카테고리 그라데이션입니다. 🔴 이모지를 얹지 않습니다 —
+             * 썸네일이 없으면 그라데이션 매트입니다. 🔴 이모지를 얹지 않습니다 —
              * 41편에 이모지 필드가 없어서 자동 할당하면 부정확한 이모지가 붙습니다(§4-3).
+             * 🔴 카테고리별 3종 분기는 STEP 1 §3-1a 에서 `--gradient-thumb-from/-to`
+             *    2종으로 축소됐습니다. 카테고리는 아래 배지가 이미 말합니다.
              */
-            style={
-                hasThumbnail
-                    ? undefined
-                    : { background: HERO_GRADIENT[post.category] ?? 'var(--gradient-hero-study)' }
-            }
+            className={hasThumbnail ? styles.hero : `${styles.hero} ${styles.hero_matte}`}
             /* 그라데이션 히어로는 순수 장식입니다(§7.1) */
             role="presentation"
         >
@@ -63,6 +62,8 @@ function Hero({ post }: { post: PostMetadata }) {
                     className={styles.hero_image}
                     src={post.thumbnail}
                     alt=""
+                    width={thumbnailSize?.width}
+                    height={thumbnailSize?.height}
                     /* 첫 화면 이미지라 지연 로드하지 않습니다(§11-2 요구 5) */
                     loading="eager"
                     fetchPriority="high"

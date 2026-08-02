@@ -225,8 +225,42 @@ function decorateCodeBlocks(root: HTMLElement): void {
     }
 }
 
-/** `figure > div.matte > img` 한 벌을 만듭니다 */
-function buildFigure(image: HTMLImageElement, sizes: ImageSizeMap): HTMLElement {
+/**
+ * 지연 로드 · 크기 속성.
+ *
+ * 🔴 `width`/`height` 는 CLS 방어의 유일한 확실한 수단이고, 여기서는
+ *    **기능 요구사항**이기도 합니다. 없으면 이미지가 로드될 때마다 문서
+ *    높이가 변하고 읽기 진행바가 그때마다 뒤로 튑니다(§11-2·§8-2).
+ *    `mongodb-local` 은 이미지가 13장이라 13번 튑니다.
+ *    CSS 의 `width:100%; height:auto` 와 함께 써서 반응형은 유지됩니다.
+ */
+function applyImageAttributes(image: HTMLImageElement, sizes: ImageSizeMap): void {
+    image.setAttribute('loading', 'lazy');
+    image.setAttribute('decoding', 'async');
+
+    const size = sizes[image.getAttribute('src') ?? ''];
+    if (size && !image.hasAttribute('width')) {
+        image.setAttribute('width', String(size.width));
+        image.setAttribute('height', String(size.height));
+    }
+}
+
+/**
+ * `figure > div.matte > (img 또는 img 를 감싼 <a>)` 한 벌을 만듭니다.
+ *
+ * `carrier` 는 매트 안으로 옮길 노드입니다. 보통 `<img>` 자신이지만
+ * `[![alt](img)](link)` 처럼 링크로 감싼 이미지면 `<a>` 가 넘어옵니다 —
+ * 이미지만 꺼내면 링크가 조용히 사라집니다.
+ *
+ * `captionNodes` 는 마크다운에서 **이미지 다음 줄**에 적힌 캡션입니다.
+ * 없으면 `alt` 를 캡션으로 씁니다.
+ */
+function buildFigure(
+    image: HTMLImageElement,
+    sizes: ImageSizeMap,
+    carrier: Node,
+    captionNodes: Node[] | null,
+): HTMLElement {
     const document = image.ownerDocument;
     const figure = document.createElement('figure');
     figure.className = CONTENT_CLASS.figure;
@@ -234,32 +268,30 @@ function buildFigure(image: HTMLImageElement, sizes: ImageSizeMap): HTMLElement 
     const matte = document.createElement('div');
     matte.className = CONTENT_CLASS.matte;
 
-    image.setAttribute('loading', 'lazy');
-    image.setAttribute('decoding', 'async');
-
-    /*
-     * 🔴 `width`/`height` 는 CLS 방어의 유일한 확실한 수단이고, 여기서는
-     *    **기능 요구사항**이기도 합니다. 없으면 이미지가 로드될 때마다 문서
-     *    높이가 변하고 읽기 진행바가 그때마다 뒤로 튑니다(§11-2·§8-2).
-     *    `mongodb-local` 은 이미지가 13장이라 13번 튑니다.
-     *    CSS 의 `width:100%; height:auto` 와 함께 써서 반응형은 유지됩니다.
-     */
-    const size = sizes[image.getAttribute('src') ?? ''];
-    if (size) {
-        image.setAttribute('width', String(size.width));
-        image.setAttribute('height', String(size.height));
-    }
+    applyImageAttributes(image, sizes);
 
     const alt = image.getAttribute('alt')?.trim() ?? '';
 
-    image.replaceWith(figure);
-    matte.appendChild(image);
+    matte.appendChild(carrier);
     figure.appendChild(matte);
 
-    if (alt) {
-        const caption = document.createElement('figcaption');
-        caption.className = CONTENT_CLASS.caption;
+    const caption = document.createElement('figcaption');
+    caption.className = CONTENT_CLASS.caption;
+
+    if (captionNodes && captionNodes.length > 0) {
+        /*
+         * 원문 노드를 그대로 옮깁니다. `textContent` 로 납작하게 만들면
+         * 캡션 안의 `<code>`·`<a>` 가 문자열로 노출됩니다 — 실제로
+         * `client-side-ai` 12장의 캡션이 `<code>` 를 품고 있습니다.
+         */
+        for (const node of captionNodes) {
+            caption.appendChild(node);
+        }
+    } else if (alt) {
         caption.textContent = alt;
+    }
+
+    if (caption.childNodes.length > 0) {
         figure.appendChild(caption);
 
         /*
@@ -268,7 +300,9 @@ function buildFigure(image: HTMLImageElement, sizes: ImageSizeMap): HTMLElement 
          *    원문은 `data-alt` 에 남깁니다 — 로드 실패 시 그 텍스트를 다시
          *    보여 줘야 정보가 사라지지 않습니다(§12-3).
          */
-        image.setAttribute('data-alt', alt);
+        if (alt) {
+            image.setAttribute('data-alt', alt);
+        }
         image.setAttribute('alt', '');
     } else {
         image.setAttribute('alt', '');
@@ -278,6 +312,70 @@ function buildFigure(image: HTMLImageElement, sizes: ImageSizeMap): HTMLElement 
     return figure;
 }
 
+/* ------------------------------------------------------------
+ * 문단 분해 — §2-3 (2026-08-01 판정)
+ * ---------------------------------------------------------- */
+
+/**
+ * `<p>` 를 `<br>` 기준으로 **줄** 단위로 쪼갭니다.
+ *
+ * `breaks: true` 라 마크다운의 단일 개행이 전부 `<br>` 이 됩니다. 즉 렌더된
+ * `<p>` 하나는 원문에서 **여러 줄**이었고, 이미지와 캡션의 관계는 그 줄 경계에
+ * 담겨 있습니다. 줄로 되돌리지 않으면 관계를 볼 수 없습니다.
+ */
+function splitParagraphLines(paragraph: HTMLElement): ChildNode[][] {
+    const lines: ChildNode[][] = [[]];
+
+    for (const node of Array.from(paragraph.childNodes)) {
+        if (node.nodeType === Node.ELEMENT_NODE && (node as Element).tagName === 'BR') {
+            lines.push([]);
+        } else {
+            lines[lines.length - 1].push(node);
+        }
+    }
+
+    return lines;
+}
+
+function isBlankNode(node: Node): boolean {
+    return node.nodeType === Node.TEXT_NODE && (node.textContent ?? '').trim() === '';
+}
+
+/** 줄에 글자가 있는가. `<img>` 는 `textContent` 가 비어 있어 세지 않습니다 */
+function hasLineText(line: ChildNode[]): boolean {
+    return line.some(node => (node.textContent ?? '').trim() !== '');
+}
+
+interface FigureUnit {
+    /** 매트 안으로 옮길 노드 — `<img>` 이거나 이미지 하나만 품은 래퍼(`<a>` 등) */
+    carrier: ChildNode;
+    image: HTMLImageElement;
+}
+
+/** 줄 안의 이미지들을 감싸는 노드와 짝지어 돌려줍니다 */
+function collectFigureUnits(line: ChildNode[]): FigureUnit[] {
+    const units: FigureUnit[] = [];
+
+    for (const node of line) {
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+            continue;
+        }
+
+        const element = node as Element;
+        const images =
+            element.tagName === 'IMG'
+                ? [element as HTMLImageElement]
+                : Array.from(element.querySelectorAll('img'));
+
+        for (const image of images) {
+            /* 래퍼가 이미지를 여럿 품고 있으면 래퍼째 옮길 수 없으므로 이미지만 꺼냅니다 */
+            units.push({ carrier: images.length === 1 ? node : image, image });
+        }
+    }
+
+    return units;
+}
+
 /**
  * 본문 이미지 매트(액자) — 25편 113장에 **예외 없이 일괄 적용**합니다.
  *
@@ -285,47 +383,120 @@ function buildFigure(image: HTMLImageElement, sizes: ImageSizeMap): HTMLElement 
  * 그리고 매트는 `filter` 를 **쓰지 않으므로**(패딩·배경·보더뿐) 사진·GIF 가
  * 섞여 있어도 이미지 픽셀이 전혀 변하지 않습니다 — 부작용이 없습니다(§2-3).
  *
- * ⚠️ `figure` 는 `p` 안에 들어갈 수 없습니다. `breaks: true` 라 이미지가 대부분
- *    `<p><img><br><img></p>` 형태로 나오므로, **문단이 이미지·개행뿐이면 문단을
- *    통째로 치환**합니다. 글이 섞인 문단에서는 이미지를 인라인으로 남기고
- *    속성(lazy·크기)만 붙입니다 — 무효한 마크업을 만드는 것보다 낫습니다.
+ * 🔴 **문단을 분해합니다**(2026-08-01 판정 · §2-3).
+ * ------------------------------------------------------------
+ * `figure` 는 `p` 안에 들어갈 수 없습니다. 직전 구현은 "문단이 이미지·개행뿐일
+ * 때만" 승격해서 **113장 중 46장에 매트가 붙지 않았고**, 하필 2025년 글 3편과
+ * `mongodb-local` 이 통째로 빠졌습니다. `breaks: true` 때문에 `![img]` 다음 줄
+ * 캡션이 같은 `<p>` 안에 `<img><br>텍스트` 로 들어오기 때문입니다.
+ *
+ * ```
+ * <p> 안의 <img> 는 전부 <figure> 로 승격한다.
+ * 승격 시 그 이미지 직후의 <br> + 텍스트는 <figcaption> 이 된다.
+ * 이미지 앞뒤가 모두 텍스트인 경우(인라인 배지 등)에만 승격하지 않는다.
+ * ```
+ *
+ * | 입력 `<p>` | 출력 |
+ * |---|---|
+ * | `<img>` 단독 | `<figure><img></figure>` |
+ * | `<img><br>캡션` | `<figure><img><figcaption>캡션</figcaption></figure>` |
+ * | `텍스트<br><img>` | `<p>텍스트</p>` + `<figure><img></figure>` |
+ * | `<img><br><img><br>캡션` | 각각 `<figure>`, 캡션은 **직전** 이미지에 |
+ * | `텍스트<img>텍스트` | 승격 안 함 — 인라인 이미지 |
+ *
+ * ⚠️ §2-3 의 *"이미지 종류를 판별하는 로직을 만들지 마세요"* 가 금지한 것은
+ *    **내용 기반 분류**(스크린샷인지 도표인지 추정)입니다. 문단 구조를 보고
+ *    승격하는 것은 구조 변환이고, 오히려 "예외 없이 일괄 적용" 을 달성하는
+ *    수단입니다.
+ *
+ * ⚠️ **`breaks: true` 를 끄지 마세요.** 41편 전체의 줄바꿈 렌더가 바뀝니다.
  */
 function wrapImages(root: HTMLElement, sizes: ImageSizeMap): void {
     for (const paragraph of Array.from(root.querySelectorAll('p'))) {
-        const images = Array.from(paragraph.querySelectorAll('img'));
-        if (images.length === 0) {
+        if (paragraph.querySelector('img') === null) {
             continue;
         }
 
-        const isImageOnly = Array.from(paragraph.childNodes).every(node => {
-            if (node.nodeType === Node.TEXT_NODE) {
-                return (node.textContent ?? '').trim() === '';
-            }
-            if (node.nodeType !== Node.ELEMENT_NODE) {
-                return false;
-            }
-            const tag = (node as Element).tagName;
-            return tag === 'IMG' || tag === 'BR';
-        });
+        const document = paragraph.ownerDocument;
+        const lines = splitParagraphLines(paragraph);
 
-        if (!isImageOnly) {
+        /* 승격할 줄이 하나도 없으면 문단을 건드리지 않습니다(속성 보강은 아래에서) */
+        const hasFigureLine = lines.some(
+            line => collectFigureUnits(line).length > 0 && !hasLineText(line),
+        );
+        if (!hasFigureLine) {
             continue;
         }
 
-        const figures = images.map(image => buildFigure(image, sizes));
-        paragraph.replaceWith(...figures);
+        const output: Node[] = [];
+        let pending: ChildNode[][] = [];
+
+        /** 쌓아 둔 텍스트 줄들을 `<p>` 하나로 되돌립니다 — 줄 사이의 `<br>` 도 복원 */
+        const flushText = () => {
+            if (pending.length === 0) {
+                return;
+            }
+
+            const block = document.createElement('p');
+            pending.forEach((line, index) => {
+                if (index > 0) {
+                    block.appendChild(document.createElement('br'));
+                }
+                for (const node of line) {
+                    block.appendChild(node);
+                }
+            });
+            pending = [];
+
+            if ((block.textContent ?? '').trim() !== '' || block.querySelector('img')) {
+                output.push(block);
+            }
+        };
+
+        for (let index = 0; index < lines.length; index += 1) {
+            const line = lines[index];
+            const units = collectFigureUnits(line);
+
+            /* 글이 섞인 줄은 승격 대상이 아닙니다(인라인 배지 등) */
+            if (units.length === 0 || hasLineText(line)) {
+                if (line.some(node => !isBlankNode(node))) {
+                    pending.push(line);
+                }
+                continue;
+            }
+
+            flushText();
+
+            /*
+             * 바로 다음 줄이 글뿐이면 그 줄이 캡션입니다. **한 줄만** 가져갑니다 —
+             * 두 줄 이상을 삼키면 본문 문단이 캡션으로 흡수됩니다.
+             */
+            const next = lines[index + 1];
+            const captionLine =
+                next && collectFigureUnits(next).length === 0 && hasLineText(next) ? next : null;
+            if (captionLine) {
+                index += 1;
+            }
+
+            units.forEach((unit, unitIndex) => {
+                /* 캡션은 **직전** 이미지의 것입니다 — 한 줄에 이미지가 여럿이면 마지막 */
+                const isLast = unitIndex === units.length - 1;
+                output.push(
+                    buildFigure(unit.image, sizes, unit.carrier, isLast ? captionLine : null),
+                );
+            });
+        }
+
+        flushText();
+
+        if (output.length > 0) {
+            paragraph.replaceWith(...output);
+        }
     }
 
     /* 문단 밖에 있거나 글과 섞인 나머지 — 속성만 보강합니다 */
     for (const image of Array.from(root.querySelectorAll('img'))) {
-        image.setAttribute('loading', 'lazy');
-        image.setAttribute('decoding', 'async');
-
-        const size = sizes[image.getAttribute('src') ?? ''];
-        if (size && !image.hasAttribute('width')) {
-            image.setAttribute('width', String(size.width));
-            image.setAttribute('height', String(size.height));
-        }
+        applyImageAttributes(image, sizes);
     }
 }
 

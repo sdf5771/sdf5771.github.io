@@ -193,11 +193,19 @@
 /* ------------------------------------------------------------
  * 메타 — 카테고리 · 날짜 · 읽기 시간
  * ---------------------------------------------------------- */
+/*
+ * 🔴 읽기 시간이 **두 자리**까지 갑니다. 정본 공식이 STEP 3 §10-3(산문 + 코드 +
+ *    이미지)으로 바뀌면서 최댓값이 20 → **27분**이 됐습니다. `Survey · 2025.05.26
+ *    · 27분` 이 390px 에서 조각 중간에 끊기면 안 되므로, **조각마다 nowrap 을
+ *    걸고 컨테이너가 줄바꿈**하게 합니다. 컨테이너에 nowrap 을 걸면 반대로
+ *    한 줄을 고집하다 열을 밀어냅니다.
+ */
 .meta {
     grid-column: 3;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    flex-wrap: wrap;
     gap: var(--space-3);
     margin: 0;
     /*
@@ -207,6 +215,9 @@
     font-family: var(--font-ui-meta);
     font-size: var(--fs-xs);
     color: var(--color-text-muted);
+}
+
+.meta > * {
     white-space: nowrap;
 }
 
@@ -298,11 +309,9 @@
     }
 
     .meta {
+        /* 모바일은 카테고리가 제목 위가 아니라 메타 줄에 함께 옵니다 */
         justify-content: flex-start;
         gap: var(--space-2);
-        /* 모바일은 카테고리가 제목 위가 아니라 메타 줄에 함께 옵니다 */
-        flex-wrap: wrap;
-        white-space: normal;
     }
 }
 

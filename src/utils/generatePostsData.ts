@@ -198,6 +198,29 @@ function collectImageSizes(content: string): PostMetadata['imageSizes'] {
     return sizes;
 }
 
+/**
+ * 썸네일의 실제 픽셀 크기를 `imageSizes` 에 채워 넣습니다.
+ *
+ * 🔴 본문에 나오는 이미지만 모으면 **썸네일 2장이 빠집니다** — 썸네일은
+ *    "폴더의 `thumbnail*` 파일 또는 첫 파일" 규칙으로 골라서 본문에서 한 번도
+ *    참조되지 않을 수 있습니다(`client-side-ai/thumbnail.png`).
+ *    글 상세 히어로 `<img>` 가 `width`/`height` 를 요구하므로(§4-3) 여기서
+ *    함께 읽어 둡니다. 런타임에는 크기를 알 방법이 없습니다.
+ */
+function withThumbnailSize(
+    sizes: PostMetadata['imageSizes'],
+    thumbnail: string,
+): PostMetadata['imageSizes'] {
+    if (!thumbnail || sizes[thumbnail] || /^(?:https?:)?\/\//.test(thumbnail)) {
+        return sizes;
+    }
+
+    const relative = thumbnail.startsWith('/') ? thumbnail.slice(1) : thumbnail;
+    const size = readImageSize(path.join(process.cwd(), 'public', decodeURIComponent(relative)));
+
+    return size ? { ...sizes, [thumbnail]: size } : sizes;
+}
+
 /* ------------------------------------------------------------
  * 시리즈 — §10-1
  * ---------------------------------------------------------- */
@@ -319,7 +342,7 @@ function generatePostsData() {
                 excerpt: (typeof data.description === 'string' && data.description.trim())
                     ? data.description.trim()
                     : extractExcerpt(content),
-                imageSizes: collectImageSizes(content),
+                imageSizes: withThumbnailSize(collectImageSizes(content), thumbnailImage),
                 /* 아래에서 _series.json 을 병합합니다 */
                 series: null,
             } as PostMetadata;

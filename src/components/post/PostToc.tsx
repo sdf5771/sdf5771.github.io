@@ -27,6 +27,45 @@ function hasUsableToc(headings: PostHeading[]): boolean {
     return headings.length >= MIN_TOC_ITEMS;
 }
 
+/**
+ * 목차 아이콘 5×5 비트맵 — 폰트 대신 **CSS 도트**로 그립니다.
+ * 명세: docs/handoff-step1-shell.md §4-7 (2026-08-01 추가)
+ *
+ * 🔴 원래 `≡`(U+2261)를 썼는데 **세 서브셋 어디에도 없습니다.** macOS 에서는
+ *    시스템 폰트로 폴백돼 보이지만 전역 규칙(§4-7 "장식 기호는 서브셋 cmap 에
+ *    실재하는 문자만") 위반입니다. `☰`(U+2630)은 폰트에 있지만 **모바일 메뉴가
+ *    이미 쓰고 있어** 같은 글리프가 두 의미를 갖게 되므로 반려됐습니다.
+ *    검색 아이콘·테마 토글과 같은 기법이라 서브셋 범위가 바뀌어도 안 깨집니다.
+ *
+ * 명세의 기본형은 같은 길이의 3줄(`# # # # #` × 3)이지만 그대로 두면 햄버거와
+ * 구별되지 않습니다. 명세가 허용한 재량(*"줄 길이를 들여쓰기해 문서 개요처럼
+ * 차별화하세요"*)을 써서 2·3번째 줄을 한 칸 들여썼습니다.
+ *
+ *   # # # # #     ← 최상위 소제목
+ *   . . . . .
+ *   . # # # #     ← 하위 항목
+ *   . . . . .
+ *   . # # # #
+ */
+const TOC_ICON_BITMAP = [
+    1, 1, 1, 1, 1,
+    0, 0, 0, 0, 0,
+    0, 1, 1, 1, 1,
+    0, 0, 0, 0, 0,
+    0, 1, 1, 1, 1,
+];
+
+/** 색은 `currentColor` 를 따르므로 감싸는 쪽이 정합니다. 순수 장식입니다 */
+function TocIcon() {
+    return (
+        <span className={styles.icon} aria-hidden="true">
+            {TOC_ICON_BITMAP.map((isOn, index) => (
+                <span key={index} className={isOn ? styles.icon_dot : styles.icon_dot_off} />
+            ))}
+        </span>
+    );
+}
+
 /* ------------------------------------------------------------
  * 공통 목록
  * ---------------------------------------------------------- */
@@ -92,13 +131,22 @@ function TocList({ headings, activeId, onJump, variant }: TocListProps) {
 }
 
 /**
- * 소제목이 없는 글의 대체 카드 (§2-2 · 확정 카피 §18).
+ * 목차를 그리기엔 소제목이 부족한 글의 대체 카드 (§2-2 · 확정 카피 §18).
  * h1 강등 후 실측 **2편**(항목 1개 이하)에만 나타납니다.
+ *
+ * 🔴 카피가 `소제목이 없는 글이에요` 였는데 **사실이 아니었습니다.** 해당 2편
+ *    (`react-redux`·`python-under-bar`)에는 소제목이 1개 있고 화면에 보입니다.
+ *    확정안은 소제목 0개와 1개 **양쪽에 참**이라 헤딩 분포가 바뀌어도 거짓이
+ *    되지 않습니다(2026-08-01 정정).
+ *
+ * 🔴 액션 버튼을 두지 않습니다. 실패 상태가 아니라 정상 안내이고, 여기서
+ *    사용자가 할 수 있는 일이 없습니다 — WRITING_GUIDE §6.2 의 3요소는
+ *    "빠져나와야 하는 상태" 에 적용됩니다.
  */
 function TocEmpty() {
     return (
         <div className={styles.empty}>
-            <p className={styles.empty_title}>소제목이 없는 글이에요</p>
+            <p className={styles.empty_title}>목차를 만들기엔 소제목이 적어요</p>
             <p className={styles.empty_description}>대신 진행률로 위치를 알려드려요.</p>
         </div>
     );
@@ -216,8 +264,7 @@ export function PostTocMobile({
                 aria-controls={sheetId}
                 onClick={() => setIsOpen(true)}
             >
-                {/* `≡` 는 장식입니다 */}
-                <span aria-hidden="true">≡</span>
+                <TocIcon />
                 목차
                 {/*
                  * 버튼이 진행률 표시를 겸합니다 — 닫혀 있는 동안에도 정보를
@@ -249,7 +296,13 @@ export function PostTocMobile({
                                 data-autofocus
                                 onClick={close}
                             >
-                                <span aria-hidden="true">✕</span>
+                                {/*
+                                 * 🔴 `✕`(U+2715)는 Galmuri 서브셋에 없습니다
+                                 * (Dingbats 블록이 통째로 빠져 있음). 라틴-1 의
+                                 * `×`(U+00D7)로 대체합니다 — `AppliedConditions`
+                                 * 도 같은 이유로 이 문자를 씁니다(§4-7).
+                                 */}
+                                <span aria-hidden="true">×</span>
                             </button>
                         </div>
 
