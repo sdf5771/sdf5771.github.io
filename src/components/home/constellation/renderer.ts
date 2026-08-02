@@ -77,8 +77,9 @@ function starColor(palette: HeroPalette, star: ConstellationStar): string {
  * ------------------------------------------------------------
  * 🔴 시안은 별 하나마다 매 프레임 `createRadialGradient` 를 불렀습니다.
  *    41개 × 60fps = **초당 2,460개** 그라데이션 객체이고, 전부 GC 대상입니다.
- *    블룸을 (카테고리 3색 + 골드) × (반지름 8단계) = **32장**으로 미리 그려 두고
- *    프레임마다 `drawImage` 만 합니다.
+ *    블룸을 (서로 다른 색) × (반지름 8단계) 로 미리 그려 두고 프레임마다
+ *    `drawImage` 만 합니다. 명세 §3-6 은 (카테고리 3색 + 골드) × 8 = 32장으로
+ *    셌지만, 실제 토큰에서 골드와 Survey 색이 같아 **24장 + 최신 헤일로 1장**입니다.
  *
  * ⚠️ 스프라이트로 굽는 것은 **블룸(부드러운 번짐)뿐**입니다. 별의 중심 원은
  *    프레임마다 `arc()` 로 그립니다 — 값싸고, 무엇보다 반지름 41단계가 8단계로
@@ -140,9 +141,15 @@ function bakeBloom(color: string, radius: number, alpha: number, dpr: number): H
 }
 
 /**
- * 32장을 **레이아웃당 1회** 굽습니다. 메모리 32 × 64×64 RGBA ≈ 393KB.
- * 라이트 모드는 블룸이 없으므로(형태로 최신성을 말합니다) 최신 별의 헤일로
- * 한 장만 굽습니다.
+ * **레이아웃당 1회** 굽습니다. 라이트 모드는 블룸이 없으므로(형태로 최신성을
+ * 말합니다) 최신 별의 헤일로 한 장만 굽습니다.
+ *
+ * 🔴 스프라이트 키는 **색 문자열**이라 색이 겹치면 키도 겹칩니다. 다크 골드
+ *    (`--color-accent-hover`)와 `--color-cat-survey` 가 같은 `#ffd770` 이어서,
+ *    거르지 않으면 8장을 구워 놓고 **같은 키에 그대로 덮어씁니다** — 레이아웃마다
+ *    8회가 통째로 헛일입니다(명세 §3-6 의 "32장"은 4색이 서로 다르다는 전제였고,
+ *    실제 토큰에서는 3색이라 24장 + 최신 헤일로 1장 = 25장이 정확합니다).
+ *    결과는 원래도 같았으므로 정확성이 아니라 비용 문제입니다.
  */
 export function createSpriteSheet(
     palette: HeroPalette,
@@ -151,13 +158,10 @@ export function createSpriteSheet(
 ): SpriteSheet {
     const bloom = new Map<string, HTMLCanvasElement>();
 
-    const colors =
-        theme === 'dark'
-            ? [...Object.values(palette.category), palette.latest]
-            : [palette.latest];
+    if (theme === 'dark') {
+        const colors = new Set([...Object.values(palette.category), palette.latest]);
 
-    for (const color of colors) {
-        if (theme === 'dark') {
+        for (const color of colors) {
             for (let step = 0; step < SPRITE_STEPS; step += 1) {
                 bloom.set(
                     `${color}|${step}`,

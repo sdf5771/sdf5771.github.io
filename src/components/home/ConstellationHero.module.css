@@ -62,6 +62,15 @@
     height: 100%;
 }
 
+/*
+ * 별 위에 있을 때만 손가락 커서 (§3-5).
+ * 🔴 canvas 전체에 걸면 "빈 하늘도 눌린다" 고 말하게 됩니다 — 별 41개 밖은
+ *    아무 데도 가지 않습니다. 히트 판정(반경 16px)과 정확히 같은 조건입니다.
+ */
+.canvas[data-hit='true'] {
+    cursor: pointer;
+}
+
 /* ------------------------------------------------------------
  * 텍스트 블록
  * ---------------------------------------------------------- */
@@ -345,7 +354,22 @@
 
 .alternates:focus-within {
     max-width: 520px;
-    max-height: 60svh;
+
+    /*
+     * 🔴 상한을 **뷰포트가 아니라 히어로 안쪽**으로 묶습니다.
+     *
+     *    이전 값 `60svh` 는 히어로 높이 `clamp(440px, 56svh, 560px)` 보다 **항상**
+     *    큽니다(60 > 56). 이 패널은 `bottom` 앵커라 위로 자라므로, 넘치는 만큼이
+     *    그대로 뷰포트 밖으로 나갑니다 — 1440×900 에서 건너뛰기 링크가 y −43 에
+     *    놓였습니다. 히어로가 페이지 맨 위라 `scrollY` 상한이 0 이고, 패널 안쪽
+     *    `overflow-y` 는 패널 **내부**만 굴리므로 어느 쪽으로도 복구가 안 됩니다.
+     *    41개 탭 스톱의 유일한 탈출구가 화면 밖이면 키보드 사용자는 갇힙니다.
+     *
+     *    아래 앵커(--space-6)에서 위로 자라되 헤더 높이 + 16px 을 남깁니다.
+     *    히어로 높이가 얼마든 패널 상단이 y = 64px 에 고정됩니다(440·448·504
+     *    전부 확인). 목록이 길어지면 패널 안에서 스크롤됩니다.
+     */
+    max-height: calc(100% - var(--header-h-desktop) - var(--space-6) - var(--space-4));
     padding: var(--space-3);
     border: 1px solid var(--color-accent-border);
     border-radius: var(--radius-md);
@@ -484,6 +508,27 @@
         position: static;
         margin-top: var(--space-5);
     }
+
+    /*
+     * 🔴 sm·md 는 canvas 가 조작 대상이 아닙니다(§3-5 터치 표). 개별 별이 탭
+     *    대상이 아니고 캡션 링크가 그 역할을 하므로, canvas 가 포인터를 먹으면
+     *    "눌리는 것처럼 보이지만 아무 데도 안 가는" 면이 생깁니다.
+     */
+    .canvas {
+        pointer-events: none;
+    }
+
+    /*
+     * md 캡션 링크. sm 과 달리 이 구간은 slot 이 절대 배치라 링크가 흐름 위쪽
+     * (텍스트 바로 아래 = 별 위)에 남습니다. `order` + `margin-top: auto` 로
+     * **밴드 아래**, 히어로 바닥으로 내립니다. 별이 이 자리로 내려오지 않도록
+     * 플롯 padBottom 이 같은 만큼 비워 둡니다(ConstellationHero.tsx buildPlotBox).
+     */
+    .band_link {
+        display: flex;
+        order: 1;
+        margin-top: auto;
+    }
 }
 
 /* ============================================================
@@ -501,7 +546,15 @@
 
         height: auto;
         margin-top: calc(-1 * var(--header-h-mobile));
-        padding: calc(var(--header-h-mobile) + var(--space-6)) var(--hero-gutter) var(--space-6);
+        /*
+         * 🔴 상단 여백이 --space-6 이었습니다. §7-2 의 첫 화면 예산은 헤더 52 +
+         *    텍스트 존 235 + 밴드 130 = 417 / 745 = 56.0% 인데, 실제 텍스트 존은
+         *    200px 로 더 짧은 대신 명세 산술이 세지 않은 **상단 24 + 밴드 앞 20 =
+         *    44px** 이 붙어 427 / 745 = 57.3% 가 됐습니다. 여백 두 곳에서 12px 을
+         *    돌려받아 415 / 745 = 55.7% 로 예산 안에 들어옵니다. 헤더와 이름 사이,
+         *    CTA 와 밴드 사이 모두 16px 이상은 남습니다.
+         */
+        padding: calc(var(--header-h-mobile) + var(--space-4)) var(--hero-gutter) var(--space-6);
     }
 
     .name {
@@ -517,16 +570,19 @@
         content: none;
     }
 
-    /* 전용 밴드 — 전폭(full-bleed)입니다 */
+    /* 전용 밴드 — 전폭(full-bleed)입니다. 밴드 높이 130px 은 §7-2 고정값입니다 */
     .slot {
         position: static;
         height: 130px;
-        margin: var(--space-5) calc(-1 * var(--hero-gutter)) 0;
+        margin: var(--space-4) calc(-1 * var(--hero-gutter)) 0;
         overflow: hidden;
     }
 
+    /* sm 은 밴드가 흐름 안에 있어 링크가 이미 바로 아래입니다 — md 의 보정을 되돌립니다 */
     .band_link {
         display: flex;
+        order: 0;
+        margin-top: var(--space-3);
     }
 
     .legend {

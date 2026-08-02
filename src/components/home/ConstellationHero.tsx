@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './ConstellationHero.module.css';
 import {
     buildConstellationModel,
@@ -111,14 +111,22 @@ function buildPlotBox(
     }
 
     if (breakpoint === 'md') {
-        /* 텍스트가 위, 별이 아래인 단일 컬럼 */
+        /*
+         * 텍스트가 위, 별이 아래인 단일 컬럼.
+         *
+         * 🔴 padBottom 이 명세의 48 이 아니라 110 입니다. §3-5 가 md 에도 요구하는
+         *    캡션 링크(--tap-min 44px)가 히어로 바닥에 붙기 때문입니다 — 실측
+         *    900×768 에서 링크가 바닥 84px 을 씁니다. 48 로 두면 별이 링크 글자
+         *    뒤에 깔려, 라이트("페이퍼 위 도표")에서 §3-2 (5)가 막으려던 바로 그
+         *    상태가 됩니다. 26px 은 여유입니다.
+         */
         return {
             width,
             height,
             padLeft: 40,
             padRight: 40,
             padTop: 190,
-            padBottom: 48,
+            padBottom: 110,
             minSeparation: 14,
         };
     }
@@ -153,6 +161,8 @@ function ConstellationHero() {
     const textRef = useRef<HTMLDivElement>(null);
     const slotRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const navigate = useNavigate();
 
     const { resolved: theme } = useTheme();
     const isMobileViewport = useMediaMatch(MEDIA_MOBILE);
@@ -282,9 +292,14 @@ function ConstellationHero() {
                 : null;
 
         const plot = buildPlotBox(breakpoint, size.width, size.height, size.textRight);
-        /* sm 밴드는 높이 130px 이라 눈금을 넣을 자리가 없습니다 */
+        /*
+         * 연도 눈금은 lg 이상에서만 그립니다.
+         * sm 밴드는 높이 130px 이라 애초에 자리가 없고, md 는 플롯 아래 26px 이
+         * 캡션 링크와 범례 차지라 눈금(20px)을 넣으면 겹칩니다. 시간축 정보는
+         * lg 이상에서 전달되고, sm·md 에서는 캡션 링크가 최신 글을 직접 말합니다.
+         */
         const tickBaseline =
-            breakpoint === 'sm' ? null : size.height - plot.padBottom + 20;
+            breakpoint === 'desktop' ? size.height - plot.padBottom + 20 : null;
 
         const frame: FrameState = {
             linkProgress: prefersReducedMotion ? 1 : 0,
@@ -457,6 +472,50 @@ function ConstellationHero() {
         setActive(null);
     }, [setActive]);
 
+    /*
+     * 별 클릭 → 글로 이동 (§3-5 데스크톱 표).
+     *
+     * 🔴 미리보기 카드가 뜨는 것 자체가 "누를 수 있다" 는 약속입니다. 제목·
+     *    카테고리·날짜·읽기시간을 보여 주고 클릭에 아무 반응이 없으면 그 약속이
+     *    깨집니다. 카드와 이동은 **같은 히트 판정**(findNearestStar, 반경 16px)을
+     *    쓰므로 "본 카드 ≠ 열린 글" 이 될 수 없습니다.
+     *
+     * 🔴 핸들러를 canvas 에 답니다. 히어로 전체에 달면 텍스트·CTA·범례·대체
+     *    목록 위의 클릭까지 여기로 들어옵니다. canvas 는 z-index 가 가장 낮아
+     *    (--z-base) 그 요소들에 가려지고, sm·md 에서는 pointer-events: none 이라
+     *    아예 받지 않습니다.
+     */
+    const lastPointerTypeRef = useRef<string>('mouse');
+
+    const handleCanvasPointerDown = useCallback((event: React.PointerEvent<HTMLCanvasElement>) => {
+        lastPointerTypeRef.current = event.pointerType;
+    }, []);
+
+    const handleCanvasClick = useCallback(
+        (event: React.MouseEvent<HTMLCanvasElement>) => {
+            /*
+             * 터치로는 별을 열지 않습니다 — 히트 반경 16px 은 지름 32px 이라
+             * --tap-min 44px 에 미달합니다(§3-5). 큰 화면의 터치 기기도 같습니다.
+             */
+            if (lastPointerTypeRef.current === 'touch' || !layout || !slotRef.current) {
+                return;
+            }
+
+            const rect = slotRef.current.getBoundingClientRect();
+            const nearest = findNearestStar(
+                layout.stars,
+                event.clientX - rect.left,
+                event.clientY - rect.top,
+                HIT_RADIUS,
+            );
+
+            if (nearest) {
+                navigate(`/posts/${nearest.slug}`);
+            }
+        },
+        [layout, navigate],
+    );
+
     const activeStar: ConstellationStar | null =
         layout && activeIndex !== null
             ? layout.stars.find(star => star.index === activeIndex) ?? null
@@ -483,7 +542,7 @@ function ConstellationHero() {
                 <p className={styles.intro}>{INTRO}</p>
                 {/* 🔴 개수는 데이터에서 셉니다. 하드코딩하면 글이 늘 때 거짓이 됩니다 */}
                 <p className={styles.stats}>
-                    {formatPostDate(model.posts[0].date).slice(0, 7)}부터 · 글 {POSTS.length}개
+                    {formatPostDate(model.posts[0].date).slice(0, 7)}부터 · 글 {POSTS.length}편
                 </p>
 
                 <div className={styles.actions}>
@@ -519,6 +578,10 @@ function ConstellationHero() {
                 <canvas
                     ref={canvasRef}
                     className={styles.canvas}
+                    /* 별 위에서만 커서가 pointer 가 됩니다(§3-5). 빈 하늘은 기본 커서입니다 */
+                    data-hit={activeIndex !== null ? 'true' : undefined}
+                    onPointerDown={isDesktopViewport ? handleCanvasPointerDown : undefined}
+                    onClick={isDesktopViewport ? handleCanvasClick : undefined}
                     /* sm·md 에서는 접근성 경로를 캡션 링크와 아래 목록이 담당합니다 */
                     role={isDesktopViewport ? 'img' : undefined}
                     aria-label={isDesktopViewport ? canvasLabel : undefined}
@@ -573,10 +636,15 @@ function ConstellationHero() {
             </div>
 
             {/*
-             * sm 캡션 링크 — 별자리 밴드의 유일한 조작 지점입니다.
+             * sm·md 캡션 링크 — 별자리 밴드의 유일한 조작 지점입니다.
              * 높이 --tap-min 이상이고, 주 CTA 와 같은 목적지입니다(§3-5).
+             *
+             * 🔴 조건이 `isMobileViewport`(≤767) 였습니다. §3-5 터치 표와 §3-7 은
+             *    **sm·md 공통**으로 이 링크를 요구합니다. md(768~1023)에서는
+             *    canvas 가 aria-hidden 이고 대체 목록도 없고 별이 탭 대상도
+             *    아니어서, 링크가 빠지면 별자리에 닿는 경로가 **0개**가 됩니다.
              */}
-            {isMobileViewport && (
+            {!isDesktopViewport && (
                 <Link className={styles.band_link} to={`/posts/${latestPost.slug}`}>
                     <span className={styles.band_link_meta}>
                         {LATEST_LABEL} · {formatPostDate(latestPost.date)}
@@ -612,7 +680,8 @@ function ConstellationHero() {
                         {SKIP_LABEL}
                     </a>
 
-                    <nav aria-label={`별자리 — 글 ${POSTS.length}개`}>
+                    {/* 글을 세는 단위는 `편` 입니다 — WRITING_GUIDE §3.4 (2026-08-02 정정) */}
+                    <nav aria-label={`별자리 — 글 ${POSTS.length}편`}>
                         <ul className={styles.alt_list}>
                             {byRecency.map(post => {
                                 const star = layout?.stars.find(item => item.slug === post.slug);
