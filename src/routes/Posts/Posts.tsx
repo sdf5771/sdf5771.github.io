@@ -272,7 +272,7 @@ function Posts() {
          * 빈 문자열입니다. 그 값을 적어 둬야 위 URL→입력 효과가 "내가 쓴 값"으로
          * 알아봅니다.
          */
-        writtenQueryRef.current = nextQuery.trim() ? nextQuery : '';
+        writtenQueryRef.current = nextQuery.trim();
 
         /*
          * 실행은 `push` 입니다 — 카테고리·정렬·페이지와 같은 등급의 명시적

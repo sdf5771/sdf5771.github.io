@@ -111,7 +111,7 @@ export function buildPostListSearch(currentSearch: string, next: PostListQuery):
 
     /* 공백뿐인 검색어는 조건이 아닙니다 — `?q=%20%20` 을 남기지 않습니다 */
     if (next.q.trim()) {
-        parts.push(`q=${encodeURIComponent(next.q)}`);
+        parts.push(`q=${encodeURIComponent(next.q.trim())}`);
     }
 
     if (next.category) {
