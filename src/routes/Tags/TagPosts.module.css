@@ -1,0 +1,121 @@
+/*
+ * 태그별 목록 `/tags/:tag`.
+ * 명세: docs/handoff-step6-tags-archive.md §7-2 · §7-7
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ */
+
+.root {
+    width: 100%;
+    padding: var(--space-12) var(--space-8) var(--space-16);
+}
+
+.inner {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+.title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-4);
+    font-weight: 400;
+    line-height: var(--lh-heading);
+    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    overflow-wrap: anywhere;
+    -webkit-font-smoothing: none;
+}
+
+.hash {
+    color: var(--color-accent-text);
+}
+
+/* 22px — 한글(`글`·`편`)이 있어도 22px 이상이라 픽셀 서체가 허용됩니다 */
+.title_count {
+    font-size: var(--fs-pixel-2);
+    color: var(--color-text-muted);
+}
+
+.chips {
+    margin-top: var(--space-5);
+}
+
+/*
+ * 정렬 세그먼트 + 목록 상단 경계선.
+ * DOM 순서 = 시각 순서입니다 — 오른쪽 끝에 있어도 앞 요소 다음입니다(§10-4).
+ */
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border-strong);
+}
+
+/*
+ * 🔴 행은 --color-bg-base / --color-bg-surface 위에만 놓습니다.
+ *    --color-bg-raised 위에 올리면 호버 시 메타 텍스트 대비가 다크에서
+ *    4.09:1 로 떨어져 미달합니다(§10-1a).
+ */
+.list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pagination {
+    margin-top: var(--space-8);
+}
+
+/*
+ * `전체 태그 보기`. 히어로 주 CTA 외 모든 버튼은 Pretendard 15px 입니다
+ * (STEP 1 §6-7). 높이 40px, 터치 구간 44px.
+ */
+.index_link {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    margin-top: var(--space-8);
+    padding: 0 var(--space-4);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-surface);
+    color: var(--color-text-secondary);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-md);
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.index_link:hover {
+    border-color: var(--color-accent-border);
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent-text);
+}
+
+@media (pointer: coarse) {
+    .index_link {
+        height: var(--tap-min);
+    }
+}
+
+@media (max-width: 1023px) {
+    .root {
+        padding-inline: var(--space-6);
+    }
+}
+
+@media (max-width: 767px) {
+    .root {
+        padding: var(--space-8) var(--space-5) var(--space-12);
+    }
+
+    .title {
+        font-size: var(--fs-pixel-3);
+    }
+}

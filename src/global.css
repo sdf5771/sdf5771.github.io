@@ -1,87 +1,138 @@
+/*
+ * 전역 스타일.
+ * 색·크기 값은 여기서 만들지 않습니다 — src/styles/tokens.css 를 var() 로 소비하세요.
+ * import 순서: initialize.css → styles/tokens.css → styles/fonts.css → global.css
+ */
+
 @font-face {
     font-family: 'Pretendard';
     src: url('assets/fonts/Pretendard-Thin.woff2') format('woff2'),
-         url('assets/fonts/Pretendard-Thin.woff') format('woff'),
-         url('assets/fonts/Pretendard-Thin.ttf') format('truetype');
+         url('assets/fonts/Pretendard-Thin.woff') format('woff');
     font-weight: 100;
+    font-display: swap;
 }
 @font-face {
     font-family: 'Pretendard';
     src: url('assets/fonts/Pretendard-ExtraLight.woff2') format('woff2'),
-         url('assets/fonts/Pretendard-ExtraLight.woff') format('woff'),
-         url('assets/fonts/Pretendard-ExtraLight.ttf') format('truetype');
+         url('assets/fonts/Pretendard-ExtraLight.woff') format('woff');
     font-weight: 200;
+    font-display: swap;
 }
 @font-face {
     font-family: 'Pretendard';
     src: url('assets/fonts/Pretendard-Light.woff2') format('woff2'),
-         url('assets/fonts/Pretendard-Light.woff') format('woff'),
-         url('assets/fonts/Pretendard-Light.ttf') format('truetype');
+         url('assets/fonts/Pretendard-Light.woff') format('woff');
     font-weight: 300;
+    font-display: swap;
 }
 @font-face {
     font-family: 'Pretendard';
     src: url('assets/fonts/Pretendard-Regular.woff2') format('woff2'),
-         url('assets/fonts/Pretendard-Regular.woff') format('woff'),
-         url('assets/fonts/Pretendard-Regular.ttf') format('truetype');
+         url('assets/fonts/Pretendard-Regular.woff') format('woff');
     font-weight: 400;
+    font-display: swap;
 }
 @font-face {
     font-family: 'Pretendard';
     src: url('assets/fonts/Pretendard-Medium.woff2') format('woff2'),
-         url('assets/fonts/Pretendard-Medium.woff') format('woff'),
-         url('assets/fonts/Pretendard-Medium.ttf') format('truetype');
+         url('assets/fonts/Pretendard-Medium.woff') format('woff');
     font-weight: 500;
+    font-display: swap;
 }
 @font-face {
     font-family: 'Pretendard';
     src: url('assets/fonts/Pretendard-SemiBold.woff2') format('woff2'),
-         url('assets/fonts/Pretendard-SemiBold.woff') format('woff'),
-         url('assets/fonts/Pretendard-SemiBold.ttf') format('truetype');
+         url('assets/fonts/Pretendard-SemiBold.woff') format('woff');
     font-weight: 600;
+    font-display: swap;
 }
 @font-face {
     font-family: 'Pretendard';
     src: url('assets/fonts/Pretendard-Bold.woff2') format('woff2'),
-         url('assets/fonts/Pretendard-Bold.woff') format('woff'),
-         url('assets/fonts/Pretendard-Bold.ttf') format('truetype');
+         url('assets/fonts/Pretendard-Bold.woff') format('woff');
     font-weight: 700;
+    font-display: swap;
 }
 @font-face {
-  font-family: 'Pretendard';
-  src: url('assets/fonts/Pretendard-ExtraBold.woff2') format('woff2'),
-       url('assets/fonts/Pretendard-ExtraBold.woff') format('woff'),
-       url('assets/fonts/Pretendard-ExtraBold.ttf') format('truetype');
-  font-weight: 800;
+    font-family: 'Pretendard';
+    src: url('assets/fonts/Pretendard-ExtraBold.woff2') format('woff2'),
+        url('assets/fonts/Pretendard-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-display: swap;
 }
 @font-face {
     font-family: 'Pretendard';
     src: url('assets/fonts/Pretendard-Black.woff2') format('woff2'),
-         url('assets/fonts/Pretendard-Black.woff') format('woff'),
-         url('assets/fonts/Pretendard-Black.ttf') format('truetype');
+         url('assets/fonts/Pretendard-Black.woff') format('woff');
     font-weight: 900;
+    font-display: swap;
 }
 
 html,
 body {
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 400;
-}
-* {
-    font-family: 'Pretendard', sans-serif;
+    font-family: var(--font-body);
     font-weight: 400;
 }
 
-:root {
-    /* 주요 컬러 */
-    /* 블루 계열 컬러 파렛트 ( https://colorhunt.co/palette/fff2f2a9b5df7886c72d336b ) 참고 */
-    --brand-primary: #7886C7;   /* 메인 컬러 */
-    --brand-secondary: #A9B5DF; /* 보조 컬러 */
-    --brand-accent: #2D336B;    /* 강조색 */
-    --brand-neutral: #FFF2F2;   /* 중립색 */
-    --brand-gray-black: #333333;
-    --brand-black: #1e293b;
-    --brand-gray-light: #eaeaea;
-    --brand-gray-dark: #9BA3AF;
-    --brand-gray-medium: #F1F5F9;
+body {
+    background-color: var(--color-bg-base);
+    color: var(--color-text-body);
+}
+
+/*
+ * 포커스 표시. initialize.css 의 `a:active, a:hover { outline: 0 }` 를 제거했으므로
+ * 여기서 :focus-visible 링을 전역 기본으로 세웁니다.
+ * 골드 채움 위에서는 --color-focus-onFill 로 반전해야 합니다(컴포넌트에서 개별 지정).
+ */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+}
+
+/* 스크린리더 전용 텍스트 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/*
+ * 저감 모션 전역 그물 — 명세: docs/handoff-step1-shell.md §5-6
+ *
+ * 🔴 `transition-duration: .01ms !important` 는 **삭제했습니다.**
+ *    지속시간을 0 으로 만드는 것은 해결이 아닙니다 — `translateY(-3px)` 호버는
+ *    지속시간이 0 이어도 **여전히 3px 점프**합니다. 즉시 이동도 이동입니다.
+ *    그 규칙은 막아야 할 것(transform)은 못 막고, 막지 말아야 할 것(색 전환
+ *    8곳)만 막고 있었습니다. prefers-reduced-motion 과 WCAG 2.3.3 은 전정기관을
+ *    자극하는 *motion* 이 대상이고, 배경색·글자색·테두리색 전환은 아무것도
+ *    움직이지 않습니다.
+ *
+ * 규칙: **transform·레이아웃 속성은 값을 지우고(`transform: none`),
+ *       색·opacity 전환은 그대로 둔다.** 저감은 컴포넌트 CSS 에서 속성별로.
+ *
+ * 남긴 셋의 이유
+ *  - `animation-*`: 키프레임은 대부분 실제 움직임이고, **무한 반복(커서 blink)을
+ *    잊고 남기는 것이 최악의 실패**라 그물이 필요합니다.
+ *  - `scroll-behavior: auto !important`: `!important` 없이는 `smooth` 를 덮지
+ *    못합니다. 전역 `!important` 가 실제로 필요한 유일한 케이스입니다.
+ */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
 }

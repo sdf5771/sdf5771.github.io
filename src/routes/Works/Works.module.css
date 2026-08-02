@@ -1,0 +1,128 @@
+/*
+ * 작업 목록 `/works`.
+ * 명세: docs/handoff-step7-works.md §5-1 · §5-6 · §7-1 · §8
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ */
+
+.root {
+    width: 100%;
+    /* 시안의 좌우 36px 은 스페이싱 스케일 밖입니다. --space-8(32px)로 치환(§11-2 9번) */
+    padding: var(--space-12) var(--space-8) var(--space-16);
+}
+
+.inner {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+.title {
+    /* 44px — 11의 정수배 + 22 이상이라 한글 픽셀 서체 허용(STEP 1 §3-3a) */
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-4);
+    font-weight: 400;
+    line-height: var(--lh-heading);
+    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: none;
+}
+
+.lead {
+    margin: var(--space-3) 0 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    line-height: var(--lh-normal);
+    color: var(--color-text-secondary);
+}
+
+.controls {
+    margin-top: var(--space-5);
+}
+
+/* ------------------------------------------------------------
+ * 목록 헤더 — `▸ 연도순 · 전체 15건`
+ * ---------------------------------------------------------- */
+.list_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border-strong);
+}
+
+/*
+ * 🔴 Pretendard 13px 입니다. 시안의 GalmuriMono11 13px 은 이중 위반이었습니다 —
+ *    11의 배수가 아니고 `연도순`·`전체`·`건` 이 한글입니다(§10-1 6번).
+ */
+.summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-sm);
+    color: var(--color-text-secondary);
+}
+
+.prompt {
+    color: var(--color-accent-text);
+}
+
+/* ------------------------------------------------------------
+ * 연도 그룹
+ * ---------------------------------------------------------- */
+.groups {
+    margin-top: var(--space-6);
+    /* 🔴 마지막 그룹 아래 여백이 목록을 물리적으로 종결시킵니다(§3-4) */
+    padding-bottom: var(--space-12);
+    animation: fadeUp var(--dur-base) var(--ease-out) both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ------------------------------------------------------------
+ * 모바일 (≤767px)
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .root {
+        padding: var(--space-8) var(--space-4) var(--space-12);
+    }
+
+    .title {
+        /* 33px — 11의 정수배 + 22 이상. 한글 허용 */
+        font-size: var(--fs-pixel-3);
+    }
+
+    .groups {
+        margin-top: var(--space-5);
+    }
+}
+
+/* ------------------------------------------------------------
+ * 저감 모션 (§8-1 1번)
+ * ------------------------------------------------------------
+ * 🔴 재진입 애니메이션은 `translateY` 를 씁니다 — 지속시간을 0 으로 만드는 것은
+ *    해결이 아니라 6px 점프를 남깁니다. **애니메이션 자체를 제거**해 즉시 최종
+ *    상태로 둡니다. 그 자리를 목록 헤더의 aria-live 가 메웁니다(§8-4).
+ *
+ * 🔴 카펫 폭격(`* { transition: none !important }`)을 쓰지 마세요 — 색 전환은
+ *    전정 자극이 아니고, 제거하면 호버 피드백이 끊깁니다(§8-3).
+ * ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .groups {
+        animation: none;
+    }
+}

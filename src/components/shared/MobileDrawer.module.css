@@ -1,0 +1,182 @@
+/*
+ * 모바일 전체화면 드로어. 명세: docs/handoff-step1-shell.md §6-3
+ * 색·크기는 전부 tokens.css 의 var() 로만 소비합니다.
+ */
+
+.drawer {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    overflow-y: auto;
+    padding: var(--space-3) var(--space-5) var(--space-12);
+    background-color: var(--color-bg-surface);
+    animation: slide_in var(--dur-slow) var(--ease-emphasized);
+}
+
+@keyframes slide_in {
+    from {
+        opacity: 0;
+        transform: translateX(var(--space-6));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .drawer {
+        animation: none;
+    }
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: var(--header-h-mobile);
+}
+
+.wordmark {
+    font-size: var(--fs-pixel-2);
+}
+
+.close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--tap-min);
+    height: var(--tap-min);
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    font-size: var(--fs-xl);
+    line-height: 1;
+    color: var(--color-accent-text);
+    cursor: pointer;
+    transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.close:hover {
+    background-color: var(--color-accent-subtle);
+}
+
+/* ------------------------------------------------------------
+ * 내비
+ * ---------------------------------------------------------- */
+.nav_list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav_link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--tap-min);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    /* 한글 라벨 — 픽셀 서체를 쓰지 않습니다(tokens.css 서체 역할 레이어) */
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-xl);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition:
+        color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
+}
+
+.nav_link:hover {
+    color: var(--color-text-primary);
+}
+
+.bullet {
+    flex-shrink: 0;
+    font-size: var(--fs-sm);
+    color: var(--color-accent-text);
+}
+
+/* 배경만으로는 대비가 1.11:1 수준이라 색 라벨을 함께 바꿉니다(§6-1a) */
+.nav_link_active {
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent-text);
+}
+
+/* ------------------------------------------------------------
+ * 연락처 · 테마 섹션
+ * ---------------------------------------------------------- */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.section_title {
+    margin: 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.contact_list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.contact_link {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-lg);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+.contact_link:hover {
+    color: var(--color-accent-text);
+}
+
+.theme_options {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.theme_option {
+    flex: 1 1 0;
+    min-height: var(--tap-min);
+    padding: var(--space-2) var(--space-3);
+    background-color: transparent;
+    border: 1px solid var(--color-border-interactive);
+    border-radius: var(--radius-md);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition:
+        color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out);
+}
+
+.theme_option_active {
+    background-color: var(--color-accent-subtle);
+    border-color: var(--color-accent-border);
+    color: var(--color-accent-text);
+}

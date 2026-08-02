@@ -1,0 +1,319 @@
+/*
+ * 목차 — docs/handoff-step3-post.md §8-3 ~ §8-6
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다. 원시 hex 금지.
+ */
+
+.sidebar {
+    position: sticky;
+    /* 헤더(48) + 진행바(3) + 여유 */
+    top: calc(var(--header-h-desktop) + var(--space-6));
+    width: var(--toc-w);
+    flex-shrink: 0;
+}
+
+.label {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-1);
+    /* 픽셀 서체에 굵기를 주지 않습니다(STEP 1 §4-5) */
+    font-weight: 400;
+    color: var(--color-text-secondary);
+}
+
+/* ------------------------------------------------------------
+ * 항목 목록
+ * ------------------------------------------------------------
+ * 🔴 높이 제한이 없으면 안 됩니다. 실측 최대 **24항목**(bruteforce 글)이고
+ *    24 × 36px ≈ 864px 로 대부분의 노트북 뷰포트보다 깁니다(§8-5).
+ * ---------------------------------------------------------- */
+.list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.list_sidebar {
+    /* 200px = 라벨 + `맨 위로` 버튼의 예약 높이 */
+    max-height: calc(100vh - var(--header-h-desktop) - 3px - 200px);
+    overflow-y: auto;
+    /* 목차 끝에서 페이지가 함께 스크롤되지 않게 합니다 */
+    overscroll-behavior: contain;
+}
+
+.item {
+    position: relative;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    /* 최장 헤딩이 101자입니다 — 2행에서 자릅니다(§8-5) */
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    padding: var(--space-2) 0 var(--space-2) var(--space-3);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    /* 한글 단어 중간에서 잘리면 가독성이 급락합니다 */
+    word-break: keep-all;
+    /* 색 전환은 저감 모션에서도 유지합니다 — 움직이지 않습니다 */
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+/* h3 는 한 단계 더 들여씁니다(§8-3) */
+.item[data-level='3'] {
+    padding-left: var(--space-6);
+    font-size: var(--fs-xs);
+}
+
+/*
+ * 좌측 바 — 🔴 **활성 표시의 색 외 단서**입니다(§8-4 · §7.5).
+ * 색만으로 활성을 표시하면 색각 이상 사용자가 현재 위치를 알 수 없습니다.
+ */
+.item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: var(--space-1);
+    bottom: var(--space-1);
+    width: 2px;
+    background-color: var(--color-accent-text);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform var(--dur-slow) var(--ease-emphasized);
+}
+
+.item:hover {
+    color: var(--color-text-primary);
+}
+
+.item[data-active='true'] {
+    color: var(--color-accent-text);
+}
+
+.item[data-active='true']::before {
+    transform: scaleY(1);
+}
+
+/* ------------------------------------------------------------
+ * 소제목이 없는 글 (2편)
+ * ---------------------------------------------------------- */
+.empty {
+    padding: var(--space-4);
+    border: 1px dashed var(--color-border-default);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-surface);
+}
+
+.empty_title {
+    margin: 0 0 var(--space-1);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.empty_description {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    line-height: var(--lh-normal);
+    color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+ * 맨 위로
+ * ---------------------------------------------------------- */
+.top_button {
+    margin-top: var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: transparent;
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.top_button:hover {
+    border-color: var(--color-border-interactive);
+    color: var(--color-text-primary);
+}
+
+/* ------------------------------------------------------------
+ * 모바일 — 플로팅 버튼 (§8-6)
+ * ---------------------------------------------------------- */
+.floating {
+    position: sticky;
+    bottom: var(--space-4);
+    z-index: var(--z-dropdown);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    /*
+     * `margin-left: auto` 만 주면 컨테이너 오른쪽 **끝에 붙습니다**(실측 right=1440,
+     * 즉 뷰포트 가장자리에 딱 닿음). 아래 여백(bottom: 16px)과 짝을 맞춥니다.
+     */
+    margin-left: auto;
+    margin-right: var(--space-4);
+    /* --tap-min(44px) 이상 */
+    height: 48px;
+    padding: 0 var(--space-5);
+    border: 1px solid var(--color-border-interactive);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-bg-elevated);
+    box-shadow: var(--shadow-md);
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    color: var(--color-text-primary);
+    cursor: pointer;
+}
+
+.floating_percent {
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+/*
+ * 목차 아이콘 — 폰트·SVG 없이 CSS 그리드 도트로 그립니다.
+ * 명세: docs/handoff-step1-shell.md §4-7. 검색 아이콘(SearchIcon.module.css)과
+ * 같은 기법이고, 서브셋 범위가 바뀌어도 다시 깨지지 않습니다.
+ * 5×5 · 셀 2px · 갭 1px → 14×14. 갭은 정수 고정이어야 도트가 뭉개지지 않습니다.
+ */
+.icon {
+    display: grid;
+    grid-template-columns: repeat(5, 2px);
+    grid-template-rows: repeat(5, 2px);
+    flex-shrink: 0;
+    gap: 1px;
+    color: var(--color-text-secondary);
+}
+
+.icon_dot {
+    background-color: currentColor;
+}
+
+.icon_dot_off {
+    background-color: transparent;
+}
+
+/* 데스크톱·태블릿에서는 사이드바가 있거나(≥1024) 시트를 쓰므로 버튼만 남깁니다 */
+@media (min-width: 1024px) {
+    .floating {
+        display: none;
+    }
+}
+
+@media (max-width: 1023px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+/* ------------------------------------------------------------
+ * 바텀시트
+ * ---------------------------------------------------------- */
+.scrim {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    background-color: var(--color-bg-overlay);
+}
+
+.sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    /* 🔴 항목이 24개면 시트도 넘칩니다 */
+    max-height: 70vh;
+    padding: var(--space-4) var(--space-4) var(--space-6);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    background-color: var(--color-bg-raised);
+    box-shadow: var(--shadow-lg);
+    animation: sheet_rise var(--dur-base) var(--ease-emphasized);
+}
+
+@keyframes sheet_rise {
+    from {
+        transform: translateY(16px);
+        opacity: 0;
+    }
+}
+
+.sheet_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.sheet_close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--tap-min);
+    height: var(--tap-min);
+    border: none;
+    border-radius: var(--radius-md);
+    background-color: transparent;
+    font-size: var(--fs-lg);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+.list_sheet {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.list_sheet .item {
+    /* 터치 타깃 48px — --tap-min 초과 */
+    display: flex;
+    align-items: center;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    min-height: 48px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: var(--fs-md);
+}
+
+.list_sheet .item[data-level='3'] {
+    padding-left: var(--space-8);
+    font-size: var(--fs-base);
+}
+
+.list_sheet .item[data-active='true'] {
+    background-color: var(--color-accent-subtle);
+}
+
+/* ------------------------------------------------------------
+ * 저감 모션 (§9-2 · handoff-step1-shell.md §5-6)
+ * ------------------------------------------------------------
+ * 🔴 **transform 은 값을 지우고, 색 전환은 남깁니다.**
+ *    지속시간을 0 으로 만드는 것은 해결이 아닙니다 — 즉시 이동도 이동입니다.
+ *    좌측 바의 `scaleY` 는 크기 변화라 저감 대상이고, 항목 색 전환은 아닙니다.
+ * ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .item::before {
+        transform: scaleY(1);
+        /* 나타나고 사라지는 것은 유지하되 늘어나는 동작만 없앱니다 */
+        opacity: 0;
+        transition: opacity var(--dur-fast) var(--ease-out);
+    }
+
+    .item[data-active='true']::before {
+        opacity: 1;
+    }
+
+    .sheet {
+        animation: none;
+    }
+}

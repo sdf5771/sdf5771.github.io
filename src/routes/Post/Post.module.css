@@ -1,630 +1,694 @@
-.main {
+/*
+ * 글 상세 — docs/handoff-step3-post.md §3 · §5-3 · §6 · §7 · §11
+ *
+ * 🔴 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다. 원시 hex 금지.
+ *    이 파일은 직전까지 본문 타이포를 `#00243A` 같은 리터럴로 갖고 있었고, 그래서
+ *    다크 셸 안에 라이트 본문이 박혀 있었습니다(tokens.css §5 주석). 전부 걷어냈고
+ *    --brand-* 별칭도 더 이상 소비하지 않습니다.
+ *
+ * 본문 안의 요소 선택자가 `:global(...)` 인 이유: 본문은
+ * dangerouslySetInnerHTML 로 들어오므로 CSS Modules 가 클래스를 해시하면 맞지
+ * 않습니다. 이름은 src/utils/postContent.ts 의 CONTENT_CLASS 와 **한 벌**입니다.
+ */
+
+.page {
     display: flex;
     flex-direction: column;
-    width: 100%;
     align-items: center;
-    background-color: #ffffff;
-}
-.article_section{
     width: 100%;
-    max-width: 1024px;
-    padding: 0 40px;
-    min-height: calc(100vh - 189px);
+}
+
+.article {
+    width: 100%;
+    /* 640(본문) + 32(gap) + 176(목차) = 848 → --container-narrow(920) 안에 들어갑니다 */
+    max-width: var(--container-narrow);
+    /* 시안의 좌우 36px 은 스페이싱 스케일에 없습니다 — --space-8(32px)로 치환(§3-1) */
+    padding: 0 var(--space-8) var(--space-16);
+}
+
+.body {
+    display: flex;
+    /* 목차가 sticky 로 동작하려면 stretch 가 아니어야 합니다 */
+    align-items: flex-start;
+    gap: var(--space-8);
+    margin-top: var(--space-10);
+}
+
+.main_column {
+    flex: 1;
+    /* flex 자식의 기본 min-width:auto 때문에 긴 코드블록이 컬럼을 밀어냅니다 */
+    min-width: 0;
+    /* --measure-reading 은 **상한**이지 고정폭이 아닙니다(§3-1) */
+    max-width: var(--measure-reading);
+}
+
+/* ============================================================
+ * 본문 공통
+ * ========================================================== */
+.content {
+    font-family: var(--font-body);
+    font-size: var(--fs-lg);
+    font-weight: 400;
+    /*
+     * 🔴 1.8 은 넉넉해서가 아니라 **필요해서**입니다. `breaks: true` 라 단일
+     *    개행이 전부 <br> 이 되고(41편이 그 동작을 전제로 쓰였습니다), 그 결과
+     *    한 <p> 안에 줄이 여러 개 쌓입니다. 행간이 좁으면 문단이 벽이 됩니다(§5-2).
+     */
+    line-height: var(--lh-relaxed);
+    color: var(--color-text-body);
+}
+
+.content p {
+    margin: 0 0 var(--space-5);
+    text-wrap: pretty;
+}
+
+/* 본문보다 한 단계 밝게 — 다크에서 굵기만으로는 구분이 약합니다 */
+.content strong {
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.content em {
+    font-style: italic;
+}
+
+/*
+ * 취소선(4편). markdown-it 은 `~~` 를 `<s>` 로 냅니다 — `<del>` 도 함께 받습니다.
+ * 🔴 `opacity` 를 쓰지 마세요. 대비가 무너집니다(§5-3).
+ */
+.content s,
+.content del {
+    text-decoration: line-through;
+    color: var(--color-text-muted);
+}
+
+.content a {
+    color: var(--color-status-info);
+    /* 🔴 색만으로 링크를 구분하지 않습니다 — 밑줄 병용(§16 3번) */
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: text-decoration-thickness var(--dur-base) var(--ease-out);
+}
+
+.content a:hover {
+    text-decoration-thickness: 2px;
+}
+
+.content :global(.post-external-mark) {
+    margin-left: var(--space-px);
+    font-size: 0.85em;
+}
+
+/*
+ * 인라인 코드.
+ * 🔴 색은 --color-accent-text 입니다. --color-accent-fill 을 쓰면 라이트에서
+ *    2.14:1 로 무너집니다(§5-3 · §16 4번). 지금 값은 라이트 6.16 · 다크 7.82 입니다.
+ */
+.content code {
+    font-family: var(--font-mono-11);
+    font-size: 14px;
+    padding: 1px 6px;
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-xs);
+    background-color: var(--color-bg-raised);
+    color: var(--color-accent-text);
+}
+
+/* ============================================================
+ * 헤딩
+ * ============================================================
+ * 🔴 scroll-margin-top 은 목차 점프 시 헤딩이 sticky 헤더 뒤로 숨는 것을 막는
+ *    유일한 장치입니다. 빠뜨리면 목차가 "눌리는데 안 보이는" 상태가 됩니다.
+ * ⚠️ 본문 h1 은 변환 단계에서 h2 로 강등됩니다(§5-5). 여기에 h1 규칙이 없는 것은
+ *    누락이 아니라 **본문에 h1 이 남아 있으면 안 되기 때문**입니다.
+ * ========================================================== */
+.content h2,
+.content h3,
+.content h4 {
+    font-family: var(--font-body);
+    color: var(--color-text-primary);
+    word-break: keep-all;
+    scroll-margin-top: var(--scroll-offset);
+}
+
+/* 목차 점프로 포커스를 받아도 링을 그리지 않습니다 — 이동 대상 표시일 뿐입니다 */
+.content h2:focus,
+.content h3:focus {
+    outline: none;
+}
+
+.content h2 {
+    margin: var(--space-10) 0 var(--space-4);
+    font-size: var(--fs-article-h2);
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.content h3 {
+    margin: var(--space-8) 0 var(--space-3);
+    font-size: var(--fs-article-h3);
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.content h4 {
+    margin: var(--space-7) 0 var(--space-2);
+    font-size: var(--fs-article-h4);
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+/* 41편에 h5·h6 은 없지만 들어와도 h4 규격 안에 머물게 둡니다 */
+.content h5,
+.content h6 {
+    margin: var(--space-6) 0 var(--space-2);
+    font-family: var(--font-body);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+/* ============================================================
+ * 목록 (순서 없음 36편 · 순서 있음 14편 · 중첩 24편)
+ * ========================================================== */
+.content ul {
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    list-style: none;
+}
+
+.content ul > li {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.article{
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 0 40px;
-    max-width: 1024px;
-}
-.article_header{
-    margin-top: 188px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-}
-.dot{
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background-color: #94a3b8;
-}
-.horizontal_line{
-    margin: 30px 0;
-    width: 100%;
-    height: 1px;
-    background-color: #003B63;
-}
-.group_wrapper{
-    margin-top: 25px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-.keywords{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-.category{
-    display: flex;
-    margin-bottom: 20px;
-    padding: 12px 14px;
-    height: 37px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radius: 30px;
-    border: 1px solid var(--brand-gray-black);
-}
-.category > span{
-    color: var(--brand-accent);
-    font-family: "Pretendard";
-    font-size: 0.875rem;
-    font-weight: 700;
-}
-.tag{
-    display: inline-flex;
-    padding: 12px 18px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radius: 30px;
-    background: #fff;
-    border: 1px solid var(--brand-gray-black);
-}
-.tag > span{
-    color: var(--brand-gray-black);
-    font-family: "Pretendard";
-    font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-.content{
-    margin-bottom: 20px;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    align-self: stretch;
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 0.938rem;
-    font-weight: 400;
-    line-height: 26px;
+    padding-left: 22px;
+    margin-bottom: 9px;
 }
 
-/* heading style */
-.content h1{
-    margin: 20px 0 0 0;
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 1.5rem;
-    font-weight: 800;
-    line-height: 36px;
-}
-.content h2{
-    margin: 17px 0 0 0;
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 1.25rem;
-    font-weight: 800;
-    line-height: 20px;
-}
-.content h3{
-    margin: 17px 0 0 0;
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 18px;
-}
-.content h4{
-    margin: 17px 0 0 0;
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 30px;
-}
-.content h5{
-    margin: 17px 0 0 0;
-    color: #00243A;
-    font-family: "NanumSquare Neo OTF";
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 30px;
-}
-.content h6{
-    margin: 17px 0 0 0;
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 0.938rem;
-    font-weight: 400;
-    line-height: 30px;
+/* 의사요소는 낭독되지 않으므로 aria-hidden 이 필요 없습니다 */
+.content ul > li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    font-family: var(--font-mono-11);
+    color: var(--color-accent-text);
 }
 
-/* code block style */
-.content pre{
-    border-radius: 10px;
-    background: var(--brand-gray-medium);
-    padding: 26px 28px;
-    width: 100%;
-    margin: 30px 0;
-    border: 1px solid var(--brand-gray-black);
-}
-.content code{
-    color: var(--brand-gray-black);
-    font-family: "Pretendard";
-    font-size: 0.875rem;
-    font-weight: 700;
-    line-height: 30px;
-}
-.content p code{
-    color: var(--brand-gray-black);
-    font-family: "Pretendard";
-    font-size: 0.938rem;
-    font-weight: 800;
-    line-height: 27px;
-}
-.content strong code{
-    color: var(--brand-accent);
-    font-family: "Pretendard";
-    font-size: 0.938rem;
-    font-weight: 800;
-    line-height: 27px;
-}
-.content :global(.hljs-keyword) {
-    color: #004173;
-}
-.content :global(.hljs-number) {
-    color: #004173;
-}
-.content :global(.hljs-title.class_) {
-    color: #004173;
-}
-.content :global(.hljs-title.function_) {
-    color: #004173;
-}
-.content :global(.hljs-title.class_) {
-    color: #004173;
-}
-.content :global(.hljs-title.class_) {
-    color: #004173;
-}
-.content :global(.hljs-comment) {
-    color: var(--brand-gray-dark);
-}
-.content :global(.hljs-property) {
-    color: var(--brand-black);
-}
-.content :global(.hljs-variable) {
-    color: var(--brand-primary);
-}
-.content :global(.hljs-string) {
-    color: var(--brand-secondary);
-}
-.content :global(.hljs-attr) {
-    color: var(--brand-primary);
+.content ol {
+    margin: 0 0 var(--space-6);
+    padding-left: var(--space-6);
+    list-style: decimal;
 }
 
-/* list style */
-.content ul{
-    margin: 5px 12px;
-    padding: 0;
-}
-.content ol{
-    margin: 5px 12px;
-    padding: 0;
-}
-.content li{
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 0.938rem;
-    font-weight: 400;
-    line-height: 30px;
+.content ol > li {
+    margin-bottom: 9px;
+    padding-left: var(--space-1);
 }
 
-/* blockquote style */
-.content blockquote{
-    margin: 10px 20px;
-    padding: 0;
-    border-left: 2px solid var(--brand-primary);
-    padding-left: 10px;
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 0.938rem;
-    background-color: #F8F9FA;
+.content ol > li::marker {
+    color: var(--color-accent-text);
 }
-.content blockquote p{
+
+/*
+ * 🔴 중첩 목록(24편) — **깊이별 마커를 반드시 다르게** 합니다.
+ *    전부 `▸` 이면 계층이 시각적으로 사라집니다(§5-3).
+ */
+.content ul ul,
+.content ul ol,
+.content ol ul,
+.content ol ol {
+    margin: var(--space-2) 0 0;
+}
+
+.content ul ul > li::before {
+    content: '·';
+}
+
+.content ul ul ul > li::before {
+    content: '-';
+}
+
+/*
+ * `breaks: true` 때문에 목록 항목 안에 <p> 가 생기는 경우가 있습니다.
+ * 마진을 지우지 않으면 항목 사이가 들쭉날쭉해집니다.
+ */
+.content li > p {
     margin: 0;
 }
 
-/* table style */
-.content table{
-    margin: 20px 0;
+/* ============================================================
+ * 인용문 (16편)
+ * ============================================================
+ * 시안의 신규 hex 2개(quoteFg)는 폐기했습니다 — --color-text-body 가 인용 배경
+ * 위에서 라이트 10.82:1 · 다크 10.89:1 로 이미 통과합니다(§5-3 · §14-1).
+ * ========================================================== */
+.content blockquote {
+    margin: 0 0 var(--space-6);
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--color-accent-subtle);
+    border-left: 3px solid var(--color-accent-border);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.content blockquote p {
+    margin: 0;
+    font-size: var(--fs-md);
+    line-height: 1.75;
+    color: var(--color-text-body);
+}
+
+.content blockquote p + p {
+    margin-top: var(--space-3);
+}
+
+/* ============================================================
+ * 표 (8편)
+ * ============================================================
+ * 🔴 래퍼가 없으면 **페이지 전체가 가로 스크롤**됩니다(§5-3).
+ *    래퍼는 postContent.ts 가 만듭니다.
+ * ========================================================== */
+.content :global(.post-table-wrap) {
+    margin: 0 0 var(--space-6);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+.content table {
     width: 100%;
+    min-width: 420px;
     border-collapse: collapse;
-    border-spacing: 0;
-    /* border-radius: 10px; */
-    overflow: hidden;
-    background-color: var(--brand-neutral);
-}
-.content table th{
-    background-color: var(--brand-neutral);
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 0.938rem;
-    font-weight: 400;
-    border-top: 1px solid var(--brand-gray-black);
-    border-bottom: 2px solid var(--brand-gray-black);
-}
-.content table td{
-    background-color: var(--brand-neutral);
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 0.938rem;
-    font-weight: 400;
-}
-.content table tr{
-    border-bottom: 1px solid var(--brand-gray-black);
-}
-.content table tr:last-child{
-    /* border-bottom: none; */
-}
-.content table td{
-    padding: 10px 20px;
-}
-.content table th{
-    padding: 10px 20px;
-}
-.content table td:first-child{
-    border-left: 1px solid var(--brand-gray-black);
-}
-.content table td:last-child{
-    border-right: 1px solid var(--brand-gray-black);
-}
-.content table th:first-child{
-    border-left: 1px solid var(--brand-gray-black);
-}
-.content table th:last-child{
-    border-right: 1px solid var(--brand-gray-black);
-}
-.content table td:first-child{
-    border-left: 1px solid var(--brand-gray-black);
-}
-.content table td:last-child{
-    border-right: 1px solid var(--brand-gray-black);
-}
-.content table th:first-child{
-    border-left: 1px solid var(--brand-gray-black);
-}
-.content table th:last-child{
-    border-right: 1px solid var(--brand-gray-black);
+    font-size: var(--fs-base);
 }
 
-.content table td:first-child{
-    border-left: 1px solid var(--brand-gray-black);
-}
-.content table td:last-child{
-    border-right: 1px solid var(--brand-gray-black);
+.content th {
+    padding: 10px 14px;
+    background-color: var(--color-bg-raised);
+    /* 픽셀 서체에 굵기를 주지 않습니다(STEP 1 §4-5) */
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-1);
+    font-weight: 400;
+    text-align: left;
+    color: var(--color-text-secondary);
+    border-bottom: 1px solid var(--color-border-default);
 }
 
-/* horizontal line style */
-.content hr{
-    background: #BCC8CE;
+.content td {
+    padding: 10px 14px;
+    color: var(--color-text-body);
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.content tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ============================================================
+ * 수평선 (16편)
+ * ============================================================
+ * `---` · `***` · `___` 세 표기를 markdown-it 이 전부 <hr> 로 정규화하므로
+ * 규칙 하나로 충분합니다.
+ * ========================================================== */
+.content hr {
+    border: none;
+    border-top: 1px solid var(--color-border-default);
+    margin: var(--space-8) 0;
+}
+
+/* ============================================================
+ * 이미지 (25편 · 113장) — 매트
+ * ============================================================
+ * 🔴 `filter` 를 쓰지 않습니다. 이미지 다수가 **텍스트가 든 스크린샷**이라
+ *    밝기를 낮추면 그 텍스트의 대비가 함께 무너집니다 — 접근성을 지키려다
+ *    접근성을 깨는 처리입니다(§2-3).
+ *
+ * 다크에서 #0a0f1c(페이지) → #161d30(매트) → #2d3551(보더) → 이미지로 밝기가
+ * 단계적으로 오릅니다. 흰 이미지가 검은 페이지에 직접 닿는 경계가 사라지고,
+ * **밝은 면적은 늘지 않습니다** — 크림색 매트(16:1)를 두르면 오히려 늘어납니다.
+ * 픽셀을 건드리지 않으므로 사진·GIF 가 섞여 있어도 부작용이 없습니다.
+ * ========================================================== */
+.content :global(.post-figure) {
+    margin: 0 0 var(--space-6);
+}
+
+/*
+ * 목록 안 이미지 (2026-08-02 판정 — 승격 규칙이 배치 수준으로 일반화됐습니다).
+ *
+ * 🔴 항목 간격이 9px 인 목록에 24px 짜리 아래 마진이 끼면 항목마다 높이가
+ *    들쭉날쭉해지고, `ul > li::before` 의 `▸` 가 어느 줄에 붙은 마커인지
+ *    읽히지 않습니다. 목록 안에서만 마진을 좁히고 마지막 자식이면 지웁니다.
+ */
+.content li > :global(.post-figure) {
+    margin: var(--space-2) 0 var(--space-3);
+}
+
+.content li > :global(.post-figure):last-child {
+    margin-bottom: 0;
+}
+
+.content :global(.post-matte) {
+    padding: var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-xl);
+    background-color: var(--color-bg-raised);
+    box-shadow: var(--shadow-sm);
+}
+
+.content :global(.post-matte) img {
+    display: block;
     width: 100%;
-    height: 1px;
-    margin: 10px 0;
+    /* width/height 속성이 반응형을 깨지 않게 합니다(§11-2) */
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
 }
 
-/* paragraph style */
-.content p {
-    margin: 7px 0;
-    color: #00243A;
-    font-family: "Pretendard";
-    font-size: 0.938rem;
-    font-weight: 400;
-    line-height: 27px;
+.content :global(.post-caption) {
+    margin-top: var(--space-2);
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    color: var(--color-text-muted);
 }
 
-/* link style */
-.content a {
-    color: #333333;
-    font-family: "Pretendard";
-    font-size: 0.938rem;
-    font-weight: 700;
-    line-height: 27px;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    text-decoration-skip-ink: auto;
-    text-decoration-thickness: auto;
-    text-underline-offset: auto;
-    text-underline-position: from-font;
-}
-.content .task-list-item {
-    list-style-type: none;
-    margin-left: -20px;
-}
-.content .task-list-item input[type='checkbox'] {
-    margin-right: 10px;
-}
-/* pc */
-@media screen and (min-width: 1024px) {
-    .info_container{
-        margin-top: 30px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .title{
-        margin: 0;
-        color: var(--brand-accent);
-        font-family: "Pretendard";
-        font-size: 2.438rem;
-        font-weight: 900;
-        line-height: 48px; /* 123.077% */
-    }
-    .date{
-        color: #94a3b8;
-        font-family: "Pretendard";
-        font-size: 1.125rem;
-        font-weight: 700;
-        line-height: 18px; /* 100% */
-    }
-    .author{
-        color: #94a3b8;
-        font-family: "Pretendard";
-        font-size: 1.125rem;
-        font-weight: 700;
-        line-height: 18px;
-    }
-    
-    /* image style */
-    .content img{
-        width: calc(100% - 150px);
-        margin: 30px 78px 30px 72px;
-        height: auto;
-        border-radius: 10px;
-    }
-
-    .article_footer{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 163px;
-    }
-
-    /* prev btn */
-    .back_button{
-        display: flex;
-        width: 210px;
-        height: 56px;
-        padding: 10px 0px;
-        justify-content: center;
-        align-items: center;
-        gap: 6px;
-        border-radius: 50px;
-        border: 1.5px solid #004173;
-        background: #FFF;
-        color: #004173;
-        text-align: center;
-        font-family: "Pretendard";
-        font-size: 1rem;
-        font-weight: 700;
-    }
-
-    .next_button{
-        display: flex;
-        height: 56px;
-        padding: 10px 0px;
-        justify-content: center;
-        align-items: center;
-        gap: 11px;
-    }
-
-    .next_button > span{
-        max-width: 202px;
-        width: calc(100% - 11px - 4px);
-        color: #004173;
-        font-family: "Pretendard";
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 26px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    }
+/* 로드 실패 — 깨진 이미지 아이콘을 노출하지 않습니다(§12-3) */
+.content :global(.post-image-error) {
+    margin: 0;
+    padding: var(--space-8) var(--space-4);
+    text-align: center;
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
 }
 
-/* pad */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    .info_container{
-        margin-top: 35px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+/* 매트 밖에 남은 인라인 이미지(글과 섞인 문단) */
+.content img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 라이트 모드에서는 보더를 한 단계 낮춰 액자가 과해지지 않게 합니다 */
+:global([data-theme='light']) .content :global(.post-matte) {
+    border-color: var(--color-border-default);
+    background-color: var(--color-bg-surface);
+}
+
+/* ============================================================
+ * 코드 블록 (35편 · 펜스 169개)
+ * ========================================================== */
+.content :global(.post-code-block) {
+    margin: 0 0 var(--space-6);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-code);
+    overflow: hidden;
+}
+
+.content :global(.post-code-header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    /* 라벨이 없어도 헤더 높이가 유지되게 최소 높이를 둡니다 */
+    min-height: 34px;
+    padding: 0 var(--space-2) 0 var(--space-4);
+    background-color: var(--color-bg-code-header);
+    border-bottom: 1px solid var(--color-border-default);
+}
+
+.content :global(.post-code-lang) {
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    color: var(--color-text-muted);
+}
+
+.content :global(.post-copy-button) {
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-sm);
+    background-color: transparent;
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.content :global(.post-copy-button):hover {
+    background-color: var(--color-bg-raised);
+    color: var(--color-text-primary);
+}
+
+.content :global(.post-copy-button)[data-copied='true'] {
+    border-color: var(--color-status-success);
+    background-color: var(--color-status-success);
+    color: var(--color-accent-onFill);
+}
+
+.content pre {
+    margin: 0;
+    padding: var(--space-4);
+    /* 🔴 절대 줄바꿈하지 않습니다. 코드를 접으면 들여쓰기 의미가 사라집니다 */
+    white-space: pre;
+    overflow-x: auto;
+}
+
+.content pre code {
+    /* 인라인 코드의 배경·보더·색을 상속하지 않게 전부 되돌립니다 */
+    padding: 0;
+    border: none;
+    background: none;
+    font-family: var(--font-mono-11);
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--color-text-body);
+}
+
+/* ------------------------------------------------------------
+ * 신택스 — 🔴 hljs 기성 테마 CSS 를 import 하지 않습니다 (§6-3)
+ * ------------------------------------------------------------
+ * 이유 셋:
+ *  ① 모든 기성 테마가 자기 배경색을 강제합니다(`.hljs { background: … }`) —
+ *     위에서 확정한 테마별 배경과 충돌합니다.
+ *  ② 라이트/다크 둘을 같이 로드하면 뒤에 온 것이 이기고, @media 로 가르면
+ *     **명시적 테마 토글이 죽습니다.**
+ *  ③ 어떤 기성 테마도 우리 대비 기준을 만족한다는 보장이 없습니다.
+ *
+ * 토큰을 쓰므로 테마 전환이 자동으로 따라옵니다. 별도 다크 규칙이 필요 없습니다.
+ * 주석 옆 숫자는 라이트/다크 대비 실측값입니다 — 전부 4.5:1 이상(§2-4).
+ * ---------------------------------------------------------- */
+.content :global(.hljs) {
+    color: var(--color-text-body); /* 11.42 / 12.71 */
+}
+
+.content :global(.hljs-keyword),
+.content :global(.hljs-built_in),
+.content :global(.hljs-literal),
+.content :global(.hljs-type) {
+    color: var(--color-status-accent); /* 6.31 / 7.95 */
+}
+
+.content :global(.hljs-string),
+.content :global(.hljs-regexp),
+.content :global(.hljs-meta-string) {
+    color: var(--color-status-success); /* 4.76 / 9.69 */
+}
+
+.content :global(.hljs-operator),
+.content :global(.hljs-number),
+.content :global(.hljs-symbol) {
+    color: var(--color-status-info); /* 5.04 / 8.44 */
+}
+
+.content :global(.hljs-title),
+.content :global(.hljs-function),
+.content :global(.hljs-attr),
+.content :global(.hljs-attribute),
+.content :global(.hljs-tag),
+.content :global(.hljs-name),
+.content :global(.hljs-selector-tag) {
+    color: var(--color-accent-text); /* 5.45 / 13.52 */
+}
+
+.content :global(.hljs-comment),
+.content :global(.hljs-quote) {
+    color: var(--color-text-muted); /* 5.55 / 5.43 */
+}
+
+/*
+ * 위에 없는 hljs-* 는 상속받아 --color-text-body 로 렌더됩니다 — **의도된
+ * 동작**입니다. 색 종류를 늘리면 코드가 크리스마스 트리가 됩니다(§6-3).
+ * 🔴 --color-accent-fill 을 신택스에 쓰지 마세요. 라이트에서 2.14:1 입니다.
+ */
+
+/* ============================================================
+ * 수식 · 각주 · 체크리스트 — 실사용 0에 가까운 3종
+ * ============================================================
+ * 수식은 1편 3회(그중 2회는 파싱 실패로 평문), 각주·체크리스트는 0편입니다.
+ * 스타일은 최소로만 두고, KaTeX **CSS 는 전역 로드하지 않습니다**(§7).
+ * 실패한 수식이 평문으로 떨어질 때 본문 서체·색 그대로여야 하므로 별도 규칙을
+ * 주지 않습니다 — 지금 그렇습니다.
+ * ========================================================== */
+.content :global(.katex) {
+    color: var(--color-text-primary);
+}
+
+/* 블록 수식은 41편에 0회입니다. 생기면 넘치지 않게 미리 받아 둡니다 */
+.content :global(.katex-display) {
+    margin: 0 0 var(--space-6);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-surface);
+    overflow-x: auto;
+}
+
+.content :global(.footnotes) {
+    margin-top: var(--space-8);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border-default);
+    font-size: var(--fs-sm);
+    line-height: 1.75;
+    color: var(--color-text-muted);
+}
+
+/* markdown-it-footnote 는 라벨을 만들지 않아 번호 목록만 덩그러니 남습니다 */
+.content :global(.footnotes)::before {
+    content: '각주';
+    display: block;
+    margin-bottom: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-1);
+    color: var(--color-text-secondary);
+}
+
+.content :global(.footnotes) ol {
+    padding-left: var(--space-5);
+}
+
+.content :global(.footnote-ref) a,
+.content :global(.footnote-backref) {
+    color: var(--color-status-info);
+    text-decoration: none;
+}
+
+.content :global(.footnote-ref) a {
+    font-size: var(--fs-xs);
+    vertical-align: super;
+}
+
+/*
+ * 🔴 체크박스는 실제 <input type="checkbox" disabled> 입니다.
+ *    커스텀 <span> 마크업은 스크린리더에 체크 상태를 전달하지 못합니다(§7-3).
+ *    disabled 는 markdown-it-task-lists 의 기본값이라 옵션을 건드리지 않습니다.
+ */
+.content :global(.task-list-item) {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.content :global(.task-list-item)::before {
+    content: none;
+}
+
+.content :global(.task-list-item) input[type='checkbox'] {
+    margin-top: 5px;
+    accent-color: var(--color-accent-fill);
+}
+
+.content :global(.task-list-item) input:checked + * {
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+}
+
+/* 원시 <aside> 1편 — 스타일이 없으면 문단과 다르게 보일 이유가 없습니다 */
+.content aside {
+    margin: 0 0 var(--space-5);
+}
+
+/* ============================================================
+ * 글 하단 — 링크 복사
+ * ========================================================== */
+.article_footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--space-8);
+}
+
+.copy_link {
+    min-height: var(--tap-min);
+    padding: 0 var(--space-4);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: transparent;
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.copy_link:hover {
+    background-color: var(--color-bg-raised);
+    color: var(--color-text-primary);
+}
+
+.copy_link[data-copied='true'] {
+    border-color: var(--color-status-success);
+    background-color: var(--color-status-success);
+    color: var(--color-accent-onFill);
+}
+
+/* ============================================================
+ * 태블릿 (768~1023px) — 목차 사이드바를 숨깁니다 (§3-2)
+ * ============================================================
+ * 848px 컬럼이 들어가지 않습니다. 모바일과 같은 플로팅 버튼 + 바텀시트를 씁니다.
+ * (숨김 자체는 PostToc.module.css 가 담당합니다)
+ * ========================================================== */
+@media (max-width: 1023px) {
+    .article {
+        padding: 0 var(--space-6) var(--space-14);
     }
 
-    .title{
-        margin: 0;
-        color: var(--brand-accent);
-        font-family: "Pretendard";
-        font-size: 1.688rem;
-        font-weight: 900;
-        line-height: 27px;
-    }
-    .date{
-        color: #94a3b8;
-        font-family: "Pretendard";
-        font-size: 1rem;
-        font-weight: 700;
-        line-height: 16px;
-    }
-    .author{
-        color: #94a3b8;
-        font-family: "Pretendard";
-        font-size: 1rem;
-        font-weight: 700;
-        line-height: 16px;
-    }
-    /* image style */
-    .content img{
-        width: calc(100% - 150px);
-        margin: 20px 78px 20px 72px;
-        height: auto;
-        border-radius: 10px;
-    }
-
-    .article_footer{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 163px;
-    }
-
-    /* prev btn */
-    .back_button{
-        display: flex;
-        width: 210px;
-        height: 56px;
-        padding: 10px 0px;
-        justify-content: center;
-        align-items: center;
-        gap: 6px;
-        border-radius: 50px;
-        border: 1.5px solid #004173;
-        background: #FFF;
-        color: #004173;
-        text-align: center;
-        font-family: "Pretendard";
-        font-size: 1rem;
-        font-weight: 700;
-    }
-
-    .next_button{
-        display: flex;
-        height: 56px;
-        padding: 10px 0px;
-        justify-content: center;
-        align-items: center;
-        gap: 11px;
-    }
-
-    .next_button > span{
-        max-width: 202px;
-        width: calc(100% - 11px - 4px);
-        color: #004173;
-        font-family: "Pretendard";
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 26px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+    .main_column {
+        max-width: none;
+        margin: 0 auto;
     }
 }
 
-/* mobile */
-@media screen and (max-width: 767px) {
-    .info_container{
-        margin-top: 38px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .title{
-        margin: 0;
-        color: var(--brand-accent);
-        font-family: "Pretendard";
-        font-size: 1.688rem;
-        font-weight: 900;
-        line-height: 41px;
-    }
-    .date{
-        color: #94a3b8;
-        font-family: "Pretendard";
-        font-size: 1rem;
-        font-weight: 700;
-        line-height: 16px;
-    }
-    .author{
-        color: #94a3b8;
-        font-family: "Pretendard";
-        font-size: 1rem;
-        font-weight: 700;
-        line-height: 16px;
-    }
-    /* image style */
-    .content img{
-        width: 100%;
-        height: auto;
-        border-radius: 10px;
+/* ============================================================
+ * 모바일 (≤767px)
+ * ========================================================== */
+@media (max-width: 767px) {
+    .article {
+        padding: 0 var(--space-4) var(--space-12);
     }
 
-    .article_footer{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 118px;
-        gap: 64px;
+    .content h2 {
+        font-size: 21px;
     }
 
-    /* prev btn */
-    .back_button{
-        display: flex;
-        width: 43px;
-        height: 43px;
-        padding: 10px 13px;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50px;
-        border: 1.5px solid #004173;
-        background: #FFF;
-        color: #004173;
-        text-align: center;
-        font-family: "Pretendard";
-        font-size: 1rem;
-        font-weight: 700;
+    .content h3 {
+        font-size: var(--fs-xl);
     }
 
-    .next_button{
-        display: flex;
-        height: 56px;
-        padding: 10px 0px;
-        justify-content: center;
-        align-items: center;
-        gap: 4px;
-        max-width: 216px;
-        overflow: hidden;
+    .content h4 {
+        font-size: var(--fs-lg);
     }
 
-    .next_button > span{
-        max-width: 202px;
-        width: calc(100% - 11px - 4px);
-        color: #004173;
-        font-family: "Pretendard";
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 26px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+    /*
+     * 헤더가 52px 이고 스크롤 시 숨으므로 오프셋이 줄어듭니다(§5-3).
+     * 값은 tokens.css 의 미디어쿼리가 --scroll-offset 을 90px 로 덮어써서
+     * 위 `.content h2/h3/h4` 규칙에 자동으로 반영됩니다 — 여기서 다시 적지
+     * 않습니다(정의처가 둘이 되면 한쪽만 고쳐집니다).
+     */
+
+    /* 매트 패딩은 모바일에서 한 단계 줄입니다(§2-3) */
+    .content :global(.post-matte) {
+        padding: var(--space-2);
     }
 }

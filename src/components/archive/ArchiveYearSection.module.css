@@ -1,0 +1,141 @@
+/*
+ * 연도 섹션.
+ * 명세: docs/handoff-step6-tags-archive.md §2-4 · §8-1
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ */
+
+/*
+ * 🔴 `overflow: hidden` 금지. 시안의 섹션 카드가 그것을 갖고 있었는데, 그러면
+ *    안쪽 sticky 헤더가 동작하지 않습니다(스크롤 컨테이너가 되어 버림).
+ *    라운드는 헤더가 직접 갖습니다.
+ *
+ * 🔴 연도마다 **동일한 프레임**입니다. 2024년(2편)도 2023년(29편)과 같은 크기의
+ *    상자로 시작합니다 — 브리프의 "편차를 강조하는 시각화는 피한다" 를 그대로
+ *    실행한 것이고, 막대·밀도 시각화는 반려됐습니다(§2-4).
+ */
+.section {
+    overflow: visible;
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    /*
+     * 🔴 섹션 배경은 surface 입니다. 행을 --color-bg-raised 위에 놓으면 호버 시
+     *    메타 텍스트 대비가 다크에서 4.09:1 로 떨어져 미달합니다(§10-1a).
+     *    raised 는 아래 헤더에만 씁니다.
+     */
+    background-color: var(--color-bg-surface);
+}
+
+.heading {
+    /*
+     * 🔴 위치 상실 대책. 2023년 29행(모바일 2,237px)을 스크롤하는 내내
+     *    `2023 · 29편` 이 상단에 붙어 있습니다. 접기를 기본값으로 삼는 대신
+     *    이걸 택했습니다(§2-4).
+     */
+    position: sticky;
+    top: var(--header-h-desktop);
+    z-index: var(--z-sticky);
+    margin: 0;
+    /* 앵커 점프 시 sticky 전역 헤더 뒤로 숨지 않게(§8-5) */
+    scroll-margin-top: calc(var(--header-h-desktop) + var(--space-4));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background-color: var(--color-bg-raised);
+}
+
+.heading:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: -2px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.toggle {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    width: 100%;
+    /* 시안 18px 은 스케일 밖입니다 → --space-5 */
+    padding: var(--space-3) var(--space-5);
+    border: 0;
+    border-bottom: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+/*
+ * 접힌 섹션의 헤더는 하단 보더 없이 **단독 상자**로 보이는 것이 옳습니다.
+ * 시안의 `headBd: transparent` 를 채택했습니다(§13-2 14번).
+ */
+.toggle[aria-expanded='false'] {
+    border-bottom-color: transparent;
+    border-radius: var(--radius-lg);
+}
+
+.toggle:hover .year {
+    color: var(--color-accent-text);
+}
+
+/* 33px — **숫자**라 픽셀 서체 규칙을 통과합니다(§9-2 그룹 3) */
+.year {
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-3);
+    font-weight: 400;
+    line-height: var(--lh-heading);
+    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: none;
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+/* `편` 이 한글이라 픽셀 서체 불가 — Pretendard 13px (§9-2 8번) */
+.count {
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-sm);
+    color: var(--color-text-secondary);
+}
+
+/*
+ * `▾` / `▸` 는 **문자 교체**입니다 — 회전이 아닙니다(§11-2).
+ * 라틴·기호이므로 GalmuriMono11 11px 이 규칙을 통과합니다.
+ */
+.marker {
+    margin-left: auto;
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    color: var(--color-text-muted);
+}
+
+.list {
+    margin: 0;
+    padding: 0 var(--space-5) var(--space-3);
+    list-style: none;
+}
+
+@media (pointer: coarse) {
+    .toggle {
+        min-height: var(--tap-min);
+    }
+}
+
+@media (max-width: 767px) {
+    .heading {
+        top: var(--header-h-mobile);
+        scroll-margin-top: calc(var(--header-h-mobile) + var(--space-4));
+    }
+
+    .toggle {
+        padding: var(--space-3);
+    }
+
+    .list {
+        padding: 0 var(--space-3) var(--space-2);
+    }
+}
+
+/*
+ * 🔴 섹션 펼침/접힘에 **높이 애니메이션을 넣지 마십시오**(§11-1 11번).
+ *    즉시 전환이 확정입니다. 회전도 쓰지 않으므로 이 파일에는
+ *    prefers-reduced-motion 분기가 없습니다 — 저감할 모션이 없습니다.
+ */

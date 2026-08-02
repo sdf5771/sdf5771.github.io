@@ -1,6 +1,25 @@
+import Archive from './Archive/Archive';
 import Home from './Home/Home';
 import Post from './Post/Post';
+import Posts from './Posts/Posts';
+import LegacyPostRedirect from './Post/LegacyPostRedirect';
+import About from './About/About';
+import NotFound from './NotFound/NotFound';
+import TagPosts from './Tags/TagPosts';
+import Tags from './Tags/Tags';
+import Work from './Works/Work';
+import Works from './Works/Works';
+
 export {
+    Archive,
     Home,
-    Post
+    Post,
+    Posts,
+    LegacyPostRedirect,
+    About,
+    NotFound,
+    TagPosts,
+    Tags,
+    Work,
+    Works,
 }

@@ -1,0 +1,172 @@
+/*
+ * 홈 선별 카드.
+ * 명세: docs/handoff-step2-home.md §5-3
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다. 원시 hex 금지.
+ */
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-surface);
+    /* 🔴 색·보더 전환만 둡니다. transform 은 저감 모션에서 지워집니다 */
+    transition:
+        border-color var(--dur-slow) var(--ease-emphasized),
+        box-shadow var(--dur-slow) var(--ease-emphasized),
+        transform var(--dur-slow) var(--ease-emphasized);
+}
+
+.card[data-category='Study'] {
+    --card-category-color: var(--color-cat-study);
+}
+
+.card[data-category='Survey'] {
+    --card-category-color: var(--color-cat-survey);
+}
+
+.card[data-category='Activity'] {
+    --card-category-color: var(--color-cat-activity);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-accent-border);
+    box-shadow: var(--shadow-md);
+}
+
+/*
+ * 🔴 포커스 링은 **카드 전체**를 감쌉니다. 링크는 제목만 감싸지만(접근 가능한
+ *    이름을 제목으로 유지하기 위해) 클릭 영역은 카드 전체라, 링이 제목에만
+ *    걸리면 "무엇이 눌리는가" 와 "무엇이 포커스됐는가" 가 어긋납니다.
+ */
+.card:has(.link:focus-visible) {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-color: var(--color-accent-border);
+}
+
+/* ------------------------------------------------------------
+ * 썸네일 — 112px (시안 110 → 4px 스케일 스냅)
+ * ---------------------------------------------------------- */
+.thumbnail {
+    position: relative;
+    height: 112px;
+    margin-bottom: var(--space-3);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-raised);
+    overflow: hidden;
+}
+
+/*
+ * `width`/`height` 속성이 붙으므로 CSS 로 다시 채웁니다 — 속성값(원본 픽셀)이
+ * 그대로 그려지면 112px 슬롯을 뚫습니다. 속성 자체는 종횡비 예약용입니다.
+ */
+.thumbnail_image,
+.thumbnail_glyph {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ------------------------------------------------------------
+ * 본문
+ * ---------------------------------------------------------- */
+.category {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-secondary);
+}
+
+.category_dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background-color: var(--card-category-color, var(--color-accent-border));
+    flex-shrink: 0;
+}
+
+.title {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-text-primary);
+}
+
+/*
+ * 🔴 `outline: none` 은 접근성 후퇴가 아니라 **중복 제거**입니다.
+ *    global.css 가 이 <a> 에 링을 주고, 위 `.card:has(.link:focus-visible)` 이
+ *    카드에 또 줍니다. 남기는 쪽은 카드입니다 — 실제 클릭 영역이 카드 전체입니다.
+ */
+.link {
+    outline: none;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    /* 최장 96자 제목 — 카드 폭(약 340px)에서 3행입니다(§8-2) */
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    word-break: keep-all;
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+/* 스트레치 링크 — 이름은 제목뿐이면서 클릭 영역은 카드 전체가 됩니다 */
+.link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+}
+
+.card:hover .link {
+    color: var(--color-accent-text);
+}
+
+.note {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    line-height: var(--lh-normal);
+    color: var(--color-text-body);
+    word-break: keep-all;
+}
+
+.meta {
+    /* 카드 높이가 달라도 메타는 바닥에 붙습니다 */
+    margin: auto 0 0;
+    padding-top: var(--space-3);
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+
+/* ------------------------------------------------------------
+ * 저감 모션 (§4-4)
+ * ------------------------------------------------------------
+ * 🔴 **transform 은 값을 지우고, 색·보더 전환은 남깁니다.** 호버 피드백 자체를
+ *    없애면 "눌리는지 알 수 없는" 인터페이스가 됩니다. 지속시간을 0 으로
+ *    만드는 것은 해결이 아닙니다 — translateY(-3px) 는 0ms 여도 3px 점프합니다.
+ * ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .card:hover {
+        transform: none;
+    }
+
+    .card {
+        transition:
+            border-color var(--dur-base) var(--ease-out),
+            box-shadow var(--dur-base) var(--ease-out);
+    }
+}

@@ -1,0 +1,41 @@
+/*
+ * 테마 토글. 아이콘을 폰트·SVG 없이 CSS 그리드 5×5 도트로 직접 그립니다 —
+ * 시스템의 픽셀 문법을 그대로 씁니다. 각 셀 3px + 1px 갭.
+ * 명세: docs/handoff-step1-shell.md §5-5
+ */
+
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    /* 터치 영역 최소 44×44 */
+    width: var(--tap-min);
+    height: var(--tap-min);
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    color: var(--color-accent-text);
+    cursor: pointer;
+    transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.toggle:hover {
+    background-color: var(--color-accent-subtle);
+}
+
+.icon {
+    display: grid;
+    grid-template-columns: repeat(5, 3px);
+    grid-template-rows: repeat(5, 3px);
+    gap: 1px;
+}
+
+.dot {
+    background-color: currentColor;
+}
+
+.dot_off {
+    background-color: transparent;
+}

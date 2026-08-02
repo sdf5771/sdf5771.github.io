@@ -1,44 +1,133 @@
-.pagination_container {
+/*
+ * 페이지네이션.
+ * 명세: docs/handoff-step4-list.md §7-3 · §5-2
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ *
+ * ⚠️ 이전 판은 --brand-* 전환기 별칭을 쓰고 있었습니다. 그 레이어는 STEP 2~7 이
+ *    전 화면을 새 토큰으로 옮기면 삭제될 예정이라(tokens.css §5) 여기서 먼저
+ *    끊었습니다. 홈(STEP 2)이 아직 흰 배경을 하드코딩하고 있어 그 화면에서는
+ *    페이저만 새 토큰으로 보입니다 — 홈 전환 때 해소됩니다.
+ */
+
+.pagination {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
 
-}
-.control_button{
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-    border: 1px solid var(--brand-gray-dark);
-    background-color: var(--brand-white);
-    color: var(--brand-gray-dark);
-    font-family: 'Pretendard';
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-.control_button:hover {
-    background-color: var(--brand-gray-dark);
-    color: var(--brand-white);
-}
+.control,
 .page {
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-    border: 1px solid var(--brand-gray-dark);
-    background-color: var(--brand-white);
-    color: var(--brand-gray-dark);
-    font-family: 'Pretendard';
-    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-raised);
+    color: var(--color-text-secondary);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
     font-weight: 600;
-    transition: all 0.3s ease;
-}
-.page:hover {
-    background-color: var(--brand-gray-dark);
-    color: var(--brand-white);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
 }
 
-.active {
-    background-color: var(--brand-primary);
-    color: #fff;
-    border: 1px solid var(--brand-primary);
+.control {
+    gap: var(--space-1);
+    padding: 0 var(--space-3);
+}
+
+.page {
+    width: 40px;
+}
+
+.control:hover,
+.page:hover {
+    border-color: var(--color-border-interactive);
+    color: var(--color-text-primary);
+}
+
+/* 활성 페이지 — 골드 채움 */
+.page[aria-current='page'] {
+    border-color: var(--color-accent-border);
+    background-color: var(--color-accent-fill);
+    color: var(--color-accent-onFill);
+}
+
+/* 골드 채움 위 골드 링은 1.55:1 로 보이지 않습니다 (STEP 1 §6-6) */
+.page[aria-current='page']:focus-visible {
+    outline-color: var(--color-focus-onFill);
+}
+
+.disabled {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.pages {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.progress {
+    margin: 0 0 0 var(--space-4);
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+/* 터치 구간에서만 44px 로 승격 (§5-2) */
+@media (pointer: coarse) {
+    .control,
+    .page {
+        height: var(--tap-min);
+    }
+
+    .page {
+        width: var(--tap-min);
+    }
+}
+
+/*
+ * 모바일은 `[←] 1 / 3 [→]` 만 — 숫자 나열이 없습니다(§5-3).
+ * 390px 에서 번호까지 늘어놓으면 컨트롤이 두 줄로 접힙니다.
+ */
+@media (max-width: 767px) {
+    .pages {
+        display: none;
+    }
+
+    .pagination {
+        justify-content: space-between;
+        flex-wrap: nowrap;
+    }
+
+    /*
+     * DOM 순서는 이전 → 다음 → `1 / 3` 입니다(스크린리더가 컨트롤을 먼저 만나야
+     * 합니다). 화면에서는 진행 표시가 가운데여야 하므로 order 로만 바꿉니다.
+     */
+    .control_prev {
+        order: 1;
+    }
+
+    .progress {
+        order: 2;
+        margin: 0;
+        flex: 1 1 auto;
+        text-align: center;
+    }
+
+    .control_next {
+        order: 3;
+    }
 }

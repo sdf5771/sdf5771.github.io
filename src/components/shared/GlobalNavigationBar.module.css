@@ -1,255 +1,300 @@
-/* pc */
-@media screen and (min-width: 1024px) {
-  .nav {
-    z-index: 100;
-    position: fixed;
+/*
+ * 전역 헤더. 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ * 명세: docs/handoff-step1-shell.md §6-1 / §6-2
+ *
+ * ⚠️ 브레이크포인트 숫자를 고치면 src/styles/breakpoints.ts 도 함께 고쳐야 합니다.
+ */
+
+.header {
+    position: sticky;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    z-index: var(--z-header);
     width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #fff;
-    border-bottom: 1px solid var(--brand-gray-light);
-}
-.nav_container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1024px;
-    width: 100%;
-    height: 60px;
-}
-.left_container{
-    display: flex;
-    align-items: center;
-}
-.title_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-.logo{
-    width: 36px;
-    height: 36px;
-}
-.logo > img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.title_container > span{
-    font-family: Pretendard;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--brand-gray-black);
-}
-.menu_list{
-    padding: 0;
-    display: flex;
-    gap: 20px;
-}
-.menu_list > li{
-    list-style: none;
-    font-family: Pretendard;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--brand-gray-black);
-    cursor: pointer;
-}
+    /*
+     * 배경 불투명도만 스크롤에 따라 바뀝니다(§6-1b).
+     * --header-bg-alpha 는 useHeaderScroll 이 인라인 스타일로 넣습니다.
+     * --color-bg-raised-rgb 는 --color-bg-raised 의 RGB 분해값입니다.
+     */
+    background-color: rgba(var(--color-bg-raised-rgb), var(--header-bg-alpha, 1));
+    border-bottom: 1px solid transparent;
+    transition:
+        transform var(--dur-slow) var(--ease-emphasized),
+        border-bottom-color var(--dur-base) var(--ease-out);
 }
 
-/* pad */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .nav {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #fff;
-    border-bottom: 1px solid var(--brand-gray-light);
-}
-.nav_container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1024px;
-    width: 100%;
-    height: 60px;
-}
-.left_container{
-    display: flex;
-    align-items: center;
-}
-.title_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-.logo{
-    width: 36px;
-    height: 36px;
-}
-.logo > img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.title_container > span{
-    font-family: Pretendard;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--brand-gray-black);
-}
-.menu_list{
-    padding: 0;
-    display: flex;
-    gap: 20px;
-}
-.menu_list > li{
-    list-style: none;
-    font-family: Pretendard;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--brand-gray-black);
-    cursor: pointer;
-}
+/* 진행률 15% 지점부터 나타납니다 */
+.header[data-has-border='true'] {
+    border-bottom-color: var(--color-border-strong);
 }
 
-/* mobile */
-@media screen and (max-width: 767px) {
-  .nav {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+/* 모바일 스크롤 다운 시 숨김. 헤더의 위치·크기는 그 외에는 절대 변하지 않습니다. */
+.header[data-hidden='true'] {
+    transform: translateY(-100%);
+}
+
+/*
+ * reduced-motion 에서는 숨김 **동작 자체**를 끕니다.
+ * 전환만 끄면 헤더가 순간이동해 더 나쁩니다(§6-2).
+ * useHeaderScroll 도 같은 조건에서 isHidden 을 켜지 않지만, CSS 로도 못 박아 둡니다.
+ */
+@media (prefers-reduced-motion: reduce) {
+    .header[data-hidden='true'] {
+        transform: none;
+    }
+}
+
+/* 포커스를 받을 때만 나타납니다 */
+.skip_link {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: var(--z-modal);
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-accent-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transform: translateY(calc(-100% - var(--space-4)));
+    transition: transform var(--dur-base) var(--ease-emphasized);
+}
+
+.skip_link:focus-visible {
+    transform: translateY(0);
+}
+
+.inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
     width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #fff;
-    border-bottom: 1px solid var(--brand-gray-light);
-    transition: background-color 0.3s ease-in-out, height 0.3s ease-in-out;
-  }
-  .nav.active {
-    z-index: 100;
-    width: 100vw;
-    padding: 0 10px;
-    height: 100dvh;
-    display: flex;
-    justify-content: center;
-    background-color: var(--brand-gray-light);
-    /* border-bottom: 1px solid var(--brand-gray-light); */
-  }
-  .nav_container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1024px;
-      width: 100%;
-      height: 60px;
-  }
-  .left_container{
-      display: flex;
-      align-items: center;
-  }
-  .title_container{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-  }
-  .logo{
-      width: 36px;
-      height: 36px;
-  }
-  .logo > img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-  }
-  .title_container > span{
-      font-family: Pretendard;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--brand-gray-black);
-  }
-  .menu_list_mobile{
+    max-width: var(--container-max);
+    height: var(--header-h-mobile);
+    margin: 0 auto;
+    /* 390px 에서 워드마크(190px) + 아이콘 3개(132px)를 넣어야 해서 좌우 여백이 얇습니다 */
+    padding: 0 var(--space-3);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    /*
+     * 절대 압축하지 않습니다.
+     * 워드마크는 사이트 정체성이고 픽셀 서체라 축소도 불가능합니다(§4-5 정수배 규칙) —
+     * 줄어들어야 하는 쪽은 언제나 경로 표시입니다. flex-shrink: 1 이면 1280px 에서도
+     * 긴 slug 를 만나는 순간 `Seobisback.log` 가 `Seobisbacl` 로 잘립니다.
+     */
+    flex-shrink: 0;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+}
+
+.wordmark {
+    /* 축 A 의 22px. 픽셀 서체는 11의 정수배에서만 선명하므로 임의 축소하지 않습니다. */
+    font-size: var(--fs-pixel-2);
+}
+
+/* ------------------------------------------------------------
+ * 경로 표시
+ * ------------------------------------------------------------
+ * 모바일에서는 헤더에서 뺍니다 — 390px 에 워드마크 + 경로 + 아이콘 3개는
+ * 물리적으로 들어가지 않습니다. 본문 최상단 브레드크럼으로 내리는 것은
+ * 화면(STEP 2~3) 소관입니다.
+ * ---------------------------------------------------------- */
+.path {
     display: none;
-  }
-  .menu_list_mobile.active{
-      z-index: 101;
-      position: absolute;
-      top: 60px;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--brand-gray-light);
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-  }
-  .menu_list_mobile.active > li{
-      list-style: none;
-      font-family: Pretendard;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--brand-gray-black);
-      cursor: pointer;
-  }
 }
 
-.menu_trigger,
-.menu_trigger > span {
-  display: inline-block;
-  transition: all 0.4s;
-  box-sizing: border-box;
-}
-.menu_trigger {
-  margin-right: 10px;
-  position: relative;
-  width: 35px;
-  height: 30px;
-}
-.menu_trigger > span {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: var(--brand-accent);
-  border-radius: 4px;
-}
-.menu_trigger > span:nth-of-type(1) {
-  top: 0;
+.prompt {
+    flex-shrink: 0;
+    /* 프롬프트도 경로와 같은 픽셀 격자 위에 있어야 한 줄로 읽힙니다. `▸` 는 라틴 전용
+       서브셋에도 들어 있습니다(§4-7) */
+    font-family: var(--font-terminal-path);
+    font-size: var(--fs-2xs);
+    line-height: var(--lh-snug);
+    color: var(--color-accent-text);
 }
 
-.menu_trigger > span:nth-of-type(2) {
-  top: 13px;
+.path_text {
+    /*
+     * 남는 폭을 그대로 채웁니다.
+     * 내용 길이가 자기 폭을 바꾸지 않아야 useLeftTruncate 의 ResizeObserver 가
+     * "재계산 → 폭 변화 → 재계산" 루프에 빠지지 않습니다.
+     */
+    flex: 1 1 0;
+    min-width: 0;
+    /* 모노는 11px 고정입니다. 12px 은 11px 그리드의 정수배가 아니라 도트가 뭉개집니다(§13 4번).
+       라틴 전용 자리이며, `~/tags/<태그>` 처럼 한글이 들어오면 모노 서브셋에 한글이
+       없어 Pretendard 로 자동 폴백됩니다. */
+    font-family: var(--font-terminal-path);
+    font-size: var(--fs-2xs);
+    line-height: var(--lh-snug);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    /*
+     * 앞부분 생략(`…뒷부분`)은 JS 가 글자 수를 재서 만듭니다 — useLeftTruncate.
+     * `direction: rtl` 은 쓰지 않습니다. bidi 중립 문자인 `~` 와 `/` 가 문자열
+     * 끝으로 재배치돼 `~/posts` 가 `posts/~` 로 뒤집혀 렌더됩니다(§12-5).
+     * CSS 말줄임을 겹쳐 쓰면 `……` 가 되므로 clip 으로 못 박아 둡니다.
+     */
+    text-overflow: clip;
 }
 
-.menu_trigger > span:nth-of-type(3) {
-  bottom: 0;
-}
-.menu_trigger.active > span:nth-of-type(1) {
-  transform: translateY(13px) rotate(-45deg);
-}
-
-.menu_trigger.active > span:nth-of-type(2) {
-  opacity: 0;
+/* ------------------------------------------------------------
+ * 내비게이션
+ * ---------------------------------------------------------- */
+.nav {
+    display: none;
 }
 
-.menu_trigger.active > span:nth-of-type(3) {
-  transform: translateY(-13px) rotate(45deg);
+.nav_list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav_link {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-3);
+    /* 한글 라벨이라 픽셀 서체를 쓰지 않습니다 — tokens.css 의 서체 역할 레이어 참고 */
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-base);
+    line-height: var(--lh-snug);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    border-bottom: 2px solid transparent;
+    transition:
+        color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
+}
+
+.nav_link:hover {
+    color: var(--color-text-primary);
+}
+
+/*
+ * 활성 표시는 배경만으로는 안 됩니다.
+ * --color-accent-subtle 을 합성하면 라이트 1.11:1 / 다크 1.15:1 로 사실상 안 보입니다.
+ * 배경 + 밑줄을 함께 써야 색을 구분하지 못하는 사용자에게도 위치가 남습니다(§6-1a).
+ */
+.nav_link_active {
+    color: var(--color-accent-text);
+    background-color: var(--color-accent-subtle);
+    border-bottom-color: var(--color-accent-text);
+}
+
+/* ------------------------------------------------------------
+ * 우측 액션 (검색 아이콘 · 테마 토글 · 햄버거)
+ * ---------------------------------------------------------- */
+.actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    /* 경로·내비가 숨겨지는 모바일에서 오른쪽으로 밀어 붙입니다 */
+    margin-left: auto;
+}
+
+.icon_button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    /* 터치 영역 최소 44×44 */
+    width: var(--tap-min);
+    height: var(--tap-min);
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    font-size: var(--fs-xl);
+    line-height: 1;
+    color: var(--color-accent-text);
+    cursor: pointer;
+    transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.icon_button:hover {
+    background-color: var(--color-accent-subtle);
+}
+
+/* 인라인 검색은 데스크톱(≥1024px) 전용 */
+.search_inline {
+    display: none;
+}
+
+/*
+ * 358px 미만 — 마지막 수단으로 워드마크가 줄어듭니다.
+ * 워드마크(190) + 좌우 여백(24) + 아이콘 3개(132) + 갭(12) = 358px 가 필요한데(§6-6a),
+ * 그보다 좁으면 무언가는 밀려야 합니다. 브랜드를 끝까지 지키면 검색·테마·메뉴
+ * 버튼이 화면 밖으로 나가 **누를 수 없게** 되므로, 이 구간에서만 순서를 뒤집습니다.
+ * 이름이 잘리는 것보다 컨트롤에 닿지 못하는 쪽이 나쁩니다.
+ */
+@media screen and (max-width: 357px) {
+    .brand {
+        flex-shrink: 1;
+        min-width: 0;
+        overflow: hidden;
+    }
+}
+
+/* ------------------------------------------------------------
+ * md 이상 (≥768px) — 경로 표시 · 내비 노출, 헤더 높이 48px
+ * ---------------------------------------------------------- */
+@media screen and (min-width: 768px) {
+    .inner {
+        gap: var(--space-4);
+        height: var(--header-h-desktop);
+        padding: 0 var(--space-6);
+    }
+
+    .path {
+        display: flex;
+        align-items: center;
+        /* 브랜드·내비·액션이 전부 flex-shrink: 0 이라, 부족한 폭은 여기서만 흡수합니다 */
+        flex: 1 1 0;
+        gap: var(--space-2);
+        min-width: 0;
+        margin: 0;
+    }
+
+    .nav {
+        display: block;
+        flex-shrink: 0;
+    }
+
+    .actions {
+        margin-left: 0;
+    }
+
+    /* 내비가 헤더에 직접 나오므로 드로어가 필요 없습니다 */
+    .menu_trigger {
+        display: none;
+    }
+
+    .nav_link {
+        /* 헤더 높이 48px 안에서 밑줄이 바닥에 붙게 */
+        height: var(--header-h-desktop);
+        border-radius: 0;
+    }
+}
+
+/* ------------------------------------------------------------
+ * lg 이상 (≥1024px) — 검색이 아이콘에서 인라인 입력으로 바뀝니다
+ * ---------------------------------------------------------- */
+@media screen and (min-width: 1024px) {
+    .search_inline {
+        display: block;
+    }
+
+    .icon_button {
+        display: none;
+    }
 }

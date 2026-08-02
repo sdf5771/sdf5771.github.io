@@ -1,0 +1,21 @@
+/*
+ * 생성 썸네일.
+ * 명세: docs/handoff-step4-list.md §6-3
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ */
+
+.glyph {
+    display: block;
+    /* 96×64 고정. 폭·높이가 속성에도 있어 로드 전에 자리가 잡힙니다 → CLS 0 (R9) */
+    width: 96px;
+    height: 64px;
+    border-radius: var(--radius-md);
+    /*
+     * 타일 배경.
+     * ⚠️ 행 자체는 bg-raised 위에 놓지 않습니다 — 다크에서 메타 텍스트 대비가
+     *    4.09:1 로 떨어집니다(§10-1). 여기는 96×64 타일 안이고 그 위에 글자가
+     *    올라가지 않으므로 해당되지 않습니다.
+     */
+    background-color: var(--color-bg-raised);
+    /* R8 — 목록에서 20개가 동시에 움직이면 훑기를 방해합니다. 정적입니다 */
+}

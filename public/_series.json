@@ -1,0 +1,23 @@
+[
+    {
+        "id": "react-query-state",
+        "title": "React Query와 상태 관리",
+        "posts": [
+            "2023-01-13-ReactQuery-State-StateManagement-01",
+            "2023-01-13-ReactQuery-State-StateManagement-02"
+        ]
+    },
+    {
+        "id": "spatial-uxui",
+        "title": "Spatial UX/UI와 웹의 패러다임 시프트",
+        "posts": [
+            "2025-03-13-ux-trends-and-spatial-computing-paradigm-1",
+            "2025-03-14-ux-trends-and-spatial-computing-paradigm-2"
+        ]
+    },
+    {
+        "id": "wanted-preonboarding",
+        "title": "원티드 프리온보딩 챌린지",
+        "posts": ["2023-01-11-Wanted-pre-onboarding-01"]
+    }
+]

@@ -73,7 +73,7 @@ Translator API는 웹 페이지나 사용자 콘텐츠를 다양한 언어로 �
 접속 후 `Experimental translation API` 플래그를 활성화하면 Early Preview 사용 준비가 끝났습니다.
 
 ![Experimental translation API 활성화](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/01.png)
-`<font color="#7f7f7f">`(Experimental translation API 활성화)`</font>`
+(Experimental translation API 활성화)
 
 앞서 링크한 [API Docs](https://developer.chrome.com/docs/ai/translator-api)와 [Translator Github](https://github.com/WICG/translation-api)를 보면서 구현을 진행해보겠습니다.
 
@@ -180,13 +180,13 @@ translateButton.addEventListener('click', async () => {
 제가 간단하게 만든 Demo를 확인해볼까요?
 
 ![Translator API Demo App](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/02.png)
-`<font color="#7f7f7f">`(Translator API Demo App)`</font>`
+(Translator API Demo App)
 
 아직까지 Preview 형태로 사용할 수 있는 만큼 일부 언어 쌍은 지원되지 않을 수 있습니다.
 그리고 첫 번역 시에는 모델 다운로드가 필수적이므로 네트워크 환경에 따라서 지연이 발생할 수 있습니다.
 
 ![Translator API Demo App GIF](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/03.gif)
-`<font color="#7f7f7f">`(Translator API Demo App GIF)`</font>`
+(Translator API Demo App GIF)
 
 > Github Repository: [@sdf5771/2025-google-io/translator-api](https://github.com/sdf5771/2025-google-io/tree/main/translator-api)
 
@@ -204,7 +204,7 @@ Language Detector API는 텍스트의 언어를 자동으로 식별하는 기능
 접속 후 `Language detection web platform API` 플래그를 활성화하면 Early Preview 사용 준비가 끝났습니다.
 
 ![Language detection web platform API 활성화](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/04.png)
-`<font color="#7f7f7f">`(Language detection web platform API 활성화)`</font>`
+(Language detection web platform API 활성화)
 
 동일하게 [API Docs](https://developer.chrome.com/docs/ai/language-detection)와 [Language Detector Github](https://github.com/webmachinelearning/translation-api?tab=readme-ov-file#language-detection)를 보면서 구현을 진행해보겠습니다.
 
@@ -334,10 +334,10 @@ detectButton.addEventListener('click', async () => {
 UI가 포함된 간단하게 만든 Demo를 확인해보겠습니다.
 
 ![Language Detector API Demo App](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/05.png)
-`<font color="#7f7f7f">`(Language Detector API Demo App)`</font>`
+(Language Detector API Demo App)
 
 ![Language Detector API Demo App GIF](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/06.gif)
-`<font color="#7f7f7f">`(Language Detector API Demo App GIF)`</font>`
+(Language Detector API Demo App GIF)
 
 > Github Repository: [@sdf5771/2025-google-io/language-detector-api](https://github.com/sdf5771/2025-google-io/tree/main/language-detector-api)
 
@@ -355,7 +355,7 @@ Summarizer API는 앞서 설명한 내용과 같이 긴 텍스트를 핵심 내�
 접속 후 `Summarization API for Gemini Nano` 플래그를 활성화하면 Early Preview 사용 준비가 끝났습니다.
 
 ![Summarization API for Gemini Nano 활성화](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/07.png)
-`<font color="#7f7f7f">`(Summarization API for Gemini Nano 활성화)`</font>`
+(Summarization API for Gemini Nano 활성화)
 
 [Summarizer API Docs](https://developer.chrome.com/docs/ai/summarizer-api)와 [Language Detector Github](https://github.com/webmachinelearning/writing-assistance-apis?tab=readme-ov-file#basic-usage)를 보면서 바로 구현을 진행해보겠습니다.
 
@@ -468,10 +468,10 @@ summarizeButton.addEventListener('click', async () => {
 구현된 Demo를 확인해보겠습니다.
 
 ![Summarizer API Demo App](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/08.png)
-`<font color="#7f7f7f">`(Summarizer API Demo App)`</font>`
+(Summarizer API Demo App)
 
 ![Summarizer API Demo App GIF](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/09.gif)
-`<font color="#7f7f7f">`(Summarizer API Demo App GIF)`</font>`
+(Summarizer API Demo App GIF)
 
 > Github Repository: [@sdf5771/2025-google-io/summarizer-api](https://github.com/sdf5771/2025-google-io/tree/main/summarizer-api)
 
@@ -480,7 +480,7 @@ summarizeButton.addEventListener('click', async () => {
 <h2 id="section3">Gemini Nano: 브라우저의 두뇌</h2>
 
 ![Gemini Nano](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/10.jpg)
-`<font color="#7f7f7f">`(Gemini Nano)`</font>`
+(Gemini Nano)
 
 위에서 소개한 API들은 모두 Google의 `Gemini Nano` 모델을 기반으로 동작합니다.
 
@@ -529,10 +529,10 @@ Gemini Nano 또한 경량화를 위한 트레이드 오프가 존재하며,
 클라이언트에 내장된 AI는 대표적으로 삼성의 Galaxy 기기에 탑재된 `Gemini Nano`, Apple이 iPhone, iPad, Macbook 등의 기기에 탑재한 `Apple Intelligence` 등이 있습니다.
 
 ![삼성 갤럭시 S24 시리즈에 탑재된 구글 AI](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/11.webp)
-`<font color="#7f7f7f">`(삼성 갤럭시 S24 시리즈에 탑재된 구글 AI)`</font>`
+(삼성 갤럭시 S24 시리즈에 탑재된 구글 AI)
 
 ![Apple - Apple Intelligence](/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/12.webp)
-`<font color="#7f7f7f">`(Apple - Apple Intelligence)`</font>`
+(Apple - Apple Intelligence)
 
 - 프라이버시 강화: 사용자의 데이터가 서버로 전송되지 않으며, 사용자의 기기 내에서 처리되므로 개인정보 보호 측면에서도 큰 장점이 있습니다.
 - 오프라인 작동: 인터넷 연결 없이도 AI 모델을 통해 사용자의 요구사항을 처리할 수 있으므로, 기존 서버 기반 AI의 문제에서 언급된 네트워크 의존성이 해결됩니다.

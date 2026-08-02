@@ -1,0 +1,139 @@
+/*
+ * 연도별 보기 `/archive`.
+ * 명세: docs/handoff-step6-tags-archive.md §8-1 · §8-2
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ */
+
+.root {
+    width: 100%;
+    padding: var(--space-12) var(--space-8) var(--space-16);
+}
+
+.inner {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+.title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-4);
+    font-weight: 400;
+    line-height: var(--lh-heading);
+    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: none;
+}
+
+.description {
+    margin: var(--space-3) 0 0;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-md);
+    color: var(--color-text-secondary);
+}
+
+.years {
+    margin-top: var(--space-5);
+    min-width: 0;
+}
+
+.year_list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    min-width: 0;
+}
+
+/*
+ * 이동 링크입니다. **활성 상태가 없습니다** — 필터가 아니라서 "지금 선택된 연도"
+ * 라는 개념이 존재하지 않습니다(§8-5).
+ */
+.year_chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: 40px;
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-surface);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.year_chip:hover {
+    border-color: var(--color-accent-border);
+    background-color: var(--color-accent-subtle);
+}
+
+/* `2025` 는 Galmuri11 11px — **숫자**라 픽셀 서체 규칙을 통과합니다(§9-2 그룹 3) */
+.year_chip_label {
+    font-family: var(--font-display);
+    font-size: var(--fs-pixel-1);
+    color: var(--color-text-secondary);
+    -webkit-font-smoothing: none;
+}
+
+.year_chip_count {
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    color: var(--color-text-muted);
+}
+
+.year_chip:hover .year_chip_label,
+.year_chip:hover .year_chip_count {
+    color: var(--color-accent-text);
+}
+
+.sections {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+}
+
+@media (pointer: coarse) {
+    .year_chip {
+        height: var(--tap-min);
+    }
+}
+
+@media (max-width: 1023px) {
+    .root {
+        padding-inline: var(--space-6);
+    }
+}
+
+/*
+ * 모바일 — 연도 칩만 가로 스크롤합니다.
+ * 🔴 페이지 컨테이너에는 360px 에서도 가로 스크롤이 생기면 안 됩니다(§10-5).
+ *    음수 마진으로 화면 끝까지 흘리는 연출은 <html> 스크롤 폭을 넓혀 페이지
+ *    전체에 가로 스크롤을 만듭니다(STEP 4 §5-3 실측).
+ */
+@media (max-width: 767px) {
+    .root {
+        padding: var(--space-8) var(--space-5) var(--space-12);
+    }
+
+    .title {
+        font-size: var(--fs-pixel-3);
+    }
+
+    .year_list {
+        overflow-x: auto;
+        max-width: 100%;
+        scrollbar-width: none;
+    }
+
+    .year_list::-webkit-scrollbar {
+        display: none;
+    }
+}

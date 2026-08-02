@@ -2,24 +2,86 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="dark light" />
+    <!--
+      테마 부트스트랩. 모든 CSS·React 보다 먼저 실행돼야 합니다.
+      React 마운트를 기다리면 다크 사용자가 매 진입마다 흰 화면 섬광(FOUC)을 봅니다.
+      localStorage["theme"]("system" | "light" | "dark") 를 해석해
+      <html data-theme> 에 실제 적용값만 씁니다.
+      근거: docs/handoff-step1-shell.md §5-2
+    -->
+    <script>
+      (function () {
+        try {
+          var s = localStorage.getItem('theme') || 'system';
+          var d =
+            s === 'dark' ||
+            (s === 'system' &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+    <!--
+      워드마크·히어로 이름이 이 서체로 그려지므로 LCP 요소가 여기에 걸립니다(§4-4).
+      CSS 를 파싱한 뒤에야 폰트 요청이 시작되면 그만큼 늦으므로 미리 받습니다.
+      경로에 /src/ 가 들어가는 이유: Vite 가 빌드 때 해시가 붙은 실제 자산 경로로
+      바꿔 줍니다. 손으로 /assets/... 를 적으면 해시가 바뀌는 순간 404 가 됩니다.
+      GalmuriMono11 은 preload 하지 않습니다 — 헤더 경로·⌘K 같은 작은 보조 텍스트라
+      LCP 에 걸리지 않고, 대역폭을 LCP 쪽에 몰아 주는 편이 낫습니다.
+    -->
+    <link
+      rel="preload"
+      href="/src/assets/fonts/Galmuri11-subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Seobisback Github Blog" />
+    <meta name="description" content="Software Engineer Seobisback의 기술 블로그입니다. 공부하거나 조사한 내용을 기록합니다. 프론트엔드, 브라우저, 그리고 그 사이의 이야기를 남깁니다." />
     <meta name="author" content="Seobisback" />
     <meta name="keywords" content="Seobisback, Blog, Frontend, Developer, JavaScript, TypeScript, React, Next.js, Tailwind CSS, HTML, CSS, Web Development" />
-    <meta name="og:title" content="Seobisback Github Blog" />
-    <meta name="og:description" content="공부하는 기술, 경험에 대한 이야기를 정리해요." />
-    <meta name="og:image" content="/favicon.ico" />
-    <meta name="og:url" content="https://sdf5771.github.io" />
-    <meta name="og:site_name" content="Seobisback Github Blog" />
-    <meta name="og:type" content="website" />
-    <meta name="og:locale" content="ko_KR" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Seobisback Github Blog" />
-    <meta name="twitter:description" content="공부하는 기술, 경험에 대한 이야기를 정리해요." />
-    <meta name="twitter:image" content="/favicon.ico" />
-    <meta name="twitter:url" content="https://sdf5771.github.io" />
-    <title>Seobisback Github Blog</title>
+    <!--
+      🔴 Open Graph 는 `property=` 입니다 — `name=` 이 아닙니다(OGP 는 RDFa 기반).
+      규격을 엄격히 보는 스크레이퍼(페이스북·링크드인·카카오)는 `name="og:*"` 를
+      읽지 않고 <title> 로 폴백합니다. 아래 문구를 손보면서 `name=` 으로 두면
+      바꾼 문구가 공유 카드에 끝내 나타나지 않습니다.
+      바로 아래 twitter:* 는 반대로 `name=` 이 맞습니다(트위터 카드는 RDFa 가 아님).
+    -->
+    <meta property="og:title" content="Seobisback.log — Software Engineer" />
+    <meta property="og:description" content="Software Engineer Seobisback의 기술 블로그입니다. 공부하거나 조사한 내용을 기록합니다. 프론트엔드, 브라우저, 그리고 그 사이의 이야기를 남깁니다." />
+    <!--
+      🔴 og:image 는 반드시 절대 URL 입니다. 스크레이퍼(페이스북·슬랙·카카오)는
+      HTML 을 내려받아 서버 밖에서 파싱하므로 `/og/default.png` 같은 상대 경로를
+      해석하지 못합니다. 이전에 `/favicon.ico` 로 두어 미리보기가 비던 것이
+      바로 이 문제였습니다. 경로를 손볼 일이 있어도 도메인을 떼지 마세요.
+      width/height 를 함께 주면 스크레이퍼가 이미지를 다 받기 전에 자리를 잡아
+      미리보기가 더 빨리 뜹니다.
+      근거: docs/handoff-step8-og.md §2-3
+    -->
+    <meta property="og:image" content="https://sdf5771.github.io/og/default.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Seobisback.log — Software Engineer" />
+    <meta property="og:url" content="https://sdf5771.github.io/" />
+    <meta property="og:site_name" content="Seobisback.log" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <!--
+      summary 는 정사각 썸네일이라 1200×630 카드의 좌우가 잘립니다.
+      summary_large_image 여야 1.91:1 이 그대로 적용됩니다.
+      twitter:image 도 og:image 와 같은 절대 URL 이어야 합니다 — 상대 경로를
+      남겨 두면 og:image 로 폴백하지 않고 이쪽이 우선돼 미리보기가 깨집니다.
+    -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Seobisback.log — Software Engineer" />
+    <meta name="twitter:description" content="Software Engineer Seobisback의 기술 블로그입니다. 공부하거나 조사한 내용을 기록합니다. 프론트엔드, 브라우저, 그리고 그 사이의 이야기를 남깁니다." />
+    <meta name="twitter:image" content="https://sdf5771.github.io/og/default.png" />
+    <meta name="twitter:url" content="https://sdf5771.github.io/" />
+    <title>Seobisback.log — Software Engineer</title>
   </head>
   <body>
     <div id="root"></div>

@@ -37,7 +37,6 @@ WebXR이란 XR 장치에서 증강 현실(AR) 및 가상 현실(VR)에 대한 �
 여기서 **XR이란 W3C(World Wide Web Consortium - 웹 표준을 개발하는 국제 컨소시엄)에서는 AR과 VR 관련 기술에 사용되는 하드웨어, 애플리케이션 및 기술의 스펙트럼을 나타낸다고 정의하고 있습니다.**
 
 기존에 **WebVR은 가상 현실만 표현** 할 수 있는 실험적인 WebAPI였지만 **WebXR로 대체되면서 VR과 AR을 모두 지원** 하는 좀 더 포괄적인 의미가 되었습니다.
-
 
 #### 지원 브라우저와 디바이스 ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API#browser_compatibility))
 

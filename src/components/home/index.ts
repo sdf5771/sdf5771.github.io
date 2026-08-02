@@ -1,5 +1,11 @@
-import Profile from './Profile';
+import ConstellationHero from './ConstellationHero';
+import FeaturedPosts from './FeaturedPosts';
+import PostCard from './PostCard';
+import RecentPosts from './RecentPosts';
 
 export {
-    Profile,
+    ConstellationHero,
+    FeaturedPosts,
+    PostCard,
+    RecentPosts,
 };

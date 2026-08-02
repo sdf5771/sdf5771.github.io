@@ -1,0 +1,335 @@
+/*
+ * 글 목록의 행.
+ * 명세: docs/handoff-step4-list.md §5-1 · §5-3 · §5-4 · §9
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ */
+
+.row {
+    position: relative;
+    display: grid;
+    /* 96 썸네일 · 1fr 제목 · 216 메타. 216 은 최장 메타 조합 + nowrap 기준입니다 */
+    grid-template-columns: 96px 1fr 216px;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-4) var(--space-3);
+    /* 썸네일 64 + 상하 패딩 28. 제목이 2행이면 약 102px 로 자연히 늘어납니다 */
+    min-height: 92px;
+    border-bottom: 1px solid var(--color-border-subtle);
+    /* 색·배경 전환은 저감 모드에서도 유지합니다(§9-3) */
+    transition: background-color var(--dur-base) var(--ease-out);
+}
+
+/*
+ * 좌측 카테고리 바. 데스크톱에서는 호버 시, 모바일에서는 상시 표시됩니다.
+ * 배경만으로 상태를 표시하지 않기 위한 두 번째 채널이기도 합니다(§10-1).
+ */
+.row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--row-category-color, var(--color-accent-border));
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.row[data-category='Study'] {
+    --row-category-color: var(--color-cat-study);
+}
+
+.row[data-category='Survey'] {
+    --row-category-color: var(--color-cat-survey);
+}
+
+.row[data-category='Activity'] {
+    --row-category-color: var(--color-cat-activity);
+}
+
+.row:hover {
+    background-color: var(--color-accent-subtle);
+}
+
+.row:hover::before {
+    opacity: 1;
+}
+
+/*
+ * 🔴 포커스 링은 **행 전체**를 감쌉니다. 링크는 제목만 감싸고 있지만(접근 가능한
+ *    이름을 제목으로 유지하기 위해) 실제 클릭 영역은 행 전체라, 링이 제목에만
+ *    걸리면 "무엇이 눌리는가"와 "무엇이 포커스됐는가"가 어긋납니다.
+ */
+.row:has(.link:focus-visible) {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+}
+
+.row:has(.link:focus-visible)::before {
+    opacity: 1;
+}
+
+.glyph {
+    grid-column: 1;
+}
+
+.body {
+    grid-column: 2;
+    /* grid 자식의 기본 min-width: auto 때문에 긴 제목이 열을 밀어냅니다 */
+    min-width: 0;
+}
+
+.heading {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-text-primary);
+}
+
+/*
+ * 🔴 `outline: none` 은 접근성 후퇴가 아니라 **중복 제거**입니다.
+ *    global.css 의 `:where(a, button, …):focus-visible` 이 이 <a>(제목 박스)에
+ *    링을 주고, 아래 `.row:has(.link:focus-visible)` 이 행에 또 줍니다. 그대로 두면
+ *    Tab 한 번에 링이 **두 겹**(제목 448×22 + 행 460×102)으로 그려집니다.
+ *    남기는 쪽은 행입니다 — 실제 클릭 영역이 행 전체이기 때문입니다(§10-2).
+ */
+.link {
+    outline: none;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    /* `ReactHook_useContext` 처럼 공백 없는 긴 라틴 문자열이 있습니다(§10-4) */
+    overflow-wrap: anywhere;
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+/*
+ * 🔴 스트레치 링크 — 링크의 접근 가능한 이름은 **제목뿐**이면서 클릭 영역은
+ *    행 전체가 되게 합니다. 행 전체를 <a> 로 감싸면 메타·태그가 전부 이름에
+ *    섞여 들어가 스크린리더의 링크 목록에서 글을 구분할 수 없습니다(§10-2).
+ *    ⌘+클릭 새 탭·가운데 클릭·주소 복사·크롤러 인식은 전부 그대로 동작합니다.
+ */
+.link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+}
+
+.row:hover .link {
+    color: var(--color-accent-text);
+}
+
+/* 실제 정보이므로 낭독되게 둡니다. 지금 데이터에는 해당 글이 없습니다(§8-7) */
+.badge {
+    display: inline-block;
+    margin-right: var(--space-2);
+    padding: 0 var(--space-1);
+    border-radius: var(--radius-xs);
+    background-color: var(--color-accent-fill);
+    color: var(--color-accent-onFill);
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+/* ------------------------------------------------------------
+ * 태그 — 3개 + `+N`
+ * ---------------------------------------------------------- */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.tag,
+.tag_more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-px);
+    padding: 0 var(--space-2);
+    height: 22px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    line-height: 1;
+    /* 링크가 아니므로 커서·호버 효과를 주지 않습니다 — 눌리는 것처럼 보이면 안 됩니다 */
+    white-space: nowrap;
+}
+
+.tag {
+    border: 1px solid var(--color-border-default);
+    background-color: var(--color-bg-raised);
+    color: var(--color-text-secondary);
+}
+
+/* 검색어 일치 태그. 배경 외에 테두리·글자색으로도 구분됩니다(§10-1) */
+.tag[data-matched='true'] {
+    border-color: var(--color-accent-border);
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent-text);
+}
+
+.tag_hash {
+    opacity: 0.6;
+}
+
+.tag_more {
+    border: 1px dashed var(--color-border-strong);
+    background-color: transparent;
+    color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+ * 메타 — 카테고리 · 날짜 · 읽기 시간
+ * ---------------------------------------------------------- */
+/*
+ * 🔴 읽기 시간이 **두 자리**까지 갑니다. 정본 공식이 STEP 3 §10-3(산문 + 코드 +
+ *    이미지)으로 바뀌면서 최댓값이 20 → **27분**이 됐습니다. `Survey · 2025.05.26
+ *    · 27분` 이 390px 에서 조각 중간에 끊기면 안 되므로, **조각마다 nowrap 을
+ *    걸고 컨테이너가 줄바꿈**하게 합니다. 컨테이너에 nowrap 을 걸면 반대로
+ *    한 줄을 고집하다 열을 밀어냅니다.
+ */
+.meta {
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: 0;
+    /*
+     * 날짜·메타는 --font-ui-meta(Pretendard)입니다. GalmuriMono11 은 11px 에서만
+     * 쓸 수 있고 한글(`분`)이 서브셋에 없어 폴백이 섞입니다(tokens.css §3).
+     */
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+.meta > * {
+    white-space: nowrap;
+}
+
+.category {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-secondary);
+}
+
+.category[data-matched='true'] {
+    color: var(--color-accent-text);
+}
+
+.category_dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background-color: var(--row-category-color, var(--color-accent-border));
+    flex-shrink: 0;
+}
+
+.meta_detail {
+    /* 읽기 시간은 41편 중 16편이 `1분` 이라 정보량이 낮습니다. 강조하지 않습니다 */
+    color: var(--color-text-muted);
+}
+
+.arrow {
+    display: inline-block;
+    width: 13px;
+    opacity: 0;
+    transform: translateX(-8px);
+    color: var(--color-accent-text);
+    transition:
+        opacity var(--dur-slow) var(--ease-emphasized),
+        transform var(--dur-slow) var(--ease-emphasized);
+}
+
+.row:hover .arrow,
+.row:has(.link:focus-visible) .arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ------------------------------------------------------------
+ * 태블릿 (768~1023px) — 메타 열만 축소
+ * ---------------------------------------------------------- */
+@media (max-width: 1023px) {
+    .row {
+        grid-template-columns: 96px 1fr max-content;
+    }
+
+    /* 호버가 없는 구간이라 등장할 일이 없습니다 */
+    .arrow {
+        display: none;
+    }
+}
+
+/* ------------------------------------------------------------
+ * 모바일 (≤767px) — 🔴 썸네일 슬롯 제거
+ * ------------------------------------------------------------
+ * 시안은 76×56 썸네일을 유지하지만, 그러면 제목 폭이 270px 이 되어 2행 예산이
+ * 540px 입니다. **앞 61자(약 663px)가 완전히 같은 글이 2편**(2025-03-14 /
+ * 2025-03-13) 있어 두 행이 글자 하나 다르지 않게 보입니다.
+ * 썸네일을 빼면 358px × 2행 = 716px 로 구분됩니다.
+ *
+ * 시각 리듬은 좌측 3px 카테고리 바가 대신 잡습니다 — 폭을 3px 만 씁니다.
+ * 부수 이득으로 1페이지 이미지 전송량이 사라집니다.
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .row {
+        grid-template-columns: 1fr;
+        gap: var(--space-2);
+        padding: var(--space-3) 0 var(--space-3) var(--space-3);
+    }
+
+    .glyph {
+        display: none;
+    }
+
+    /* 데스크톱에서는 호버 시에만 나타나지만 모바일에는 호버가 없습니다 */
+    .row::before {
+        opacity: 1;
+    }
+
+    .body,
+    .meta {
+        grid-column: 1;
+    }
+
+    .meta {
+        /* 모바일은 카테고리가 제목 위가 아니라 메타 줄에 함께 옵니다 */
+        justify-content: flex-start;
+        gap: var(--space-2);
+    }
+}
+
+/* ------------------------------------------------------------
+ * 저감 모션 (§9-1 6·7번)
+ * ------------------------------------------------------------
+ * transform 만 걷어내고 **색·투명도 전환은 남깁니다.**
+ * prefers-reduced-motion 은 전정 자극(위치·크기·회전)을 겨냥합니다. 색 전환까지
+ * 죽이면 호버 피드백이 뚝뚝 끊겨 오히려 상태 파악이 어려워집니다(§9-3).
+ * ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .arrow {
+        transform: none;
+        transition: opacity var(--dur-fast) var(--ease-out);
+    }
+
+    .row:hover .arrow,
+    .row:has(.link:focus-visible) .arrow {
+        transform: none;
+    }
+}

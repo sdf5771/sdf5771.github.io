@@ -1,0 +1,96 @@
+/*
+ * `자주 쓰는 태그` 칩 줄.
+ * 명세: docs/handoff-step6-tags-archive.md §7-2 · §7-7
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ */
+
+.root {
+    min-width: 0;
+}
+
+.label {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+}
+
+.chips {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    min-width: 0;
+}
+
+/*
+ * `#Python 16` 은 라틴·숫자·기호뿐이라 GalmuriMono11 **11px** 이 규칙을
+ * 통과합니다. 시안의 12px 은 11의 정수배가 아니라 위반입니다(§9-2 14번).
+ * 높이는 컨트롤 공통 40px, 터치 구간에서 44px 로 승격됩니다.
+ */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    height: 40px;
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-surface);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.chip:hover {
+    border-color: var(--color-accent-border);
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent-text);
+}
+
+.hash {
+    color: var(--color-text-muted);
+}
+
+.count {
+    color: var(--color-text-muted);
+}
+
+.chip:hover .hash,
+.chip:hover .count {
+    color: var(--color-accent-text);
+}
+
+@media (pointer: coarse) {
+    .chip {
+        height: var(--tap-min);
+    }
+}
+
+/*
+ * 모바일 — 줄바꿈이 아니라 가로 스크롤입니다.
+ *
+ * 🔴 가로 스크롤은 **이 줄 안에서만** 일어납니다. 시안처럼 컨테이너 여백만큼
+ *    음수 마진을 주면 <html> 스크롤 폭이 뷰포트를 넘어 페이지 전체에 가로
+ *    스크롤이 생깁니다(STEP 4 §5-3 에서 실측된 사고). 여기서 overflow-x: hidden
+ *    으로 막으면 이번엔 스크롤 컨테이너가 생겨 sticky 헤더가 깨집니다.
+ */
+@media (max-width: 767px) {
+    .chips {
+        overflow-x: auto;
+        max-width: 100%;
+        scrollbar-width: none;
+    }
+
+    .chips::-webkit-scrollbar {
+        display: none;
+    }
+}

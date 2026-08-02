@@ -1,0 +1,62 @@
+/*
+ * 워드마크 조형. 헤더·푸터가 같은 것을 씁니다.
+ * 크기는 부모가 font-size 로 정합니다(축 A 의 11의 배수만 사용 — 임의 축소 금지).
+ */
+.wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+}
+
+.label {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: inherit;
+    line-height: 1;
+
+    /* 안티에일리어싱 제거 — 도트 선명도의 핵심.
+       Firefox 에는 동등한 표준 속성이 없어 약간 뭉개집니다(알려진 한계). */
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+
+    /* em·소수는 서브픽셀 위치를 만들어 도트를 흐립니다. 정수 px 만. */
+    letter-spacing: 1px;
+
+    color: var(--color-text-primary);
+    white-space: nowrap;
+}
+
+.accent {
+    color: var(--color-accent-text);
+}
+
+/*
+ * 메모지는 워드마크를 앞서지 않아야 하므로 24px 로 고정합니다.
+ * 22px 픽셀 워드마크는 가로 190px 를 차지하므로 면적 대비로 종속됩니다.
+ * 자산은 72px(3x) webp — 원본 421px PNG 75.6 KB → 1.7 KB.
+ */
+.memoji {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-pill);
+    object-fit: cover;
+}
+
+/*
+ * 🔴 모바일에서는 메모지를 숨깁니다. 실측 근거:
+ *   `Seobisback.log` 는 Galmuri11 22px 에서 가로 190px 를 차지합니다.
+ *   메모지(24) + 갭(8) 을 더하면 222px, 여기에 좌우 여백(12+12)과 아이콘 3개(132),
+ *   사이 갭(12)을 더하면 헤더에 **390px 가 정확히 필요**합니다 — 여유 0.
+ *   360px 기기에서는 워드마크(=사이트 이름)가 잘립니다.
+ *   픽셀 서체는 11의 정수배에서만 선명해 임의 축소가 불가능하므로,
+ *   장식(메모지)을 빼고 이름을 온전히 남기는 쪽을 택했습니다.
+ *   메모지를 뺀 필요 폭은 358px 이라 360px 에서 2px 여유로 들어갑니다.
+ * ⚠️ 358px 미만에서는 그래도 잘립니다(가로 스크롤은 생기지 않음).
+ */
+@media screen and (max-width: 767px) {
+    .memoji {
+        display: none;
+    }
+}

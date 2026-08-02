@@ -1,0 +1,42 @@
+/*
+ * 읽기 진행바 — docs/handoff-step3-post.md §4-1
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ */
+
+.track {
+    position: sticky;
+    /* 헤더 바로 아래에 붙습니다 */
+    top: var(--header-h-desktop);
+    z-index: var(--z-header);
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-border-subtle);
+}
+
+.fill {
+    width: var(--progress, 0%);
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--color-accent-deep),
+        var(--color-accent-fill),
+        var(--color-accent-hover)
+    );
+    transition: width var(--dur-instant) linear;
+}
+
+@media (max-width: 767px) {
+    .track {
+        top: var(--header-h-mobile);
+    }
+}
+
+/*
+ * 저감 모션 — 🔴 **바는 그대로 두고 보간만 끕니다.**
+ * 폭 전환은 위치 이동이 아니라 정보 갱신입니다. 값은 계속 정확히 반영됩니다.
+ */
+@media (prefers-reduced-motion: reduce) {
+    .fill {
+        transition: none;
+    }
+}

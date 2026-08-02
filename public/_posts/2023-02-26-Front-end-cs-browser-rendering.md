@@ -3,7 +3,7 @@ layout: post
 title: "[Front-end CS] 브라우저 렌더링 프로세스"
 date: "2023-02-26"
 author: Seobisback
-tags: [Front-end, Computer Science, Browser]
+tags: [Frontend, Computer Science, Browser]
 categories: Study
 ---
 # Browser Rendering Process
@@ -77,13 +77,13 @@ render tree에 node를 그린다 (2, 3, 4번)
 
 그러므로 아래 과정으로 HTML tag를 parsing 한다.
 
-> <script> tag는 가장 마지막 위치에 위치하는 것이 좋다. <script> 코드를 parsing하고 실행하는 동안 추가적으로 parsing할 HTML tag가 남지 않기 때문 - ‘모든 tag가 parsing과 동시에 실행된 후 <script>로 해당 tag에게 인터렉션을 주거나 조작’
+> `<script>` tag는 가장 마지막 위치에 위치하는 것이 좋다. `<script>` 코드를 parsing하고 실행하는 동안 추가적으로 parsing할 HTML tag가 남지 않기 때문 - ‘모든 tag가 parsing과 동시에 실행된 후 `<script>`로 해당 tag에게 인터렉션을 주거나 조작’
 
-1. <script> tag를 parsing한다.
-2. <script> tag를 실행한다.
+1. `<script>` tag를 parsing한다.
+2. `<script>` tag를 실행한다.
 3. 실행이 완료된 후 다음 tag를 파싱한다.
 
-> <script> tag의 실행이 완료된 후, 다음 tag를 parsing 한다.
+> `<script>` tag의 실행이 완료된 후, 다음 tag를 parsing 한다.
 
 그러므로
 
@@ -102,7 +102,7 @@ HTML5에서 추가된 기능이 있다.
 - render object는 render tree의 구성요소로써, 자신과 자식 요소를 어떻게 배치하고 그려야할지 안다.
 - node의 css box를 표시할 정보를 가지고 있다.
 - 모든 DOM node가 전부 render obejct로 생성되는 것은 아니다.(ex head tag, display none tag 등)
-- `<htmll>`과 `<body>` DOM node 또한 render object로 구성되는데 이들은 render tree root 로써 render view 라고 부른다.
+- `<html>`과 `<body>` DOM node 또한 render object로 구성되는데 이들은 render tree root 로써 render view 라고 부른다.
 - 나머지 DOM node 들은 render object로 생성되어 이 render tree root에 추가된다.
 
 3. 구축한 render tree를 배치(layout)한다.

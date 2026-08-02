@@ -1,0 +1,422 @@
+/*
+ * ============================================================
+ * 디자인 토큰 — 섭우.log
+ * ------------------------------------------------------------
+ * 출처: docs/handoff-step1-shell.md §3 (web-design 확정 명세)
+ *
+ * 소비 규칙
+ *  - 컴포넌트 *.module.css 는 var() 로만 값을 씁니다. 원시 hex 금지
+ *  - 다크가 :root 기본, 라이트는 [data-theme="light"] 에서 덮어씀
+ *  - 새 색·크기가 필요하면 여기서 지어내지 말고 web-design 에 요청
+ * ============================================================
+ */
+
+/* ------------------------------------------------------------
+ * 1. 색 — 다크 (기본)
+ * ---------------------------------------------------------- */
+:root {
+    color-scheme: dark;
+
+    /* 배경 */
+    --color-bg-base: #0a0f1c;
+    --color-bg-surface: #0d1220;
+    --color-bg-raised: #161d30;
+    --color-bg-elevated: #1f273e;
+    --color-bg-overlay: rgba(10, 15, 28, 0.78);
+
+    /* bg-raised 의 RGB 성분. 헤더 스크롤 배경 불투명도 전환(§6-1b) 전용.
+       색을 새로 만든 것이 아니라 --color-bg-raised 를 rgba() 에 쓰기 위한 분해값입니다. */
+    --color-bg-raised-rgb: 22, 29, 48;
+
+    /* 텍스트 */
+    --color-text-primary: #f4ecd2;
+    --color-text-body: #cfd5e4;
+    --color-text-secondary: #b8c0d8;
+    --color-text-muted: #7f8aa8;
+
+    /* 액센트 — 4역할 분리(fill / onFill / text / border)를 반드시 지킬 것.
+       "배경 위에 글자·아이콘으로 놓는 골드"는 항상 --color-accent-text 입니다.
+       fill 을 텍스트에 쓰면 라이트 전환 순간 대비 2.14:1 로 무너집니다. */
+    --color-accent-fill: #e6a536;
+    --color-accent-onFill: #1a1206;
+    --color-accent-text: #e6a536;
+    --color-accent-border: #e6a536;
+    --color-accent-hover: #ffd770;
+    --color-accent-light: #f5b94a;
+    --color-accent-deep: #c98a22;
+    --color-accent-subtle: rgba(230, 165, 54, 0.1);
+
+    /* 보더 */
+    --color-border-subtle: #1a2033;
+    --color-border-default: #232a44;
+    --color-border-strong: #2d3551;
+    --color-border-interactive: #6d7798;
+
+    /* 상태 */
+    --color-status-success: #6fcf7c;
+    --color-status-info: #5fb8e6;
+    --color-status-accent: #c39ad9;
+    --color-status-danger: #ff6b6b;
+
+    /* 카테고리 */
+    --color-cat-survey: #ffd770;
+    --color-cat-study: #c39ad9;
+    --color-cat-activity: #6fcf7c;
+
+    /* 기여 활동(잔디) */
+    --color-grass-0: #232a44;
+    --color-grass-1: #5c4a18;
+    --color-grass-2: #8f6212;
+    --color-grass-3: #c98a22;
+    --color-grass-4: #ffd770;
+
+    /* 포커스 */
+    --color-focus-ring: #ffd770;
+    --color-focus-onFill: #1a1206;
+    --color-focus-glow: rgba(230, 165, 54, 0.28);
+
+    /* 히어로(별자리) 전용 — STEP 2 에서 소비합니다.
+       ⚠️ canvas 는 CSS 변수를 자동으로 읽지 못합니다. 마운트 시·테마 전환 시
+       getComputedStyle(document.documentElement).getPropertyValue(...) 로 읽어
+       캐시하세요. 색을 JS 에 하드코딩하면 테마 전환이 깨집니다. */
+    --color-hero-rule: transparent;
+    --color-hero-orbit: transparent;
+    --color-hero-link-strong: rgba(230, 165, 54, 0.18);
+    --color-hero-link-weak: rgba(230, 165, 54, 0.11);
+    /* 색이 아니라 숫자입니다 */
+    --hero-bloom-alpha: 0.67;
+
+    /* 그림자 */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 -8px 32px rgba(0, 0, 0, 0.55);
+    --shadow-btn-inset: inset 0 1px 0 rgba(255, 235, 170, 0.5),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.28);
+
+    /* ------------------------------------------------------------
+     * STEP 3 제안 → STEP 1 승격 완료 (§3-1a · 2026-08-01)
+     * ------------------------------------------------------------
+     * 8종 중 **6종 채택 · 2종 반려**. 이름 3건이 정정됐고 아래는 확정 이름입니다.
+     *   --color-code-bg        → --color-bg-code        (기존 --color-bg-* 계열 편입)
+     *   --color-code-header-bg → --color-bg-code-header
+     *   --gradient-hero-*      → --gradient-thumb-*     (hero 는 홈 히어로를 가리켜 오해)
+     * ---------------------------------------------------------- */
+
+    /* 코드 블록. 다크에서는 기존 표면 토큰과 같은 값이지만, 라이트에서 갈라지므로
+       이름을 따로 둡니다 — 컴포넌트가 분기를 갖지 않게 하는 것이 목적입니다 */
+    --color-bg-code: #0d1220;
+    --color-bg-code-header: #161d30;
+
+    /* 오버레이(히어로 배지 등) 위 전경. --color-text-primary 의 다크값이
+       테마와 무관하게 필요한 자리입니다 — 오버레이는 항상 어둡습니다(§14-3) */
+    --color-text-onOverlay: #f4ecd2;
+
+    /* 스켈레톤. 🔴 저감 모션에서는 sheen 을 쓰지 않고 base 단색으로 갑니다 */
+    --color-skeleton-base: #131a2c;
+    --color-skeleton-sheen: #1c2440;
+
+    /*
+     * 썸네일 매트. **2종(from/to)입니다** — 카테고리별 3종에서 축소됐습니다(§3-1a).
+     * 사용자가 "썸네일 41편 전량 생성 그래픽 통일" 을 확정하면서 카테고리별
+     * 분기의 전제가 사라졌습니다. 카테고리는 배지·점이 이미 말하고 있습니다.
+     * 플레이스홀더 조형이 변주를 요구하면 그때 확장하세요 — 값을 지어내지
+     * 않기 위해 지금은 2종으로 시작합니다.
+     */
+    --gradient-thumb-from: #7a5210;
+    --gradient-thumb-to: #e6a536;
+}
+
+/* ------------------------------------------------------------
+ * 2. 색 — 라이트
+ * ---------------------------------------------------------- */
+[data-theme='light'] {
+    color-scheme: light;
+
+    --color-bg-base: #efece4;
+    --color-bg-surface: #f7f5ef;
+    --color-bg-raised: #ffffff;
+    --color-bg-elevated: #ffffff;
+    --color-bg-overlay: rgba(23, 28, 43, 0.72);
+
+    --color-bg-raised-rgb: 255, 255, 255;
+
+    --color-text-primary: #171c2b;
+    --color-text-body: #2b3145;
+    --color-text-secondary: #4a5163;
+    --color-text-muted: #5a6072;
+
+    --color-accent-fill: #e6a536;
+    --color-accent-onFill: #1a1206;
+    --color-accent-text: #7d5c0e;
+    --color-accent-border: #a97213;
+    --color-accent-hover: #6b4e0b;
+    --color-accent-light: #f5b94a;
+    --color-accent-deep: #c98a22;
+    --color-accent-subtle: rgba(230, 165, 54, 0.14);
+
+    --color-border-subtle: #e4e0d5;
+    --color-border-default: #ddd8cc;
+    --color-border-strong: #cfc9ba;
+    --color-border-interactive: #7d7768;
+
+    --color-status-success: #1f7a3a;
+    --color-status-info: #1a6d99;
+    --color-status-accent: #6b4a86;
+    --color-status-danger: #c0392b;
+
+    --color-cat-survey: #7d5c0e;
+    --color-cat-study: #6b4a86;
+    --color-cat-activity: #1b6b33;
+
+    --color-grass-0: #e4dfd2;
+    --color-grass-1: #f0c060;
+    --color-grass-2: #dd9a24;
+    --color-grass-3: #b07713;
+    --color-grass-4: #7d5c0e;
+
+    --color-focus-ring: #7d5c0e;
+    --color-focus-onFill: #171c2b;
+    --color-focus-glow: rgba(125, 92, 14, 0.26);
+
+    /* 히어로 — 괘선·궤도는 라이트에만 있습니다 */
+    --color-hero-rule: rgba(23, 28, 43, 0.055);
+    --color-hero-orbit: rgba(23, 28, 43, 0.1);
+    --color-hero-link-strong: rgba(23, 28, 43, 0.3);
+    --color-hero-link-weak: rgba(23, 28, 43, 0.2);
+    --hero-bloom-alpha: 0.3;
+
+    --shadow-sm: 0 1px 3px rgba(23, 28, 43, 0.1);
+    --shadow-md: 0 4px 12px rgba(23, 28, 43, 0.14);
+    --shadow-lg: 0 -8px 32px rgba(23, 28, 43, 0.18);
+    --shadow-btn-inset: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        inset 0 -2px 0 rgba(23, 28, 43, 0.16);
+
+    /* STEP 3 추가 — 라이트 (§14-2) */
+
+    /*
+     * 🔴 코드블록 배경(#f4f1e8)과 페이지 배경(#efece4)의 대비는 **1.045:1** 입니다.
+     *    사실상 구분이 없고, **보더가 유일하게 블록 경계를 만듭니다.**
+     *    라이트에서 코드블록 보더를 빼지 마세요(§6-1).
+     */
+    --color-bg-code: #f4f1e8;
+    --color-bg-code-header: #eae6d9;
+
+    /* 오버레이는 라이트에서도 어둡습니다(rgba(23,28,43,.72)) — 값이 같습니다 */
+    --color-text-onOverlay: #f4ecd2;
+
+    --color-skeleton-base: #e8e4da;
+    --color-skeleton-sheen: #f3f0e8;
+
+    --gradient-thumb-from: #e0b768;
+    --gradient-thumb-to: #f2d79a;
+}
+
+/* ------------------------------------------------------------
+ * 3. 타이포 · 스페이싱 · 모션 · 치수 (테마 무관)
+ * ---------------------------------------------------------- */
+:root {
+    /* 서체 원본. @font-face 선언은 src/styles/fonts.css 에 있습니다.
+       모노의 폴백이 Pretendard 인 것이 핵심입니다 — 모노 서브셋에 한글이 없어서
+       모노 자리에 한글을 넣으면 Pretendard 로 자동 폴백됩니다(§13 7번). */
+    --font-display: 'Galmuri11', 'Pretendard', sans-serif;
+    --font-mono: 'GalmuriMono11', 'Pretendard', ui-monospace, monospace;
+    --font-body: 'Pretendard', -apple-system, system-ui, sans-serif;
+
+    /* ------------------------------------------------------------
+     * 서체 역할 — 자리별 지정을 여기 한 곳에 모읍니다.
+     * ------------------------------------------------------------
+     * 🔴 컴포넌트에서 --font-mono / --font-display 를 직접 쓰지 말고
+     *    반드시 이 레이어를 거치세요.
+     *
+     * 픽셀 서체 사용 규칙 (§3-3a — 전 화면 공통, 예외 없음)
+     *
+     * | 서체          | 허용 크기              | 허용 문자        |
+     * |---------------|------------------------|------------------|
+     * | Galmuri11     | 22/33/44/55/66px       | 한글 포함 전부    |
+     * | Galmuri11     | 11px                   | 라틴·숫자·기호만  |
+     * | GalmuriMono11 | **11px 고정**          | 라틴·숫자·기호만  |
+     * | Pretendard    | 12px 이상 자유         | 전부             |
+     *
+     * 12px·13px 은 11px 그리드의 정수배가 아니라 도트가 뭉개집니다.
+     * 22px 미만에서 픽셀 느낌이 필요하면 크기를 22px 로 올리거나 픽셀을 포기하는
+     * 두 선택지뿐입니다. 중간은 없습니다.
+     * ---------------------------------------------------------- */
+
+    /* 내비 라벨·드로어 항목·검색 플레이스홀더·안내문·연락처 라벨 */
+    --font-ui-label: var(--font-body);
+    /* 메타·날짜·저작권 등 보조 정보 */
+    --font-ui-meta: var(--font-body);
+    /* 경로 표시(▸ ~/...) — **--fs-2xs(11px) 에서만** 씁니다. 라틴 전용 */
+    --font-terminal-path: var(--font-mono);
+    /* 그 밖의 모노 자리(⌘K 등) — **--fs-2xs(11px) 고정, 라틴·숫자·기호만** */
+    --font-mono-11: var(--font-mono);
+
+    /* 축 A — 픽셀(Galmuri11). 11의 배수만 사용. transform: scale() 금지 */
+    --fs-pixel-1: 11px;
+    --fs-pixel-2: 22px;
+    --fs-pixel-3: 33px;
+    --fs-pixel-4: 44px;
+    --fs-pixel-5: 55px;
+    --fs-pixel-6: 66px;
+
+    /*
+     * 축 B — 본문/UI
+     * --fs-2xs(11px) 만 GalmuriMono11 을 쓸 수 있습니다.
+     * --fs-xs(12px)·--fs-sm(13px) 은 11px 그리드의 정수배가 아니므로 **Pretendard** 입니다(§13 1·2번).
+     */
+    --fs-2xs: 11px;
+    --fs-xs: 12px;
+    --fs-sm: 13px;
+    --fs-base: 14px;
+    --fs-md: 15px;
+    --fs-lg: 16px;
+    --fs-xl: 18px;
+    --fs-2xl: 21px;
+
+    /*
+     * 축 C — 글 본문 헤딩 (STEP 3 §14-2 제안)
+     * 축 B(11~21px)는 **UI 용**이라 본문 헤딩을 담지 못합니다. 34px 제목이
+     * 축 B 에 없어서 만든 별도 축이고, 글 상세·작업 상세 전용입니다.
+     * 🔴 픽셀 서체(Galmuri11)를 여기에 쓰지 마세요 — 최장 96자 한글 제목을
+     *    11px 그리드 비트맵으로 조판하면 읽히지 않습니다(§3-4). 전부 Pretendard.
+     * 모바일 값은 Post.module.css 의 미디어쿼리가 덮어씁니다.
+     */
+    --fs-article-h1: 34px;
+    --fs-article-h2: 25px;
+    --fs-article-h3: 20px;
+    --fs-article-h4: 17px;
+
+    /*
+     * 목차 점프 시 헤딩이 sticky 헤더 뒤로 숨는 것을 막는 유일한 장치입니다.
+     * 헤더(48) + 진행바(3) + 여유. 🔴 빠뜨리면 목차가 "눌리는데 안 보이는" 상태가
+     * 됩니다(§5-3). 모바일 값은 아래 미디어쿼리가 덮어씁니다.
+     */
+    --scroll-offset: 120px;
+
+    /* 행간 */
+    --lh-tight: 1.05;
+    --lh-heading: 1.2;
+    --lh-snug: 1.45;
+    --lh-normal: 1.6;
+    --lh-relaxed: 1.8;
+    --lh-mono: 2;
+
+    /* 스페이싱 */
+    --space-px: 2px;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-7: 28px;
+    --space-8: 32px;
+    --space-10: 40px;
+    /* STEP 2 §2-3 이 섹션 상단 간격으로 이 이름을 참조합니다. 4px 스케일 위 값입니다 */
+    --space-11: 44px;
+    --space-12: 48px;
+    --space-14: 56px;
+    --space-16: 64px;
+
+    /* 라운드 */
+    --radius-xs: 2px;
+    --radius-sm: 3px;
+    --radius-md: 4px;
+    --radius-lg: 6px;
+    --radius-xl: 8px;
+    --radius-pill: 999px;
+
+    /* 모션 */
+    --dur-instant: 80ms;
+    --dur-fast: 120ms;
+    --dur-base: 160ms;
+    --dur-slow: 240ms;
+    --dur-slower: 340ms;
+    --ease-emphasized: cubic-bezier(0.2, 0.7, 0.3, 1);
+    --ease-out: ease-out;
+
+    /* 치수 */
+    --container-max: 1180px;
+    --container-narrow: 920px;
+    --measure-reading: 640px;
+    --sidebar-w: 312px;
+    --toc-w: 176px;
+    --tap-min: 44px;
+    --header-h-desktop: 48px;
+    --header-h-mobile: 52px;
+
+    /* z-index */
+    --z-base: 0;
+    --z-sticky: 10;
+    --z-header: 100;
+    --z-dropdown: 200;
+    --z-overlay: 300;
+    --z-modal: 400;
+    --z-toast: 500;
+    --z-tooltip: 600;
+}
+
+/* ------------------------------------------------------------
+ * 3-1. 모바일 파생값
+ * ------------------------------------------------------------
+ * 🔴 `--scroll-offset` 은 **헤더 높이 파생값**이라 헤더가 바뀌는 구간에서
+ *    함께 바뀌어야 합니다. 데스크톱은 헤더 48 + 진행바 3, 모바일은 헤더 52 +
+ *    진행바 3 인데 **모바일 헤더는 아래로 스크롤하면 숨습니다**(useHeaderScroll).
+ *    즉 점프 시 실제로 가려지는 높이가 0~55px 이라 120px 은 과합니다 —
+ *    헤딩 위에 빈 화면이 65px 남고, 390×745 뷰포트에서는 첫 문단이 접힙니다.
+ *    90px 이면 헤더가 보이는 최악의 경우에도 35px 여유가 남습니다.
+ *
+ *    값을 여기 한 곳에만 둡니다. 직전까지 Post.module.css 가 `90px` 을 원시값으로
+ *    갖고 있어 정의처가 둘이었습니다.
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    :root {
+        --scroll-offset: 90px;
+    }
+}
+
+/* ------------------------------------------------------------
+ * 4. 테마 전환 순간 트랜지션 차단 (§5-4)
+ *    토글 시 화면 전체가 훑히듯 바뀌는 것을 막습니다.
+ * ---------------------------------------------------------- */
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+    transition: none !important;
+}
+
+/* ------------------------------------------------------------
+ * 5. 🟡 전환기 별칭 레이어 — --brand-* 9종
+ * ------------------------------------------------------------
+ * 기존 화면(Home / Post / PostCard / PageTitle / Pagination / Profile)이
+ * 아직 --brand-* 를 쓰고 있습니다.
+ *
+ * 🔴 값을 새 토큰에 연결하지 않고 **원래 리터럴 값 그대로 유지**합니다.
+ *    한 번 새 토큰으로 매핑해 봤는데, 아직 전환되지 않은 화면이 깨집니다:
+ *    Post.module.css 는 본문 타이포를 원시 hex(#00243A 등)로 갖고 있고
+ *    페이지 배경도 #ffffff 로 박혀 있습니다. 여기서 --brand-accent 만
+ *    --color-text-primary(다크에서 크림색)로 바꾸면 흰 배경 위에 크림색 제목이
+ *    올라가 글 제목을 읽을 수 없게 됩니다.
+ *    별칭 레이어의 목적은 "기존 화면이 그대로 동작"하는 것이므로(§11 1번),
+ *    전환 완료 전까지는 리터럴 값이 정답입니다.
+ *
+ *    → 결과적으로 다크 테마에서 지금은 "다크 셸 + 라이트 본문"이 됩니다.
+ *      STEP 2(홈)·STEP 3(글 상세)가 각 화면을 토큰으로 옮기면 해소됩니다.
+ *
+ * 🔴 삭제 시점: STEP 2~7 로 전 화면이 새 토큰으로 전환된 뒤.
+ *    지금 지우면 위 6개 파일의 색이 전부 무효값이 됩니다.
+ * ---------------------------------------------------------- */
+:root {
+    --brand-primary: #7886c7;
+    --brand-secondary: #a9b5df;
+    --brand-accent: #2d336b;
+    --brand-neutral: #fff2f2;
+    --brand-gray-black: #333333;
+    --brand-black: #1e293b;
+    --brand-gray-light: #eaeaea;
+    --brand-gray-dark: #9ba3af;
+    --brand-gray-medium: #f1f5f9;
+    /* Pagination.module.css 가 참조하지만 어디에도 정의된 적 없던 변수입니다.
+       (지금까지 무효값이라 배경이 투명하게 렌더됐습니다) */
+    --brand-white: #ffffff;
+}

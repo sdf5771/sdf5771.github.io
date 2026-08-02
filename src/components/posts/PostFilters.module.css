@@ -1,0 +1,262 @@
+/*
+ * 카테고리 칩 · 정렬 세그먼트 · 「적용된 조건」 바.
+ * 명세: docs/handoff-step4-list.md §2-5 · §5-2 · §8-2 · §10-1
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다.
+ */
+
+/* ------------------------------------------------------------
+ * 컨트롤 공통 — 40px, 터치 구간에서 44px 로 승격
+ * ------------------------------------------------------------
+ * 40px 은 마우스 정밀도를 전제하며 WCAG 2.5.8(AA) 24×24 를 충족합니다.
+ * pointer: coarse 에서만 44px 로 올려 STEP 1 §10 체크리스트를 만족시킵니다 —
+ * 데스크톱까지 44px 로 키우면 컨트롤 행이 불필요하게 두꺼워집니다.
+ * ---------------------------------------------------------- */
+
+.chips {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    min-width: 0;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: 40px;
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-surface);
+    color: var(--color-text-secondary);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.chip:hover {
+    border-color: var(--color-border-interactive);
+    color: var(--color-text-primary);
+}
+
+/*
+ * 활성 칩. accent-subtle 배경 **단독으로 표시하지 않습니다** — 바탕 대비가
+ * 라이트 1.09:1 / 다크 1.15:1 이라 배경 경계가 보이지 않습니다(§10-1).
+ * 테두리 + 글자색 + aria-current 를 함께 씁니다.
+ */
+.chip[aria-current='true'] {
+    border-color: var(--color-accent-border);
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent-text);
+}
+
+.chip_count {
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+.chip[aria-current='true'] .chip_count {
+    color: var(--color-accent-text);
+}
+
+.chip_ratio {
+    height: 3px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-border-strong);
+    flex-shrink: 0;
+}
+
+.chip[aria-current='true'] .chip_ratio {
+    background-color: var(--color-accent-border);
+}
+
+/* ------------------------------------------------------------
+ * 정렬 세그먼트
+ * ---------------------------------------------------------- */
+.segment {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-surface);
+    overflow: hidden;
+}
+
+.segment_option {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 var(--space-3);
+    color: var(--color-text-secondary);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        background-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.segment_option + .segment_option {
+    border-left: 1px solid var(--color-border-default);
+}
+
+.segment_option:hover {
+    color: var(--color-text-primary);
+}
+
+/* 활성 옵션도 배경 단독 금지 — 글자색이 실제 구분 채널입니다 */
+.segment_option[aria-current='true'] {
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent-text);
+    font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+ * 「적용된 조건」 바
+ * ---------------------------------------------------------- */
+.applied {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-accent-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-accent-subtle);
+}
+
+.applied_label {
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.applied_list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    min-width: 0;
+}
+
+.applied_item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-1) var(--space-1) var(--space-3);
+    border: 1px solid var(--color-accent-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-surface);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    color: var(--color-text-primary);
+    max-width: 100%;
+    min-width: 0;
+}
+
+.applied_item > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.applied_clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: var(--fs-lg);
+    line-height: 1;
+    transition: color var(--dur-base) var(--ease-out);
+}
+
+.applied_clear:hover {
+    color: var(--color-accent-text);
+}
+
+.applied_reset {
+    margin-left: auto;
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--color-accent-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ------------------------------------------------------------
+ * 터치 승격 — 마우스가 아닌 입력에서만 44px
+ * ---------------------------------------------------------- */
+@media (pointer: coarse) {
+    .chip,
+    .segment_option {
+        height: var(--tap-min);
+    }
+
+    .applied_clear {
+        width: var(--tap-min);
+        height: var(--tap-min);
+    }
+}
+
+/* ------------------------------------------------------------
+ * 모바일 — 칩 행은 가로 스크롤
+ * ------------------------------------------------------------
+ * 줄바꿈이 아니라 가로 스크롤입니다. 4개뿐이라 390px 에서 대부분 들어가지만,
+ * 넘칠 때 두 번째 줄이 생기면 정렬 컨트롤과 세로 위치가 어긋납니다.
+ *
+ * 🔴 가로 스크롤은 **이 행 안에서만** 일어납니다. <body>·페이지 컨테이너에는
+ *    360px 에서도 가로 스크롤이 생기면 안 됩니다(§10-4).
+ *
+ * ⚠️ 시안은 컨테이너 좌우 여백만큼 **음수 마진**을 줘 칩을 화면 끝까지
+ *    흘립니다. 그대로 옮겼더니 390px 에서 `<html>` 스크롤 폭이 455px 가 되어
+ *    **페이지 전체에 가로 스크롤이 생겼습니다.** 음수 마진은 자기 박스를
+ *    뷰포트 밖으로 넓히는데, 그것을 잘라 줄 조상이 없기 때문입니다
+ *    (여기서 overflow-x: hidden 을 쓰면 스크롤 컨테이너가 생겨 sticky 헤더가
+ *    깨집니다 — STEP 1 이 같은 문제로 셸을 화면 밖으로 옮겼습니다).
+ *    가장자리까지 흘리는 연출보다 §10-4 를 지키는 쪽을 택해, 칩 행은
+ *    컨테이너 여백 안에서 스크롤합니다.
+ * ---------------------------------------------------------- */
+@media (max-width: 767px) {
+    .chips {
+        overflow-x: auto;
+        /* 부모(flex column)가 내용 폭만큼 넓어지는 것을 막습니다 */
+        max-width: 100%;
+        scrollbar-width: none;
+    }
+
+    .chips::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* 칩 행 폭에 끌려 늘어나지 않게 자기 크기만 씁니다 */
+    .segment {
+        align-self: flex-start;
+    }
+
+    .applied_reset {
+        margin-left: 0;
+    }
+}

@@ -19,10 +19,84 @@
       "Client",
       "Client Side AI"
     ],
+    "tagSlugs": [
+      "web",
+      "frontend",
+      "ai",
+      "ml",
+      "google",
+      "2025-google-io",
+      "translator",
+      "language-detector",
+      "summarizer",
+      "google-io",
+      "chrome",
+      "browser",
+      "client",
+      "client-side-ai"
+    ],
     "description": "Google I/O 2025 핵심 API 살펴보기",
     "category": "Survey",
     "slug": "2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer",
-    "thumbnail": "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/thumbnail.png"
+    "file": "2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer.md",
+    "thumbnail": "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/thumbnail.png",
+    "readingMinutes": 27,
+    "excerpt": "Google I/O 2025 핵심 API 살펴보기",
+    "imageSizes": {
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/01.png": {
+        "width": 1003,
+        "height": 940
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/02.png": {
+        "width": 1228,
+        "height": 959
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/03.gif": {
+        "width": 1024,
+        "height": 624
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/04.png": {
+        "width": 1265,
+        "height": 847
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/05.png": {
+        "width": 1169,
+        "height": 866
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/06.gif": {
+        "width": 1024,
+        "height": 624
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/07.png": {
+        "width": 1243,
+        "height": 981
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/08.png": {
+        "width": 1170,
+        "height": 820
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/09.gif": {
+        "width": 1024,
+        "height": 624
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/10.jpg": {
+        "height": 538,
+        "width": 1024
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/11.webp": {
+        "width": 1200,
+        "height": 676
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/12.webp": {
+        "width": 1248,
+        "height": 702
+      },
+      "/images/posts/2025-05-26-the-era-of-client-side-ai-your-browser-becomes-translator-language-detector-summarizer/thumbnail.png": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    "series": null
   },
   {
     "title": "2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임 시프트 - WebXR: 공간적 웹 경험과 2025 미래 기술 전망 (2부)",
@@ -45,10 +119,63 @@
       "WebGL",
       "Naver"
     ],
+    "tagSlugs": [
+      "web",
+      "frontend",
+      "design",
+      "ux",
+      "ui",
+      "vr",
+      "ar",
+      "webxr",
+      "apple",
+      "google",
+      "vision-pro",
+      "android-xr",
+      "spatial",
+      "webgl",
+      "naver"
+    ],
     "description": "",
     "category": "Survey",
     "slug": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2",
-    "thumbnail": "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/15.png"
+    "file": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2.md",
+    "thumbnail": "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/15.png",
+    "readingMinutes": 13,
+    "excerpt": "이 글에서는 '2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임 시프트'라는 주제로, 지난 트렌드를 체계적으로 분석하고 앞으로 다가올 변화를 탐색해보고자 합니다.",
+    "imageSizes": {
+      "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/15.png": {
+        "width": 1887,
+        "height": 1626
+      },
+      "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/16.png": {
+        "width": 3804,
+        "height": 1734
+      },
+      "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/17.png": {
+        "width": 2626,
+        "height": 1804
+      },
+      "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/18.png": {
+        "width": 1595,
+        "height": 1013
+      },
+      "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/19.png": {
+        "width": 2306,
+        "height": 1828
+      },
+      "/images/posts/2025-03-14-ux-trends-and-spatial-computing-paradigm-2/20.png": {
+        "width": 2302,
+        "height": 1828
+      }
+    },
+    "series": {
+      "id": "spatial-uxui",
+      "title": "Spatial UX/UI와 웹의 패러다임 시프트",
+      "index": 2,
+      "total": 2,
+      "next": null
+    }
   },
   {
     "title": "2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임 시프트 - UX/UI의 진화와 Spatial UX/UI (1부)",
@@ -71,10 +198,118 @@
       "WebGL",
       "Naver"
     ],
+    "tagSlugs": [
+      "web",
+      "frontend",
+      "design",
+      "ux",
+      "ui",
+      "vr",
+      "ar",
+      "webxr",
+      "apple",
+      "google",
+      "vision-pro",
+      "android-xr",
+      "spatial",
+      "webgl",
+      "naver"
+    ],
     "description": "",
     "category": "Survey",
     "slug": "2025-03-13-ux-trends-and-spatial-computing-paradigm-1",
-    "thumbnail": "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1/01.jpg"
+    "file": "2025-03-13-ux-trends-and-spatial-computing-paradigm-1.md",
+    "thumbnail": "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1/01.jpg",
+    "readingMinutes": 22,
+    "excerpt": "이 글에서는 '2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임 시프트'라는 주제로, 지난 트렌드를 체계적으로 분석하고 앞으로 다가올 변화를 탐색해보고자 합니다.",
+    "imageSizes": {
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//01.jpg": {
+        "height": 430,
+        "width": 575
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02.jpg": {
+        "height": 549,
+        "width": 966
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02-1.jpg": {
+        "height": 549,
+        "width": 966
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02-2.jpg": {
+        "height": 327,
+        "width": 220
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//02-3.png": {
+        "width": 1000,
+        "height": 900
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//03.jpg": {
+        "height": 340,
+        "width": 890
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//04.png": {
+        "width": 1800,
+        "height": 705
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//05.png": {
+        "width": 2236,
+        "height": 1844
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//06.png": {
+        "width": 2085,
+        "height": 1197
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//07.png": {
+        "width": 1824,
+        "height": 2007
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//08.png": {
+        "width": 3062,
+        "height": 1986
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//09.png": {
+        "width": 3068,
+        "height": 1954
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//10-1.png": {
+        "width": 2075,
+        "height": 1125
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//10.png": {
+        "width": 2620,
+        "height": 1746
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//11.png": {
+        "width": 1684,
+        "height": 1334
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//12.png": {
+        "width": 1752,
+        "height": 1320
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//13.png": {
+        "width": 2046,
+        "height": 1808
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1//14.png": {
+        "width": 1960,
+        "height": 1716
+      },
+      "/images/posts/2025-03-13-ux-trends-and-spatial-computing-paradigm-1/01.jpg": {
+        "height": 430,
+        "width": 575
+      }
+    },
+    "series": {
+      "id": "spatial-uxui",
+      "title": "Spatial UX/UI와 웹의 패러다임 시프트",
+      "index": 1,
+      "total": 2,
+      "next": {
+        "slug": "2025-03-14-ux-trends-and-spatial-computing-paradigm-2",
+        "title": "2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임 시프트 - WebXR: 공간적 웹 경험과 2025 미래 기술 전망 (2부)"
+      }
+    }
   },
   {
     "title": "MongoDB.local Seoul 2024 - 컨퍼런스 참여 후기",
@@ -85,10 +320,69 @@
       "Conference",
       "Event"
     ],
+    "tagSlugs": [
+      "mongodb",
+      "conference",
+      "event"
+    ],
     "description": "",
     "category": "Activity",
     "slug": "2024-09-04-mongodb-local",
-    "thumbnail": "/images/posts/2024-09-04-mongodb-local/01.png"
+    "file": "2024-09-04-mongodb-local.md",
+    "thumbnail": "/images/posts/2024-09-04-mongodb-local/01.png",
+    "readingMinutes": 11,
+    "excerpt": "[https://www.mongodb.com/ko-kr/events/mongodb-local/seoul] - 일시 및 장소 - 장소 : 서울특별시 송파구 올림픽로 240, 롯데호텔 월드 3층 크리스탈볼룸 - 일시 : 2024년 09월 03일, 화요일 09:00 AM - 05:00 PM KST",
+    "imageSizes": {
+      "/images/posts/2024-09-04-mongodb-local/01.png": {
+        "width": 1812,
+        "height": 935
+      },
+      "/images/posts/2024-09-04-mongodb-local/02.png": {
+        "width": 2266,
+        "height": 1414
+      },
+      "/images/posts/2024-09-04-mongodb-local/03.jpeg": {
+        "height": 4284,
+        "width": 5712
+      },
+      "/images/posts/2024-09-04-mongodb-local/04.jpeg": {
+        "height": 4284,
+        "width": 5712
+      },
+      "/images/posts/2024-09-04-mongodb-local/05.jpeg": {
+        "height": 4284,
+        "width": 5712
+      },
+      "/images/posts/2024-09-04-mongodb-local/06.jpeg": {
+        "height": 4284,
+        "width": 5712
+      },
+      "/images/posts/2024-09-04-mongodb-local/07.jpeg": {
+        "height": 4284,
+        "width": 5712
+      },
+      "/images/posts/2024-09-04-mongodb-local/08.jpeg": {
+        "height": 4284,
+        "width": 5712
+      },
+      "/images/posts/2024-09-04-mongodb-local/09.jpeg": {
+        "height": 4284,
+        "width": 5712
+      },
+      "/images/posts/2024-09-04-mongodb-local/10.jpeg": {
+        "height": 4284,
+        "width": 5712
+      },
+      "/images/posts/2024-09-04-mongodb-local/11.jpeg": {
+        "height": 4284,
+        "width": 5712
+      },
+      "/images/posts/2024-09-04-mongodb-local/13.jpeg": {
+        "height": 4284,
+        "width": 5712
+      }
+    },
+    "series": null
   },
   {
     "title": "[인증과 인가] - 토큰 기반 인증을 풀스택으로 구현해보자 (Next js, Typescript)",
@@ -102,10 +396,40 @@
       "JWT",
       "Login"
     ],
+    "tagSlugs": [
+      "javascript",
+      "typescript",
+      "react",
+      "nextjs",
+      "jwt",
+      "login"
+    ],
     "description": "",
     "category": "Survey",
     "slug": "2024-03-06-jwttoken",
-    "thumbnail": "/images/posts/2024-03-06-jwttoken/jwttoken01.png"
+    "file": "2024-03-06-jwttoken.md",
+    "thumbnail": "/images/posts/2024-03-06-jwttoken/jwttoken01.png",
+    "readingMinutes": 25,
+    "excerpt": "HTTP 프로토콜은 stateless(비상태성) 한 특성을 갖는다. 서버는 클라이언트의 상태를 저장하지 않으며, 직전에 진행한 통신에 관해 기억하지 않는다.",
+    "imageSizes": {
+      "/images/posts/2024-03-06-jwttoken/jwttoken01.png": {
+        "width": 363,
+        "height": 139
+      },
+      "/images/posts/2024-03-06-jwttoken/jwttoken02.png": {
+        "width": 461,
+        "height": 282
+      },
+      "/images/posts/2024-03-06-jwttoken/jwttoken03.png": {
+        "width": 1191,
+        "height": 561
+      },
+      "/images/posts/2024-03-06-jwttoken/jwttoken04.png": {
+        "width": 700,
+        "height": 450
+      }
+    },
+    "series": null
   },
   {
     "title": "(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민",
@@ -116,10 +440,53 @@
       "Browser",
       "Rendering"
     ],
+    "tagSlugs": [
+      "javascript",
+      "browser",
+      "rendering"
+    ],
     "description": "",
     "category": "Survey",
-    "slug": "2023-09-17-Browser-rendering",
-    "thumbnail": "/images/posts/2023-09-17-Browser-rendering/browser01.png"
+    "slug": "2023-09-17-browser-rendering",
+    "file": "2023-09-17-Browser-rendering.md",
+    "thumbnail": "/images/posts/2023-09-17-Browser-rendering/browser01.png",
+    "readingMinutes": 9,
+    "excerpt": "스터디에서 발표 자료를 준비하기 위해 정리하였으며, 프론트엔드 엔지니어 포지션으로 면접을 보며 많이 받은 질문이다. “웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요?”",
+    "imageSizes": {
+      "/images/posts/2023-09-17-Browser-rendering/browser01.png": {
+        "width": 960,
+        "height": 540
+      },
+      "/images/posts/2023-09-17-Browser-rendering/browser02.png": {
+        "width": 810,
+        "height": 823
+      },
+      "/images/posts/2023-09-17-Browser-rendering/browser03.png": {
+        "width": 861,
+        "height": 542
+      },
+      "/images/posts/2023-09-17-Browser-rendering/browser04.png": {
+        "width": 953,
+        "height": 228
+      },
+      "/images/posts/2023-09-17-Browser-rendering/browser05.png": {
+        "width": 900,
+        "height": 420
+      },
+      "/images/posts/2023-09-17-Browser-rendering/browser06.png": {
+        "width": 1570,
+        "height": 924
+      },
+      "/images/posts/2023-09-17-Browser-rendering/browser07.png": {
+        "width": 1022,
+        "height": 254
+      },
+      "/images/posts/2023-09-17-Browser-rendering/browser08.png": {
+        "width": 761,
+        "height": 511
+      }
+    },
+    "series": null
   },
   {
     "title": "Javascript Test - Jest",
@@ -132,10 +499,22 @@
       "Test",
       "Jest"
     ],
+    "tagSlugs": [
+      "react",
+      "javascript",
+      "typescript",
+      "test",
+      "jest"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-09-13-Test-jest-learn",
-    "thumbnail": ""
+    "slug": "2023-09-13-test-jest-learn",
+    "file": "2023-09-13-Test-jest-learn.md",
+    "thumbnail": "",
+    "readingMinutes": 9,
+    "excerpt": "- Facebook에서 만든 테스트 도구이다. - zero config 철학을 가지고 있기 때문에 별도의 설정 없이 빠르게 Test Case를 작성할 수 있다.",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "React에서 Skeleton Loading 만들기",
@@ -145,10 +524,36 @@
       "React",
       "Typescript"
     ],
+    "tagSlugs": [
+      "react",
+      "typescript"
+    ],
     "description": "",
     "category": "Survey",
-    "slug": "2023-07-19-Skeleton-loading",
-    "thumbnail": "/images/posts/2023-07-19-Skeleton-loading/folder_image01.png"
+    "slug": "2023-07-19-skeleton-loading",
+    "file": "2023-07-19-Skeleton-loading.md",
+    "thumbnail": "/images/posts/2023-07-19-Skeleton-loading/folder_image01.png",
+    "readingMinutes": 6,
+    "excerpt": "진행중인 팀 프로젝트에 여러 컨텐츠가 나오게 되면서 UX적인 부분을 개선하기 위해 디자이너님과 로딩에 대해서 고민을 하다가 스켈레톤 로딩을 만들게 되었다.",
+    "imageSizes": {
+      "/images/posts/2023-07-19-Skeleton-loading/skeleton-loading.gif": {
+        "width": 600,
+        "height": 316
+      },
+      "/images/posts/2023-07-19-Skeleton-loading/folder_image01.png": {
+        "width": 407,
+        "height": 140
+      },
+      "/images/posts/2023-07-19-Skeleton-loading/forder_image02.png": {
+        "width": 399,
+        "height": 67
+      },
+      "/images/posts/2023-07-19-Skeleton-loading/source.png": {
+        "width": 725,
+        "height": 557
+      }
+    },
+    "series": null
   },
   {
     "title": "아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1",
@@ -159,10 +564,45 @@
       "DesignPattern",
       "Typescript"
     ],
+    "tagSlugs": [
+      "react",
+      "designpattern",
+      "typescript"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-05-01-AtomicDesignPattern01",
-    "thumbnail": "/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png"
+    "slug": "2023-05-01-atomicdesignpattern01",
+    "file": "2023-05-01-AtomicDesignPattern01.md",
+    "thumbnail": "/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png",
+    "readingMinutes": 7,
+    "excerpt": "- 좀 더 효과적인 컴포넌트를 구성하기 위한 방법론 중 하나이다.",
+    "imageSizes": {
+      "/images/posts/2023-05-01-AtomicDesignPattern01/atom01.png": {
+        "width": 630,
+        "height": 262
+      },
+      "/images/posts/2023-05-01-AtomicDesignPattern01/atom02.png": {
+        "width": 630,
+        "height": 487
+      },
+      "/images/posts/2023-05-01-AtomicDesignPattern01/atom03.png": {
+        "width": 630,
+        "height": 240
+      },
+      "/images/posts/2023-05-01-AtomicDesignPattern01/atom04.png": {
+        "width": 630,
+        "height": 85
+      },
+      "/images/posts/2023-05-01-AtomicDesignPattern01/atom05.png": {
+        "width": 630,
+        "height": 471
+      },
+      "/images/posts/2023-05-01-AtomicDesignPattern01/atom06.png": {
+        "width": 630,
+        "height": 482
+      }
+    },
+    "series": null
   },
   {
     "title": "[Next JS] 학습 01 - 프로젝트 생성 및 개념 공부",
@@ -173,10 +613,45 @@
       "SEO",
       "NextJS"
     ],
+    "tagSlugs": [
+      "react",
+      "seo",
+      "nextjs"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-25-Next-js-practice",
-    "thumbnail": "/images/posts/2023-04-25-Next-js-practice/next-js-01.png"
+    "slug": "2023-04-25-next-js-practice",
+    "file": "2023-04-25-Next-js-practice.md",
+    "thumbnail": "/images/posts/2023-04-25-Next-js-practice/next-js-01.png",
+    "readingMinutes": 6,
+    "excerpt": "- create-next-app으로 프로젝트를 만들면 여러 옵션을 선택한다. - Would you like to use TypeScript with this project?…",
+    "imageSizes": {
+      "/images/posts/2023-04-25-Next-js-practice/next-js-01.png": {
+        "width": 568,
+        "height": 257
+      },
+      "/images/posts/2023-04-25-Next-js-practice/next-js-02.png": {
+        "width": 422,
+        "height": 570
+      },
+      "/images/posts/2023-04-25-Next-js-practice/next-js-03.png": {
+        "width": 938,
+        "height": 348
+      },
+      "/images/posts/2023-04-25-Next-js-practice/next-js-04.png": {
+        "width": 786,
+        "height": 444
+      },
+      "/images/posts/2023-04-25-Next-js-practice/next-js-05.png": {
+        "width": 2046,
+        "height": 1266
+      },
+      "/images/posts/2023-04-25-Next-js-practice/next-js-06.png": {
+        "width": 2042,
+        "height": 1354
+      }
+    },
+    "series": null
   },
   {
     "title": "Technical SEO를 위한 동적 메타태그 작성 feat.React Project",
@@ -187,10 +662,29 @@
       "SEO",
       "MetaTag"
     ],
+    "tagSlugs": [
+      "react",
+      "seo",
+      "metatag"
+    ],
     "description": "",
     "category": "Survey",
-    "slug": "2023-04-15-Technical-SEO-meta-tag",
-    "thumbnail": "/images/posts/2023-04-15-Technical-SEO-meta-tag/seo01.png"
+    "slug": "2023-04-15-technical-seo-meta-tag",
+    "file": "2023-04-15-Technical-SEO-meta-tag.md",
+    "thumbnail": "/images/posts/2023-04-15-Technical-SEO-meta-tag/seo01.png",
+    "readingMinutes": 5,
+    "excerpt": "현재 작업중인 팀 프로젝트에서 SEO를 위한 메타 태그를 작업하며 공부한 것을 기록해본다. 테크니컬 SEO는 웹 사이트 검색 순위 향상을 위해서 기술적인 요구 사항을 확인하는 과정이다.",
+    "imageSizes": {
+      "/images/posts/2023-04-15-Technical-SEO-meta-tag/seo01.png": {
+        "width": 546,
+        "height": 242
+      },
+      "/images/posts/2023-04-15-Technical-SEO-meta-tag/seo02.png": {
+        "width": 1768,
+        "height": 422
+      }
+    },
+    "series": null
   },
   {
     "title": "API (API, Application Programming Interface)",
@@ -199,10 +693,23 @@
     "keywords": [
       "API"
     ],
+    "tagSlugs": [
+      "api"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-13-API",
-    "thumbnail": "/images/posts/2023-04-13-API/api01.png"
+    "slug": "2023-04-13-api",
+    "file": "2023-04-13-API.md",
+    "thumbnail": "/images/posts/2023-04-13-API/api01.png",
+    "readingMinutes": 2,
+    "excerpt": "- 둘 이상의 컴퓨터 프로그램이 서로 통신하는 방법이자 컴퓨터 사이에 있는 중계 계층을 의미한다.",
+    "imageSizes": {
+      "/images/posts/2023-04-13-API/api01.png": {
+        "width": 650,
+        "height": 530
+      }
+    },
+    "series": null
   },
   {
     "title": "클라우드, SaaS, IaaS, PasS",
@@ -214,10 +721,26 @@
       "IaaS",
       "PasS"
     ],
+    "tagSlugs": [
+      "cloud",
+      "saas",
+      "iaas",
+      "pass"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-13-Cloud-SaaS-IaaS-PaaS",
-    "thumbnail": "/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png"
+    "slug": "2023-04-13-cloud-saas-iaas-paas",
+    "file": "2023-04-13-Cloud-SaaS-IaaS-PaaS.md",
+    "thumbnail": "/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png",
+    "readingMinutes": 1,
+    "excerpt": "- 인터넷을 통해 접근할 수 있는 서버 그리고 그 안에서 구동되는 소프트웨어, 데이터베이스 등을 의미함.",
+    "imageSizes": {
+      "/images/posts/2023-04-13-Cloud-SaaS-IaaS-PaaS/cloud01.png": {
+        "width": 2151,
+        "height": 1560
+      }
+    },
+    "series": null
   },
   {
     "title": "[데이터 포맷]  JSON & XML",
@@ -227,10 +750,19 @@
       "JSON",
       "XML"
     ],
+    "tagSlugs": [
+      "json",
+      "xml"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-13-JSON-XML",
-    "thumbnail": ""
+    "slug": "2023-04-13-json-xml",
+    "file": "2023-04-13-JSON-XML.md",
+    "thumbnail": "",
+    "readingMinutes": 7,
+    "excerpt": "데이터 - 이론을 세우는 데 기초가 되는 사실, 또는 바탕이 되는 자료나 관찰이나 실험, 조사로 얻은 사실이나 자료 등을 의미 데이터는 복잡성을 지닌다.…",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "[Python]백준 : 11660 구간 합 구하기 5",
@@ -240,10 +772,28 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-04-13-Python-Prefix-sum-5",
-    "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum01.jpg"
+    "slug": "2023-04-13-python-prefix-sum-5",
+    "file": "2023-04-13-Python-Prefix-sum-5.md",
+    "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum01.jpg",
+    "readingMinutes": 3,
+    "excerpt": "N×N개의 수가 N×N 크기의 표에 채워져 있다. (x1, y1)부터 (x2, y2)까지 합을 구하는 프로그램을 작성하시오. (x, y)는 x행 y열을 의미한다.",
+    "imageSizes": {
+      "/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum01.jpg": {
+        "height": 2154,
+        "width": 1668
+      },
+      "/images/posts/2023-04-13-Python-Prefix-sum-5/prefixsum02.png": {
+        "width": 2306,
+        "height": 338
+      }
+    },
+    "series": null
   },
   {
     "title": "[Python]백준 : 10986 나머지 합",
@@ -253,24 +803,28 @@
       "Python",
       "CodingTest"
     ],
-    "description": "",
-    "category": "Study",
-    "slug": "2023-04-13-Python-Prefix-sum-reminder",
-    "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg"
-  },
-  {
-    "title": "[Front-end CS] 브라우저 렌더링 프로세스",
-    "date": "2023-02-26",
-    "author": "Seobisback",
-    "keywords": [
-      "Front-end",
-      "Computer Science",
-      "Browser"
+    "tagSlugs": [
+      "python",
+      "codingtest"
     ],
     "description": "",
     "category": "Study",
-    "slug": "2023-02-26-Front-end-cs-browser-rendering",
-    "thumbnail": "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering01.png"
+    "slug": "2023-04-13-python-prefix-sum-reminder",
+    "file": "2023-04-13-Python-Prefix-sum-reminder.md",
+    "thumbnail": "/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg",
+    "readingMinutes": 2,
+    "excerpt": "수 N개 A1, A2, ..., AN이 주어진다. 이때, 연속된 부분 구간의 합이 M으로 나누어 떨어지는 구간의 개수를 구하는 프로그램을 작성하시오.",
+    "imageSizes": {
+      "/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder01.jpg": {
+        "height": 2154,
+        "width": 1668
+      },
+      "/images/posts/2023-04-13-Python-Prefix-sum-reminder/prefix-sum-reminder02.png": {
+        "width": 2302,
+        "height": 342
+      }
+    },
+    "series": null
   },
   {
     "title": "코드 업 : 1920 : (재귀함수) 2진수 변환",
@@ -280,10 +834,19 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-binaryparse",
-    "thumbnail": ""
+    "file": "2023-02-26-codeup-codetest-binaryparse.md",
+    "thumbnail": "",
+    "readingMinutes": 1,
+    "excerpt": "문제 링크 : (재귀함수) 2진수 변환 어떤 10진수 �이 주어지면 2진수로 변환해서 출력하시오. 예) 10 -----> 1010 0 -----> 0",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "코드 업 : 1928 : (재귀함수) 우박수 (3n + 1) (basic)",
@@ -293,10 +856,19 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-collatz-basic",
-    "thumbnail": ""
+    "file": "2023-02-26-codeup-codetest-collatz-basic.md",
+    "thumbnail": "",
+    "readingMinutes": 2,
+    "excerpt": "문제 링크 : (재귀함수) 우박수 (3n+1) (basic) 콜라츠의 추측, 3n + 1 문제, 우박수 문제라고 불리는 이 문제는 다음과 같다.",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "1929 : (재귀함수) 우박수 (3n+1) (reverse)",
@@ -306,10 +878,64 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
     "slug": "2023-02-26-codeup-codetest-collatz-reverse",
-    "thumbnail": ""
+    "file": "2023-02-26-codeup-codetest-collatz-reverse.md",
+    "thumbnail": "",
+    "readingMinutes": 1,
+    "excerpt": "문제 링크 : (재귀함수) 우박수 (3n+1) (reverse) 콜라츠의 추측, 3n + 1 문제, 우박수 문제라고 불리는 이 문제는 다음과 같다.",
+    "imageSizes": {},
+    "series": null
+  },
+  {
+    "title": "[Front-end CS] 브라우저 렌더링 프로세스",
+    "date": "2023-02-26",
+    "author": "Seobisback",
+    "keywords": [
+      "Frontend",
+      "Computer Science",
+      "Browser"
+    ],
+    "tagSlugs": [
+      "frontend",
+      "computer-science",
+      "browser"
+    ],
+    "description": "",
+    "category": "Study",
+    "slug": "2023-02-26-front-end-cs-browser-rendering",
+    "file": "2023-02-26-Front-end-cs-browser-rendering.md",
+    "thumbnail": "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering01.png",
+    "readingMinutes": 7,
+    "excerpt": "- Browser Elements - Browser Rendering Process - rendering engine(webkit) working process - HTML, CSS parsing process - render process",
+    "imageSizes": {
+      "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering01.png": {
+        "width": 500,
+        "height": 339
+      },
+      "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering02.png": {
+        "width": 601,
+        "height": 66
+      },
+      "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering03.png": {
+        "width": 625,
+        "height": 289
+      },
+      "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering04.png": {
+        "width": 400,
+        "height": 218
+      },
+      "/images/posts/2023-02-26-Front-end-cs-browser-rendering/browser-rendering05.png": {
+        "width": 625,
+        "height": 290
+      }
+    },
+    "series": null
   },
   {
     "title": "[Python] - 구현: 시뮬레이션과 완전 탐색",
@@ -319,10 +945,48 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-02-02-Python-implementation-bruteforce",
-    "thumbnail": "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png"
+    "slug": "2023-02-02-python-implementation-bruteforce",
+    "file": "2023-02-02-Python-implementation-bruteforce.md",
+    "thumbnail": "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png",
+    "readingMinutes": 12,
+    "excerpt": "- 구현이란, 머릿속에 있는 알고리즘을 소스코드로 바꾸는 과정이다.",
+    "imageSizes": {
+      "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation01.png": {
+        "width": 1390,
+        "height": 530
+      },
+      "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation02.png": {
+        "width": 1574,
+        "height": 662
+      },
+      "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation03.png": {
+        "width": 518,
+        "height": 506
+      },
+      "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation04.png": {
+        "width": 523,
+        "height": 172
+      },
+      "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation05.png": {
+        "width": 672,
+        "height": 642
+      },
+      "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation06.png": {
+        "width": 502,
+        "height": 302
+      },
+      "/images/posts/2023-02-02-Python-implementation-bruteforce/implementation07.png": {
+        "width": 1000,
+        "height": 584
+      }
+    },
+    "series": null
   },
   {
     "title": "[Python] - 그리디 알고리즘",
@@ -332,10 +996,32 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-02-01-Python-greedy-algorithm",
-    "thumbnail": "/images/posts/2023-02-01-Python-greedy-algorithm/greedy_01.png"
+    "slug": "2023-02-01-python-greedy-algorithm",
+    "file": "2023-02-01-Python-greedy-algorithm.md",
+    "thumbnail": "/images/posts/2023-02-01-Python-greedy-algorithm/greedy_01.png",
+    "readingMinutes": 7,
+    "excerpt": "- 그리디 알고리즘(탐욕법)은 현재 상황에서 지금 당장 좋은 것만 고르는 방법을 의미한다. - 일반적인 그리디 알고리즘은 문제를 풀기 위한 최소한의 아이디어를 떠올릴 수 있는 능력을 요구한다.…",
+    "imageSizes": {
+      "/images/posts/2023-02-01-Python-greedy-algorithm/greedy_01.png": {
+        "width": 529,
+        "height": 536
+      },
+      "/images/posts/2023-02-01-Python-greedy-algorithm/greedy_02.png": {
+        "width": 579,
+        "height": 422
+      },
+      "/images/posts/2023-02-01-Python-greedy-algorithm/greedy_03.png": {
+        "width": 511,
+        "height": 391
+      }
+    },
+    "series": null
   },
   {
     "title": "[Python] - 그래프 탐색 알고리즘 : DFS/BFS",
@@ -345,10 +1031,32 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-30-Python-dfs-bfs",
-    "thumbnail": "/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_01.png"
+    "slug": "2023-01-30-python-dfs-bfs",
+    "file": "2023-01-30-Python-dfs-bfs.md",
+    "thumbnail": "/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_01.png",
+    "readingMinutes": 14,
+    "excerpt": "- 탐색(Search)이란 많은 양의 데이터 중에서 원하는 데이터를 찾는 과정을 말한다. - 대표적인 그래프 탐색 알고리즘으로는 DFS와 BFS가 있다.…",
+    "imageSizes": {
+      "/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_01.png": {
+        "width": 2000,
+        "height": 1596
+      },
+      "/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_02.png": {
+        "width": 2000,
+        "height": 1618
+      },
+      "/images/posts/2023-01-30-Python-dfs-bfs/dfs_bfs_03.png": {
+        "width": 2000,
+        "height": 2000
+      }
+    },
+    "series": null
   },
   {
     "title": "[Python] - 동적 프로그래밍 : 피보나치 수",
@@ -358,10 +1066,28 @@
       "Python",
       "CodingTest"
     ],
+    "tagSlugs": [
+      "python",
+      "codingtest"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-30-Python-pibonacci",
-    "thumbnail": "/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png"
+    "slug": "2023-01-30-python-pibonacci",
+    "file": "2023-01-30-Python-pibonacci.md",
+    "thumbnail": "/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png",
+    "readingMinutes": 4,
+    "excerpt": "프로그래머스 문제 (링크) - https://school.programmers.co.kr/learn/courses/30/lessons/12945",
+    "imageSizes": {
+      "/images/posts/2023-01-30-Python-pibonacci/pibonacci_result.png": {
+        "width": 542,
+        "height": 608
+      },
+      "/images/posts/2023-01-30-Python-pibonacci/pibonacci_result2.png": {
+        "width": 1117,
+        "height": 359
+      }
+    },
+    "series": null
   },
   {
     "title": "React Query + 상태 + 상태 관리 [1편]",
@@ -373,10 +1099,30 @@
       "State",
       "StateManagement"
     ],
+    "tagSlugs": [
+      "react",
+      "reactnative",
+      "state",
+      "statemanagement"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-13-ReactQuery-State-StateManagement-01",
-    "thumbnail": ""
+    "slug": "2023-01-13-reactquery-state-statemanagement-01",
+    "file": "2023-01-13-ReactQuery-State-StateManagement-01.md",
+    "thumbnail": "",
+    "readingMinutes": 3,
+    "excerpt": "React Query + 상태 + 상태 관리 [1편] 우선적으로 React Query에 이야기를 하시기 전에 상태에 관한 이야기로 세미나의 서두를 띄우셨다.",
+    "imageSizes": {},
+    "series": {
+      "id": "react-query-state",
+      "title": "React Query와 상태 관리",
+      "index": 1,
+      "total": 2,
+      "next": {
+        "slug": "2023-01-13-reactquery-state-statemanagement-02",
+        "title": "React Query + 상태 + 상태 관리 [2편]"
+      }
+    }
   },
   {
     "title": "React Query + 상태 + 상태 관리 [2편]",
@@ -388,10 +1134,27 @@
       "State",
       "StateManagement"
     ],
+    "tagSlugs": [
+      "react",
+      "reactnative",
+      "state",
+      "statemanagement"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-13-ReactQuery-State-StateManagement-02",
-    "thumbnail": ""
+    "slug": "2023-01-13-reactquery-state-statemanagement-02",
+    "file": "2023-01-13-ReactQuery-State-StateManagement-02.md",
+    "thumbnail": "",
+    "readingMinutes": 5,
+    "excerpt": "React Query + 상태 + 상태 관리 [2편] 🌱 DataBase에서 가져온 데이터를 클라이언트에서 보여주기 위해 개발자는 ajax를 이용하는데, 이 때 서버에서 가져오는 데이터를 Server State 라고 한다.",
+    "imageSizes": {},
+    "series": {
+      "id": "react-query-state",
+      "title": "React Query와 상태 관리",
+      "index": 2,
+      "total": 2,
+      "next": null
+    }
   },
   {
     "title": "[Code refactoring] - 원티드 프리온보딩 프론트엔드 챌린지 - 사전과제 리팩토링",
@@ -402,10 +1165,26 @@
       "Refactoring",
       "CodeReview"
     ],
+    "tagSlugs": [
+      "react",
+      "refactoring",
+      "codereview"
+    ],
     "description": "",
     "category": "Activity",
-    "slug": "2023-01-11-Wanted-pre-onboarding-01",
-    "thumbnail": ""
+    "slug": "2023-01-11-wanted-pre-onboarding-01",
+    "file": "2023-01-11-Wanted-pre-onboarding-01.md",
+    "thumbnail": "",
+    "readingMinutes": 3,
+    "excerpt": "원티드에서 프리온보딩 프론트엔드 챌린지를 참여하고 있다. 라이브 세션에 참가하신 개발자 분들이 500명이 넘어서 설마 내 코드가 리뷰되겠어? 라는 생각이 있었는데",
+    "imageSizes": {},
+    "series": {
+      "id": "wanted-preonboarding",
+      "title": "원티드 프리온보딩 챌린지",
+      "index": 1,
+      "total": 1,
+      "next": null
+    }
   },
   {
     "title": "[Python] - 기본 입출력",
@@ -414,10 +1193,23 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-10-Python-default-input-output",
-    "thumbnail": "/images/posts/2023-01-10-Python-default-input-output/input_output.png"
+    "slug": "2023-01-10-python-default-input-output",
+    "file": "2023-01-10-Python-default-input-output.md",
+    "thumbnail": "/images/posts/2023-01-10-Python-default-input-output/input_output.png",
+    "readingMinutes": 3,
+    "excerpt": "- 모든 프로그램은 적절한 (약속된) 입출력 양식을 가지고 있다.",
+    "imageSizes": {
+      "/images/posts/2023-01-10-Python-default-input-output/input_output.png": {
+        "width": 1290,
+        "height": 279
+      }
+    },
+    "series": null
   },
   {
     "title": "[Python] - 함수, 람다 표현식",
@@ -426,10 +1218,18 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-10-Python-function-lambda",
-    "thumbnail": ""
+    "slug": "2023-01-10-python-function-lambda",
+    "file": "2023-01-10-Python-function-lambda.md",
+    "thumbnail": "",
+    "readingMinutes": 3,
+    "excerpt": "- 함수(Function)란 특정한 작업을 하나의 단위로 묶어 놓은 것을 의미한다. - 함수를 사용하면 불필요한 소스코드의 반복을 줄일 수 있다.",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "[Python] - 조건문, 반복문",
@@ -438,10 +1238,18 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-10-Python-if-for-while",
-    "thumbnail": ""
+    "slug": "2023-01-10-python-if-for-while",
+    "file": "2023-01-10-Python-if-for-while.md",
+    "thumbnail": "",
+    "readingMinutes": 11,
+    "excerpt": "- 조건문은 프로그램의 흐름을 제어하는 문법이다. - 조건문을 이용해 조건에 따라서 프로그램의 로직을 설정할 수 있다. - 파이썬에서는 코드의 블록(Blcok)을 들여쓰기(Indent)로 지정한다.…",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "[Python] - 문자열 자료형, 튜플 자료형",
@@ -450,10 +1258,18 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-10-Python-string-tuple",
-    "thumbnail": ""
+    "slug": "2023-01-10-python-string-tuple",
+    "file": "2023-01-10-Python-string-tuple.md",
+    "thumbnail": "",
+    "readingMinutes": 3,
+    "excerpt": "- 문자열 변수를 초기화할 때는 큰 따옴표(”)나 작은 따옴표(’)를 이용한다. - 문자열 안에 큰 따옴표나 작은 따옴표가 포함되어야 하는 경우가 있다.…",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "[Python] - 집합 자료형, 사전 자료",
@@ -462,10 +1278,18 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-09-Python-dictionary-data-type",
-    "thumbnail": ""
+    "slug": "2023-01-09-python-dictionary-data-type",
+    "file": "2023-01-09-Python-dictionary-data-type.md",
+    "thumbnail": "",
+    "readingMinutes": 4,
+    "excerpt": "- 사전 자료형은 키(Key)와 값(Value)의 쌍을 데이터로 가지는 자료형이다. - 앞서 다루었던 리스트나 튜플이 값을 순차적으로 저장하는 것과는 대비된다.…",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "[Python] - 리스트 자료형",
@@ -474,10 +1298,18 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-08-Python-data-type-list",
-    "thumbnail": ""
+    "slug": "2023-01-08-python-data-type-list",
+    "file": "2023-01-08-Python-data-type-list.md",
+    "thumbnail": "",
+    "readingMinutes": 8,
+    "excerpt": "- 여러 개의 데이터를 연속적으로 담아 처리하기 위해 사용하는 자료형이다. - 사용자 입장에서 C나 자바에서의 배열(Array)의 기능 및 연결 리스트와 유사한 기능을 지원한다.…",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "[Python] - 언더바는 언제 사용하는가?",
@@ -486,10 +1318,18 @@
     "keywords": [
       "Python"
     ],
+    "tagSlugs": [
+      "python"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2023-01-08-Python-under-bar",
-    "thumbnail": ""
+    "slug": "2023-01-08-python-under-bar",
+    "file": "2023-01-08-Python-under-bar.md",
+    "thumbnail": "",
+    "readingMinutes": 1,
+    "excerpt": "- 파이썬에서는 반복을 수행하되 반복을 위한 변수의 값을 무시하고자 할 때 언더바()를 자주 사용한다.",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "Typescript를 사용하는 이유",
@@ -499,22 +1339,48 @@
       "Typescript",
       "Javascript"
     ],
+    "tagSlugs": [
+      "typescript",
+      "javascript"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2022-12-31-Typescript",
-    "thumbnail": ""
+    "slug": "2022-12-31-typescript",
+    "file": "2022-12-31-Typescript.md",
+    "thumbnail": "",
+    "readingMinutes": 10,
+    "excerpt": "- TypeScript는 JavaScript를 기반으로 만들어진 언어이다.",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "Javascript Types",
     "date": "2022-12-27",
     "author": "Seobisback",
     "keywords": [
-      "JavaScript"
+      "Javascript"
+    ],
+    "tagSlugs": [
+      "javascript"
     ],
     "description": "",
     "category": "Study",
-    "slug": "2022-12-27-Javascript-type",
-    "thumbnail": "/images/posts/2022-12-27-Javascript-type/javascript1.png"
+    "slug": "2022-12-27-javascript-type",
+    "file": "2022-12-27-Javascript-type.md",
+    "thumbnail": "/images/posts/2022-12-27-Javascript-type/javascript1.png",
+    "readingMinutes": 1,
+    "excerpt": "- String - Number - Boolean - Null - Undefined - Biglnt - Symbol - Object - Array",
+    "imageSizes": {
+      "/images/posts/2022-12-27-Javascript-type/javascript1.png": {
+        "width": 2878,
+        "height": 1552
+      },
+      "/images/posts/2022-12-27-Javascript-type/javascript2.png": {
+        "width": 2880,
+        "height": 1504
+      }
+    },
+    "series": null
   },
   {
     "title": "ReactHook_useContext + Context API",
@@ -525,10 +1391,25 @@
       "Hooks",
       "Context"
     ],
+    "tagSlugs": [
+      "react",
+      "hooks",
+      "context"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2022-12-27-React-useContext-ContextAPI",
-    "thumbnail": "/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png"
+    "slug": "2022-12-27-react-usecontext-contextapi",
+    "file": "2022-12-27-React-useContext-ContextAPI.md",
+    "thumbnail": "/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png",
+    "readingMinutes": 2,
+    "excerpt": "Context API : Context 는 APP 안에서 전역적으로 사용되는 data를 여러 Component 끼리 공유할 수 있는 방법을 제공한다.",
+    "imageSizes": {
+      "/images/posts/2022-12-27-React-useContext-ContextAPI/React_useContext1.png": {
+        "width": 2848,
+        "height": 1542
+      }
+    },
+    "series": null
   },
   {
     "title": "ReactHook_useMemo",
@@ -539,10 +1420,20 @@
       "Hooks",
       "useMemo"
     ],
+    "tagSlugs": [
+      "react",
+      "hooks",
+      "usememo"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2022-12-27-React-useMemo",
-    "thumbnail": ""
+    "slug": "2022-12-27-react-usememo",
+    "file": "2022-12-27-React-useMemo.md",
+    "thumbnail": "",
+    "readingMinutes": 3,
+    "excerpt": "- Memo 는 Memoization(메모이제이션)을 뜻한다.",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "ReactHook_useRef",
@@ -553,10 +1444,20 @@
       "Hooks",
       "useRef"
     ],
+    "tagSlugs": [
+      "react",
+      "hooks",
+      "useref"
+    ],
     "description": "",
     "category": "Study",
-    "slug": "2022-12-27-React-useRef",
-    "thumbnail": ""
+    "slug": "2022-12-27-react-useref",
+    "file": "2022-12-27-React-useRef.md",
+    "thumbnail": "",
+    "readingMinutes": 3,
+    "excerpt": "- useRef를 사용하는 대표적인 두 가지 상황 - ref는 state와 비슷하게 어떠한 값을 저장해두는 저장공간으로 사용한다.",
+    "imageSizes": {},
+    "series": null
   },
   {
     "title": "React Navigation",
@@ -566,10 +1467,24 @@
       "React",
       "ReactNative"
     ],
+    "tagSlugs": [
+      "react",
+      "reactnative"
+    ],
     "description": "",
     "category": "Survey",
-    "slug": "2022-12-26-React-Navigation",
-    "thumbnail": "/images/posts/2022-12-26-React-Navigation/ReactNavigation1.png"
+    "slug": "2022-12-26-react-navigation",
+    "file": "2022-12-26-React-Navigation.md",
+    "thumbnail": "/images/posts/2022-12-26-React-Navigation/ReactNavigation1.png",
+    "readingMinutes": 5,
+    "excerpt": "이 포스팅은 회사에서 React Native를 사용한 프로젝트를 진행하며, React Navigation에 관해 조사한 내용을 정리한 글이다.",
+    "imageSizes": {
+      "/images/posts/2022-12-26-React-Navigation/ReactNavigation1.png": {
+        "width": 2874,
+        "height": 1418
+      }
+    },
+    "series": null
   },
   {
     "title": "상태 관리 라이브러리 Redux VS MobX",
@@ -581,9 +1496,25 @@
       "Redux",
       "MobX"
     ],
+    "tagSlugs": [
+      "react",
+      "statemanagement",
+      "redux",
+      "mobx"
+    ],
     "description": "",
     "category": "Survey",
-    "slug": "2022-12-26-React-Redux",
-    "thumbnail": "/images/posts/2022-12-26-React-Redux/reactredux1.png"
+    "slug": "2022-12-26-react-redux",
+    "file": "2022-12-26-React-Redux.md",
+    "thumbnail": "/images/posts/2022-12-26-React-Redux/reactredux1.png",
+    "readingMinutes": 6,
+    "excerpt": "회사에서 React로 프로젝트를 진행하게 되어, 상태관리 라이브러리에 관해서 조사를 하게 되었다.",
+    "imageSizes": {
+      "/images/posts/2022-12-26-React-Redux/reactredux1.png": {
+        "width": 1400,
+        "height": 819
+      }
+    },
+    "series": null
   }
 ]

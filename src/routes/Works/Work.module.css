@@ -1,0 +1,244 @@
+/*
+ * 작업 상세 `/works/<slug>`.
+ * 명세: docs/handoff-step7-works.md §6
+ * 색·크기는 전부 src/styles/tokens.css 의 var() 로만 소비합니다 — 원시 hex 금지.
+ *
+ * 🔴 **이 파일에 본문(`.content`) 스타일이 없습니다.** 페이지 골격(`.page`·
+ *    `.article`·`.body`·`.main_column`)과 본문 조판은 `Post.module.css` 를
+ *    **그대로 import 해서 씁니다** — §6-1 이 "복제 금지" 를 명시했고, 700줄짜리
+ *    본문 조판을 옮겨 적으면 그 순간부터 두 상세 화면이 서로 다르게 늙습니다.
+ *    여기에는 **작업 상세에만 있는 것**(브레드크럼·히어로·정의 목록·하단 링크)만
+ *    둡니다.
+ */
+
+.header {
+    padding-top: var(--space-6);
+}
+
+/* ------------------------------------------------------------
+ * 브레드크럼 — `cd .. / ~/works / <slug>`
+ * ------------------------------------------------------------
+ * 🔴 카테고리 세그먼트가 없습니다. 작업에는 카테고리가 없습니다(§6-2 ①).
+ * 🔴 전부 라틴·기호라 GalmuriMono11 **11px** 입니다. 시안의 12px 은 11의 배수가
+ *    아닙니다(§10-1 23번 · §10-4).
+ * ---------------------------------------------------------- */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) 0;
+    font-family: var(--font-terminal-path);
+    font-size: var(--fs-2xs);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.breadcrumb::-webkit-scrollbar {
+    display: none;
+}
+
+.breadcrumb_link {
+    color: var(--color-status-info);
+    text-decoration: none;
+}
+
+.breadcrumb_link:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb_slug {
+    color: var(--color-text-secondary);
+}
+
+/* ------------------------------------------------------------
+ * 히어로 — 생성 그래픽 (§6-4)
+ * ---------------------------------------------------------- */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 220px;
+    margin-top: var(--space-2);
+    border-radius: var(--radius-xl);
+    background-color: var(--color-bg-raised);
+    overflow: hidden;
+}
+
+/*
+ * 96×64 타일을 **비율 그대로** 3배로 놓습니다. viewBox 를 가로로 늘이면
+ * 격자가 찌그러져 조형(격자 + 직각 배선)이 무너집니다.
+ *
+ * 🔴 선택자를 `.hero .hero_glyph` 로 겹칩니다. `WorkGlyph.module.css` 의
+ *    `.glyph` 가 96×64 를 갖고 있어 **한 클래스끼리는 특정도가 같고**, 그러면
+ *    번들 순서가 승자를 정합니다 — 실제로 히어로가 96px 로 렌더됐습니다.
+ */
+.hero .hero_glyph {
+    width: 288px;
+    height: 192px;
+    border-radius: var(--radius-lg);
+    background-color: transparent;
+}
+
+.title {
+    margin: var(--space-6) 0 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-article-h1);
+    font-weight: 800;
+    line-height: var(--lh-heading);
+    letter-spacing: -0.01em;
+    color: var(--color-text-primary);
+    /* 한글 단어 중간에서 잘리면 가독성이 급락합니다 */
+    word-break: keep-all;
+    text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------
+ * 메타 — 정의 목록 (§6-3)
+ * ---------------------------------------------------------- */
+.meta {
+    display: grid;
+    /* 🟡 74px 은 스케일 밖이지만 <dl> 내부 상수입니다. 스케일에 맞추면 80px */
+    grid-template-columns: 74px 1fr;
+    gap: var(--space-2) var(--space-4);
+    margin: var(--space-6) 0 0;
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--color-border-subtle);
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+/* 🔴 라벨은 한글(`기간`·`역할`·`기술 스택`)이라 Pretendard 입니다(§10-1 24번) */
+.meta dt {
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+}
+
+.meta dd {
+    margin: 0;
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-text-secondary);
+}
+
+/* 기간은 라틴·숫자라 GalmuriMono11 11px 통과 */
+.meta_period {
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+}
+
+/* `진행 중` 은 한글이라 Pretendard 로 되돌립니다 */
+.ongoing {
+    font-family: var(--font-ui-meta);
+    font-size: var(--fs-xs);
+    color: var(--color-status-success);
+}
+
+/* 🔴 상세에서는 `+N` 없이 전부 노출합니다. 13개도 wrap 으로 2행 */
+.stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.stack_chip {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 var(--space-2);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-raised);
+    color: var(--color-text-secondary);
+    /* 스택명은 전부 라틴 — 모노 11px 규칙 통과 */
+    font-family: var(--font-mono-11);
+    font-size: var(--fs-2xs);
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+.links a,
+.related {
+    color: var(--color-status-info);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ------------------------------------------------------------
+ * 하단 — 🔴 이전/다음이 없습니다 (§6-2 ④)
+ * ---------------------------------------------------------- */
+.footer {
+    margin-top: var(--space-12);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border-subtle);
+}
+
+/* Pretendard 600 15px — 버튼 타이포(STEP 1 §6-7). 한글이라 픽셀 서체 금지 */
+.back {
+    display: inline-flex;
+    align-items: center;
+    height: var(--tap-min);
+    padding: 0 var(--space-4);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-raised);
+    color: var(--color-text-primary);
+    font-family: var(--font-ui-label);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        color var(--dur-base) var(--ease-out);
+}
+
+.back:hover {
+    border-color: var(--color-accent-border);
+    color: var(--color-accent-text);
+}
+
+/* ------------------------------------------------------------
+ * 반응형 — 히어로 치수는 글 상세와 같습니다 (§6-4)
+ * ---------------------------------------------------------- */
+@media (max-width: 1023px) {
+    .hero {
+        height: 180px;
+    }
+
+    .hero .hero_glyph {
+        width: 240px;
+        height: 160px;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero {
+        height: 150px;
+        border-radius: var(--radius-lg);
+    }
+
+    .hero .hero_glyph {
+        width: 168px;
+        height: 112px;
+    }
+
+    .meta {
+        grid-template-columns: 1fr;
+        gap: var(--space-1) 0;
+    }
+
+    .meta dd {
+        margin-bottom: var(--space-3);
+    }
+}

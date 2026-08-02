@@ -1,0 +1,135 @@
+/*
+ * 404 도트 성좌의 모션.
+ * 명세: docs/handoff-step5-404-about.md §8-2 · §8-3 · §8-4
+ *
+ * 🔴 애니메이션은 「기본값에서 출발해 기본값으로 끝나는 진동」으로 설계합니다.
+ *    그러면 animation: none 일 때 자동으로 올바른 정지 상태가 되고, reduce 전용
+ *    스타일이 따로 필요 없습니다.
+ *
+ * 🔴 무한 반복(infinite)을 쓰지 않습니다. WCAG 2.2.2 는 5초 이상 자동으로 움직이는
+ *    콘텐츠에 정지 수단을 요구하는데, 유한 반복이면 정지 버튼 없이 충족됩니다.
+ *    최장 11.4s 로 사이트 공통 12초 예산 안에서 끝납니다.
+ *
+ * 🔴 animation-fill-mode: both 필수 — 없으면 끝난 뒤 초기값으로 튑니다.
+ *
+ * sin 곡선을 ease-in-out 키프레임으로 근사합니다. 육안으로 구별되지 않고,
+ * rAF 루프와 수명주기 관리가 통째로 사라집니다.
+ */
+
+.constellation {
+    display: block;
+    height: auto;
+    /* width 는 viewBox 와 같은 값에서 인라인으로 옵니다 — 둘이 어긋날 수 없게 */
+    margin: 0 auto;
+    overflow: visible;
+}
+
+/* ------------------------------------------------------------
+ * 도트 반짝임 — 2.4s × 4회 = 9.6s
+ * ---------------------------------------------------------- */
+@keyframes dotTwinkle {
+    /* 기본값 = 최종값. 여기가 reduce 의 정지 상태이기도 합니다 */
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.55;
+    }
+}
+
+.dot {
+    animation: dotTwinkle 2.4s ease-in-out 4 both;
+    animation-delay: var(--twinkle-delay, 0s);
+}
+
+/* ------------------------------------------------------------
+ * 이탈 별 표류 — 11.4s × 1회 (drift 주기 2π/0.55)
+ * ------------------------------------------------------------
+ * cx/cy 에 이미 정지 위치(가시 간격 공식으로 계산 — 데스크톱 drift 1.2)가
+ * 박혀 있고, 여기서는 그 주위를
+ * ±0.42 만큼 흔들기만 합니다. 그래서 translate(0,0) 이 곧 올바른 정지 상태입니다.
+ * ---------------------------------------------------------- */
+@keyframes starDrift {
+    0%,
+    50%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(var(--drift-x), var(--drift-y));
+    }
+
+    75% {
+        transform: translate(calc(var(--drift-x) * -1), calc(var(--drift-y) * -1));
+    }
+}
+
+.star_drift {
+    animation: starDrift 11.4s ease-in-out 1 both;
+}
+
+/* ------------------------------------------------------------
+ * 이탈 별 맥동 — 3.7s × 3회 = 11.1s (pulse 주기 2π/1.7, ±16%)
+ * ---------------------------------------------------------- */
+@keyframes starPulse {
+    0%,
+    50%,
+    100% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.16);
+    }
+
+    75% {
+        transform: scale(0.84);
+    }
+}
+
+.star {
+    /* 원의 중심을 기준으로 커지고 작아지게. 없으면 viewBox 원점 기준이 됩니다 */
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: starPulse 3.7s ease-in-out 3 both;
+}
+
+/* ------------------------------------------------------------
+ * 끊어진 연결선 페이드 인 — 400ms
+ * ---------------------------------------------------------- */
+@keyframes brokenLinkFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.broken_link {
+    animation: brokenLinkFade 400ms var(--ease-out) 1 both;
+}
+
+/* ------------------------------------------------------------
+ * 저감 모션 — 애니메이션 3종 정지
+ * ------------------------------------------------------------
+ * 전역 리셋(global.css)에 의존하지 않고 여기에 명시합니다. 전역 리셋은
+ * animation-duration 만 건드리는데 fill-mode 와의 상호작용이 브라우저마다
+ * 미묘하게 다릅니다.
+ *
+ * 정지해도 정보 손실이 0 입니다 — 「끊어진 연결」은 ① 빈 자리 윤곽
+ * ② 그 윤곽이 비어 있음 ③ 격자 밖 골드 별 ④ 점선, 네 개의 **정적** 요소가
+ * 전부 전달합니다(§4-4).
+ * ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .dot,
+    .star,
+    .star_drift,
+    .broken_link {
+        animation: none;
+    }
+}
