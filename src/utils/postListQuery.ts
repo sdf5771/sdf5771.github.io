@@ -34,7 +34,10 @@ export const POST_SORT_OPTIONS: ReadonlyArray<{ value: PostSortOrder; label: str
 ];
 
 export interface PostListQuery {
-    /** 검색어 원문. 빈 문자열이 기본값 */
+    /**
+     * URL 의 `q` 값 **그대로** — 파싱은 트림하지 않습니다. 빈 문자열이 기본값.
+     * 트림은 직렬화(`buildPostListSearch`)에서만 걸립니다(§4-2a).
+     */
     q: string;
     /** 저장된 대소문자 그대로의 카테고리명. `null` 이 전체(기본값) */
     category: string | null;
@@ -109,7 +112,16 @@ export function buildPostListSearch(currentSearch: string, next: PostListQuery):
         parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
     }
 
-    /* 공백뿐인 검색어는 조건이 아닙니다 — `?q=%20%20` 을 남기지 않습니다 */
+    /*
+     * 🔴 게이트와 값이 **같은 트림값**이어야 합니다(§4-2a). 공백뿐인 검색어는
+     * 조건이 아니라 `?q=%20%20` 이 안 남고, 앞뒤 공백도 잘려 `?q=react%20` 역시
+     * 안 남습니다.
+     *
+     * 값에서 `.trim()` 을 떼면: `?q=react` 에서 `react ` 를 커밋할 때 `search` 가
+     * 달라져 **`replace` 가 `push` 로 바뀌고**, `<ul>` 이 재마운트되어 결과가
+     * 똑같은데 `listFadeUp` 이 다시 재생됩니다. `Posts.tsx` 의 `writtenQueryRef`
+     * 트림과 한 쌍이라 한쪽만 되돌리면 커밋 직후 입력창까지 덮어써집니다(§3-8-5).
+     */
     if (next.q.trim()) {
         parts.push(`q=${encodeURIComponent(next.q.trim())}`);
     }
