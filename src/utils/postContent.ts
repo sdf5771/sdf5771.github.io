@@ -317,11 +317,11 @@ function buildFigure(
  * ---------------------------------------------------------- */
 
 /**
- * `<p>` 를 `<br>` 기준으로 **줄** 단위로 쪼갭니다.
+ * 컨테이너를 `<br>` 기준으로 **줄** 단위로 쪼갭니다.
  *
  * `breaks: true` 라 마크다운의 단일 개행이 전부 `<br>` 이 됩니다. 즉 렌더된
- * `<p>` 하나는 원문에서 **여러 줄**이었고, 이미지와 캡션의 관계는 그 줄 경계에
- * 담겨 있습니다. 줄로 되돌리지 않으면 관계를 볼 수 없습니다.
+ * `<p>`·`<li>` 하나는 원문에서 **여러 줄**이었고, 이미지와 캡션의 관계는 그 줄
+ * 경계에 담겨 있습니다. 줄로 되돌리지 않으면 관계를 볼 수 없습니다.
  */
 function splitParagraphLines(paragraph: HTMLElement): ChildNode[][] {
     const lines: ChildNode[][] = [[]];
@@ -391,110 +391,183 @@ function collectFigureUnits(line: ChildNode[]): FigureUnit[] {
  * 캡션이 같은 `<p>` 안에 `<img><br>텍스트` 로 들어오기 때문입니다.
  *
  * ```
- * <p> 안의 <img> 는 전부 <figure> 로 승격한다.
+ * 블록 수준에 놓인 <img> 는 부모가 무엇이든 전부 <figure> 로 승격한다.
  * 승격 시 그 이미지 직후의 <br> + 텍스트는 <figcaption> 이 된다.
  * 이미지 앞뒤가 모두 텍스트인 경우(인라인 배지 등)에만 승격하지 않는다.
  * ```
  *
- * | 입력 `<p>` | 출력 |
+ * | 입력 줄 | 출력 |
  * |---|---|
  * | `<img>` 단독 | `<figure><img></figure>` |
  * | `<img><br>캡션` | `<figure><img><figcaption>캡션</figcaption></figure>` |
- * | `텍스트<br><img>` | `<p>텍스트</p>` + `<figure><img></figure>` |
+ * | `텍스트<br><img>` | `텍스트` + `<figure><img></figure>` |
  * | `<img><br><img><br>캡션` | 각각 `<figure>`, 캡션은 **직전** 이미지에 |
  * | `텍스트<img>텍스트` | 승격 안 함 — 인라인 이미지 |
  *
+ * 🔴 **부모 태그를 열거하지 않습니다**(2026-08-02 판정).
+ * ------------------------------------------------------------
+ * 직전 구현은 `<p>` 만 훑어서 `<li>` 안 5장이 매트 없이 남았습니다. 목록을
+ * 조건에 추가하는 대신 **배치 수준**으로 규칙을 바꿉니다 — "블록 컨테이너 안에서
+ * 한 줄을 통째로 차지하는 이미지". 그래야 `<blockquote>`·표 칸에 이미지가
+ * 나와도 여기를 다시 고칠 일이 없습니다. 목표 113/113.
+ *
  * ⚠️ §2-3 의 *"이미지 종류를 판별하는 로직을 만들지 마세요"* 가 금지한 것은
- *    **내용 기반 분류**(스크린샷인지 도표인지 추정)입니다. 문단 구조를 보고
- *    승격하는 것은 구조 변환이고, 오히려 "예외 없이 일괄 적용" 을 달성하는
- *    수단입니다.
+ *    **내용 기반 분류**(스크린샷인지 도표인지 추정)입니다. 배치를 보고 승격하는
+ *    것은 구조 변환이고, 오히려 "예외 없이 일괄 적용" 을 달성하는 수단입니다.
  *
  * ⚠️ **`breaks: true` 를 끄지 마세요.** 41편 전체의 줄바꿈 렌더가 바뀝니다.
  */
-function wrapImages(root: HTMLElement, sizes: ImageSizeMap): void {
-    for (const paragraph of Array.from(root.querySelectorAll('p'))) {
-        if (paragraph.querySelector('img') === null) {
-            continue;
+
+/**
+ * 이미지가 놓인 "줄" 의 주인이 되는 블록 컨테이너.
+ * 여기 없는 태그(`<strong>`·`<a>` 등)는 인라인이므로 계속 위로 올라갑니다.
+ */
+const LINE_OWNER_TAGS = new Set(['P', 'LI', 'BLOCKQUOTE', 'TD', 'TH', 'DD', 'DT']);
+
+function findLineOwner(image: Element, root: HTMLElement): HTMLElement | null {
+    let node = image.parentElement;
+
+    while (node && node !== root) {
+        /* 이미 매트 안입니다 — 두 번 감싸지 않습니다 */
+        if (node.tagName === 'FIGURE') {
+            return null;
+        }
+        if (LINE_OWNER_TAGS.has(node.tagName)) {
+            return node;
+        }
+        node = node.parentElement;
+    }
+
+    return null;
+}
+
+/**
+ * 컨테이너 하나를 줄 단위로 훑어 이미지 줄을 `<figure>` 로 바꿉니다.
+ *
+ * 🔴 `<p>` 만 자기 자신을 교체합니다. `<figure>` 는 `<p>` 안에 들어갈 수 없어
+ *    파서가 문단을 강제로 닫아 버리기 때문입니다. `<li>`·`<td>` 등은 `<figure>`
+ *    를 그대로 품을 수 있으므로 **자식만 갈아 끼웁니다** — 목록 구조를 유지해야
+ *    마커 정렬이 흔들리지 않습니다.
+ */
+function promoteImageLines(container: HTMLElement, sizes: ImageSizeMap): void {
+    const document = container.ownerDocument;
+    const isParagraph = container.tagName === 'P';
+    const lines = splitParagraphLines(container);
+
+    /* 승격할 줄이 하나도 없으면 건드리지 않습니다(속성 보강은 호출부에서) */
+    const hasFigureLine = lines.some(
+        line => collectFigureUnits(line).length > 0 && !hasLineText(line),
+    );
+    if (!hasFigureLine) {
+        return;
+    }
+
+    const output: Node[] = [];
+    let pending: ChildNode[][] = [];
+
+    /** 쌓아 둔 텍스트 줄들을 되돌립니다 — 줄 사이의 `<br>` 도 복원 */
+    const flushText = () => {
+        if (pending.length === 0) {
+            return;
         }
 
-        const document = paragraph.ownerDocument;
-        const lines = splitParagraphLines(paragraph);
+        const lifted = pending;
+        pending = [];
 
-        /* 승격할 줄이 하나도 없으면 문단을 건드리지 않습니다(속성 보강은 아래에서) */
-        const hasFigureLine = lines.some(
-            line => collectFigureUnits(line).length > 0 && !hasLineText(line),
-        );
-        if (!hasFigureLine) {
-            continue;
-        }
-
-        const output: Node[] = [];
-        let pending: ChildNode[][] = [];
-
-        /** 쌓아 둔 텍스트 줄들을 `<p>` 하나로 되돌립니다 — 줄 사이의 `<br>` 도 복원 */
-        const flushText = () => {
-            if (pending.length === 0) {
-                return;
-            }
-
-            const block = document.createElement('p');
-            pending.forEach((line, index) => {
-                if (index > 0) {
-                    block.appendChild(document.createElement('br'));
-                }
-                for (const node of line) {
-                    block.appendChild(node);
-                }
-            });
-            pending = [];
-
-            if ((block.textContent ?? '').trim() !== '' || block.querySelector('img')) {
-                output.push(block);
-            }
-        };
-
-        for (let index = 0; index < lines.length; index += 1) {
-            const line = lines[index];
-            const units = collectFigureUnits(line);
-
-            /* 글이 섞인 줄은 승격 대상이 아닙니다(인라인 배지 등) */
-            if (units.length === 0 || hasLineText(line)) {
-                if (line.some(node => !isBlankNode(node))) {
-                    pending.push(line);
-                }
-                continue;
-            }
-
-            flushText();
-
+        if (!isParagraph) {
             /*
-             * 바로 다음 줄이 글뿐이면 그 줄이 캡션입니다. **한 줄만** 가져갑니다 —
-             * 두 줄 이상을 삼키면 본문 문단이 캡션으로 흡수됩니다.
+             * 컨테이너가 그대로 남으므로 원래 줄을 그대로 돌려놓습니다.
+             * `<p>` 로 감싸면 tight 목록이 loose 로 바뀌어 항목 간격이 벌어집니다.
              */
-            const next = lines[index + 1];
-            const captionLine =
-                next && collectFigureUnits(next).length === 0 && hasLineText(next) ? next : null;
-            if (captionLine) {
-                index += 1;
-            }
-
-            units.forEach((unit, unitIndex) => {
-                /* 캡션은 **직전** 이미지의 것입니다 — 한 줄에 이미지가 여럿이면 마지막 */
-                const isLast = unitIndex === units.length - 1;
-                output.push(
-                    buildFigure(unit.image, sizes, unit.carrier, isLast ? captionLine : null),
-                );
+            lifted.forEach((line, index) => {
+                if (index > 0) {
+                    output.push(document.createElement('br'));
+                }
+                output.push(...line);
             });
+            return;
+        }
+
+        const block = document.createElement('p');
+        lifted.forEach((line, index) => {
+            if (index > 0) {
+                block.appendChild(document.createElement('br'));
+            }
+            for (const node of line) {
+                block.appendChild(node);
+            }
+        });
+
+        if ((block.textContent ?? '').trim() !== '' || block.querySelector('img')) {
+            output.push(block);
+        }
+    };
+
+    for (let index = 0; index < lines.length; index += 1) {
+        const line = lines[index];
+        const units = collectFigureUnits(line);
+
+        /* 글이 섞인 줄은 승격 대상이 아닙니다(인라인 배지 등) */
+        if (units.length === 0 || hasLineText(line)) {
+            if (line.some(node => !isBlankNode(node))) {
+                pending.push(line);
+            }
+            continue;
         }
 
         flushText();
 
-        if (output.length > 0) {
-            paragraph.replaceWith(...output);
+        /*
+         * 바로 다음 줄이 글뿐이면 그 줄이 캡션입니다. **한 줄만** 가져갑니다 —
+         * 두 줄 이상을 삼키면 본문 문단이 캡션으로 흡수됩니다.
+         */
+        const next = lines[index + 1];
+        const captionLine =
+            next && collectFigureUnits(next).length === 0 && hasLineText(next) ? next : null;
+        if (captionLine) {
+            index += 1;
+        }
+
+        units.forEach((unit, unitIndex) => {
+            /* 캡션은 **직전** 이미지의 것입니다 — 한 줄에 이미지가 여럿이면 마지막 */
+            const isLast = unitIndex === units.length - 1;
+            output.push(buildFigure(unit.image, sizes, unit.carrier, isLast ? captionLine : null));
+        });
+    }
+
+    flushText();
+
+    if (output.length === 0) {
+        return;
+    }
+
+    if (isParagraph) {
+        container.replaceWith(...output);
+    } else {
+        container.replaceChildren(...output);
+    }
+}
+
+function wrapImages(root: HTMLElement, sizes: ImageSizeMap): void {
+    /*
+     * 이미지에서 **위로** 올라가 주인을 찾습니다. 컨테이너를 셀렉터로 훑으면
+     * `<li><p><img>` 처럼 중첩된 경우 바깥 `<li>` 까지 후보가 되어 같은 이미지를
+     * 두 번 처리하게 됩니다. 가장 가까운 주인 하나만 남깁니다.
+     */
+    const owners = new Set<HTMLElement>();
+
+    for (const image of Array.from(root.querySelectorAll('img'))) {
+        const owner = findLineOwner(image, root);
+        if (owner) {
+            owners.add(owner);
         }
     }
 
-    /* 문단 밖에 있거나 글과 섞인 나머지 — 속성만 보강합니다 */
+    for (const owner of owners) {
+        promoteImageLines(owner, sizes);
+    }
+
+    /* 컨테이너 밖에 있거나 글과 섞인 나머지 — 속성만 보강합니다 */
     for (const image of Array.from(root.querySelectorAll('img'))) {
         applyImageAttributes(image, sizes);
     }
