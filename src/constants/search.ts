@@ -7,6 +7,15 @@
  */
 
 export const SEARCH_PLACEHOLDER = '제목, 태그로 검색';
+/**
+ * `/posts` 인라인 검색의 제출 버튼 라벨 (§3-8-3).
+ *
+ * 🔴 **아이콘 단독으로 바꾸지 마세요.** 입력창 안에 이미 돋보기가 있어 같은
+ *    화면에 돋보기가 둘이 됩니다. 커밋 기반에서는 "쳐도 아무 일이 안 일어나는"
+ *    입력이라 실행 어포던스가 없으면 고장으로 보이고, ⌘K 가 없는 모바일에는
+ *    이 버튼이 Enter 외의 유일한 실행 경로입니다.
+ */
+export const SEARCH_SUBMIT_LABEL = '검색';
 export const SEARCH_SCOPE_HINT = '제목·태그·카테고리에서 찾아요';
 export const SEARCH_INITIAL_HINT = '검색어를 입력하면 결과가 나와요';
 export const SEARCH_EMPTY_TITLE = '일치하는 글이 없어요';
