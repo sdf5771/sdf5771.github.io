@@ -3,7 +3,7 @@ layout: post
 title: "(Deep Dive Study)웹 브라우저에 naver.com URL을 입력하면 어떤 일이 생기나요? + 이론을 통한 렌더링 최적화 고민"
 date: "2023-09-17"
 author: Seobisback
-tags: [Javascript, Browser, Rendering]
+tags: [JavaScript, Browser, Rendering]
 categories: Survey
 ---
 # 🌱  이 토픽에 관해

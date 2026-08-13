@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Javascript Types"
+title: "JavaScript Types"
 date: "2022-12-27"
 author: Seobisback
-tags: [Javascript]
+tags: [JavaScript]
 categories: Study
 ---
 ### 원시 (Primitive) 타입

@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Javascript Test - Jest"
+title: "JavaScript Test - Jest"
 date: "2023-09-13"
 author: Seobisback
-tags: [React, Javascript, Typescript, Test, Jest]
+tags: [React, JavaScript, TypeScript, Test, Jest]
 categories: Study
 ---
 # Jest 란?

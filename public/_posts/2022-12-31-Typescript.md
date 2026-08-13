@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Typescript를 사용하는 이유"
+title: "TypeScript를 사용하는 이유"
 date: "2022-12-31"
 author: Seobisback
-tags: [Typescript, Javascript]
+tags: [TypeScript, JavaScript]
 categories: Study
 ---
 ## 개요
