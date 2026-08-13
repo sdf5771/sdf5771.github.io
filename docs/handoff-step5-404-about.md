@@ -241,7 +241,11 @@ public/_posts/<해당 글>.md 의 프론트매터   tags: [..., Front-end, ...] 
 - §3.3 「자주 틀리는 표기 고정 목록」은 `JavaScript`(Javascript ❌) · `TypeScript`를 명시합니다. **확정된 `Javascript`는 이 목록과 어긋납니다.**
 - §6.8 「글에 적힌 원문 그대로」는 md를 직접 고치는 방식과는 충돌하지 않습니다(원문 자체가 바뀌었으므로).
 - → **본문 산문의 `JavaScript`/`TypeScript`는 §3.3 그대로 두고, 태그 값만 예외**로 두는 것이 정합적입니다. 태그는 저자가 md에 적은 식별자이고, 산문은 노출 문장이기 때문입니다.
-- **§3.3에 「태그 값은 예외」 한 줄 추가**를 요청합니다 (PM 판단 — §12 R-1). 추가하지 않으면 다음 사람이 `Javascript`를 오표기로 보고 되돌립니다.
+- ~~**§3.3에 「태그 값은 예외」 한 줄 추가**를 요청합니다 (PM 판단 — §12 R-1). 추가하지 않으면 다음 사람이 `Javascript`를 오표기로 보고 되돌립니다.~~
+
+> 🔧 **위 두 줄은 반려됐습니다 (2026-08-13). §3.3에 예외를 추가하지 마십시오.**
+> 가이드 소유자가 **§3.3 우선**으로 판정했습니다 — 가이드에 예외를 파는 대신 **데이터를 정본에 맞췄습니다.** 커밋 `f10f9320`이 `public/_posts/` 프론트매터를 `JavaScript`·`TypeScript`로 정정했고(사용자 승인), 그 결과 **원문 자체가 §3.3 정본이라 §6.8과도 어긋나지 않습니다.**
+> 즉 위 줄이 걱정한 *"다음 사람이 `Javascript`를 오표기로 보고 되돌린다"* 는 일이 **실제로 일어났고, 그 방향이 채택됐습니다.** 판정문은 `WRITING_GUIDE §6.13c-3`. **태그 값에 별도 예외는 없습니다.**
 
 **하류 영향 (반드시 전달하세요)**
 
@@ -880,7 +884,7 @@ const { openSearch } = useShell();
 │ $ 자주 쓴 태그                          h2 22px  │
 │ 41편의 글에 가장 많이 붙은 태그입니다.             │
 │ [Python 16][React 14][CodingTest 9]             │
-│ [Javascript 5][Typescript 5][Frontend 4]        │
+│ [JavaScript 5][TypeScript 5][Frontend 4]        │
 │                                                 │
 │ $ 기여 활동                             h2 22px  │
 │ 🌱 자라나라 잔디 잔디                             │
@@ -963,8 +967,8 @@ const ranked = [...counts]
 | 1 | `Python` | 16 | |
 | 2 | `React` | 14 | |
 | 3 | `CodingTest` | 9 | |
-| 4 | `Javascript` | **5** | ✅ 병합 완료 (4+1) — 커밋 `1bf8f691` |
-| 5 | `Typescript` | 5 | 표기 교정 여부 **U-1** |
+| 4 | `JavaScript` | **5** | ✅ 병합 완료 (4+1) — 커밋 `1bf8f691`. 🔧 표기는 커밋 `f10f9320`(2026-08-13)으로 `Javascript` → **`JavaScript`** |
+| 5 | `TypeScript` | 5 | ✅ ~~표기 교정 여부 **U-1**~~ → **U-1 종결 (2026-08-13):** 교정함. `Typescript` → **`TypeScript`** (커밋 `f10f9320`, 사용자 승인) |
 | 6 | `Frontend` | **4** | 🔴 **병합 필요** (3+1) — §3-3 |
 | — | (7위 이하) | 전부 **3** | `Web·Google·Browser·ReactNative·StateManagement·Hooks` 6-way 동점 |
 

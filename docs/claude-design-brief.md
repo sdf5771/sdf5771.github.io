@@ -361,11 +361,11 @@
   최장 제목 실물 (반드시 시안에 넣을 것):
   "2025 이전 UX/UI 트렌드 정리와 향후 Spatial UX/UI가 가져올 웹 개발의 패러다임
    시프트 - WebXR: 공간적 웹 경험과 2025 미래 기술 전망 (2부)"
-  최단 제목 실물: "Javascript Types"
+  최단 제목 실물: "JavaScript Types"
 
 태그: 글당 1~15개 (15개인 글 2편, 14개 1편, 1개인 글 9편)
   총 62종 중 35종이 1회만 등장
-  상위: Python 16 / React 14 / CodingTest 9 / Javascript 5 / Typescript 5
+  상위: Python 16 / React 14 / CodingTest 9 / JavaScript 5 / TypeScript 5
   → 목록·카드에서는 최대 3개 노출 + "+N" 규칙
 
 썸네일: ★41편 중 17편에 이미지가 없습니다
@@ -944,7 +944,7 @@ F. 확정 문구
 G. 목록 행/카드에 반드시 넣을 실제 케이스
 ───────────────────────────────
   · 96자 제목 (모바일에서 2행 클램프, 데스크톱에서 1행 또는 2행)
-  · 16자 제목 ("Javascript Types")
+  · 16자 제목 ("JavaScript Types")
   · 태그 15개 글 (최대 3개 + "+12")
   · 태그 1개 글
   · 썸네일 없는 글
@@ -1022,7 +1022,7 @@ B. 소개 "/about"
 
   섹션: $ 다루는 기술
     ★자기 신고 레벨이 아니라 실제 태그 빈도로★:
-      Python 16 · React 14 · CodingTest 9 · Typescript 5 · Javascript 5
+      Python 16 · React 14 · CodingTest 9 · TypeScript 5 · JavaScript 5
     이 숫자는 41편에 실제로 등장한 횟수입니다. 검증 가능한 사실이라
     자기 평가보다 강한 근거입니다. 각 항목은 해당 태그의 글 목록으로 연결됩니다.
     ✗ Lv.9, 숙련도 %, 별점, 진행 바 — 절대 금지
@@ -1072,7 +1072,7 @@ A. 태그 인덱스 "/tags"
   → 1회성 태그는 글 상세에는 표시하되 링크하지 않습니다.
 
   빈도 분포 (편차가 큽니다):
-    Python 16 / React 14 / CodingTest 9 / Javascript 5 / Typescript 5 /
+    Python 16 / React 14 / CodingTest 9 / JavaScript 5 / TypeScript 5 /
     Frontend 4 / Browser 3 / Google 3 / Hooks 3 / ReactNative 3 /
     ... 나머지는 2회
 

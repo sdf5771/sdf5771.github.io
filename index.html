@@ -41,48 +41,18 @@
     />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Software Engineer Seobisback의 기술 블로그입니다. 공부하거나 조사한 내용을 기록합니다. 프론트엔드, 브라우저, 그리고 그 사이의 이야기를 남깁니다." />
     <meta name="author" content="Seobisback" />
     <meta name="keywords" content="Seobisback, Blog, Frontend, Developer, JavaScript, TypeScript, React, Next.js, Tailwind CSS, HTML, CSS, Web Development" />
     <!--
-      🔴 Open Graph 는 `property=` 입니다 — `name=` 이 아닙니다(OGP 는 RDFa 기반).
-      규격을 엄격히 보는 스크레이퍼(페이스북·링크드인·카카오)는 `name="og:*"` 를
-      읽지 않고 <title> 로 폴백합니다. 아래 문구를 손보면서 `name=` 으로 두면
-      바꾼 문구가 공유 카드에 끝내 나타나지 않습니다.
-      바로 아래 twitter:* 는 반대로 `name=` 이 맞습니다(트위터 카드는 RDFa 가 아님).
+      🔴 라우트별 메타(description · og:* · twitter:* · canonical · 문서 제목)는
+      **빌드가 이 자리에 주입합니다** — 74개 URL 이 각자 자기 값을 말해야 하기
+      때문입니다(agent-log/product.md §14-5 R-4 · R-4a).
+      생성처는 scripts/prerender/meta.ts 이고, 문구의 정본은
+      docs/WRITING_GUIDE.md §6.13 입니다. 여기에 손으로 다시 적지 마세요 —
+      적는 순간 홈만 다른 말을 하기 시작합니다(lessons L15).
+      이 자리 표시가 사라지면 빌드가 멈춥니다.
     -->
-    <meta property="og:title" content="Seobisback.log — Software Engineer" />
-    <meta property="og:description" content="Software Engineer Seobisback의 기술 블로그입니다. 공부하거나 조사한 내용을 기록합니다. 프론트엔드, 브라우저, 그리고 그 사이의 이야기를 남깁니다." />
-    <!--
-      🔴 og:image 는 반드시 절대 URL 입니다. 스크레이퍼(페이스북·슬랙·카카오)는
-      HTML 을 내려받아 서버 밖에서 파싱하므로 `/og/default.png` 같은 상대 경로를
-      해석하지 못합니다. 이전에 `/favicon.ico` 로 두어 미리보기가 비던 것이
-      바로 이 문제였습니다. 경로를 손볼 일이 있어도 도메인을 떼지 마세요.
-      width/height 를 함께 주면 스크레이퍼가 이미지를 다 받기 전에 자리를 잡아
-      미리보기가 더 빨리 뜹니다.
-      근거: docs/handoff-step8-og.md §2-3
-    -->
-    <meta property="og:image" content="https://sdf5771.github.io/og/default.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Seobisback.log — Software Engineer" />
-    <meta property="og:url" content="https://sdf5771.github.io/" />
-    <meta property="og:site_name" content="Seobisback.log" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="ko_KR" />
-    <!--
-      summary 는 정사각 썸네일이라 1200×630 카드의 좌우가 잘립니다.
-      summary_large_image 여야 1.91:1 이 그대로 적용됩니다.
-      twitter:image 도 og:image 와 같은 절대 URL 이어야 합니다 — 상대 경로를
-      남겨 두면 og:image 로 폴백하지 않고 이쪽이 우선돼 미리보기가 깨집니다.
-    -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Seobisback.log — Software Engineer" />
-    <meta name="twitter:description" content="Software Engineer Seobisback의 기술 블로그입니다. 공부하거나 조사한 내용을 기록합니다. 프론트엔드, 브라우저, 그리고 그 사이의 이야기를 남깁니다." />
-    <meta name="twitter:image" content="https://sdf5771.github.io/og/default.png" />
-    <meta name="twitter:image:alt" content="Seobisback.log — Software Engineer" />
-    <meta name="twitter:url" content="https://sdf5771.github.io/" />
-    <title>Seobisback.log — Software Engineer</title>
+    <!-- prerender:meta -->
   </head>
   <body>
     <div id="root"></div>

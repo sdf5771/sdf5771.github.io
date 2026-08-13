@@ -3,7 +3,7 @@ layout: post
 title: "아토믹 디자인 패턴 (Atomic Design Pattern) 공부 및 적용기 #1"
 date: "2023-05-01"
 author: Seobisback
-tags: [React, DesignPattern, Typescript]
+tags: [React, DesignPattern, TypeScript]
 categories: Study
 ---
 # 아토믹 디자인 패턴이란?

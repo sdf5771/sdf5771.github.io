@@ -3,7 +3,7 @@ layout: post
 title: "React에서 Skeleton Loading 만들기"
 date: "2023-07-19"
 author: Seobisback
-tags: [React, Typescript]
+tags: [React, TypeScript]
 categories: Survey
 ---
 ![ezgif.com-video-to-gif (1).gif](/images/posts/2023-07-19-Skeleton-loading/skeleton-loading.gif)

@@ -20,6 +20,17 @@ export const WORDMARK = {
 export const WORDMARK_TEXT = `${WORDMARK.base}${WORDMARK.accent}`;
 
 /**
+ * 배포 도메인 — **절대 URL 의 유일한 정의처입니다**(product.md §14-5 R-3).
+ *
+ * canonical · `og:url` · `og:image` · sitemap `<loc>` · robots 의 `Sitemap:` 이
+ * 전부 여기서 파생됩니다. 도메인을 옮기면 이 한 줄만 고치면 됩니다.
+ *
+ * 🔴 **후행 슬래시를 붙이지 않습니다.** 이 값 + 경로(`/posts/<slug>`)로 URL 을
+ *    만들기 때문이고, 홈은 `${SITE_ORIGIN}/` 로 따로 씁니다.
+ */
+export const SITE_ORIGIN = 'https://sdf5771.github.io';
+
+/**
  * 홈 `<title>`. 홈만 사이트명이 앞에 옵니다 (WRITING_GUIDE §6.13)
  *
  * 🔴 부제에 이름을 넣지 않습니다. 워드마크가 이미 `Seobisback` 을 담고 있어

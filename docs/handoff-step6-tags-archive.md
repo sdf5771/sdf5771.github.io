@@ -303,7 +303,8 @@ tagSlug(s) = normalizeTag(s)
 | **글 상세(STEP 3)의 태그 줄** | **글에 적힌 원문 그대로.** 대소문자 변경 금지 (WRITING_GUIDE §6.8 · STEP 3 §4-4) |
 | **`/tags` 인덱스 카드 · `/tags/:tag` h1 · `<title>`** | **대표 표기** = 그 정규화 키의 원문 중 **최빈 표기**. 동률이면 가장 최근 글의 표기 |
 
-`Javascript` 4회 vs `JavaScript` 1회 → 대표 표기 **`Javascript`**.
+~~`Javascript` 4회 vs `JavaScript` 1회 → 대표 표기 **`Javascript`**.~~
+**→ 🔧 정정 (2026-08-13, 커밋 `f10f9320`): 표기 갈림 자체가 사라져 대표 표기는 `JavaScript`입니다.** 프론트매터가 §3.3 정본으로 정정되어 소스에 `Javascript`가 **0건**이고, `tags-data.json`의 `name`이 `JavaScript`(count 5)입니다. **최빈 표기 규칙은 그대로 유효하지만, 지금 데이터에서는 후보가 하나뿐이라 무연산입니다.** `Typescript` → **`TypeScript`** 도 같습니다.
 
 > 인덱스는 같은 태그를 두 줄로 낼 수 없으므로 대표 표기 선정이 불가피합니다. WRITING_GUIDE §6.8의 "원문 그대로"는 **글 단위 표시**에 대한 규칙이고, 집계 화면에는 적용할 수 없습니다. 두 규칙이 충돌하지 않도록 위 표처럼 적용 범위를 나눕니다. → §16-1 사용자 확인 항목.
 
@@ -342,7 +343,9 @@ tagSlug(s) = normalizeTag(s)
 
 > 부수 확인: `agent-log/product.md` §301은 이미 **`Javascript 5`** 로 적어 두었습니다. 즉 **정규화 기준이 사실상 이미 확정돼 있었고**, 브리프의 `Javascript 4`가 정규화 전 값이었습니다. 이 문서는 product.md 쪽 값을 따릅니다.
 
-> 🟡 **보고만 — 표기 규칙 충돌 1건 (이번 범위 밖).** 대표 표기로 확정된 `Javascript`·`Typescript`는 `WRITING_GUIDE §3.3`의 **고정 표기 목록**(`JavaScript`·`TypeScript`, *"Javascript X"* 라고 명시)과 어긋납니다. §6.8(*"글에 적힌 원문 그대로"*)을 따르면 현재 값이 맞고, §3.3을 따르면 틀립니다. **어느 쪽을 우선할지는 가이드 소유자가 정할 사안**이며, 고치려면 `_posts/` 프론트매터 수정이 필요해 `docs/` 범위를 벗어납니다 → §16-1.
+> ~~🟡 **보고만 — 표기 규칙 충돌 1건 (이번 범위 밖).** 대표 표기로 확정된 `Javascript`·`Typescript`는 `WRITING_GUIDE §3.3`의 **고정 표기 목록**(`JavaScript`·`TypeScript`, *"Javascript X"* 라고 명시)과 어긋납니다. §6.8(*"글에 적힌 원문 그대로"*)을 따르면 현재 값이 맞고, §3.3을 따르면 틀립니다. **어느 쪽을 우선할지는 가이드 소유자가 정할 사안**이며, 고치려면 `_posts/` 프론트매터 수정이 필요해 `docs/` 범위를 벗어납니다 → §16-1.~~
+>
+> ✅ **해소됨 (2026-08-13).** 가이드 소유자가 **§3.3 우선**으로 판정했고, 가이드에 예외를 파는 대신 **데이터를 정본에 맞추는 방향**을 택했습니다 — 커밋 `f10f9320`이 `public/_posts/` 프론트매터를 `JavaScript`·`TypeScript`로 정정(사용자 승인). **이제 §6.8을 따라도 §3.3을 따라도 값이 같아 두 조항은 충돌하지 않습니다.** 근거와 판정문은 `WRITING_GUIDE §6.13c-3`에 있습니다. **§3.3에 「태그 값은 예외」를 추가하는 안은 채택되지 않았습니다.**
 
 **인덱스 27종 확정 목록 (정규화 기준, 빈도 내림차순 → 이름 오름차순)**
 
@@ -351,8 +354,8 @@ tagSlug(s) = normalizeTag(s)
 | Python | 16 | `python` | | Design | 2 | `design` |
 | React | 14 | `react` | | Naver | 2 | `naver` |
 | CodingTest | 9 | `codingtest` | | NextJS | 2 | `nextjs` |
-| Javascript | **5** | `javascript` | | SEO | 2 | `seo` |
-| Typescript | 5 | `typescript` | | Spatial | 2 | `spatial` |
+| JavaScript | **5** | `javascript` | | SEO | 2 | `seo` |
+| TypeScript | 5 | `typescript` | | Spatial | 2 | `spatial` |
 | Browser | 3 | `browser` | | State | 2 | `state` |
 | Frontend | 3 | `frontend` | | UI | 2 | `ui` |
 | Google | 3 | `google` | | UX | 2 | `ux` |
@@ -719,7 +722,7 @@ type PostRowProps = {
 │    └ 「#」는 --color-accent-text · aria-hidden
 │  (여백 --space-5)
 ├─ 자주 쓰는 태그                       --fs-sm (13px) / --color-text-muted
-│  [#Python 16][#CodingTest 9][#Typescript 5][#Javascript 5][#Browser 3][#Frontend 3]
+│  [#Python 16][#CodingTest 9][#TypeScript 5][#JavaScript 5][#Browser 3][#Frontend 3]
 │  (여백 --space-5)
 ├─                                                       [ 최신순 | 오래된순 ]
 │  ────────────────────────────────  border-bottom --color-border-strong
@@ -1446,14 +1449,14 @@ WRITING_GUIDE §6.13 표에 `/tags` 인덱스와 `/archive` 행이 없어 신규
 **태그 정규화 · URL**
 - [ ] `/tags/Android%20XR` 진입 시 `/tags/android-xr`로 `replace` 되고 히스토리에 항목이 늘지 않는다
 - [ ] `/tags/REACT` · `/tags/React` 모두 `/tags/react`로 정규화된다
-- [ ] `/tags/javascript`에 **5편**이 나온다 (`Javascript` 4 + `JavaScript` 1 병합)
+- [ ] `/tags/javascript`에 **5편**이 나온다 (2026-08-13 커밋 `f10f9320` 이후 소스 표기가 `JavaScript` 5건으로 통일돼 **병합 없이 5편**입니다)
 - [ ] `/tags/svelte`(없는 태그) → 404 화면
 - [ ] `/tags/ai`(1회성) → **404가 아니라 글 1편 목록**이 나온다
 - [ ] 빌드 시 slug 충돌·빈 slug·`tagSlugs` 길이 불일치가 있으면 **빌드가 실패**한다
 
 **태그 인덱스**
 - [ ] 카드 **27장**. §3-5 확정 목록과 정확히 일치한다 (`Zustand`·`Storybook`·`AI`·`Chrome` 등이 **없다**)
-- [ ] `Javascript`가 **5**로 표시되고 `span 2` 카드다
+- [ ] `JavaScript`가 **5**로 표시되고 `span 2` 카드다 (🔧 2026-08-13: 이전 기준 `Javascript`. 커밋 `f10f9320`으로 표기가 §3.3 정본이 됐습니다 — 소문자 `s`로 보이면 **실패**입니다)
 - [ ] 티어 필터 칩이 **없다**. `빈도순` / `이름순` 세그먼트가 있다
 - [ ] `이름순`에서 27장이 알파벳 순이고 **한 장도 사라지지 않는다**
 - [ ] 가닥 선의 길이가 마디 클러스터 폭과 같다 (카드 폭 전체로 늘어나지 않는다)
