@@ -364,8 +364,8 @@
   최단 제목 실물: "Javascript Types"
 
 태그: 글당 1~15개 (15개인 글 2편, 14개 1편, 1개인 글 9편)
-  총 64종 중 37종이 1회만 등장
-  상위: Python 16 / React 14 / CodingTest 9 / Typescript 5 / Javascript 4
+  총 62종 중 35종이 1회만 등장
+  상위: Python 16 / React 14 / CodingTest 9 / Javascript 5 / Typescript 5
   → 목록·카드에서는 최대 3개 노출 + "+N" 규칙
 
 썸네일: ★41편 중 17편에 이미지가 없습니다
@@ -1066,14 +1066,14 @@ A. 태그 인덱스 "/tags"
         (포트폴리오 목적에도 기여 — 관심 분야의 시각적 증거)
 
 ■ 실데이터 제약 ★중요★
-  태그가 총 64종인데 ★37종은 단 1번만 등장★합니다.
+  태그가 총 62종인데 ★35종은 단 1번만 등장★합니다.
   전부 보여주면 의미 없는 목록이 됩니다.
   → 2회 이상 등장한 ★27종만★ 노출합니다.
   → 1회성 태그는 글 상세에는 표시하되 링크하지 않습니다.
 
   빈도 분포 (편차가 큽니다):
-    Python 16 / React 14 / CodingTest 9 / Typescript 5 / Javascript 4 /
-    Web 3 / Frontend 3 / Google 3 / Browser 3 / ReactNative 3 /
+    Python 16 / React 14 / CodingTest 9 / Javascript 5 / Typescript 5 /
+    Frontend 4 / Browser 3 / Google 3 / Hooks 3 / ReactNative 3 /
     ... 나머지는 2회
 
 ■ ★판단 요청★
