@@ -7,8 +7,6 @@ import { resolveDocumentTitle } from '../utils/documentTitle';
  *    `resolveDocumentTitle`** 입니다. 빌드타임 프리렌더가 74개 HTML 의 제목을
  *    같은 함수로 만들기 때문에(product.md §14-5 R-5) react 의존이 없는 파일에
  *    두어야 했습니다. 문구를 여기나 프리렌더 쪽에 다시 적지 마세요.
- *
- * 기존 참조 경로(`hooks/useDocumentTitle`)를 깨지 않도록 그대로 다시 내보냅니다.
  */
 
 /**
