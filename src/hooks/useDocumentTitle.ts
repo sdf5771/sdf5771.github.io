@@ -10,7 +10,6 @@ import { resolveDocumentTitle } from '../utils/documentTitle';
  *
  * 기존 참조 경로(`hooks/useDocumentTitle`)를 깨지 않도록 그대로 다시 내보냅니다.
  */
-export { resolveDocumentTitle };
 
 /**
  * 라우트가 바뀔 때 `document.title` 을 갱신합니다.
