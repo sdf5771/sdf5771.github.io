@@ -54,7 +54,14 @@ export function toAbsoluteUrl(path: string): string {
  *    `twitter:*` 는 반대로 `name=` 이 맞습니다(트위터 카드는 RDFa 가 아님).
  */
 export function renderMetaBlock(target: PrerenderTarget): string {
-    const url = toAbsoluteUrl(target.path);
+    /*
+     * 🔴 URL 도 **이스케이프해서** 넣습니다. 지금 slug 가 전부 `[a-z0-9-]` 라
+     *    결과가 같지만, 그것을 보장하는 것은 코드가 아니라 **데이터의 우연**입니다 —
+     *    `toPostSlug` 는 소문자화와 연속 하이픈 정리만 하고 `&`·`"` 를 걷어내지
+     *    않으므로, `Foo & Bar.md` 한 편이면 `href="…/posts/foo & bar"` 가 나옵니다.
+     *    sitemap 의 `<loc>`(plugin.ts)은 이미 이스케이프하고 있어 표기도 갈립니다.
+     */
+    const url = escapeHtmlAttribute(toAbsoluteUrl(target.path));
     const title = escapeHtmlAttribute(target.title);
     const description = escapeHtmlAttribute(target.description);
 

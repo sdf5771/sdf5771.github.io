@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import type { Plugin, ResolvedConfig } from 'vite';
 import { toPostSlug } from '../src/utils/postSlug';
@@ -124,6 +124,33 @@ const REDIRECT_SCRIPT = `
     </script>
 `;
 
+/**
+ * 🔴 404 본문에서 걷어낼 정본 선언.
+ *
+ * 왜 걷어내는가
+ * -------------
+ * `404.html` 은 `dist/index.html` 의 복사본이라, 프리렌더가 메타 자리에 주입한
+ * **홈 canonical 이 그대로 따라옵니다.** 그러면 이 파일이 *"색인하지 마라
+ * (`noindex`) + 내 정본은 홈이다(`canonical`)"* 를 한 문서에서 동시에 말합니다.
+ * 이 파일은 **프리렌더되지 않은 모든 경로**(1회성 태그 35종 · `hasBody=false`
+ * 작업 15건 · 오타 주소 전부)의 실제 응답 본문이므로 그 모순 신호가 계속
+ * 발신되고, 구글은 이 병용을 충돌로 보아 **`noindex` 를 canonical 대상(=홈)에
+ * 전파**할 수 있습니다. 홈이 색인에서 빠지면 이 사이트의 1순위 목적이 무너지고,
+ * Search Console 미등록(결정 #27)이라 **일어나도 관측할 수단이 없습니다.**
+ *
+ * 🔴 `og:url` 은 남깁니다. 색인에 관여하지 않는 **스크레이퍼 전용 신호**이고,
+ *    이 파일의 `og:title`·`og:description`·`og:image` 가 전부 홈 값이라
+ *    `og:url` 만 떼면 카드의 링크만 홈에서 벗어나 오히려 어긋납니다.
+ *    없는 주소를 공유했을 때 홈 카드가 뜨는 것은 의도된 동작입니다.
+ *
+ * 🔴 이 정규식이 헛돌아도(= 아무것도 못 지워도) 여기서는 조용합니다.
+ *    그것을 잡는 것은 **프리렌더 쪽의 독립 검사**입니다 — `prerender/plugin.ts`
+ *    의 `assertNoindexIsolation` 이 74개에는 canonical 이 **있을 것**을, 404 에는
+ *    **없을 것**을 같은 패턴으로 함께 단언합니다. 만드는 쪽과 검사하는 쪽을
+ *    일부러 다른 파일에 두었습니다.
+ */
+const CANONICAL_LINE = /[^\S\r\n]*<link rel="canonical"[^>]*>\r?\n?/g;
+
 interface PostsDataEntry {
     slug: string;
     file: string;
@@ -234,11 +261,36 @@ export default function spaFallbackPlugin(): Plugin {
 
         closeBundle() {
             const outDir = path.resolve(config.root, config.build.outDir);
+            const indexPath = path.join(outDir, 'index.html');
+
+            /*
+             * 🔴 **앞선 오류를 덮지 않습니다.**
+             *
+             * `transformIndexHtml` 이나 프리렌더 대상 수집이 던지면 vite 는
+             * `dist/index.html` 을 쓰지 않은 채로 이 훅을 부릅니다. 예전에는 여기서
+             * 곧장 `readFileSync` 를 해 **ENOENT 가 마지막 오류가 되었고, 화면에는
+             * 그것만 남았습니다** — `targets.ts` 가 「§6.13c-1 이 규격을 보류했습니다 ·
+             * 문구를 여기서 지어내지 마십시오」라고 공들여 적어 둔 안내가 사람에게
+             * 한 번도 도달하지 못했습니다. 멈추기는 하지만 이유는 말해 주지 못하는
+             * 정지였습니다.
+             *
+             * 그래서 파일이 없으면 **아무 일도 하지 않고 물러납니다.** 진짜 원인이
+             * 마지막 오류 자리를 되찾고, 빌드는 그 오류 때문에 그대로 실패합니다.
+             * 성공한 빌드에 `dist/index.html` 이 없는 경우는 없습니다 — 그것이
+             * 엔트리입니다.
+             */
+            if (!existsSync(indexPath)) {
+                config.logger.warn(
+                    '  ⚠️ dist/index.html 이 없어 404 폴백을 건너뜁니다 — ' +
+                        '위에 먼저 난 빌드 오류가 원인입니다(이 플러그인은 그것을 덮지 않습니다).',
+                );
+                return;
+            }
 
             /* 규칙이 어긋난 채로 404.html 을 쓰느니 빌드를 세웁니다 */
             assertNormalizerParity(outDir);
 
-            const indexHtml = readFileSync(path.join(outDir, 'index.html'), 'utf8');
+            const indexHtml = readFileSync(indexPath, 'utf8');
 
             /*
              * charset 선언 **바로 뒤**에 넣습니다. `<head>` 직후에 끼우면 이 블록의
@@ -256,11 +308,16 @@ export default function spaFallbackPlugin(): Plugin {
             }
 
             const insertAt = charsetMatch.index + charsetMatch[0].length;
-            const fallbackHtml =
-                indexHtml.slice(0, insertAt) + REDIRECT_SCRIPT + indexHtml.slice(insertAt);
+            const fallbackHtml = (
+                indexHtml.slice(0, insertAt) +
+                REDIRECT_SCRIPT +
+                indexHtml.slice(insertAt)
+            ).replace(CANONICAL_LINE, '');
 
             writeFileSync(path.join(outDir, '404.html'), fallbackHtml);
-            config.logger.info('  ✅ dist/404.html 생성 (딥링크 폴백 + 구 경로 리다이렉트)');
+            config.logger.info(
+                '  ✅ dist/404.html 생성 (딥링크 폴백 + 구 경로 리다이렉트 · noindex · canonical 없음)',
+            );
         },
     };
 }

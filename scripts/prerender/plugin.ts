@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import type { Plugin, ResolvedConfig } from 'vite';
 import { SITE_ORIGIN } from '../../src/constants/site';
@@ -59,28 +59,92 @@ const FALLBACK_FILE = '404.html';
 
 const NOINDEX_PATTERN = /<meta[^>]+name=["']robots["'][^>]*noindex/i;
 
-interface WrittenPage {
+/**
+ * 🔴 canonical·og:url 을 **찾는 유일한 패턴**입니다. 검사 세 곳이 이것을 공유합니다:
+ *    74개에는 「정확히 하나 있을 것」, `404.html` 에는 「하나도 없을 것」.
+ *    같은 패턴으로 있음과 없음을 함께 단언하므로, 패턴이 고장 나면 404 쪽 단언이
+ *    먼저 터집니다 — 검사기가 스스로를 증명합니다.
+ *    `/g` 를 상수에 박지 않는 이유: `lastIndex` 가 호출 사이에 남아 두 번째
+ *    호출부터 결과가 달라집니다. 필요할 때마다 새로 만듭니다.
+ */
+const CANONICAL_SOURCE = '<link rel="canonical" href="([^"]*)"';
+const OG_URL_SOURCE = '<meta property="og:url" content="([^"]*)"';
+
+function findAll(html: string, source: string): string[] {
+    return [...html.matchAll(new RegExp(source, 'g'))].map(match => match[1]);
+}
+
+/**
+ * 🔴 파싱한 속성값을 원문으로 되돌립니다 — `escapeHtmlAttribute` 의 **역함수**입니다.
+ *    검사가 생성기를 다시 부르는 대신 **되짚기 때문에** 둘이 같이 틀어질 수 없습니다.
+ *    (`&amp;` 를 마지막에 푸는 순서가 중요합니다. 먼저 풀면 `&amp;lt;` 가 `<` 가 됩니다.)
+ */
+function decodeHtmlAttribute(value: string): string {
+    return value
+        .replace(/&quot;/g, '"')
+        .replace(/&gt;/g, '>')
+        .replace(/&lt;/g, '<')
+        .replace(/&amp;/g, '&');
+}
+
+/**
+ * 🔴 절대 URL 에서 경로를 **되꺼냅니다** — `meta.ts` 의 `toAbsoluteUrl` 의 역함수입니다.
+ *    자리를 벗어난 값이면 `null`.
+ *
+ * 🔴 **여기서 `toAbsoluteUrl` 을 부르지 마세요.** 그러면 합격 기준이 구현과 같은
+ *    소스에서 나와 검사가 독립 오라클이기를 그만둡니다 — `toAbsoluteUrl` 이 전
+ *    URL 을 홈으로 돌려주게 망가져도 기대값이 똑같이 홈이 되어 74개가 전부 홈
+ *    canonical 을 단 채 통과합니다. 그것이 이 작업이 고치려던 라이브 증상 자체입니다.
+ *    구성(construct)이 아니라 분해(decompose)로 적은 것도 같은 이유입니다 —
+ *    한 줄짜리 중복처럼 보여서 "그냥 `toAbsoluteUrl` 을 쓰자"로 되돌려지지 않게.
+ */
+function toPathFromAbsolute(absolute: string): string | null {
+    if (!absolute.startsWith(`${SITE_ORIGIN}/`)) {
+        return null;
+    }
+
+    return absolute.slice(SITE_ORIGIN.length);
+}
+
+interface PlannedPage {
     target: PrerenderTarget;
+    /** `outDir` 기준 상대 경로. 홈만 1개, 나머지는 두 벌(R-13) */
     files: string[];
     html: string;
 }
 
-function writePage(outDir: string, target: PrerenderTarget, html: string): WrittenPage {
+/**
+ * 쓰지 않고 **계획만** 세웁니다.
+ *
+ * 🔴 계획과 쓰기를 나눈 이유: 예전에는 148개 파일을 다 쓴 **뒤에** 검사가 돌아,
+ *    검사가 터져도 `dist/` 에 검증되지 않은 산출물이 그대로 남았습니다. 그 상태로
+ *    `gh-pages -d dist` 를 한 번만 돌리면 그대로 배포됩니다. 메모리만 보면 되는
+ *    검사는 이제 전부 쓰기 전에 돕니다.
+ */
+function planPage(target: PrerenderTarget, html: string): PlannedPage {
     /* 홈은 vite 가 이미 쓴 dist/index.html 이 그대로 정답입니다 */
     if (target.path === '/') {
         return { target, files: ['index.html'], html };
     }
 
-    const flat = `${target.path.slice(1)}.html`;
-    const nested = path.join(target.path.slice(1), 'index.html');
+    return {
+        target,
+        files: [`${target.path.slice(1)}.html`, path.join(target.path.slice(1), 'index.html')],
+        html,
+    };
+}
 
-    for (const relative of [flat, nested]) {
-        const full = path.join(outDir, relative);
-        mkdirSync(path.dirname(full), { recursive: true });
-        writeFileSync(full, html);
+function commitPage(outDir: string, page: PlannedPage): void {
+    /* 홈은 vite 가 쓴 것을 그대로 둡니다 — 덮어쓰면 자기 자신을 다시 쓰는 셈입니다 */
+    if (page.target.path === '/') {
+        return;
     }
 
-    return { target, files: [flat, nested], html };
+    for (const relative of page.files) {
+        const full = path.join(outDir, relative);
+        mkdirSync(path.dirname(full), { recursive: true });
+        writeFileSync(full, page.html);
+    }
 }
 
 function renderSitemap(targets: readonly PrerenderTarget[]): string {
@@ -150,7 +214,7 @@ function renderRobots(): string {
  * **예외 목록을 만들지 마세요.** "이 12개는 되고 나머지는 안 됨" 이 되는 순간
  * 손으로 유지하는 목록이 생기고, 틀렸을 때 이 검사가 아무 말도 하지 못합니다.
  */
-function assertNoindexIsolation(outDir: string, pages: readonly WrittenPage[]): void {
+function assertNoindexIsolation(outDir: string, pages: readonly PlannedPage[]): void {
     const leaked = pages
         .filter(page => NOINDEX_PATTERN.test(page.html))
         .flatMap(page => page.files);
@@ -171,31 +235,89 @@ function assertNoindexIsolation(outDir: string, pages: readonly WrittenPage[]): 
                 '   → 404 응답 본문은 색인되면 안 됩니다(handoff-step5 §4-7).',
         );
     }
+
+    /*
+     * 🔴 그리고 **canonical 은 없어야 합니다.**
+     *
+     * `404.html` 은 `dist/index.html` 의 복사본이라 홈 canonical 이 딸려 오기
+     * 쉽습니다. 그러면 한 문서가 *"색인하지 마라 + 내 정본은 홈"* 을 동시에
+     * 말하고, 구글은 이 병용을 충돌로 보아 **`noindex` 를 홈에 전파**할 수
+     * 있습니다. 이 파일은 프리렌더되지 않은 **모든** 경로의 응답 본문이라 그
+     * 신호가 한 번이 아니라 계속 나갑니다.
+     *
+     * 지우는 쪽은 `scripts/spa-fallback-plugin.ts` 이고 검사는 여기입니다 —
+     * 만드는 코드와 검사하는 코드를 일부러 다른 파일·다른 플러그인에 두었습니다.
+     * 74개의 「반드시 있을 것」과 404 의 「반드시 없을 것」이 `CANONICAL_SOURCE`
+     * 하나를 공유하므로, 패턴이 고장 나면 둘 중 하나가 반드시 터집니다.
+     */
+    const fallbackCanonicals = findAll(fallback, CANONICAL_SOURCE);
+
+    if (fallbackCanonicals.length > 0) {
+        throw new Error(
+            `[prerender] dist/${FALLBACK_FILE} 에 canonical 이 있습니다 ` +
+                `(${fallbackCanonicals.length}건): ${fallbackCanonicals.join(', ')}\n` +
+                '   → noindex 와 canonical 을 함께 선언하면 구글이 충돌로 보고\n' +
+                '     noindex 를 canonical 대상(=홈)에 전파할 수 있습니다.\n' +
+                '     spa-fallback-plugin.ts 의 CANONICAL_LINE 이 헛돌았는지 확인하세요.',
+        );
+    }
 }
 
 /**
  * 🔴 R-4 · R-4a. 74개가 각자 **자기 URL** 을 말해야 합니다.
  * 하나라도 홈으로 남으면 언펄러가 홈 카드를 보여주고 검색엔진이 그 페이지를
  * 홈의 중복으로 접습니다 — 이 작업이 고치려는 증상 그 자체입니다.
+ *
+ * 🔴 **기대값을 `toAbsoluteUrl` 로 만들지 않습니다.**
+ *
+ * 예전에는 `const expected = toAbsoluteUrl(page.target.path)` 로 기대값을
+ * 세웠습니다. 그러면 이 검사가 잡는 것은 「메타 블록 ↔ `toAbsoluteUrl` 불일치」
+ * 뿐이고, **`toAbsoluteUrl` 자체가 틀어지는 경우 = 라이브에서 실제로 일어났던
+ * 그 증상**은 그대로 통과합니다. 실제로 그 함수를 「전 URL 홈 반환」으로 바꿔도
+ * 빌드가 `exit 0` 에 `✅ canonical/og:url 자기참조` 를 찍으면서 74개 전부
+ * `og:url=canonical=홈` 인 채로 배포 가능했습니다. 합격 기준이 구현과 같은
+ * 소스에서 나오면 독립 오라클이 아닙니다.
+ *
+ * 그래서 두 층으로 봅니다. 둘은 **서로 다른 것이 망가졌을 때** 웁니다.
+ *
+ *  ① **되짚기** — HTML 에서 URL 을 꺼내 origin 을 떼고, 남은 것이 그 페이지의
+ *    `target.path` 와 글자 그대로 같은지. 생성기를 부르지 않으므로 생성기가
+ *    망가지면 여기서 걸립니다.
+ *  ② **서로 다름** — 74개의 canonical 이 74개 모두 달라야 합니다. `SITE_ORIGIN`
+ *    자체가 흔들려 ①의 origin 판정까지 함께 틀어지는 날에도 이 층은 남습니다.
+ *    "전부 한 값으로 접혔다" 는 것이 우리가 실제로 겪은 사고의 모양입니다.
  */
-function assertSelfReferentialUrls(pages: readonly WrittenPage[]): void {
+function assertSelfReferentialUrls(pages: readonly PlannedPage[]): void {
     const problems: string[] = [];
 
-    for (const page of pages) {
-        const expected = toAbsoluteUrl(page.target.path);
-        const ogUrls = [...page.html.matchAll(/<meta property="og:url" content="([^"]*)"/g)];
-        const canonicals = [...page.html.matchAll(/<link rel="canonical" href="([^"]*)"/g)];
-        const titles = [...page.html.matchAll(/<title>/g)];
-
-        if (ogUrls.length !== 1 || ogUrls[0][1] !== expected) {
-            problems.push(`${page.files[0]} — og:url ${ogUrls.map(m => m[1]).join(',') || '없음'}`);
+    const check = (page: PlannedPage, label: string, found: string[]): string | null => {
+        if (found.length !== 1) {
+            return `${page.files[0]} — ${label} ${found.length}개 (정확히 1개여야 합니다)`;
         }
 
-        if (canonicals.length !== 1 || canonicals[0][1] !== expected) {
-            problems.push(
-                `${page.files[0]} — canonical ${canonicals.map(m => m[1]).join(',') || '없음'}`,
+        const actual = toPathFromAbsolute(decodeHtmlAttribute(found[0]));
+
+        if (actual !== page.target.path) {
+            return (
+                `${page.files[0]} — ${label} 이 "${found[0]}"\n` +
+                `        가리키는 경로 "${actual ?? '(사이트 밖)'}" ≠ 자기 경로 "${page.target.path}"`
             );
         }
+
+        return null;
+    };
+
+    for (const page of pages) {
+        const canonicals = findAll(page.html, CANONICAL_SOURCE);
+
+        problems.push(
+            ...[
+                check(page, 'og:url', findAll(page.html, OG_URL_SOURCE)),
+                check(page, 'canonical', canonicals),
+            ].filter((line): line is string => line !== null),
+        );
+
+        const titles = page.html.match(/<title>/g) ?? [];
 
         if (titles.length !== 1) {
             problems.push(`${page.files[0]} — <title> ${titles.length}개`);
@@ -207,6 +329,139 @@ function assertSelfReferentialUrls(pages: readonly WrittenPage[]): void {
             `[prerender] 자기참조 URL 위반 (${problems.length}건):\n` +
                 `${problems.slice(0, 5).map(line => `      ${line}`).join('\n')}\n` +
                 '   → canonical·og:url 은 예외 없이 그 페이지 자신의 URL 이어야 합니다(R-4a).',
+        );
+    }
+
+    /* ② 74개가 74개 다른 URL 을 말하는가 — 「전부 홈으로 접힘」의 직접 관측 */
+    const canonicals = pages.map(page => findAll(page.html, CANONICAL_SOURCE)[0]);
+    const distinct = new Set(canonicals);
+
+    if (distinct.size !== pages.length) {
+        const repeated = [...new Set(canonicals.filter((url, i) => canonicals.indexOf(url) !== i))];
+
+        throw new Error(
+            `[prerender] canonical 이 겹칩니다 — ${pages.length}개 페이지가 ` +
+                `${distinct.size}개 URL 만 말하고 있습니다.\n` +
+                `${repeated.slice(0, 5).map(url => `      "${url}"`).join('\n')}\n` +
+                '   → 서로 다른 URL 이 한 값으로 접혔습니다. 절대 URL 생성이\n' +
+                '     경로를 잃어버렸는지(meta.ts toAbsoluteUrl) 확인하세요.',
+        );
+    }
+}
+
+/**
+ * 🔴 두 벌 발행(R-13)의 파일명 충돌 — **조용히 덮어쓰는 것을 막습니다.**
+ *
+ * `/posts` 는 `posts.html` 과 `posts/index.html` 을 씁니다. 그런데 slug 가
+ * `index` 인 대상이 생기면 `/posts/index` 가 `posts/index.html` 을 써서
+ * **`/posts` 의 중첩본을 덮습니다.** 배열 순서상 나중 것이 이기고, 다른 검사는
+ * 전부 **메모리의 html** 을 보므로 아무 말도 하지 않습니다 — 디스크에서만
+ * 벌어지는 일입니다.
+ *
+ * 지금 147경로에 중복은 0건입니다. 그래도 두는 이유는 **작업 slug 가 날짜 접두
+ * 없는 자유 형식**이라(`decisions.md #19`) `public/_works/index.md` 파일 하나로
+ * 성립하기 때문입니다. 데이터가 우연히 안전한 것을 코드의 보장으로 착각하지 않습니다.
+ */
+function assertUniqueFiles(pages: readonly PlannedPage[]): void {
+    const owner = new Map<string, string>();
+    const collisions: string[] = [];
+
+    for (const page of pages) {
+        for (const file of page.files) {
+            const previous = owner.get(file);
+
+            if (previous) {
+                collisions.push(`${file} — ${previous} 와 ${page.target.path} 가 같은 파일`);
+            } else {
+                owner.set(file, page.target.path);
+            }
+        }
+    }
+
+    if (collisions.length > 0) {
+        throw new Error(
+            `[prerender] 출력 파일명이 겹칩니다 (${collisions.length}건):\n` +
+                `${collisions.slice(0, 5).map(line => `      ${line}`).join('\n')}\n` +
+                '   → 나중 것이 앞의 것을 조용히 덮어씁니다. slug 를 바꾸거나\n' +
+                '     그 경로를 프리렌더 대상에서 빼세요.',
+        );
+    }
+}
+
+/**
+ * 🔴 **sitemap 이 신고한 URL 마다 실제 파일이 있는가** — 디스크를 봅니다.
+ *
+ * §14-4 M3 의 「sitemap ↔ 프리렌더 개수 일치」를 지금까지 **빌드가 아니라 QA 가
+ * 외부에서** 확인하고 있었습니다. 그래서 프리렌더 대상 배열에서 `/tags/ui` 하나를
+ * 빼고 빌드하면 `exit 0` 에 `✅ sitemap.xml 74건` 을 찍으면서 **존재하지 않는 URL
+ * 을 신고하는 sitemap 이 배포 가능**했습니다. §14-3 이 "없는 페이지 74개를
+ * 신고하는 꼴" 이라며 작업 순서를 확정한 바로 그 사고의 축소판입니다.
+ *
+ * 🔴 R-2(단일 소스)와는 **다른 층입니다.** 단일 소스는 「두 목록이 갈리지 않음」을
+ *    보장하지 「그 목록의 파일이 실제로 있음」을 보장하지 않습니다. 배열은 하나여도
+ *    쓰는 단계에서 빠지면 그만입니다.
+ *
+ * 🔴 파일 이름 규칙(`x.html` + `x/index.html`)을 `planPage` 에서 가져오지 않고
+ *    **여기에 다시 적습니다.** 발행한 쪽의 계산을 그대로 믿으면 이름을 잘못 지어
+ *    엉뚱한 자리에 쓴 경우를 못 잡습니다 — 이 검사가 보는 것은 「우리가 썼다고
+ *    생각하는 것」이 아니라 **배포될 바이트**입니다. 중복이 아니라 대조입니다.
+ */
+function assertPublishedFiles(
+    outDir: string,
+    expectedUrlCount: number,
+    expectedFileCount: number,
+): void {
+    const sitemap = readFileSync(path.join(outDir, SITEMAP_FILE), 'utf8');
+    const locs = findAll(sitemap, '<loc>([^<]*)</loc>').map(decodeHtmlAttribute);
+
+    if (locs.length !== expectedUrlCount) {
+        throw new Error(
+            `[prerender] ${SITEMAP_FILE} 의 <loc> 이 ${locs.length}건입니다 ` +
+                `(대상 ${expectedUrlCount}건).`,
+        );
+    }
+
+    const missing: string[] = [];
+    let seen = 0;
+
+    for (const loc of locs) {
+        const routePath = toPathFromAbsolute(loc);
+
+        if (routePath === null) {
+            missing.push(`${loc} — 사이트 밖 URL`);
+            continue;
+        }
+
+        const files =
+            routePath === '/'
+                ? ['index.html']
+                : [
+                      `${routePath.slice(1)}.html`,
+                      path.join(routePath.slice(1), 'index.html'),
+                  ];
+
+        seen += files.length;
+
+        for (const file of files) {
+            if (!existsSync(path.join(outDir, file))) {
+                missing.push(`${loc} → dist/${file} 없음`);
+            }
+        }
+    }
+
+    if (missing.length > 0) {
+        throw new Error(
+            `[prerender] sitemap 이 신고한 URL 에 파일이 없습니다 (${missing.length}건):\n` +
+                `${missing.slice(0, 5).map(line => `      ${line}`).join('\n')}\n` +
+                '   → 이대로 배포하면 sitemap 이 없는 페이지를 크롤러에 신고합니다(§14-3).',
+        );
+    }
+
+    if (seen !== expectedFileCount) {
+        throw new Error(
+            `[prerender] sitemap 이 요구하는 HTML 은 ${seen}개인데 ` +
+                `${expectedFileCount}개를 발행했습니다.\n` +
+                '   → 두 수가 갈리면 어느 한쪽이 목록을 잃은 것입니다.',
         );
     }
 }
@@ -295,16 +550,47 @@ export default function prerenderPlugin(): Plugin {
             }
 
             const outDir = path.resolve(config.root, config.build.outDir);
-            const indexHtml = readFileSync(path.join(outDir, 'index.html'), 'utf8');
+            const indexPath = path.join(outDir, 'index.html');
+
+            /*
+             * 🔴 **앞선 오류를 덮지 않습니다.** `transformIndexHtml` 이나
+             *    `collectPrerenderTargets` 가 던지면 vite 는 `dist/index.html` 을
+             *    쓰지 않은 채 이 훅을 부르고, 여기서 곧장 읽으면 **ENOENT 가
+             *    마지막 오류 자리를 빼앗습니다.** `targets.ts` 가 「§6.13c-1 이 규격을
+             *    보류했습니다 · 문구를 여기서 지어내지 마십시오」라고 적어 둔 안내가
+             *    사람에게 도달하지 못하던 이유입니다 — 멈추기는 하되 이유는 말하지
+             *    못하는 정지였습니다. 성공한 빌드에 이 파일이 없는 경우는 없습니다.
+             */
+            if (!existsSync(indexPath)) {
+                config.logger.warn(
+                    '  ⚠️ dist/index.html 이 없어 프리렌더를 건너뜁니다 — ' +
+                        '위에 먼저 난 빌드 오류가 원인입니다(이 플러그인은 그것을 덮지 않습니다).',
+                );
+                return;
+            }
+
+            const indexHtml = readFileSync(indexPath, 'utf8');
             const all = getTargets();
 
             const pages = all.map(target =>
-                writePage(
-                    outDir,
+                planPage(
                     target,
                     target.path === '/' ? indexHtml : replaceMetaBlock(indexHtml, target),
                 ),
             );
+
+            /*
+             * 🔴 **쓰기 전에 도는 검사들.** 메모리의 html 과 대상 배열만 보면 되는
+             *    것은 전부 여기입니다. 예전에는 148개 파일을 다 쓴 뒤에 돌아, 검사가
+             *    터져도 검증되지 않은 산출물이 `dist/` 에 남았습니다.
+             */
+            assertDescriptions(all);
+            assertSelfReferentialUrls(pages);
+            assertUniqueFiles(pages);
+
+            for (const page of pages) {
+                commitPage(outDir, page);
+            }
 
             /*
              * sitemap 은 **프리렌더 대상과 같은 배열**에서 나옵니다(R-2 · R-12).
@@ -314,16 +600,17 @@ export default function prerenderPlugin(): Plugin {
             writeFileSync(path.join(outDir, SITEMAP_FILE), renderSitemap(all));
             writeFileSync(path.join(outDir, ROBOTS_FILE), renderRobots());
 
-            assertDescriptions(all);
-            assertSelfReferentialUrls(pages);
-            assertNoindexIsolation(outDir, pages);
-
             const fileCount = pages.reduce((sum, page) => sum + page.files.length, 0);
+
+            /* 디스크를 봐야만 하는 검사 — 404.html 과 실제로 발행된 바이트 */
+            assertNoindexIsolation(outDir, pages);
+            assertPublishedFiles(outDir, all.length, fileCount);
 
             config.logger.info(
                 `  ✅ 프리렌더 ${all.length}개 URL · HTML ${fileCount}개 ` +
                     `(글 ${all.filter(t => t.ogType === 'article').length}편 포함)\n` +
-                    `  ✅ ${SITEMAP_FILE} ${all.length}건 · ${ROBOTS_FILE} 생성\n` +
+                    `  ✅ ${SITEMAP_FILE} ${all.length}건 — 신고한 URL 전부 파일 실재 확인\n` +
+                    `  ✅ ${ROBOTS_FILE} 생성 · dist/${FALLBACK_FILE} noindex 유지 · canonical 없음\n` +
                     '  ✅ noindex 0건 · canonical/og:url 자기참조 · description 규격 통과',
             );
         },

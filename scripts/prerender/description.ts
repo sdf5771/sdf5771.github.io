@@ -52,8 +52,13 @@ const LEADING_LIST_MARKER = /^(?:[-*+•]+\s+)+/;
 /**
  * N3 — 이모지 · U+FFFD(2편).
  * `Extended_Pictographic` 만으로는 `©®™` 까지 지워 본문을 상하게 하므로 제외합니다.
+ *
+ * 🔴 `\u{200D}`(ZWJ)까지 포함합니다. 👨‍👩‍👧 같은 합자는 **이모지 + ZWJ + 이모지**로
+ *    이뤄져 있어, 이모지만 지우면 폭 0 짜리 접합자가 문자열 한가운데 남습니다.
+ *    눈에는 보이지 않지만 `text.length` 에는 들어가고 검색 결과 스니펫에도
+ *    따라갑니다. 현재 41편에는 해당 글이 없으므로 이 줄은 **다음 글을 위한 것**입니다.
  */
-const PICTOGRAPH = /[\p{Extended_Pictographic}\u{FE0F}\u{20E3}]/gu;
+const PICTOGRAPH = /[\p{Extended_Pictographic}\u{FE0F}\u{20E3}\u{200D}]/gu;
 const KEEP_PICTOGRAPH = /[©®™]/;
 const REPLACEMENT_CHAR = /�/g;
 
